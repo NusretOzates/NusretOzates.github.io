@@ -3,12 +3,10 @@ project:
   output-dir: docs
 
 website:
-  title: "Nusret Ozates's Blog"
+  title: "Nusret Ozates"
   navbar:
     background: dark
     right:
-      - text: About
-        href: about.qmd
       - icon: github
         href: https://github.com/NusretOzates
       - icon: twitter
@@ -28,6 +26,6 @@ format:
     include-in-header:
       - text: |
          <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
-mainfont: Roboto
+# mainfont: Roboto
 
 

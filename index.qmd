@@ -1,7 +1,15 @@
 ---
-title: "Welcome to My Posts"
-
+title: "Hi Everyone!"
+about:
+    template: jolla
+image: profile.jpeg
 ---
 
 
-This is a hi page!
+
+As a **Machine Learning Engineer**, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical,
+scalable solutions. I have 4 years of experience in **Natural Language Processing**, designing user-centric chatbots, developing recommendation algorithms, and creating analytics dashboards.
+
+I am also skilled in **MLOps**, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.
+
+I hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services.
