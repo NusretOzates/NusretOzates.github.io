@@ -1,0 +1,86 @@
+[
+  {
+    "objectID": "posts/docker-get-started/index.html",
+    "href": "posts/docker-get-started/index.html",
+    "title": "Things you need to know about Docker to get started",
+    "section": "",
+    "text": "Some useful commands and concepts to use Docker!\nThe original video that I take notes from :\nIn this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#why-do-we-need-docker",
+    "href": "posts/docker-get-started/index.html#why-do-we-need-docker",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Why do we need Docker?",
+    "text": "Why do we need Docker?\nWe have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.\n\n\n\nThe matrix from Hell"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#what-does-docker-do",
+    "href": "posts/docker-get-started/index.html#what-does-docker-do",
+    "title": "Things you need to know about Docker to get started",
+    "section": "What does docker do?",
+    "text": "What does docker do?\nRun each component in a separate, isolated environment with its dependencies and its libraries. All within the same VM or host."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#what-are-the-differences-with-vm",
+    "href": "posts/docker-get-started/index.html#what-are-the-differences-with-vm",
+    "title": "Things you need to know about Docker to get started",
+    "section": "What are the differences with VM?",
+    "text": "What are the differences with VM?\nVMs are complete isolation! They have their hardware, kernel, and OS. But docker containers use the same hardware and same Linux kernel.\n\nThat is the reason why you can’t have a Windows container. You can say: “Hey! I have a docker on windows!”. Then I say, look for WSL. 😄\nContainers meant to run a specific task or process, not meant to host an OS.\n\n\n\n\nVirtual Machines vs Containers"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#some-useful-docker-commands",
+    "href": "posts/docker-get-started/index.html#some-useful-docker-commands",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Some Useful Docker Commands",
+    "text": "Some Useful Docker Commands\n\ndocker version: It gives the docker version.\ndocker run: It is used to run a container from an image\n\ndocker run nginx ⇒ Runs instance of the Nginx application on the docker host\ndocker run -d nginx ⇒ Runs in the detached mode. That means the container will run in the background, and you can continue to use the terminal\ndocker run — name webapp nginx ⇒ Run a container with the given name\ndocker run -it nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something\ndocker run -v /opt/datadir:/var/lib/mysql ….. ⇒ The container maps /var/lib/mysql(in docker) to /opt/datadir(in your pc). Your data will persist even when you delete the container.\ndocker run -p 80:5000 nginx ⇒ Forward your port 80 to container’s port 5000.\n\n\nNote: You can’t bind the same host port to the multiple docker instances.\n\n\ndocker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.\ndocker stop: It stops the running containers. Needs container ID or name.\n\ndocker stop silly_sammet\n\ndocker rm: Removes stopped or exited container permanently. If it prints the name back, we are good.\n\ndocker rm silly_sammet\n\ndocker images: Gives a list of downloaded images and their sizes.\ndocker rmi: Removes the given image. You need to remove all dependent containers before.\n\ndocker rmi nginx\n\ndocker pull: Just downloads the images so you won’t wait when you want to run the image.\ndocker exec: Execute a command in the container.\n\ndocker exec distracted_meclintock(container name) cat /etc/host(command)\n\ndocker inspect: It returns all details of the container in JSON format.\n\ndocker inspect webapp\n\ndocker logs: This shows the logs of a container. It is useful when your container runs in detached mode"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#tags",
+    "href": "posts/docker-get-started/index.html#tags",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Tags",
+    "text": "Tags\nFor example “docker redis” command will run the latest Redis version for you. What if you want to use an older version of Redis?\ndocker run redis:4.0 bold part is the Tag of a container.\nWhere can I find tags of the docker image?\nhttps://hub.docker.com\nEnvironment Variables\nIn python we access an environment variable like this:\nos.environ.get(‘APP_COLOR’)\nHow can you set it in docker?\ndocker run -e APP_COLOR=pink web-app\nHow to create my own image?\nLet’s say we have a webserver to run on an Ubuntu OS, what would be our steps to run it?\n\nOS — Ubuntu\nUpdate apt repo\nInstall dependencies using apt\nInstall Python dependencies using pip\nCopy source code to ex. /opt folder\nRun web server using ex. “flask” command\n\nThen we need to do these steps in a file called Dockerfile.\nFROM Ubuntu  \nRUN apt-get update \nRUN apt-get install python  \nRUN pip install flask \nRUN pip install flask-mysql  \nCOPY . /opt/source-code  \nENTRYPOINT FLASK_APP = /opt/source-code/app.py flask run\nLet’s build our Dockerfile and have a docker image!\ndocker build -t nusret/chatbot \"Address of the dockerfile without double quote\"\nAnd push it to the DockerHub if you want\ndocker push nusret/chatbot"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#what-is-this-dockerfile",
+    "href": "posts/docker-get-started/index.html#what-is-this-dockerfile",
+    "title": "Things you need to know about Docker to get started",
+    "section": "What is this Dockerfile?",
+    "text": "What is this Dockerfile?\n\nDockerfile is a text file written in a specific format that docker can understand."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#how-can-i-exportimport-my-docker-image-as-a-tar-file",
+    "href": "posts/docker-get-started/index.html#how-can-i-exportimport-my-docker-image-as-a-tar-file",
+    "title": "Things you need to know about Docker to get started",
+    "section": "How can I export/import my docker image as a tar file?",
+    "text": "How can I export/import my docker image as a tar file?\nYou can export your Docker Image as a .tar file with this command:\ndocker save —output chatbot.tar nusret/chatbot\nAnd you can easily import it with a very similar command.\ndocker load —input chatbot.tar"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#entrypoint-vs-cmd",
+    "href": "posts/docker-get-started/index.html#entrypoint-vs-cmd",
+    "title": "Things you need to know about Docker to get started",
+    "section": "ENTRYPOINT VS CMD",
+    "text": "ENTRYPOINT VS CMD\nLet’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:\nFROM Ubuntu  \nCMD [\"sleep\",\"5\"]\nWhen I run the command:\ndocker run sleeper sleep 10\nThis CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nThis time when I run:\ndocker run sleeper 10\nThe “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nCMD [\"5\"]"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "This is a hi page!"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+  },
+  {
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "Things you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  }
+]

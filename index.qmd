@@ -1,7 +1,0 @@
----
-title: "Welcome to My Posts"
-
----
-
-
-This is a hi page!
