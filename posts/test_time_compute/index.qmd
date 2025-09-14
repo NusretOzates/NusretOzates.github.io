@@ -3,7 +3,7 @@ title: "Test-Time Compute, Reasoning and Human Brain"
 author: "Nusret Ozates"
 date: "2020-11-08"
 categories: [ml, llm]
-image: "image.png"
+image: "img.png"
 ---
 
 I have lots of things to do, but I’ve suddenly been struck by inspiration, and since the well-known work-avoidance mechanism has kicked in, I’m going to write down my thoughts on test-time compute, shared decoders, and reasoning. Here we go, a theoretical and lengthy piece is coming.
