@@ -2,8 +2,8 @@
   {
     "listing": "/myposts.html",
     "items": [
-      "/posts/docker-get-started/index.html",
-      "/posts/test_time_compute/index.html"
+      "/posts/test_time_compute/index.html",
+      "/posts/docker-get-started/index.html"
     ]
   }
 ]
