@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://NusretOzates.github.io/posts/docker-get-started/index.html</loc>
-    <lastmod>2025-09-02T22:39:00.561Z</lastmod>
+    <loc>https://NusretOzates.github.io/posts/test_time_compute/index.html</loc>
+    <lastmod>2025-09-14T21:01:41.030Z</lastmod>
   </url>
   <url>
-    <loc>https://NusretOzates.github.io/index.html</loc>
-    <lastmod>2025-09-02T22:54:51.699Z</lastmod>
+    <loc>https://NusretOzates.github.io/myposts.html</loc>
+    <lastmod>2025-09-02T22:39:00.551Z</lastmod>
   </url>
   <url>
     <loc>https://NusretOzates.github.io/about.html</loc>
     <lastmod>2025-09-02T22:39:00.550Z</lastmod>
   </url>
   <url>
-    <loc>https://NusretOzates.github.io/myposts.html</loc>
-    <lastmod>2025-09-02T22:39:00.551Z</lastmod>
+    <loc>https://NusretOzates.github.io/index.html</loc>
+    <lastmod>2025-09-02T22:54:51.699Z</lastmod>
+  </url>
+  <url>
+    <loc>https://NusretOzates.github.io/posts/docker-get-started/index.html</loc>
+    <lastmod>2025-09-02T22:39:00.561Z</lastmod>
   </url>
 </urlset>
