@@ -1,7 +1,7 @@
 ---
 title: "Test-Time Compute, Reasoning and Human Brain"
 author: "Nusret Ozates"
-date: "2020-11-08"
+date: "2025-02-07"
 categories: [ml, llm]
 image: "img.png"
 ---
