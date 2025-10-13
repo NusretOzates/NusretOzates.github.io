@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Nusret Ozates</title>
+<link>https://nusretozates.github.io/myposts.html</link>
+<atom:link href="https://nusretozates.github.io/myposts.xml" rel="self" type="application/rss+xml"/>
+<description>Welcome to Nusret Ozates&#39;s personal website. Explore my projects, blogs, and more!</description>
+<generator>quarto-1.8.22</generator>
+<lastBuildDate>Sun, 12 Oct 2025 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Academic Writing Notes: Paragraphs Development and Sentence Skills</title>
+  <dc:creator>Nusret Ozates</dc:creator>
+  <link>https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>Do you remember the times you read an article/paper and you couldn’t understand what the author wanted to say even though you know the underlying concepts? Even the most brilliant ideas can be lost in poor writing or simplest ideas can be hard to understand. Choppy paragraphs, misplaced phrases, and grammatical run-ons can obscure your argument and frustrate your reader.</p>
+<p>In this post, I will share what I learned from Koc University Academic Writing class videos and materials.</p>
+<section id="topic-and-stress" class="level2">
+<h2 class="anchored" data-anchor-id="topic-and-stress">Topic and Stress</h2>
+<p>You can divide a sentence into two parts: the topic and the stress. The topic is what the sentence is about, and the stress is what you want to say about the topic or what is new information.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span style="color: cyan">Topic Part</span>, Readers:</th>
+<th style="text-align: left;"><span style="color: red">Stress Part</span>, Readers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>- Expect to understand what the sentence is about.</td>
+<td style="text-align: left;">- Expect to see new and imporant ideas.</td>
+</tr>
+<tr class="even">
+<td>- Try to connect the sentence to what they have already read.</td>
+<td style="text-align: left;">- Focus most of their interpretative effort.</td>
+</tr>
+</tbody>
+</table>
+<p>Example:</p>
+<p><span style="color: cyan">Accounts of depression</span> evolved after psychologists introduced the <span style="color: red">concepts of defeat and entrapment</span>.</p>
+<section id="known-new-contract" class="level3">
+<h3 class="anchored" data-anchor-id="known-new-contract">Known-New Contract</h3>
+<ul>
+<li>Introduce your readers to the “big picture” first by giving them information they <strong>already know</strong> (the topic part).</li>
+<li>Then they can <strong>link what’s familiar</strong> to the <strong>new information</strong> you give them (the stress part).</li>
+</ul>
+<p>As that <strong>new information</strong> becomes familiar, it too becomes old information that can link to newer information.</p>
+<p>Example:</p>
+<p><span style="color: cyan">Accounts of depression</span> evolved after psychologists introduced the <span style="color: red">concepts of defeat and entrapment</span>. <span style="color: cyan">These concepts</span> have been implicated in <span style="color: red">theoretical accounts of anxiety and suicide</span>. <span style="color: cyan">Such theories</span>..</p>
+<p>Example 2:</p>
+<p>However, <span style="color: red">managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system</span> <span style="color: cyan">are discussed for the first time in this paper</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The sentence above starts with a lot of complex terms and we don’t know their importance until the end of sentence, which is bad. The simple fix is just reversing the order!</p>
+</div>
+</div>
+<p>However, <span style="color: cyan">this paper is the first</span> <span style="color: red">to analyze managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system</span></p>
+</section>
+<section id="what-if-i-want-to-stress-multiple-ideas-in-a-sentence" class="level3">
+<h3 class="anchored" data-anchor-id="what-if-i-want-to-stress-multiple-ideas-in-a-sentence">What If I Want to Stress Multiple Ideas in a Sentence?</h3>
+<ul>
+<li>Try to introduce just one major idea per sentence, especially if the idea is complex.</li>
+<li>If your text is complex and you have two ideas worth emphasizing, create two sentences.</li>
+</ul>
+<p>Example:</p>
+<p>However, <span style="color: red">it uses the already limited upload bandwidth of clients inefficiently</span> and is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.</p>
+<p>Instead of the sentence above, you can write:</p>
+<p>However, <span style="color: red">mesh topology uses the already limited upload bandwidth of clients inefficiently</span>. It is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.</p>
+<p>Sometimes two sentences should be one if they refer to the same idea.</p>
+<p>Example:</p>
+<p>Such leaders should make the work of their followers more pleasant. Moreover, they should treat the followers as equals, and respect them.</p>
+<p>Instead of the sentence above, you can write:</p>
+<p>Such leaders should make the work of their followers more pleasant by treating them equally and respectfully.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Additional Steps to Edit Complex Writing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Move the subject and the verb close together.</li>
+<li>Break apart sentences that contain too much new information.</li>
+<li>Use transitional phrases to indicate relationships: moreover, in addition, consequently, therefore…</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="run-ons" class="level2">
+<h2 class="anchored" data-anchor-id="run-ons">Run-Ons</h2>
+<p>A run-on is <strong>two complete thoughts</strong> run together with no sign to mark the break between them or with just a comma:</p>
+<p>Then, in [2], they also presented a bisection algorithm to compute <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">-pseudospectral abscissa of a fixed matrix, i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?%5Calpha_%7B%5Cepsilon%7D(A)">, and tried to compute minimum <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">-pseudospectral abscissa over feasible matrices, <span style="color: red"><strong>however, an algorithm wasn’t presented yet.</strong></span></p>
+<p>vs</p>
+<p>Then, in [2], they also presented a bisection algorithm to compute <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">-pseudospectral abscissa of a fixed matrix, i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?%5Calpha_%7B%5Cepsilon%7D(A)">. They also tried to compute minimum <img src="https://latex.codecogs.com/png.latex?%5Cepsilon">-pseudospectral abscissa over feasible matrices. <span style="color: red"><strong>However, an algorithm wasn’t presented yet.</strong></span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I personally didn’t like the second version too because it has too many “they also” parts.</p>
+</div>
+</div>
+</section>
+<section id="fragments" class="level2">
+<h2 class="anchored" data-anchor-id="fragments">Fragments</h2>
+<p>A sentence fragment is a group of words that lacks a subject or a verb and does not express a complete thought:</p>
+<p><span style="color: red">Purdue offers many majors in engineering.</span> <span style="color: red"><strong>Such as electrical, chemical, and industrial engineering.</strong></span></p>
+<p>Purdue offers many majors in engineering <strong>such as electrical, chemical, and industrial engineering</strong>.</p>
+</section>
+<section id="parallelism" class="level2">
+<h2 class="anchored" data-anchor-id="parallelism">Parallelism</h2>
+<p>Words in a pair or series should have a parallel structure.</p>
+<p><span style="color: red"><strong>Not Parallel:</strong></span> The production manager was asked to write his report quickly, accurately, and <span style="color: red"><strong>in a detailed manner.</strong></span></p>
+<p><span style="color: cyan"><strong>Parallel:</strong></span> The production manager was asked to write his report quickly, accurately, and <span style="color: cyan"><strong>thoroughly.</strong></span></p>
+</section>
+<section id="misplaced-modifiers" class="level2">
+<h2 class="anchored" data-anchor-id="misplaced-modifiers">Misplaced Modifiers</h2>
+<p>Misplaced modifiers do not describe the word in the way the writer intended because of their wrong place in a sentence.</p>
+<p>George couldn’t drive to work in his small sports car <span style="color: red"><strong>with a broken leg.</strong></span></p>
+<p><span style="color: cyan"><strong>With a broken leg,</strong></span> George couldn’t drive to work in his small sports car.</p>
+<p>In this example, we and transformer models know that George has a broken leg, not the car. But grammatically, the modifier “with a broken leg” seems to describe the car. This is an easy example but in a academic text, it can be more complex and harder to spot.</p>
+<p>In order to avoid misplaced modifiers, place the words as close as possible to what they describe.</p>
+</section>
+<section id="dangling-modifiers" class="level2">
+<h2 class="anchored" data-anchor-id="dangling-modifiers">Dangling Modifiers</h2>
+<p>A modifier that opens a sentence must be <strong>followed immediately</strong> by the <strong>word it is meant to describe</strong>. Otherwise the sentence takes on an unintended meaning.</p>
+<p><span style="color:red">While smoking a pipe, <u>my dog</u> sat with me.</span></p>
+<p>While smoking a pipe, <u>I sat with my dog</u>.</p>
+<p>While <u>I was smoking a pipe</u>, my dog sat with me.</p>
+<p>Again, this is also an easy example but in a academic text, it can be more complex and harder to spot.</p>
+</section>
+<section id="sentence-variety" class="level2">
+<h2 class="anchored" data-anchor-id="sentence-variety">Sentence Variety</h2>
+<ul>
+<li><p>Too many sentences with the <strong>same structure and length</strong> can grow <strong>monotonous</strong> for readers.</p></li>
+<li><p><strong>Varying</strong> sentence <strong>style and structure</strong> can also reduce repetition and add emphasis.</p></li>
+<li><p><strong>Long sentences</strong> work well for incorporating <strong>a lot of information</strong>, and <strong>short sentences</strong> can often maximize crucial points.</p></li>
+</ul>
+<section id="overusing-long-sentences" class="level3">
+<h3 class="anchored" data-anchor-id="overusing-long-sentences">Overusing Long Sentences</h3>
+<p>Long sentences can be difficult to read and understand, especially if they contain multiple ideas or clauses. Breaking up long sentences into shorter ones can improve clarity and readability.</p>
+<p>The company reported that yearly profit growth, which had steadily increased by more than 7% since 1989, had stabilized in 2009 with a 0% comp, and in 2010, the year they launched the OWN project, actually decreased from the previous year by 2%. This announcement stunned Wall Street analysts, but with the overall decrease in similar company profit growth worldwide, as reported by Author (Year) in his article detailing the company’s history, the company’s announcement aligns with industry trends and future industry predictions.</p>
+<p>The company reported that profit growth stabilized in 2009, though it had steadily increased by more than 7% since 1989. In 2010, the year they launch the OWN project, company profit growth decreased from the previous year. This announcement stunned Wall Street analysts. According to Author (Year), however, this decrease is exemplar of a trend across similar company profit growth worldwide; it also supports future predictions for the industry.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Notice that the sentence count only increased by two, but thanks to the choice of where a sentence begin and end, the paragraph is easier to read. Moreover, the sentence variety is increased.</p>
+</div>
+</div>
+</section>
+<section id="short-sentences" class="level3">
+<h3 class="anchored" data-anchor-id="short-sentences">Short Sentences</h3>
+<p>Read the text below with your voice:</p>
+<p>Too many short sentences can hurt an essay. They can make the writing seem choppy. The writing may seem like it is below a college level. Readers may lose interest. They may not want to continue reading.</p>
+<p>See the effect? Let’s fix it:</p>
+<p>Too many short sentences can hurt an essay, <strong>for</strong> it can make the writing seem choppy <strong>and</strong> below a college level. Because of this, readers may lose interest and not want to continue reading.</p>
+</section>
+</section>
+<section id="change-the-rhythm" class="level2">
+<h2 class="anchored" data-anchor-id="change-the-rhythm">Change the Rhythm!</h2>
+<p>Change the rhythm of your writing by varying sentence length and structure. As you will see the example below, varying sentence length and structure can make your writing more interesting and engaging.</p>
+<p>Vary the rhythm by alternating short and long sentences:</p>
+<p>The Winslow family visited Canada and Alaska last summer to find some Native American art. In Anchorage stores they found some excellent examples of soapstone carvings. But they couldn’t find a dealer selling any of the woven wall hangings they wanted. They were very disappointed when they left Anchorage empty-handed.</p>
+<p>The Winslow family visited Canada and Alaska last summer to find some native American art, such as soapstone carvings and wall hangings. Anchorage stores had many soapstone items available. Still, they were disappointed to learn that wall hangings, which they had especially wanted, were difficult to find. Sadly, they left empty-handed.</p>
+<p>I think I see something similar to this in the novels I’ve read.</p>
+</section>
+<section id="repeated-subjects-or-topics" class="level2">
+<h2 class="anchored" data-anchor-id="repeated-subjects-or-topics">Repeated Subjects or Topics</h2>
+<ul>
+<li>Handling the same topic for several sentences can lead to repetitive sentences. When that happens, consider using these parts of speech to fix the problem:</li>
+</ul>
+<p><strong>Relative pronouns</strong></p>
+<p>Indiana used to be mainly an agricultural state. It has recently attracted more industry. Indiana, <span style="color: cyan"><strong>which</strong></span> used to be mainly an agricultural state, has recently attracted more industry.</p>
+<p><strong>Participles</strong></p>
+<p>Wei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again. <span style="color: cyan"><strong>Surprised</strong></span> to get a phone call from his sister, Wei Xie was happy to hear her voice again.</p>
+<p><strong>Prepositions</strong></p>
+<p>The university has been facing pressure to cut its budget. It has eliminated funding for important programs. <span style="color: cyan"><strong>Under pressure</strong></span> to cut its budget, the university has eliminated funding for important programs.</p>
+</section>
+<section id="final-words" class="level2">
+<h2 class="anchored" data-anchor-id="final-words">Final Words</h2>
+<p>Finally, all these rules and tips are not strict rules, but guidelines to help you improve your writing. Also, it is very easy to forget them. The best thing you can do is keep writing constantly, while editing your own writing with these rules in mind. Over time, you will internalize these rules and your writing will improve. I also believe that reading a lot of well-written articles and books will help you improve your writing skills.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>Koc University Writing Center</li>
+<li>Sentence Variety. (2018). Retrieved from https://owl.purdue.edu/owl/general_writing/academic_writing/sentence_variety/index.html</li>
+<li>Making Complex Writing Intelligible with Known-New Contract. (2018). Global Communication Center, Carnegie Mellon University. Retrieved from https://www.cmu.edu/gcc/handouts/old-new-handout-pdf</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>academy</category>
+  <guid>https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/</guid>
+  <pubDate>Sun, 12 Oct 2025 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/focus.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Test-Time Compute, Reasoning and Human Brain</title>
+  <dc:creator>Nusret Ozates</dc:creator>
+  <link>https://nusretozates.github.io/posts/test_time_compute/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>I have lots of things to do, but I’ve suddenly been struck by inspiration, and since the well-known work-avoidance mechanism has kicked in, I’m going to write down my thoughts on test-time compute, shared decoders, and reasoning. Here we go, a theoretical and lengthy piece is coming.</p>
+<p>One of the things I love about LLMs is that they handle multiple tasks with a single loss and a single branch. That is, instead of a shared encoder + separate decoders for each task like in U-net models, there’s just a transformer decoder. As far as I know, this comes from T5 models where we model all NLP tasks as text-to-text. We’ll get back to LLMs in a bit, but let’s take a look at the vision side for now.</p>
+<p>I don’t think there’s an equivalent of this in vision, for example, how would you combine segmentation and classification tasks? At the very least, the last layers would have to be different. However, there’s a model that comes very, very close to combining these, and the model’s developers are inspired by the human brain. The model is called BU-TD. Let’s start with the inspiration part. These folks are saying, ‘segmenting anything and everything at once’ is not the right approach; the human brain doesn’t work that way.</p>
+<p><img src="https://nusretozates.github.io/posts/test_time_compute/img.png" class="img-fluid"></p>
+<p>For example, the longer you look at the image above, the more details emerge; the brain doesn’t grasp the entire image with all its details at once. So why are we trying to make models do this? This is where BU-TD comes into play.</p>
+<p><img src="https://nusretozates.github.io/posts/test_time_compute/img_1.png" class="img-fluid"></p>
+<p>Again, in this model inspired by the human brain, first an encoder processes the image, and the decoder takes the vector coming from the encoder and additionally receives a task and argument vector. For example,</p>
+<p><img src="https://nusretozates.github.io/posts/test_time_compute/img_2.png" class="img-fluid"></p>
+<p>We tell the model to look at the image, task: find hairstyle, argument: bob. Afterwards, the decoder can optionally output the segmentation of Bob’s hair, but it may not; that part is a bit vague. By feeding the decoder’s result back into the encoder, we get the result corresponding to that style, and so on.</p>
+<p>The nice thing about this system is that it first uses the weights in the decoder to the fullest, making it a parameter-efficient model. Secondly, since each task, argument, etc., is decoupled, the system learns concepts better. For example, during training, brother Bob is always bald, so Bob’s hairstyle value is always bald during training. However, since the model learns what short hair and long hair are from other examples independently of the person, it can detect this during testing if Bob comes to Turkey and gets hair implants. Thanks to this, the model learns much better with much less data.</p>
+<p><img src="https://nusretozates.github.io/posts/test_time_compute/img_3.png" class="img-fluid"></p>
+<p>Now we come back to LLMs. We are actually applying the TD part of this model, that is, using a single decoder for each task, in LLMs since the T5 models, especially in PrefixLM models, and when image tokens and (I think) the question are processed with self-attention, the TD logic is formed.</p>
+<p>The second part is that when people look at a picture, we extract the details, relationships, etc. over time; all the details don’t come at a single glance, right? Well, this part actually corresponds to the concept we call test-time compute. For example, as we look at the image on the left below, the details on the right emerge.</p>
+<p><img src="https://nusretozates.github.io/posts/test_time_compute/img_4.png" class="img-fluid"></p>
+<p>Based on what we’ve learned up to this point, trying to process everything at once is not logical. Learning the relationships one by one during training and processing the image over time using more compute/time during testing is an effective solution in terms of both the number of parameters and learning more with less data. Our next problem is this: We don’t want to process the image all at once, okay, but we also don’t want to process the entire image; we want to process as much as necessary for the information we are interested in to save time and money. This is where reasoning comes into play. What does a good LLM model do in terms of reasoning? It divides the question we ask into the necessary parts and solves the parts step by step, and stops when it reaches the result. By doing this, we have the following system:</p>
+<p><img src="https://nusretozates.github.io/posts/test_time_compute/img_5.png" class="img-fluid"></p>
+<p>I’m saying that if I were shown a picture and asked, ‘What is the size of the bag of the woman holding the bag that the girl is looking at?’, my brain would process the image in a similar way and wouldn’t look for more details.</p>
+<p>I think the BU-TD model itself is very limited in terms of input and output ranges but the main idea is still strong and I believe VLMs are very close to implementing this idea into the AI models.</p>
+<p>That’s it, I couldn’t come to a conclusion with the text. These things suddenly came to my mind while reading a very unrelated article, I thought I’d write them down. Good luck and thanks for reading up to this point!</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2105.05592">BU-TD Model: “Image interpretation by iterative bottom-up top-down processing”</a></li>
+<li><a href="https://arxiv.org/abs/1910.10683">T5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>ml</category>
+  <category>llm</category>
+  <guid>https://nusretozates.github.io/posts/test_time_compute/</guid>
+  <pubDate>Thu, 06 Feb 2025 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/test_time_compute/img.png" medium="image" type="image/png" height="69" width="144"/>
+</item>
+<item>
+  <title>Things you need to know about Docker to get started</title>
+  <dc:creator>Nusret Ozates</dc:creator>
+  <link>https://nusretozates.github.io/posts/docker-get-started/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>Some useful commands and concepts to use Docker!</p>
+<p>The original video that I take notes from :</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/fqMOX6JJhGo" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>In this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time.</p>
+<section id="why-do-we-need-docker" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-need-docker">Why do we need Docker?</h2>
+<p>We have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/matrix_hell.webp" class="img-fluid figure-img"></p>
+<figcaption>The matrix from Hell</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-does-docker-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-docker-do">What does docker do?</h2>
+<p>Run each component in a separate, isolated environment with its dependencies and its libraries. All within the same VM or host.</p>
+</section>
+<section id="what-are-the-differences-with-vm" class="level2">
+<h2 class="anchored" data-anchor-id="what-are-the-differences-with-vm">What are the differences with VM?</h2>
+<p>VMs are complete isolation! They have their hardware, kernel, and OS. But docker containers use the same hardware and same Linux kernel.</p>
+<blockquote class="blockquote">
+<p>That is the reason why you can’t have a Windows container. You can say: “Hey! I have a docker on windows!”. Then I say, look for WSL. 😄</p>
+Containers meant to run a specific task or process, not meant to host an OS.
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/vm_vs_docker.webp" class="img-fluid figure-img"></p>
+<figcaption>Virtual Machines vs Containers</figcaption>
+</figure>
+</div>
+</section>
+<section id="some-useful-docker-commands" class="level2">
+<h2 class="anchored" data-anchor-id="some-useful-docker-commands">Some Useful Docker Commands</h2>
+<ol type="1">
+<li>docker version: It gives the docker version.</li>
+<li>docker run: It is used to run a container from an image
+<ul>
+<li>docker run nginx ⇒ Runs instance of the Nginx application on the docker host</li>
+<li>docker run -d nginx ⇒ Runs in the detached mode. That means the container will run in the background, and you can continue to use the terminal</li>
+<li>docker run — name webapp nginx ⇒ Run a container with the given name</li>
+<li>docker run -it nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something</li>
+<li>docker run -v /opt/datadir:/var/lib/mysql ….. ⇒ The container maps /var/lib/mysql(in docker) to /opt/datadir(in your pc). Your data will persist even when you delete the container.</li>
+<li>docker run -p 80:5000 nginx ⇒ Forward your port 80 to container’s port 5000.</li>
+</ul></li>
+</ol>
+<p>Note: You can’t bind the same host port to the multiple docker instances.</p>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/port_bind.webp" class="img-fluid"></p>
+<ol start="3" type="1">
+<li><p>docker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.</p></li>
+<li><p>docker stop: It stops the running containers. Needs container ID or name.</p>
+<ul>
+<li>docker stop silly_sammet</li>
+</ul></li>
+<li><p>docker rm: Removes stopped or exited container permanently. If it prints the name back, we are good.</p>
+<ul>
+<li>docker rm silly_sammet</li>
+</ul></li>
+<li><p>docker images: Gives a list of downloaded images and their sizes.</p></li>
+<li><p>docker rmi: Removes the given image. You need to remove all dependent containers before.</p>
+<ul>
+<li>docker rmi nginx</li>
+</ul></li>
+<li><p>docker pull: Just downloads the images so you won’t wait when you want to run the image.</p></li>
+<li><p>docker exec: Execute a command in the container.</p>
+<ul>
+<li>docker exec distracted_meclintock(container name) cat /etc/host(command)</li>
+</ul></li>
+<li><p>docker inspect: It returns all details of the container in JSON format.</p>
+<ul>
+<li>docker inspect webapp</li>
+</ul></li>
+<li><p>docker logs: This shows the logs of a container. It is useful when your container runs in detached mode</p></li>
+</ol>
+</section>
+<section id="tags" class="level2">
+<h2 class="anchored" data-anchor-id="tags">Tags</h2>
+<p>For example “docker redis” command will run the latest Redis version for you. What if you want to use an older version of Redis?</p>
+<p>docker run redis:4.0 bold part is the Tag of a container.</p>
+<p>Where can I find tags of the docker image?</p>
+<p><a href="https://hub.docker.com" class="uri">https://hub.docker.com</a></p>
+<p>Environment Variables</p>
+<p>In python we access an environment variable like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb1-1">os.environ.get(‘APP_COLOR’)</span></code></pre></div></div>
+<p>How can you set it in docker?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-e</span> APP_COLOR=pink web-app</span></code></pre></div></div>
+<p>How to create my own image?</p>
+<p>Let’s say we have a webserver to run on an Ubuntu OS, what would be our steps to run it?</p>
+<ol type="1">
+<li>OS — Ubuntu</li>
+<li>Update apt repo</li>
+<li>Install dependencies using apt</li>
+<li>Install Python dependencies using pip</li>
+<li>Copy source code to ex. /opt folder</li>
+<li>Run web server using ex. “flask” command</li>
+</ol>
+<p>Then we need to do these steps in a file called Dockerfile.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> Ubuntu  </span>
+<span id="cb3-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">RUN</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">apt-get</span> update </span>
+<span id="cb3-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">RUN</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">apt-get</span> install python  </span>
+<span id="cb3-4"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">RUN</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install flask </span>
+<span id="cb3-5"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">RUN</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">pip</span> install flask-mysql  </span>
+<span id="cb3-6"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">COPY</span> . /opt/source-code  </span>
+<span id="cb3-7"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ENTRYPOINT</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">FLASK_APP</span> = /opt/source-code/app.py flask run</span></code></pre></div></div>
+<p>Let’s build our Dockerfile and have a docker image!</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> build <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-t</span> nusret/chatbot <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Address of the dockerfile without double quote"</span></span></code></pre></div></div>
+<p>And push it to the DockerHub if you want</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> push nusret/chatbot</span></code></pre></div></div>
+</section>
+<section id="what-is-this-dockerfile" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-this-dockerfile">What is this Dockerfile?</h2>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/dockerfile1.webp" class="img-fluid"></p>
+<p>Dockerfile is a text file written in a specific format that docker can understand.</p>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/dockerfile2.webp" class="img-fluid"></p>
+</section>
+<section id="how-can-i-exportimport-my-docker-image-as-a-tar-file" class="level2">
+<h2 class="anchored" data-anchor-id="how-can-i-exportimport-my-docker-image-as-a-tar-file">How can I export/import my docker image as a tar file?</h2>
+<p>You can export your Docker Image as a .tar file with this command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> save —output chatbot.tar nusret/chatbot</span></code></pre></div></div>
+<p>And you can easily import it with a very similar command.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> load —input chatbot.tar</span></code></pre></div></div>
+</section>
+<section id="entrypoint-vs-cmd" class="level2">
+<h2 class="anchored" data-anchor-id="entrypoint-vs-cmd">ENTRYPOINT VS CMD</h2>
+<p>Let’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb8-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> Ubuntu  </span>
+<span id="cb8-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">CMD</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sleep"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5"</span>]</span></code></pre></div></div>
+<p>When I run the command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run sleeper sleep 10</span></code></pre></div></div>
+<p>This CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb10-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> Ubuntu  </span>
+<span id="cb10-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ENTRYPOINT</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sleep"</span>]</span></code></pre></div></div>
+<p>This time when I run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run sleeper 10</span></code></pre></div></div>
+<p>The “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb12-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">FROM</span> Ubuntu  </span>
+<span id="cb12-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">ENTRYPOINT</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sleep"</span>]</span>
+<span id="cb12-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">CMD</span> [<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5"</span>]</span></code></pre></div></div>
+
+
+</section>
+
+ ]]></description>
+  <category>devops</category>
+  <category>mlops</category>
+  <category>software</category>
+  <guid>https://nusretozates.github.io/posts/docker-get-started/</guid>
+  <pubDate>Sat, 07 Nov 2020 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/docker-get-started/image.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
+</channel>
+</rss>

@@ -2,6 +2,7 @@
   {
     "listing": "/myposts.html",
     "items": [
+      "/posts/paragraph_dev_sentece_skill/index.html",
       "/posts/test_time_compute/index.html",
       "/posts/docker-get-started/index.html"
     ]

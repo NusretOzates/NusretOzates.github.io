@@ -14,27 +14,6 @@
     "text": "References\n\nBU-TD Model: “Image interpretation by iterative bottom-up top-down processing”\nT5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”"
   },
   {
-    "objectID": "myposts.html",
-    "href": "myposts.html",
-    "title": "Welcome to My Posts",
-    "section": "",
-    "text": "Test-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hi Everyone!",
-    "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, designing user-centric chatbots, developing recommendation algorithms, and creating analytics dashboards.\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
-  },
-  {
     "objectID": "posts/docker-get-started/index.html",
     "href": "posts/docker-get-started/index.html",
     "title": "Things you need to know about Docker to get started",
@@ -96,5 +75,110 @@
     "title": "Things you need to know about Docker to get started",
     "section": "ENTRYPOINT VS CMD",
     "text": "ENTRYPOINT VS CMD\nLet’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:\nFROM Ubuntu  \nCMD [\"sleep\",\"5\"]\nWhen I run the command:\ndocker run sleeper sleep 10\nThis CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nThis time when I run:\ndocker run sleeper 10\nThe “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nCMD [\"5\"]"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hi Everyone!",
+    "section": "",
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, designing user-centric chatbots, developing recommendation algorithms, and creating analytics dashboards.\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+  },
+  {
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "Academic Writing Notes: Paragraphs Development and Sentence Skills\n\n\n\nacademy\n\n\n\n\n\n\n\n\n\nOct 13, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html",
+    "href": "posts/paragraph_dev_sentece_skill/index.html",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "",
+    "text": "Do you remember the times you read an article/paper and you couldn’t understand what the author wanted to say even though you know the underlying concepts? Even the most brilliant ideas can be lost in poor writing or simplest ideas can be hard to understand. Choppy paragraphs, misplaced phrases, and grammatical run-ons can obscure your argument and frustrate your reader.\nIn this post, I will share what I learned from Koc University Academic Writing class videos and materials."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#topic-and-stress",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#topic-and-stress",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Topic and Stress",
+    "text": "Topic and Stress\nYou can divide a sentence into two parts: the topic and the stress. The topic is what the sentence is about, and the stress is what you want to say about the topic or what is new information.\n\n\n\n\n\n\n\nTopic Part, Readers:\nStress Part, Readers\n\n\n\n\n- Expect to understand what the sentence is about.\n- Expect to see new and imporant ideas.\n\n\n- Try to connect the sentence to what they have already read.\n- Focus most of their interpretative effort.\n\n\n\nExample:\nAccounts of depression evolved after psychologists introduced the concepts of defeat and entrapment.\n\nKnown-New Contract\n\nIntroduce your readers to the “big picture” first by giving them information they already know (the topic part).\nThen they can link what’s familiar to the new information you give them (the stress part).\n\nAs that new information becomes familiar, it too becomes old information that can link to newer information.\nExample:\nAccounts of depression evolved after psychologists introduced the concepts of defeat and entrapment. These concepts have been implicated in theoretical accounts of anxiety and suicide. Such theories..\nExample 2:\nHowever, managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system are discussed for the first time in this paper\n\n\n\n\n\n\nImportant\n\n\n\nThe sentence above starts with a lot of complex terms and we don’t know their importance until the end of sentence, which is bad. The simple fix is just reversing the order!\n\n\nHowever, this paper is the first to analyze managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system\n\n\nWhat If I Want to Stress Multiple Ideas in a Sentence?\n\nTry to introduce just one major idea per sentence, especially if the idea is complex.\nIf your text is complex and you have two ideas worth emphasizing, create two sentences.\n\nExample:\nHowever, it uses the already limited upload bandwidth of clients inefficiently and is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.\nInstead of the sentence above, you can write:\nHowever, mesh topology uses the already limited upload bandwidth of clients inefficiently. It is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.\nSometimes two sentences should be one if they refer to the same idea.\nExample:\nSuch leaders should make the work of their followers more pleasant. Moreover, they should treat the followers as equals, and respect them.\nInstead of the sentence above, you can write:\nSuch leaders should make the work of their followers more pleasant by treating them equally and respectfully.\n\n\n\n\n\n\nTipAdditional Steps to Edit Complex Writing\n\n\n\n\nMove the subject and the verb close together.\nBreak apart sentences that contain too much new information.\nUse transitional phrases to indicate relationships: moreover, in addition, consequently, therefore…"
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#run-ons",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#run-ons",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Run-Ons",
+    "text": "Run-Ons\nA run-on is two complete thoughts run together with no sign to mark the break between them or with just a comma:\nThen, in [2], they also presented a bisection algorithm to compute \\(\\epsilon\\)-pseudospectral abscissa of a fixed matrix, i.e. \\(\\alpha_{\\epsilon}(A)\\), and tried to compute minimum \\(\\epsilon\\)-pseudospectral abscissa over feasible matrices, however, an algorithm wasn’t presented yet.\nvs\nThen, in [2], they also presented a bisection algorithm to compute \\(\\epsilon\\)-pseudospectral abscissa of a fixed matrix, i.e. \\(\\alpha_{\\epsilon}(A)\\). They also tried to compute minimum \\(\\epsilon\\)-pseudospectral abscissa over feasible matrices. However, an algorithm wasn’t presented yet.\n\n\n\n\n\n\nNote\n\n\n\nI personally didn’t like the second version too because it has too many “they also” parts."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#fragments",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#fragments",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Fragments",
+    "text": "Fragments\nA sentence fragment is a group of words that lacks a subject or a verb and does not express a complete thought:\nPurdue offers many majors in engineering. Such as electrical, chemical, and industrial engineering.\nPurdue offers many majors in engineering such as electrical, chemical, and industrial engineering."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#parallelism",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#parallelism",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Parallelism",
+    "text": "Parallelism\nWords in a pair or series should have a parallel structure.\nNot Parallel: The production manager was asked to write his report quickly, accurately, and in a detailed manner.\nParallel: The production manager was asked to write his report quickly, accurately, and thoroughly."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#misplaced-modifiers",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#misplaced-modifiers",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Misplaced Modifiers",
+    "text": "Misplaced Modifiers\nMisplaced modifiers do not describe the word in the way the writer intended because of their wrong place in a sentence.\nGeorge couldn’t drive to work in his small sports car with a broken leg.\nWith a broken leg, George couldn’t drive to work in his small sports car.\nIn this example, we and transformer models know that George has a broken leg, not the car. But grammatically, the modifier “with a broken leg” seems to describe the car. This is an easy example but in a academic text, it can be more complex and harder to spot.\nIn order to avoid misplaced modifiers, place the words as close as possible to what they describe."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#dangling-modifiers",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#dangling-modifiers",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Dangling Modifiers",
+    "text": "Dangling Modifiers\nA modifier that opens a sentence must be followed immediately by the word it is meant to describe. Otherwise the sentence takes on an unintended meaning.\nWhile smoking a pipe, my dog sat with me.\nWhile smoking a pipe, I sat with my dog.\nWhile I was smoking a pipe, my dog sat with me.\nAgain, this is also an easy example but in a academic text, it can be more complex and harder to spot."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#sentence-variety",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#sentence-variety",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Sentence Variety",
+    "text": "Sentence Variety\n\nToo many sentences with the same structure and length can grow monotonous for readers.\nVarying sentence style and structure can also reduce repetition and add emphasis.\nLong sentences work well for incorporating a lot of information, and short sentences can often maximize crucial points.\n\n\nOverusing Long Sentences\nLong sentences can be difficult to read and understand, especially if they contain multiple ideas or clauses. Breaking up long sentences into shorter ones can improve clarity and readability.\nThe company reported that yearly profit growth, which had steadily increased by more than 7% since 1989, had stabilized in 2009 with a 0% comp, and in 2010, the year they launched the OWN project, actually decreased from the previous year by 2%. This announcement stunned Wall Street analysts, but with the overall decrease in similar company profit growth worldwide, as reported by Author (Year) in his article detailing the company’s history, the company’s announcement aligns with industry trends and future industry predictions.\nThe company reported that profit growth stabilized in 2009, though it had steadily increased by more than 7% since 1989. In 2010, the year they launch the OWN project, company profit growth decreased from the previous year. This announcement stunned Wall Street analysts. According to Author (Year), however, this decrease is exemplar of a trend across similar company profit growth worldwide; it also supports future predictions for the industry.\n\n\n\n\n\n\nNote\n\n\n\nNotice that the sentence count only increased by two, but thanks to the choice of where a sentence begin and end, the paragraph is easier to read. Moreover, the sentence variety is increased.\n\n\n\n\nShort Sentences\nRead the text below with your voice:\nToo many short sentences can hurt an essay. They can make the writing seem choppy. The writing may seem like it is below a college level. Readers may lose interest. They may not want to continue reading.\nSee the effect? Let’s fix it:\nToo many short sentences can hurt an essay, for it can make the writing seem choppy and below a college level. Because of this, readers may lose interest and not want to continue reading."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#change-the-rhythm",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#change-the-rhythm",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Change the Rhythm!",
+    "text": "Change the Rhythm!\nChange the rhythm of your writing by varying sentence length and structure. As you will see the example below, varying sentence length and structure can make your writing more interesting and engaging.\nVary the rhythm by alternating short and long sentences:\nThe Winslow family visited Canada and Alaska last summer to find some Native American art. In Anchorage stores they found some excellent examples of soapstone carvings. But they couldn’t find a dealer selling any of the woven wall hangings they wanted. They were very disappointed when they left Anchorage empty-handed.\nThe Winslow family visited Canada and Alaska last summer to find some native American art, such as soapstone carvings and wall hangings. Anchorage stores had many soapstone items available. Still, they were disappointed to learn that wall hangings, which they had especially wanted, were difficult to find. Sadly, they left empty-handed.\nI think I see something similar to this in the novels I’ve read."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#repeated-subjects-or-topics",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#repeated-subjects-or-topics",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Repeated Subjects or Topics",
+    "text": "Repeated Subjects or Topics\n\nHandling the same topic for several sentences can lead to repetitive sentences. When that happens, consider using these parts of speech to fix the problem:\n\nRelative pronouns\nIndiana used to be mainly an agricultural state. It has recently attracted more industry. Indiana, which used to be mainly an agricultural state, has recently attracted more industry.\nParticiples\nWei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again. Surprised to get a phone call from his sister, Wei Xie was happy to hear her voice again.\nPrepositions\nThe university has been facing pressure to cut its budget. It has eliminated funding for important programs. Under pressure to cut its budget, the university has eliminated funding for important programs."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#final-words",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#final-words",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Final Words",
+    "text": "Final Words\nFinally, all these rules and tips are not strict rules, but guidelines to help you improve your writing. Also, it is very easy to forget them. The best thing you can do is keep writing constantly, while editing your own writing with these rules in mind. Over time, you will internalize these rules and your writing will improve. I also believe that reading a lot of well-written articles and books will help you improve your writing skills."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#references",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#references",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "References",
+    "text": "References\n\nKoc University Writing Center\nSentence Variety. (2018). Retrieved from https://owl.purdue.edu/owl/general_writing/academic_writing/sentence_variety/index.html\nMaking Complex Writing Intelligible with Known-New Contract. (2018). Global Communication Center, Carnegie Mellon University. Retrieved from https://www.cmu.edu/gcc/handouts/old-new-handout-pdf"
   }
 ]
