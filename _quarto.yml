@@ -4,6 +4,8 @@ project:
 
 website:
   title: "Nusret Ozates"
+  site-url: https://nusretozates.github.io/
+  description: "Welcome to Nusret Ozates's personal website. Explore my projects, blogs, and more!"
   navbar:
     background: dark
     right:
@@ -20,7 +22,7 @@ format:
     respect-user-color-scheme: true
     smooth-scroll: true
     theme:
-      light: cosmo
+      light: zephyr
       dark: darkly
     css: styles.css
     include-in-header:
