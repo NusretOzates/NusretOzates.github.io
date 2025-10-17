@@ -10,7 +10,628 @@
 <atom:link href="https://nusretozates.github.io/myposts.xml" rel="self" type="application/rss+xml"/>
 <description>Welcome to Nusret Ozates&#39;s personal website. Explore my projects, blogs, and more!</description>
 <generator>quarto-1.8.22</generator>
-<lastBuildDate>Sun, 12 Oct 2025 21:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 17 Oct 2025 21:00:00 GMT</lastBuildDate>
+<item>
+  <title>Pytorch Geometric Basics: How Message Passing Works</title>
+  <dc:creator>Nusret Ozates</dc:creator>
+  <link>https://nusretozates.github.io/posts/gnn_basics/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>I need to work on GNNs for my MSc thesis and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs. It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic.</p>
+<section id="introduction-to-message-passing-in-gnns" class="level3">
+<h3 class="anchored" data-anchor-id="introduction-to-message-passing-in-gnns">Introduction to Message Passing in GNNs</h3>
+<p>For those unfamiliar, Graph Neural Networks (GNNs) are a class of neural networks designed to operate on graph-structured data. They leverage the relationships between nodes (entities) and edges (connections) to learn representations that capture both local and global graph structures. Message passing is a fundamental operation in GNNs, where information is exchanged between nodes and their neighbors to update node representations.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PyG uses “source_to_target” flow by default, meaning messages are sent from source nodes to target nodes. Source nodes are typically denoted with a subscript “_j” and target nodes with “_i”. You can remember it like: Source = neighbors, Target = self.</p>
+</div>
+</div>
+<p>In PyG, message passing is typically implemented using the <code>MessagePassing</code> class, which provides a flexible framework for defining custom message-passing schemes. It has 4 important methods:</p>
+</section>
+<section id="propagate" class="level3">
+<h3 class="anchored" data-anchor-id="propagate">1. Propagate</h3>
+<p>This function is reponsible for orchestrating the message-passing process. It takes edge index a.k.a adjacency matrix as <span style="color:cyan">mandatory parameter</span>. You can (and probably must) give feature matrix <span style="color:cyan">x</span>. In addition, you can give any other necessary data for the later steps we will see. You don’t update/override this function, you just pass the necessary data to it to be further used in the next steps.</p>
+<p>Some example parameters:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">propagate(edge_index, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x)</span>
+<span id="cb1-2">propagate(edge_index, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x, edge_attr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>edge_attr)</span>
+<span id="cb1-3">propagate(edge_index, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x, norm<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>norm)</span></code></pre></div></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Choosing the name for the feature vector <span style="color:cyan">x</span> is critical. If you use x=x like the example above, PyG will automatically split it into <span style="color:cyan">x_i</span> and <span style="color:cyan">x_j</span> for target and source nodes respectively. If you use feature_vec=x, you should use <span style="color:cyan">feature_vec_i</span> and <span style="color:cyan">feature_vec_j</span> in the later steps.</p>
+</div>
+</div>
+</section>
+<section id="message" class="level3">
+<h3 class="anchored" data-anchor-id="message">2. Message</h3>
+<p>This is where you create a <span style="color:cyan">message</span> for the source node from neighboring nodes. This function takes <span style="color:cyan">x_j</span> as input by default, which is the feature vector of the source nodes. This means you have to give your feature matrix named as x=x in the propagate function or override the parameter name in the message function.</p>
+<p>You can also access any other data you passed in the propagate function, such as edge attributes or normalization factors. For example, in the second example of propagate you give <span style="color:cyan">norm</span> parameter, you can access it in the message function as norm.</p>
+<p>Some example parameters:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">message(x_j)</span>
+<span id="cb2-2">message(x_j, norm)</span>
+<span id="cb2-3">message(x_j, x_i, norm, edge_index, x)</span></code></pre></div></div>
+<p>Example message function:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> message(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x_j, norm):</span>
+<span id="cb3-2">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># x_j has shape [E, out_channels]</span></span>
+<span id="cb3-3">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Creating messages..."</span>)</span>
+<span id="cb3-4">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"x_j shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x_j<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb3-5">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"norm shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>norm<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb3-6"></span>
+<span id="cb3-7">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 4: Normalize node features.</span></span>
+<span id="cb3-8">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> norm.view(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x_j</span></code></pre></div></div>
+</section>
+<section id="aggregate" class="level3">
+<h3 class="anchored" data-anchor-id="aggregate">3. Aggregate</h3>
+<p>Now that you have messages from your neighboring nodes, this is where you aggregate those messages. This method calls the <span style="color:cyan">Aggregator</span> object of the class by default, which is set to “add” by default. You can change it to “mean” or “max” when you initialize your custom MessagePassing class or implement your own aggregate function.</p>
+<p>You can also override this method to implement your own aggregation logic. For example you may use the default sum aggregation but before that you can weight the messages based on edge attributes.</p>
+<p>It takes:</p>
+<ul>
+<li><span style="color:cyan">inputs</span> which is the messages created in the message function</li>
+<li><span style="color:cyan">index</span> which say target node each message belongs to</li>
+</ul>
+<p>And whatever you want from the propagate function.</p>
+</section>
+<section id="update" class="level3">
+<h3 class="anchored" data-anchor-id="update">4. Update</h3>
+<p>This is the final step where you update the target node features using the aggregated messages. Depending on your architecture, you might do nothing here and just return the aggregated messages such as when you add self-loops. Alternatively, you might add the source node features to the aggregated messages or pass them through a neural network layer.</p>
+<p>It takes <span style="color:cyan">inputs</span> which is the aggregated messages from the aggregate function and whatever you want from the propagate function.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>In this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the <code>MessagePassing</code> class: <code>propagate</code>, <code>message</code>, <code>aggregate</code>, and <code>update</code>. If you want to customize your GNN architecture and experiment with different message-passing schemes, understanding these methods is critical. With this knowledge, you can implement your own GNN layers and tailor them to your specific needs. I will drop a simple working code that I’ve borrowed from the PyG documentation below for reference.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> typing <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Optional</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> torch</span>
+<span id="cb4-4"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Tensor</span>
+<span id="cb4-5"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch.nn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Linear, Parameter</span>
+<span id="cb4-6"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch_geometric.nn <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> MessagePassing</span>
+<span id="cb4-7"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch_geometric.utils <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> add_self_loops, degree</span>
+<span id="cb4-8"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> torch_geometric.data <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> Data</span>
+<span id="cb4-9"></span>
+<span id="cb4-10"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">class</span> GCNConv(MessagePassing):</span>
+<span id="cb4-11">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, in_channels, out_channels):</span>
+<span id="cb4-12">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">super</span>().<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">__init__</span>(aggr<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'add'</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># "Add" aggregation (Step 5).</span></span>
+<span id="cb4-13">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lin <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Linear(in_channels, out_channels, bias<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb4-14">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.bias <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Parameter(torch.empty(out_channels))</span>
+<span id="cb4-15"></span>
+<span id="cb4-16">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.reset_parameters()</span>
+<span id="cb4-17"></span>
+<span id="cb4-18">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> reset_parameters(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>):</span>
+<span id="cb4-19">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lin.reset_parameters()</span>
+<span id="cb4-20">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.bias.data.zero_()</span>
+<span id="cb4-21"></span>
+<span id="cb4-22">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> forward(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x, edge_index):</span>
+<span id="cb4-23">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># x has shape [N, in_channels]</span></span>
+<span id="cb4-24">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># edge_index has shape [2, E]</span></span>
+<span id="cb4-25">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Forward pass..."</span>)</span>
+<span id="cb4-26">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"x shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-27">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"edge_index shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>edge_index<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-28"></span>
+<span id="cb4-29">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 1: Add self-loops to the adjacency matrix.</span></span>
+<span id="cb4-30">        edge_index, _ <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> add_self_loops(edge_index, num_nodes<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x.size(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>))</span>
+<span id="cb4-31"></span>
+<span id="cb4-32">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 2: Linearly transform node feature matrix.</span></span>
+<span id="cb4-33">        x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.lin(x)</span>
+<span id="cb4-34"></span>
+<span id="cb4-35">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 3: Compute normalization.</span></span>
+<span id="cb4-36">        source, target <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> edge_index</span>
+<span id="cb4-37">        deg <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> degree(target, x.size(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>), dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x.dtype)</span>
+<span id="cb4-38">        deg_inv_sqrt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> deg.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">pow</span>(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>)</span>
+<span id="cb4-39">        deg_inv_sqrt[deg_inv_sqrt <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'inf'</span>)] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span></span>
+<span id="cb4-40">        norm <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> deg_inv_sqrt[source] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> deg_inv_sqrt[target]</span>
+<span id="cb4-41"></span>
+<span id="cb4-42">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 4-5: Start propagating messages.</span></span>
+<span id="cb4-43">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.propagate(edge_index, x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x, norm<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>norm)</span>
+<span id="cb4-44"></span>
+<span id="cb4-45">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 6: Apply a final bias vector.</span></span>
+<span id="cb4-46">        out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>.bias</span>
+<span id="cb4-47"></span>
+<span id="cb4-48">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> out</span>
+<span id="cb4-49"></span>
+<span id="cb4-50">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> message(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, x_i, x_j, norm, edge_index):</span>
+<span id="cb4-51">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># x_j has shape [E, out_channels]</span></span>
+<span id="cb4-52">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Creating messages..."</span>)</span>
+<span id="cb4-53">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"x_i shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x_i<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-54">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"x_j shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>x_j<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-55">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"norm shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>norm<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-56"></span>
+<span id="cb4-57">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 4: Normalize node features.</span></span>
+<span id="cb4-58">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> norm.view(<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> x_j</span>
+<span id="cb4-59"></span>
+<span id="cb4-60">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> aggregate(</span>
+<span id="cb4-61">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>,</span>
+<span id="cb4-62">        inputs: Tensor,</span>
+<span id="cb4-63">        index: Tensor,</span>
+<span id="cb4-64">        ptr: Optional[Tensor] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb4-65">        dim_size: Optional[<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>] <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>,</span>
+<span id="cb4-66">    ) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Tensor:</span>
+<span id="cb4-67">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Aggregating messages..."</span>)</span>
+<span id="cb4-68">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Inputs shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>inputs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-69">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Index shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>index<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-70">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(index)</span>
+<span id="cb4-71">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">super</span>().aggregate(inputs, index, ptr, dim_size)</span>
+<span id="cb4-72"></span>
+<span id="cb4-73">    <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> update(<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">self</span>, inputs: Tensor) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> Tensor:</span>
+<span id="cb4-74">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Updating node embeddings..."</span>)</span>
+<span id="cb4-75">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"Inputs shape: </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>inputs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">.</span>shape<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb4-76">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(inputs)</span>
+<span id="cb4-77">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">super</span>().update(inputs)</span>
+<span id="cb4-78"></span>
+<span id="cb4-79"></span>
+<span id="cb4-80">edge_index <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.tensor([[<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>],</span>
+<span id="cb4-81">                           [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>],</span>
+<span id="cb4-82">                           [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>],</span>
+<span id="cb4-83">                           [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>torch.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">long</span>)</span>
+<span id="cb4-84">x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> torch.tensor([[<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>], [<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>]], dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>torch.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">float</span>)</span>
+<span id="cb4-85"></span>
+<span id="cb4-86">data <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Data(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>x, edge_index<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>edge_index.t().contiguous())</span>
+<span id="cb4-87"></span>
+<span id="cb4-88">conv <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> GCNConv(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span>
+<span id="cb4-89">out <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> conv(data.x, data.edge_index)</span>
+<span id="cb4-90"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">print</span>(out)</span></code></pre></div></div>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html">PyTorch Geometric Documentation</a></li>
+<li><a href="https://distill.pub/2021/gnn-intro/">For GNN basics and also for headline image reference</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp">Also a greate Youtube video for GNN basics from Stanford</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>ml</category>
+  <guid>https://nusretozates.github.io/posts/gnn_basics/</guid>
+  <pubDate>Fri, 17 Oct 2025 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/gnn_basics/gnn.png" medium="image" type="image/png" height="67" width="144"/>
+</item>
 <item>
   <title>Academic Writing Notes: Paragraphs Development and Sentence Skills</title>
   <dc:creator>Nusret Ozates</dc:creator>

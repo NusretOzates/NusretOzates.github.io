@@ -14,6 +14,48 @@
     "text": "References\n\nBU-TD Model: “Image interpretation by iterative bottom-up top-down processing”\nT5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”"
   },
   {
+    "objectID": "posts/gnn_basics/index.html",
+    "href": "posts/gnn_basics/index.html",
+    "title": "Pytorch Geometric Basics: How Message Passing Works",
+    "section": "",
+    "text": "I need to work on GNNs for my MSc thesis and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs. It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic."
+  },
+  {
+    "objectID": "posts/gnn_basics/index.html#conclusion",
+    "href": "posts/gnn_basics/index.html#conclusion",
+    "title": "Pytorch Geometric Basics: How Message Passing Works",
+    "section": "Conclusion",
+    "text": "Conclusion\nIn this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the MessagePassing class: propagate, message, aggregate, and update. If you want to customize your GNN architecture and experiment with different message-passing schemes, understanding these methods is critical. With this knowledge, you can implement your own GNN layers and tailor them to your specific needs. I will drop a simple working code that I’ve borrowed from the PyG documentation below for reference.\nfrom typing import Optional\n\nimport torch\nfrom torch import Tensor\nfrom torch.nn import Linear, Parameter\nfrom torch_geometric.nn import MessagePassing\nfrom torch_geometric.utils import add_self_loops, degree\nfrom torch_geometric.data import Data\n\nclass GCNConv(MessagePassing):\n    def __init__(self, in_channels, out_channels):\n        super().__init__(aggr='add')  # \"Add\" aggregation (Step 5).\n        self.lin = Linear(in_channels, out_channels, bias=False)\n        self.bias = Parameter(torch.empty(out_channels))\n\n        self.reset_parameters()\n\n    def reset_parameters(self):\n        self.lin.reset_parameters()\n        self.bias.data.zero_()\n\n    def forward(self, x, edge_index):\n        # x has shape [N, in_channels]\n        # edge_index has shape [2, E]\n        print(\"Forward pass...\")\n        print(f\"x shape: {x.shape}\")\n        print(f\"edge_index shape: {edge_index.shape}\")\n\n        # Step 1: Add self-loops to the adjacency matrix.\n        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))\n\n        # Step 2: Linearly transform node feature matrix.\n        x = self.lin(x)\n\n        # Step 3: Compute normalization.\n        source, target = edge_index\n        deg = degree(target, x.size(0), dtype=x.dtype)\n        deg_inv_sqrt = deg.pow(-0.5)\n        deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0\n        norm = deg_inv_sqrt[source] * deg_inv_sqrt[target]\n\n        # Step 4-5: Start propagating messages.\n        out = self.propagate(edge_index, x=x, norm=norm)\n\n        # Step 6: Apply a final bias vector.\n        out = out + self.bias\n\n        return out\n\n    def message(self, x_i, x_j, norm, edge_index):\n        # x_j has shape [E, out_channels]\n        print(\"Creating messages...\")\n        print(f\"x_i shape: {x_i.shape}\")\n        print(f\"x_j shape: {x_j.shape}\")\n        print(f\"norm shape: {norm.shape}\")\n\n        # Step 4: Normalize node features.\n        return norm.view(-1, 1) * x_j\n\n    def aggregate(\n        self,\n        inputs: Tensor,\n        index: Tensor,\n        ptr: Optional[Tensor] = None,\n        dim_size: Optional[int] = None,\n    ) -&gt; Tensor:\n        print(\"Aggregating messages...\")\n        print(f\"Inputs shape: {inputs.shape}\")\n        print(f\"Index shape: {index.shape}\")\n        print(index)\n        return super().aggregate(inputs, index, ptr, dim_size)\n\n    def update(self, inputs: Tensor) -&gt; Tensor:\n        print(\"Updating node embeddings...\")\n        print(f\"Inputs shape: {inputs.shape}\")\n        print(inputs)\n        return super().update(inputs)\n\n\nedge_index = torch.tensor([[0, 1],\n                           [1, 0],\n                           [1, 2],\n                           [2, 1]], dtype=torch.long)\nx = torch.tensor([[-1], [0], [1]], dtype=torch.float)\n\ndata = Data(x=x, edge_index=edge_index.t().contiguous())\n\nconv = GCNConv(1, 2)\nout = conv(data.x, data.edge_index)\nprint(out)"
+  },
+  {
+    "objectID": "posts/gnn_basics/index.html#references",
+    "href": "posts/gnn_basics/index.html#references",
+    "title": "Pytorch Geometric Basics: How Message Passing Works",
+    "section": "References",
+    "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics and also for headline image reference\nAlso a greate Youtube video for GNN basics from Stanford"
+  },
+  {
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "Pytorch Geometric Basics: How Message Passing Works\n\n\n\nml\n\n\n\n\n\n\n\n\n\nOct 18, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n\n\nacademy\n\n\n\n\n\n\n\n\n\nOct 13, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hi Everyone!",
+    "section": "",
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, designing user-centric chatbots, developing recommendation algorithms, and creating analytics dashboards.\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
+  },
+  {
     "objectID": "posts/docker-get-started/index.html",
     "href": "posts/docker-get-started/index.html",
     "title": "Things you need to know about Docker to get started",
@@ -75,27 +117,6 @@
     "title": "Things you need to know about Docker to get started",
     "section": "ENTRYPOINT VS CMD",
     "text": "ENTRYPOINT VS CMD\nLet’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:\nFROM Ubuntu  \nCMD [\"sleep\",\"5\"]\nWhen I run the command:\ndocker run sleeper sleep 10\nThis CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nThis time when I run:\ndocker run sleeper 10\nThe “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nCMD [\"5\"]"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hi Everyone!",
-    "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, designing user-centric chatbots, developing recommendation algorithms, and creating analytics dashboards.\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
-  },
-  {
-    "objectID": "myposts.html",
-    "href": "myposts.html",
-    "title": "Welcome to My Posts",
-    "section": "",
-    "text": "Academic Writing Notes: Paragraphs Development and Sentence Skills\n\n\n\nacademy\n\n\n\n\n\n\n\n\n\nOct 13, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/paragraph_dev_sentece_skill/index.html",
