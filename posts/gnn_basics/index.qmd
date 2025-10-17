@@ -6,7 +6,7 @@ categories: [ml]
 image: "gnn.png"
 ---
 
-I need to work on GNNs for my MSc thesis and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs.
+I need to work on GNNs for my MSc thesis, and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs.
 It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic.
 
 ### Introduction to Message Passing in GNNs
@@ -25,9 +25,9 @@ In PyG, message passing is typically implemented using the `MessagePassing` clas
 It has 4 important methods:
 
 ### 1. Propagate
-This function is reponsible for orchestrating the message-passing process. It takes edge index a.k.a adjacency matrix as [mandatory parameter]{style="color:cyan"}.
-You can (and probably must) give feature matrix [x]{style="color:cyan"}. In addition, you can give any other necessary data for the later steps we will see.
-You don't update/override this function, you just pass the necessary data to it to be further used in the next steps.
+This function is responsible for orchestrating the message-passing process. It takes an edge index, a.k.a adjacency matrix, as a [mandatory parameter]{style="color:cyan"}.
+You can (and probably must) give feature matrix [x]{style="color:cyan"}. In addition, you can pass any other necessary data for the later steps we will see.
+You don't update/override this function; you pass the necessary data to it to be further used in the next steps.
 
 Some example parameters:
 ```python
@@ -38,17 +38,17 @@ propagate(edge_index, x=x, norm=norm)
 
 :::{.callout-important}
 Choosing the name for the feature vector [x]{style="color:cyan"} is critical.
-If you use x=x like the example above, PyG will automatically split it into [x_i]{style="color:cyan"} and [x_j]{style="color:cyan"} for target and source nodes respectively.
-If you use feature_vec=x, you should use [feature_vec_i]{style="color:cyan"} and [feature_vec_j]{style="color:cyan"} in the later steps.
+If you use x=x like the example above, PyG will automatically split it into [x_i]{style="color:cyan"} and [x_j]{style="color:cyan"} for target and source nodes, respectively.
+If you use feature_vec=x, you should use [feature_vec_i]{style="color:cyan"} and [feature_vec_j]{style="color:cyan"} in the later steps' parameter names.
 :::
 
 ### 2. Message
 This is where you create a [message]{style="color:cyan"} for the source node from neighboring nodes. This function takes
 [x_j]{style="color:cyan"} as input by default, which is the feature vector of the source nodes. This means you have to give your
-feature matrix named as x=x in the propagate function or override the parameter name in the message function.
+feature matrix named as x=x in the propagate function, or override the parameter name in the message function.
 
 You can also access any other data you passed in the propagate function, such as edge attributes or normalization factors.
-For example, in the second example of propagate you give [norm]{style="color:cyan"} parameter, you can access it in the message function as norm.
+For example, in the second example of the propagate function, you give [norm]{style="color:cyan"} parameter, you can access it in the message function as norm.
 
 Some example parameters:
 ```python
@@ -57,7 +57,7 @@ message(x_j, norm)
 message(x_j, x_i, norm, edge_index, x)
 ```
 
-Example message function:
+Also, an example implementation that normalizes the messages by their node's degree:
 ```python
 def message(self, x_j, norm):
     # x_j has shape [E, out_channels]
@@ -74,22 +74,23 @@ Now that you have messages from your neighboring nodes, this is where you aggreg
 of the class by default, which is set to "add" by default. You can change it to "mean" or "max" when you initialize your custom MessagePassing class or implement your own aggregate function.
 
 You can also override this method to implement your own aggregation logic.
-For example you may use the default sum aggregation but before that you can weight the messages based on edge attributes.
+By overriding this method, you can weight the messages using any data you want, before using the default sum aggregation as an example.
 
-It takes:
+
+It takes the following parameters:
 
 - [inputs]{style="color:cyan"} which is the messages created in the message function
-- [index]{style="color:cyan"} which say target node each message belongs to
+- [index]{style="color:cyan"} that says the target node each message belongs to
 
 And whatever you want from the propagate function.
 
 ### 4. Update
 
-This is the final step where you update the target node features using the aggregated messages. Depending on your architecture,
-you might do nothing here and just return the aggregated messages such as when you add self-loops. Alternatively, you might add
-the source node features to the aggregated messages or pass them through a neural network layer.
+This is the final step where you update the target node features using the aggregated messages.
+Depending on your architecture, you might do nothing here and return the aggregated messages, such as when you add self-loops.
+Alternatively, add the source node features to the aggregated messages or pass them through a neural network layer.
 
-It takes [inputs]{style="color:cyan"} which is the aggregated messages from the aggregate function and whatever you want from the propagate function.
+It takes [inputs]{style="color:cyan"}, which is the aggregated messages from the aggregate function and whatever you want from the propagate function.
 
 ## Conclusion
 In this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the `MessagePassing` class: `propagate`, `message`, `aggregate`, and `update`.
@@ -192,5 +193,7 @@ print(out)
 
 ## References
 - [PyTorch Geometric Documentation](https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html)
-- [For GNN basics and also for headline image reference](https://distill.pub/2021/gnn-intro/)
-- [Also a greate Youtube video for GNN basics from Stanford](https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp)
+- [For GNN basics, and also for the headline image reference](https://distill.pub/2021/gnn-intro/)
+- [Also, a great YouTube video for GNN basics from Stanford](https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp)
+
+Thanks for coming so far, have fun!
