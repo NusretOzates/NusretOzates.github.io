@@ -18,7 +18,7 @@
     "href": "posts/gnn_basics/index.html",
     "title": "Pytorch Geometric Basics: How Message Passing Works",
     "section": "",
-    "text": "I need to work on GNNs for my MSc thesis and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs. It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic."
+    "text": "I need to work on GNNs for my MSc thesis, and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs. It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic."
   },
   {
     "objectID": "posts/gnn_basics/index.html#conclusion",
@@ -32,7 +32,7 @@
     "href": "posts/gnn_basics/index.html#references",
     "title": "Pytorch Geometric Basics: How Message Passing Works",
     "section": "References",
-    "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics and also for headline image reference\nAlso a greate Youtube video for GNN basics from Stanford"
+    "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics, and also for the headline image reference\nAlso, a great YouTube video for GNN basics from Stanford\n\nThanks for coming so far, have fun!"
   },
   {
     "objectID": "myposts.html",

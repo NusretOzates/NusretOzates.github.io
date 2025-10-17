@@ -22,7 +22,7 @@
 
 
 
-<p>I need to work on GNNs for my MSc thesis and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs. It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic.</p>
+<p>I need to work on GNNs for my MSc thesis, and decided to use PyTorch Geometric (PyG) since it is one of the most popular libraries for GNNs. It is very easy to use, but I wanted to understand how message passing works under the hood. As I learned it, I decided to write this blog post to share my knowledge with others who might be interested in the same topic.</p>
 <section id="introduction-to-message-passing-in-gnns" class="level3">
 <h3 class="anchored" data-anchor-id="introduction-to-message-passing-in-gnns">Introduction to Message Passing in GNNs</h3>
 <p>For those unfamiliar, Graph Neural Networks (GNNs) are a class of neural networks designed to operate on graph-structured data. They leverage the relationships between nodes (entities) and edges (connections) to learn representations that capture both local and global graph structures. Message passing is a fundamental operation in GNNs, where information is exchanged between nodes and their neighbors to update node representations.</p>
@@ -43,7 +43,7 @@ Note
 </section>
 <section id="propagate" class="level3">
 <h3 class="anchored" data-anchor-id="propagate">1. Propagate</h3>
-<p>This function is reponsible for orchestrating the message-passing process. It takes edge index a.k.a adjacency matrix as <span style="color:cyan">mandatory parameter</span>. You can (and probably must) give feature matrix <span style="color:cyan">x</span>. In addition, you can give any other necessary data for the later steps we will see. You don’t update/override this function, you just pass the necessary data to it to be further used in the next steps.</p>
+<p>This function is responsible for orchestrating the message-passing process. It takes an edge index, a.k.a adjacency matrix, as a <span style="color:cyan">mandatory parameter</span>. You can (and probably must) give feature matrix <span style="color:cyan">x</span>. In addition, you can pass any other necessary data for the later steps we will see. You don’t update/override this function; you pass the necessary data to it to be further used in the next steps.</p>
 <p>Some example parameters:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1">propagate(edge_index, x<span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -68,19 +68,19 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Choosing the name for the feature vector <span style="color:cyan">x</span> is critical. If you use x=x like the example above, PyG will automatically split it into <span style="color:cyan">x_i</span> and <span style="color:cyan">x_j</span> for target and source nodes respectively. If you use feature_vec=x, you should use <span style="color:cyan">feature_vec_i</span> and <span style="color:cyan">feature_vec_j</span> in the later steps.</p>
+<p>Choosing the name for the feature vector <span style="color:cyan">x</span> is critical. If you use x=x like the example above, PyG will automatically split it into <span style="color:cyan">x_i</span> and <span style="color:cyan">x_j</span> for target and source nodes, respectively. If you use feature_vec=x, you should use <span style="color:cyan">feature_vec_i</span> and <span style="color:cyan">feature_vec_j</span> in the later steps’ parameter names.</p>
 </div>
 </div>
 </section>
 <section id="message" class="level3">
 <h3 class="anchored" data-anchor-id="message">2. Message</h3>
-<p>This is where you create a <span style="color:cyan">message</span> for the source node from neighboring nodes. This function takes <span style="color:cyan">x_j</span> as input by default, which is the feature vector of the source nodes. This means you have to give your feature matrix named as x=x in the propagate function or override the parameter name in the message function.</p>
-<p>You can also access any other data you passed in the propagate function, such as edge attributes or normalization factors. For example, in the second example of propagate you give <span style="color:cyan">norm</span> parameter, you can access it in the message function as norm.</p>
+<p>This is where you create a <span style="color:cyan">message</span> for the source node from neighboring nodes. This function takes <span style="color:cyan">x_j</span> as input by default, which is the feature vector of the source nodes. This means you have to give your feature matrix named as x=x in the propagate function, or override the parameter name in the message function.</p>
+<p>You can also access any other data you passed in the propagate function, such as edge attributes or normalization factors. For example, in the second example of the propagate function, you give <span style="color:cyan">norm</span> parameter, you can access it in the message function as norm.</p>
 <p>Some example parameters:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1">message(x_j)</span>
 <span id="cb2-2">message(x_j, norm)</span>
 <span id="cb2-3">message(x_j, x_i, norm, edge_index, x)</span></code></pre></div></div>
-<p>Example message function:</p>
+<p>Also, an example implementation that normalizes the messages by their node’s degree:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
@@ -141,18 +141,18 @@ font-style: inherit;">*</span> x_j</span></code></pre></div></div>
 <section id="aggregate" class="level3">
 <h3 class="anchored" data-anchor-id="aggregate">3. Aggregate</h3>
 <p>Now that you have messages from your neighboring nodes, this is where you aggregate those messages. This method calls the <span style="color:cyan">Aggregator</span> object of the class by default, which is set to “add” by default. You can change it to “mean” or “max” when you initialize your custom MessagePassing class or implement your own aggregate function.</p>
-<p>You can also override this method to implement your own aggregation logic. For example you may use the default sum aggregation but before that you can weight the messages based on edge attributes.</p>
-<p>It takes:</p>
+<p>You can also override this method to implement your own aggregation logic. By overriding this method, you can weight the messages using any data you want, before using the default sum aggregation as an example.</p>
+<p>It takes the following parameters:</p>
 <ul>
 <li><span style="color:cyan">inputs</span> which is the messages created in the message function</li>
-<li><span style="color:cyan">index</span> which say target node each message belongs to</li>
+<li><span style="color:cyan">index</span> that says the target node each message belongs to</li>
 </ul>
 <p>And whatever you want from the propagate function.</p>
 </section>
 <section id="update" class="level3">
 <h3 class="anchored" data-anchor-id="update">4. Update</h3>
-<p>This is the final step where you update the target node features using the aggregated messages. Depending on your architecture, you might do nothing here and just return the aggregated messages such as when you add self-loops. Alternatively, you might add the source node features to the aggregated messages or pass them through a neural network layer.</p>
-<p>It takes <span style="color:cyan">inputs</span> which is the aggregated messages from the aggregate function and whatever you want from the propagate function.</p>
+<p>This is the final step where you update the target node features using the aggregated messages. Depending on your architecture, you might do nothing here and return the aggregated messages, such as when you add self-loops. Alternatively, add the source node features to the aggregated messages or pass them through a neural network layer.</p>
+<p>It takes <span style="color:cyan">inputs</span>, which is the aggregated messages from the aggregate function and whatever you want from the propagate function.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
@@ -619,9 +619,10 @@ font-style: inherit;">print</span>(out)</span></code></pre></div></div>
 <h2 class="anchored" data-anchor-id="references">References</h2>
 <ul>
 <li><a href="https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html">PyTorch Geometric Documentation</a></li>
-<li><a href="https://distill.pub/2021/gnn-intro/">For GNN basics and also for headline image reference</a></li>
-<li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp">Also a greate Youtube video for GNN basics from Stanford</a></li>
+<li><a href="https://distill.pub/2021/gnn-intro/">For GNN basics, and also for the headline image reference</a></li>
+<li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp">Also, a great YouTube video for GNN basics from Stanford</a></li>
 </ul>
+<p>Thanks for coming so far, have fun!</p>
 
 
 </section>
