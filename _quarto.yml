@@ -20,6 +20,8 @@ website:
     left:
       - text: Blogs
         href: myposts.qmd
+      - text: Notes
+        href: notes.qmd
 
 format:
   html:

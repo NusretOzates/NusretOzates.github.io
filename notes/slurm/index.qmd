@@ -1,0 +1,16 @@
+---
+title: "Slurm Notes"
+author: "Nusret Ozates"
+date: "2025-11-12"
+categories: [general]
+---
+
+Here I will share the useful things I learned when using the SLURM cluster of my university.
+
+This bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the "ai" partition.
+You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.
+
+```bash
+sinfo -O "NodeHost,FreeMem,CPUsState,GresUsed" -p ai
+```
+
