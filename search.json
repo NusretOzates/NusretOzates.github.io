@@ -35,6 +35,13 @@
     "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics, and also for the headline image reference\nAlso, a great YouTube video for GNN basics from Stanford\n\nThanks for coming so far, have fun!"
   },
   {
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Quick Notes",
+    "section": "",
+    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "myposts.html",
     "href": "myposts.html",
     "title": "Welcome to My Posts",
@@ -53,7 +60,28 @@
     "href": "index.html",
     "title": "Hi Everyone!",
     "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, designing user-centric chatbots, developing recommendation algorithms, and creating analytics dashboards.\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
+  },
+  {
+    "objectID": "index.html#my-published-articles",
+    "href": "index.html#my-published-articles",
+    "title": "Hi Everyone!",
+    "section": "My Published Articles",
+    "text": "My Published Articles\n… TBD …"
+  },
+  {
+    "objectID": "index.html#what-is-what",
+    "href": "index.html#what-is-what",
+    "title": "Hi Everyone!",
+    "section": "What is What?",
+    "text": "What is What?\nIn the blogs section, I share whatever I learn about in a kind of detailed, structered and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\nIn the notes section, I decided share quick notes and commands that I find useful for my daily work."
+  },
+  {
+    "objectID": "notes/slurm/index.html",
+    "href": "notes/slurm/index.html",
+    "title": "Slurm Notes",
+    "section": "",
+    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
   },
   {
     "objectID": "posts/docker-get-started/index.html",

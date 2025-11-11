@@ -1,5 +1,11 @@
 [
   {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/slurm/index.html"
+    ]
+  },
+  {
     "listing": "/myposts.html",
     "items": [
       "/posts/gnn_basics/index.html",
