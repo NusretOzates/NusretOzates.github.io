@@ -1,0 +1,31 @@
+---
+title: "My summary of the “Career Advice in AI” Lecture"
+author: "Nusret Ozates"
+date: "2025-12-20"
+categories: [ml]
+---
+
+I finally had time to watch the AI Career Advice lesson by Andrew Ng and Laurence Moroney. It was a great lesson for me as I’m about to graduate from my MSc and am ready to join the industry again! I’ve created a summary and wanted to share it with everyone, but I strongly recommend watching it.
+
+In Andrew Ng's introduction, he mentions two important points. The first one is that, although saying this is (according to some people) politically incorrect, working hard is important for success. But there definitely are some exceptions, like when you have an injury, you just have a kid, and examples like that. The second one is about surrounding yourself with bright minds, high-quality people, both in your personal life and your work life, as you are the average of your surroundings. Choosing with whom you work is more important than where you work. Additionally, he mentioned that AI makes engineers faster, but the ones who also listen the user feedback, communicate with other people will be the fastest ones.
+
+Laurence Moroney makes crucial and thoughtful additions to these. About the hard working part, he said hard work ≠ amount of time spent. It must be something measurable, like what is your output after those hours? X new products? Y papers read and understand the papers properly? And about your surroundings, he reminded you that those people also will choose if they want to see you around. Even if you are a 10x engineer, if you are a rude person, people won’t want to see you. After these additions, he talked about the 3 pillars of success that you need to show to the employers, not just tell.
+
+## Understanding Depth
+Surface-level knowledge is not enough anymore. You need to have academic knowledge, diverse skills, and the ability to separate noise from the real trends because engagement is the currency of social media, not the accuracy, so there will be a lot of noise there. By diverse skills, he doesn’t mean knowing both about NLP and CV; he means knowing about training ML models while also knowing about how to deploy them, scale them, and build an application on them to be valuable even if the AI hype completely deflates tomorrow. He also gave a practical strategy to filtering noise: Develop trusted sources and filter them actively. Learn more about the fundamentals of the hyped tech (enters the academic knowledge) before judging its impact (e.g., Hollywood is over, SWE is over). And always aware of the trends and know why it is a trend right now. As an example, think about “AI Agents” before directly going into implementation, understand how they work, “when” and “why” it adds value, and when it won’t add any value. And how will it help?
+
+## Business Focus
+You need to translate the capabilities of AI into a real business outcome. If you go directly with the hype, aka agents, these days, you will fail. First, you need to peel apart the business requirements, ask “why” and “what” a lot of times to understand the real bottleneck/problem. Additionally, risks of mispredictions, hallucinations, biases, and misuses (some edge cases you will never think of will be found by the users) are here and will stay here. Knowing how to manage those risks while making a process an AI-enabled process is critical.
+
+## Bias Towards Delivery
+Building cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.
+
+And some additional points:
+
+- You will make mistakes, so learn from them and also be helpful when someone else makes a mistake
+- Vibe coding is good unless you mindlessly copy-paste the code. Every time you use AI to generate code, you are taking technical debt.
+- Learning how to fine-tune those small LLMs is currently one of the most important things, due to privacy reasons in a lot of industries
+
+If you want to watch:
+
+{{< video https://www.youtube.com/watch?v=AuZoDsNmG_s >}}
