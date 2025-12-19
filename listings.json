@@ -1,17 +1,18 @@
 [
   {
-    "listing": "/notes.html",
-    "items": [
-      "/notes/slurm/index.html"
-    ]
-  },
-  {
     "listing": "/myposts.html",
     "items": [
+      "/posts/career_advice_ai_summary/index.html",
       "/posts/gnn_basics/index.html",
       "/posts/paragraph_dev_sentece_skill/index.html",
       "/posts/test_time_compute/index.html",
       "/posts/docker-get-started/index.html"
+    ]
+  },
+  {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/slurm/index.html"
     ]
   }
 ]

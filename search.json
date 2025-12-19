@@ -35,25 +35,39 @@
     "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics, and also for the headline image reference\nAlso, a great YouTube video for GNN basics from Stanford\n\nThanks for coming so far, have fun!"
   },
   {
-    "objectID": "notes.html",
-    "href": "notes.html",
-    "title": "Quick Notes",
+    "objectID": "posts/career_advice_ai_summary/index.html",
+    "href": "posts/career_advice_ai_summary/index.html",
+    "title": "My summary of the “Career Advice in AI” Lecture",
     "section": "",
-    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+    "text": "I finally had time to watch the AI Career Advice lesson by Andrew Ng and Laurence Moroney. It was a great lesson for me as I’m about to graduate from my MSc and am ready to join the industry again! I’ve created a summary and wanted to share it with everyone, but I strongly recommend watching it.\nIn Andrew Ng’s introduction, he mentions two important points. The first one is that, although saying this is (according to some people) politically incorrect, working hard is important for success. But there definitely are some exceptions, like when you have an injury, you just have a kid, and examples like that. The second one is about surrounding yourself with bright minds, high-quality people, both in your personal life and your work life, as you are the average of your surroundings. Choosing with whom you work is more important than where you work. Additionally, he mentioned that AI makes engineers faster, but the ones who also listen the user feedback, communicate with other people will be the fastest ones.\nLaurence Moroney makes crucial and thoughtful additions to these. About the hard working part, he said hard work ≠ amount of time spent. It must be something measurable, like what is your output after those hours? X new products? Y papers read and understand the papers properly? And about your surroundings, he reminded you that those people also will choose if they want to see you around. Even if you are a 10x engineer, if you are a rude person, people won’t want to see you. After these additions, he talked about the 3 pillars of success that you need to show to the employers, not just tell."
   },
   {
-    "objectID": "myposts.html",
-    "href": "myposts.html",
-    "title": "Welcome to My Posts",
-    "section": "",
-    "text": "Pytorch Geometric Basics: How Message Passing Works\n\n\n\nml\n\n\n\n\n\n\n\n\n\nOct 18, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n\n\nacademy\n\n\n\n\n\n\n\n\n\nOct 13, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+    "objectID": "posts/career_advice_ai_summary/index.html#understanding-depth",
+    "href": "posts/career_advice_ai_summary/index.html#understanding-depth",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "Understanding Depth",
+    "text": "Understanding Depth\nSurface-level knowledge is not enough anymore. You need to have academic knowledge, diverse skills, and the ability to separate noise from the real trends because engagement is the currency of social media, not the accuracy, so there will be a lot of noise there. By diverse skills, he doesn’t mean knowing both about NLP and CV; he means knowing about training ML models while also knowing about how to deploy them, scale them, and build an application on them to be valuable even if the AI hype completely deflates tomorrow. He also gave a practical strategy to filtering noise: Develop trusted sources and filter them actively. Learn more about the fundamentals of the hyped tech (enters the academic knowledge) before judging its impact (e.g., Hollywood is over, SWE is over). And always aware of the trends and know why it is a trend right now. As an example, think about “AI Agents” before directly going into implementation, understand how they work, “when” and “why” it adds value, and when it won’t add any value. And how will it help?"
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "posts/career_advice_ai_summary/index.html#business-focus",
+    "href": "posts/career_advice_ai_summary/index.html#business-focus",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "Business Focus",
+    "text": "Business Focus\nYou need to translate the capabilities of AI into a real business outcome. If you go directly with the hype, aka agents, these days, you will fail. First, you need to peel apart the business requirements, ask “why” and “what” a lot of times to understand the real bottleneck/problem. Additionally, risks of mispredictions, hallucinations, biases, and misuses (some edge cases you will never think of will be found by the users) are here and will stay here. Knowing how to manage those risks while making a process an AI-enabled process is critical."
+  },
+  {
+    "objectID": "posts/career_advice_ai_summary/index.html#bias-towards-delivery",
+    "href": "posts/career_advice_ai_summary/index.html#bias-towards-delivery",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "Bias Towards Delivery",
+    "text": "Bias Towards Delivery\nBuilding cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.\nAnd some additional points:\n\nYou will make mistakes, so learn from them and also be helpful when someone else makes a mistake\nVibe coding is good unless you mindlessly copy-paste the code. Every time you use AI to generate code, you are taking technical debt.\nLearning how to fine-tune those small LLMs is currently one of the most important things, due to privacy reasons in a lot of industries\n\nIf you want to watch:"
+  },
+  {
+    "objectID": "notes/slurm/index.html",
+    "href": "notes/slurm/index.html",
+    "title": "Slurm Notes",
     "section": "",
-    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
   },
   {
     "objectID": "index.html",
@@ -77,11 +91,25 @@
     "text": "What is What?\nIn the blogs section, I share whatever I learn about in a kind of detailed, structered and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\nIn the notes section, I decided share quick notes and commands that I find useful for my daily work."
   },
   {
-    "objectID": "notes/slurm/index.html",
-    "href": "notes/slurm/index.html",
-    "title": "Slurm Notes",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+  },
+  {
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "My summary of the “Career Advice in AI” Lecture\n\n\n\nml\n\n\n\n\n\n\n\n\n\nDec 20, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n\n\nml\n\n\n\n\n\n\n\n\n\nOct 18, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n\n\nacademy\n\n\n\n\n\n\n\n\n\nOct 13, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Quick Notes",
+    "section": "",
+    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/docker-get-started/index.html",
