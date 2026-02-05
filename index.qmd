@@ -16,6 +16,9 @@ about:
     - icon: envelope
       text: Email
       href: mailto:m.nusret.ozates@gmail.com
+    - icon: medium
+      text: Medium
+      href: https://medium.com/@m.nusret.ozates
 page-layout: full
 ---
 

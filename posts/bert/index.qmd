@@ -2,7 +2,7 @@
 title: "BERT: Encoder Stack Is All You Need"
 author: "Nusret Ozates"
 date: "2021-06-24"
-image: "transformer.png"
+image: "masked.png"
 categories: [ ml ]
 ---
 
