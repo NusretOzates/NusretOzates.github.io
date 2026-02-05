@@ -3,6 +3,7 @@ project:
   output-dir: docs
 
 website:
+  search: true
   title: "Nusret Ozates"
   site-url: https://nusretozates.github.io/
   description: "Welcome to Nusret Ozates's personal website. Explore my projects, blogs, and more!"
@@ -28,12 +29,16 @@ format:
     respect-user-color-scheme: true
     smooth-scroll: true
     theme:
-      light: zephyr
-      dark: darkly
+      light: cosmo
+      dark: superhero
     css: styles.css
+    fontsize: 1.1rem
+    linestretch: 1.6
+    mainfont: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
     include-in-header:
       - text: |
-         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
-# mainfont: Roboto
+          <link rel="preconnect" href="https://fonts.googleapis.com">
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 
