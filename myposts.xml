@@ -946,6 +946,235 @@ Note
   <media:content url="https://nusretozates.github.io/posts/test_time_compute/img.png" medium="image" type="image/png" height="69" width="144"/>
 </item>
 <item>
+  <title>Transformer Architecture: How Transformer Models Work?</title>
+  <dc:creator>Nusret Ozates</dc:creator>
+  <link>https://nusretozates.github.io/posts/transformers/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical problem. The structure of RNN does not allow to do parallel computing. There were some optimizations to make them faster but the main problem remains. The Transformer model completely removed RNNs and built all architecture based on attention mechanism.</p>
+<p>Like most neural machine translation models, Transformers have an encoder-decoder structure. It uses stacked encoders that contain attention layers and Feed Forward Neural networks.</p>
+<section id="encoder-and-decoder-stacks" class="level2">
+<h2 class="anchored" data-anchor-id="encoder-and-decoder-stacks">Encoder and Decoder Stacks</h2>
+<section id="encoder" class="level3">
+<h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
+<p>Each encoder layer has two sub-layers, the “multi-head attention layer” (It will be explained in the next chapters) and a Feedforward Neural Network, both of them followed by a normalization layer and there is 2 residual connection around each sub-layer. Each encoder layer has the same structure but they do not have the same weights. To use residual connections, all sub-layers and embedding layers output the same dimension. We denote this dimension as parameter <img src="https://latex.codecogs.com/png.latex?d_%0A%7Bmodel%7D">. In the original article <img src="https://latex.codecogs.com/png.latex?d_%7Bmodel%7D%20=%20512">. The first encoder’s input is embedding vectors of the source sentence with position information injected (will be explained in the positional encoding subsection). Each of the other encoders’ inputs is the output of the encoder below.</p>
+<p>In summary: An encoder receives input as a list of vectors. Then it processes these vectors by passing them to a self-attention layer, then sends them to a Feedforward Neural Network. Finally, the output goes to the next encoder. The last encoder sends its output to every decoder. The number of Encoders is a hyperparameter.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/transformers/encoder.png" class="img-fluid figure-img"></p>
+<figcaption>The word at each position goes through a self-attention process. Then, each result pass through a Feedforward Neural Network (Same DNN but each vector pass through separately) In this example, there are two words but the maximum number of words (that can be given to the model) is a hyper-parameter.</figcaption>
+</figure>
+</div>
+</section>
+<section id="decoder" class="level3">
+<h3 class="anchored" data-anchor-id="decoder">Decoder</h3>
+<p>The structure of the decoder is nearly the same as the encoder. The difference is, decoder layer has one more sub-layer that contains a “masked” multi-head attention layer. When predicting the position “i” we need to be sure about we are attending the known outputs at position &lt; “i”. The Transformer model is auto-regressive, it makes predictions one part at a time, and uses its output to decide what to do next.</p>
+<p>During training, we are using teacher-forcing. Teacher forcing is passing the true output to the next time step regardless of what the model predicts at the current time step. As the Transformer predicts each word, self-attention allows it to look at the previous words in the input sequence to better predict the next word. To prevent the model from peeking at the expected output the model uses a look-ahead mask. This is what we call a masked multi-head attention layer. For a target sentence with 4 words, a look-ahead mask look like this:</p>
+<pre><code>[[0, 1, 1, 1],
+ [0, 0, 1, 1],
+ [0, 0, 0, 1],
+ [0, 0, 0, 0]]</code></pre>
+<p>We are using this matrix as below</p>
+<pre><code>scaled_attention_logits -= mask * 1e9</code></pre>
+<p>Here, scaled_attention_logits is the normalized result of matrix multiplication of query and key. We make the values from “future” near to zero by appending -1e9 to the values that need to be masked. With that, values from the future will have no impact when calculating attention value.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why we are using teacher forcing and give the true output to the model?</p>
+</div>
+</div>
+<p>Short answer: Otherwise we would have to run the decoder a number of times equal to the number of words in the target sentence.</p>
+<p>Longer answer: The secret lies in the implementation. Let’s say the true output is a three-word sentence and embedding vector dimension is five and our vocabulary size is twenty. Lastly, our batch size is 1 for ease of explanation. After passing these words from the embedding vector, we have a <a href="batch-size, number of words, the dimension of embedding">1,3,5</a> dimensional matrix. After all of the decoders’ calculations, we have a vector that has the same dimension. As we can see in the Transformer model architecture we will pass this vector to a final linear/dense layer. The number of neurons in this layer is twenty because it is our vocabulary size. That means we are multiplying [1,3,5] dimensional matrix with [5,20] dimensional matrix. The result is [1,3,20] dimensional matrix. That means, every word predicted the next word by running the decoder one time. How do we calculate loss? With Sparse Categorical Cross Entropy. This explanation below is the documentation of SparseCategoricalCrossEntropy class in Tensorflow:</p>
+<pre><code>Use this crossentropy loss function when there are two or more label classes.
+We expect labels to be provided as integers.There should be ‘# classes’ floating point values per feature for ‘y_pred’ and a single floating point value per feature for ‘y_true’.
+Example:
+
+y_true = [1, 2]
+y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/transformers/transformer.png" class="img-fluid figure-img"></p>
+<figcaption>The Transformer model architecture</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="self-attention" class="level2">
+<h2 class="anchored" data-anchor-id="self-attention">Self-Attention</h2>
+<p>Let’s suppose we want to translate the following sentence:</p>
+<p>“The books were on the shelves because they are old.”</p>
+<p>What does “they” in this sentence refer to? Is it referring to the books or the shelves? It’s a simple question to a human, but not as simple as an algorithm. Self-attention allows the model to associate “they” with books.</p>
+<p>An attention mechanism maps a query and a key-value pair to an output. All of them are vectors. The way to calculate output is the weighted sum of the values. Weights are computed by a function that uses query and key as input. These weights are not trainable, query and key values are calculated by trainable and learned weights.</p>
+<p>Query, Key, and Value are created from the encoder’s input vectors(e.g.&nbsp;embedding of input words for the first layer) by multiplying these input vectors with 3 different weight matrices <img src="https://latex.codecogs.com/png.latex?W_Q">, <img src="https://latex.codecogs.com/png.latex?W_K">,<img src="https://latex.codecogs.com/png.latex?W_V"> that can be trained during the training process. Every layer (both encoder and decoder layers) in the Transformer model has its <img src="https://latex.codecogs.com/png.latex?W_%7BQ%7D">, <img src="https://latex.codecogs.com/png.latex?W_%7BK%7D">, <img src="https://latex.codecogs.com/png.latex?W_%7BV%7D"> matrices.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/transformers/qkv.png" class="img-fluid figure-img"></p>
+<figcaption>Calculation of Query, Key and Value vectors</figcaption>
+</figure>
+</div>
+<section id="how-do-we-use-query-key-and-value-to-calculate-attention" class="level3">
+<h3 class="anchored" data-anchor-id="how-do-we-use-query-key-and-value-to-calculate-attention">How Do We Use Query, Key, and Value to Calculate Attention?</h3>
+<p>Let’s suppose we are calculation the self-attention for the word “better”. We will use “Scaled Dot-Product”.</p>
+<ol type="1">
+<li>We compute dot products of the query with all keys</li>
+<li>The results will be divided by <img src="https://latex.codecogs.com/png.latex?sqrt(d_k)"> where <img src="https://latex.codecogs.com/png.latex?d_k"> is the dimension of the key vectors. This is called scaling.</li>
+<li>Lastly, we apply the softmax function to the result from step two.</li>
+</ol>
+<p>This will tell us, how much attention we need to give to each word to encode “better”. For faster processing, Queries are packed in the matrix Q, values are packed in the matrix V and keys are packed in the matrix K. The general scaled dot-product attention formula is:</p>
+<p><img src="https://latex.codecogs.com/png.latex?Attention(Q,%20K,%20V)%20=%20softmax(%5C%5Cfrac%7BQK%5ET%7D%7B%5C%5Csqrt%7Bd_k%7D%7D)V"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/transformers/attention.png" class="img-fluid figure-img"></p>
+<figcaption>Scaled Dot-Product Attention</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="multi-head-attention" class="level2">
+<h2 class="anchored" data-anchor-id="multi-head-attention">Multi-Head Attention</h2>
+<p>The idea/question behind multi-head self-attention is: <strong>“How do we improve the model’s ability to focus on different features of the input sentence?”.</strong></p>
+<ol type="1">
+<li>With 1 head self-attention, the encoding could be dominated by the actual word.</li>
+<li>Multi-head attention allows the model to learn different semantic meanings of attention. Eg. One for grammar, one for vocabulary, etc.</li>
+</ol>
+<p>For example, if we have head=8 (referenced as h), there will be 8 different Q, K, and V matrices and 8 different outputs. <img src="https://latex.codecogs.com/png.latex?d_%7Bk%7D%20=%20d_%7Bv%7D%20=%20d_%7Bmodel%7D/h">, weights will have dimension:</p>
+<ul>
+<li><img src="https://latex.codecogs.com/png.latex?W_%7BQ%7D">: <img src="https://latex.codecogs.com/png.latex?d_%7Bmodel%7D%20x%20d_%7Bk%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?W_%7BK%7D">: <img src="https://latex.codecogs.com/png.latex?d_%7Bmodel%7D%20x%20d_%7Bk%7D"></li>
+<li><img src="https://latex.codecogs.com/png.latex?W_%7BV%7D">: <img src="https://latex.codecogs.com/png.latex?d_%7Bmodel%7D%20x%20d_%7Bv%7D"></li>
+</ul>
+<p>and the outputs will be concatenated and multiplied by another weight matrix <img src="https://latex.codecogs.com/png.latex?W_%7BO%7D"> with dimension <img src="https://latex.codecogs.com/png.latex?(hd_%7Bv%7D%20x%20d_%7Bmodel%7D)"> to get the final</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/transformers/mha.png" class="img-fluid figure-img"></p>
+<figcaption>Multi-Head Attention: We embed each word, create 8 “attention heads”, multiply X with weight matrices and find 8 different Key, Query, and Value matrices, calculate attention vector using these matrices, concatenate these matrices and multiply them with weight matrix <img src="https://latex.codecogs.com/png.latex?W%5EO"> to get the output. This output is the output of the (for example) Multi-Head Attention layer and we will pass this output to the “Add and Normalize” layer.</figcaption>
+</figure>
+</div>
+</section>
+<section id="positional-encoding" class="level2">
+<h2 class="anchored" data-anchor-id="positional-encoding">Positional Encoding</h2>
+<p>As the Transformer model doesn’t use recurrence, there isn’t any position information(time step t) in the model input. It is just a bag of words. To provide the model this important information, we inject(add) some information vector( positional encoding) to each embedding. These positional encoding vectors have the same dimension as embeddings.</p>
+<p>One way to add this information is having a second embedding, as we have an embedding vector for “computer”, why shouldn’t we have an embedding for position 3? With this approach, the model can learn positional embeddings during training. The problem with this approach is, say we have 1000 training examples and the maximum input length is 50. If 800 of these training examples have the length of 30, the other 20 embedding vectors will be poorly trained and may not generalize well in practice.</p>
+<p>As an alternative, we can use a static function that takes an integer input and give a vector in a way that captures the relationship between positions. This function should give that position 8 is more related to position 9 than position</p>
+<ol start="30" type="1">
+<li>In the Transformer model, authors decided to use sine and cosine functions of different frequencies:</li>
+</ol>
+<p><img src="https://latex.codecogs.com/png.latex?PE_%7B(pos,%202i)%7D%20=%20sin(pos/10000%5E%7B2i/d_%7Bmodel%7D%7D)"> <img src="https://latex.codecogs.com/png.latex?PE_%7B(pos,%202i+1)%7D%20=%20cos(pos/10000%5E%7B2i/d_%7Bmodel%7D%7D)"></p>
+<p>Here, <strong>pos</strong> is the position of the token, and <strong>i</strong> is the dimension. Each dimension of these positional encodings corresponds to a sinusoid. (A curve similar to the sine function but possibly shifted in phase, period, amplitude, or any combination thereof.) The wavelengths form a geometric progression from <img src="https://latex.codecogs.com/png.latex?2%5Cpi%20%5C,%20to%20%5C,%2010000%20%5Ccdot%202%5Cpi">. This function is chosen by authors because they believe(hypothesized) this would allow the model to easily learn to attend by relative positions since for any fixed offset k, <img src="https://latex.codecogs.com/png.latex?PE_%7Bpos+k%7D"> can be represented as a linear function of <img src="https://latex.codecogs.com/png.latex?PE_%7Bpos%7D">.</p>
+<p>That’s all I know :) Thank you for reading!</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li><a href="http://jalammar.github.io/illustrated-transformer/" class="uri">http://jalammar.github.io/illustrated-transformer/</a> - An excellent overview of Transformer models.</li>
+<li><a href="https://kazemnejad.com/blog/transformer_architecture_positional_encoding/" class="uri">https://kazemnejad.com/blog/transformer_architecture_positional_encoding/</a> - A detailed explanation of positional encodings.</li>
+<li><a href="https://arxiv.org/pdf/1409.0473.pdf" class="uri">https://arxiv.org/pdf/1409.0473.pdf</a> - Neural Machine Translation by Jointly Learning to Align and Translate.</li>
+<li><a href="https://arxiv.org/abs/1706.03762v5" class="uri">https://arxiv.org/abs/1706.03762v5</a> - Attention Is All You Need.</li>
+</ol>
+
+
+</section>
+
+ ]]></description>
+  <category>ml</category>
+  <guid>https://nusretozates.github.io/posts/transformers/</guid>
+  <pubDate>Fri, 19 Feb 2021 21:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Attention mechanism and how it works on neural machine translation</title>
+  <dc:creator>Nusret Ozates and Hasan Kemik</dc:creator>
+  <link>https://nusretozates.github.io/posts/attention_mechanism/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <img src="https://latex.codecogs.com/png.latex?argmax_y%20%5C,%20p(y%7Cx)">. Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector.</p>
+<section id="rnn-encoder-decoder" class="level2">
+<h2 class="anchored" data-anchor-id="rnn-encoder-decoder">RNN Encoder-Decoder</h2>
+<p>Let’s look at the encoder-decoder architecture more formally.</p>
+<section id="encoder" class="level3">
+<h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
+<p>The encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c.&nbsp;To calculate c, we calculate hidden states with:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20h_t%20=%20f(h_%7Bt-1%7D,%20x_t)%20"></p>
+<p>and vector c is equal to:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20c%20=%20q%5Cleft(%5C%7Bh_1,%20h_2,%20%5Cldots,%20h_%7BT_x%7D%5C%7D%5Cright)%20"></p>
+<p><img src="https://latex.codecogs.com/png.latex?h_t%20%5Cin%20R%5En"> is the hidden state at time t, c is a vector, generated from the sequence of hidden states, f and q are some non-linear functions. As an example, f can be an LSTM and <img src="https://latex.codecogs.com/png.latex?q%5Cleft(%5C%7Bh_1,%20h_2,%20%5Cldots,%20h_%7BT_x%7D%5C%7D%5Cright)"> can be equal to <img src="https://latex.codecogs.com/png.latex?h_%7BT_x%7D">, the last hidden state of the encoder.</p>
+</section>
+<section id="decoder" class="level3">
+<h3 class="anchored" data-anchor-id="decoder">Decoder</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.</p>
+</div>
+</div>
+<p>The decoder predicts the next word <img src="https://latex.codecogs.com/png.latex?y_t">, given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20p(y)%20=%20%5Cprod_%7Bt=1%7D%5E%7BT_y%7D%20p(y_t%20%7C%20y_1,%20...,%20y_%7Bt-1%7D,%20c)%20"></p>
+<p>How do we calculate <img src="https://latex.codecogs.com/png.latex?p(y_t%20%7C%20y_1,%20...,%20y_%7Bt-1%7D,%20c)">?</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20p(y_t%20%7C%20y_1,%20...,%20y_%7Bt-1%7D,%20c)%20=%20g(y_%7Bt-1%7D,%20s_t,%20c)%20"></p>
+<p>where g is a non-linear function that outputs the probability of <img src="https://latex.codecogs.com/png.latex?y_t"> and <img src="https://latex.codecogs.com/png.latex?s_t"> is the hidden state of the RNN.</p>
+</section>
+</section>
+<section id="attention-mechanism-a-new-approach-to-encoder-decoder-structure" class="level2">
+<h2 class="anchored" data-anchor-id="attention-mechanism-a-new-approach-to-encoder-decoder-structure">Attention Mechanism: A new approach to Encoder-Decoder Structure</h2>
+<section id="encoder-1" class="level3">
+<h3 class="anchored" data-anchor-id="encoder-1">Encoder</h3>
+<p>In the encoder structure, the hidden states are calculated as Eq.1. Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20h_j%20=%20%5B%5Coverrightarrow%7Bh_j%5ET%7D;%20%5Coverleftarrow%7Bh_j%5ET%7D%5D%20"></p>
+</section>
+<section id="decoder-1" class="level3">
+<h3 class="anchored" data-anchor-id="decoder-1">Decoder</h3>
+<p>In the decoder structure, probability of each word is computed according to previous word’s vector <img src="https://latex.codecogs.com/png.latex?y_%7Bi-1%7D"> , hidden state <img src="https://latex.codecogs.com/png.latex?s_i"> and context vector <img src="https://latex.codecogs.com/png.latex?c_i">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20p(y_i%20%7C%20y_1,%20...,%20y_%7Bi-1%7D,%20x)%20=%20g(y_%7Bi-1%7D,%20s_i,%20c_i)%20"></p>
+<p>Hidden state is computed according to previous hidden state <img src="https://latex.codecogs.com/png.latex?s_%7Bi-1%7D">, previous word’s vector <img src="https://latex.codecogs.com/png.latex?y_%7Bi-1%7D"> and current context vector <img src="https://latex.codecogs.com/png.latex?c_i">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20s_i%20=%20f(s_%7Bi-1%7D,%20y_%7Bi-1%7D,%20c_i)%20"></p>
+<p>The context vector <img src="https://latex.codecogs.com/png.latex?c_i"> depends on all hidden states with their weights. These weights represent the amount of “attention” needed to be given to predict next word <img src="https://latex.codecogs.com/png.latex?y_i">.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20c_i%20=%20%5Csum_%7Bj=1%7D%5E%7BT_x%7D%20%5Calpha_%7Bij%7D%20h_j%20"></p>
+<p>where <img src="https://latex.codecogs.com/png.latex?%5Calpha_%7Bij%7D"> is the weight for hidden state <img src="https://latex.codecogs.com/png.latex?h_j"> when predicting word <img src="https://latex.codecogs.com/png.latex?y_i">. The “attention amount” calculated by the formula:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20%5Calpha_%7Bij%7D%20=%20%5Cfrac%7Bexp(e_%7Bij%7D)%7D%7B%5Csum_%7Bk=1%7D%5E%7BT_x%7D%20exp(e_%7Bik%7D)%7D%20"></p>
+<p><img src="https://latex.codecogs.com/png.latex?e(i,j)"> represents “energy”, the importance of hidden state <img src="https://latex.codecogs.com/png.latex?h_j">, respect to the previous hidden state <img src="https://latex.codecogs.com/png.latex?s_%7Bi-1%7D">. It is calculated by concatenation of <img src="https://latex.codecogs.com/png.latex?h_j"> and <img src="https://latex.codecogs.com/png.latex?s_%7Bi-1%7D"> is fed through a feedforward neural network a, which allows to train an alignment model through backward propagation.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%20e_%7Bij%7D%20=%20a(s_%7Bi-1%7D,%20h_j)%20"></p>
+<p>And with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models.</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a></li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>ml</category>
+  <guid>https://nusretozates.github.io/posts/attention_mechanism/</guid>
+  <pubDate>Sat, 12 Dec 2020 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/attention_mechanism/img.png" medium="image" type="image/png" height="56" width="144"/>
+</item>
+<item>
   <title>Things you need to know about Docker to get started</title>
   <dc:creator>Nusret Ozates</dc:creator>
   <link>https://nusretozates.github.io/posts/docker-get-started/</link>
@@ -1038,7 +1267,7 @@ Containers meant to run a specific task or process, not meant to host an OS.
 <p>Where can I find tags of the docker image?</p>
 <p><a href="https://hub.docker.com" class="uri">https://hub.docker.com</a></p>
 <p>Environment Variables</p>
-<p>In python we access an environment variable like this:</p>
+<p>In python, we access an environment variable like this:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode py code-with-copy"><code class="sourceCode python"><span id="cb1-1">os.environ.get(‘APP_COLOR’)</span></code></pre></div></div>
 <p>How can you set it in docker?</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
@@ -1176,6 +1405,848 @@ font-weight: bold;
 font-style: inherit;">CMD</span> [<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"5"</span>]</span></code></pre></div></div>
+</section>
+<section id="docker-networking" class="level2">
+<h2 class="anchored" data-anchor-id="docker-networking">Docker Networking</h2>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/docker_networking.png" class="img-fluid"></p>
+<ol type="1">
+<li>Default network a container gets attached to. A bridged network is a private internal network created by docker on the host. All containers are attached to this network and have their internal IP addresses. Containers can access each other by using these internal IPs. If you want to access any of these containers from the outside world, you need to bind/forward the host’s port to the ports on the Docker network</li>
+<li>Another way to access these containers is removing the network isolation between the docker host and the docker container by associating the container with the host’s network.</li>
+<li>In the “none” network, the container is not attached to any network, and it is not accessible from external networks or any other docker containers.</li>
+</ol>
+<p>Containers can access each other using their names. Docker creates a DNS server that helps containers using each other’s names.</p>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/docker_networking_2.png" class="img-fluid"></p>
+</section>
+<section id="docker-compose" class="level2">
+<h2 class="anchored" data-anchor-id="docker-compose">Docker Compose</h2>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/docker_compose.png" class="img-fluid"></p>
+<p>When we have a complex app that runs with multiple containers, we need to write lots of run commands! But we have docker-compose.</p>
+<p>With the latest command at the bottom, you can run all of these images and more! We are using a .yaml file to configure docker-compose.</p>
+<p>Let’s say we have a sample application like this:</p>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/docker_compose_2.png" class="img-fluid"></p>
+<p>What you would do without docker-compose:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>redis redis </span>
+<span id="cb13-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>db postgres:9.4 </span>
+<span id="cb13-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>vote <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 5000:80 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--link</span> redis:redis voting-app </span>
+<span id="cb13-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>result <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 5001:80 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--link</span> db:db result-app </span>
+<span id="cb13-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker</span> run <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>worker <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--link</span> db:db <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--link</span> redis:redis worker</span></code></pre></div></div>
+<p>With docker-compose, you can write a docker-compose.yaml file like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">redis</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span>
+<span id="cb14-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">db</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> postgres:9.4</span></span>
+<span id="cb14-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> voting-app</span></span>
+<span id="cb14-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5000:80</span></span>
+<span id="cb14-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">result</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> result-app</span></span>
+<span id="cb14-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5001:80</span></span>
+<span id="cb14-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">worker</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb14-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> worker  </span></span></code></pre></div></div>
+<p>And run them all with a single command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">docker-compose</span> up</span></code></pre></div></div>
+<p>What if some of the images are not already built or not in the DockerHub? Like the “voting-app” in our example, we can change the image key with a build key and specify a location of a directory that contains the application code and Dockerfile.</p>
+<p>Change this code:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb16-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> voting-app</span></span>
+<span id="cb16-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb16-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5000:80</span></span></code></pre></div></div>
+<p>To this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb17-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">build</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ./vote</span></span>
+<span id="cb17-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb17-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5000:80</span></span></code></pre></div></div>
+</section>
+<section id="docker-compose-versions" class="level2">
+<h2 class="anchored" data-anchor-id="docker-compose-versions">Docker Compose Versions</h2>
+<p>Docker-compose evolved over time and now supports a lot more options than it did in the beginning.</p>
+<section id="version-1" class="level3">
+<h3 class="anchored" data-anchor-id="version-1">Version 1</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">redis</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb18-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span>
+<span id="cb18-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">db</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb18-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> postgres:9.4</span></span>
+<span id="cb18-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb18-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> voting-app</span></span>
+<span id="cb18-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb18-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5000:80</span></span>
+<span id="cb18-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">links</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb18-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span></code></pre></div></div>
+<p>It has several limitations. For example, if you wanted to deploy containers on a different network other than the default bridge network, there was no way of specifying that in this version of the file. Also, say you have a startup dependency or startup order of some kind. For example, your database container must come up first, and only then should the voting app be started. There was no way you could specify that in this version.</p>
+</section>
+<section id="version-2" class="level3">
+<h3 class="anchored" data-anchor-id="version-2">Version 2</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">version</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb19-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">services</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb19-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">redis</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb19-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span>
+<span id="cb19-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">db</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb19-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> postgres:9.4</span></span>
+<span id="cb19-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb19-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> voting-app</span></span>
+<span id="cb19-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb19-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5000:80</span></span>
+<span id="cb19-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">depends_on</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb19-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span></code></pre></div></div>
+<p>Support for these came in version 2. With version 2 and up, the format of the file also changed. You no longer specify your stack information directly as you did before. It is all encapsulated in the services section.</p>
+<p>Another difference is with networking. With version 2, docker-compose automatically creates a dedicated bridged network for this application and then attaches all containers to that new network. All containers are then able to communicate with each other using each other’s service name. So you don’t need to use links.</p>
+</section>
+<section id="version-3" class="level3">
+<h3 class="anchored" data-anchor-id="version-3">Version 3</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">version</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span></span>
+<span id="cb20-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">services</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb20-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">redis</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb20-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span>
+<span id="cb20-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">db</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb20-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> postgres:9.4</span></span>
+<span id="cb20-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb20-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> voting-app</span></span>
+<span id="cb20-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb20-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> 5000:80</span></span></code></pre></div></div>
+<p>This is the latest version of today. Version 3 comes with support for the docker swarm. There are some options removed and added. To see details: <a href="https://docs.docker.com/compose/" class="uri">https://docs.docker.com/compose/</a></p>
+</section>
+</section>
+<section id="networking-in-docker-compose" class="level2">
+<h2 class="anchored" data-anchor-id="networking-in-docker-compose">Networking in Docker Compose</h2>
+<p>Let us say we modify the architecture a little bit to contain the traffic from the different sources in separate networks. For example, we would like to separate the user-generated traffic from the application’s internal traffic. So, we create a front-end network dedicated to the traffic from users and a backend network dedicated to the traffic within the application.</p>
+<p><img src="https://nusretozates.github.io/posts/docker-get-started/docker_compose_3.png" class="img-fluid"></p>
+<p>This is the .yaml file you need to write:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">version</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"3"</span></span>
+<span id="cb21-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">services</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">redis</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> redis</span></span>
+<span id="cb21-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">networks</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> back-end</span></span>
+<span id="cb21-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">db</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> postgres:9.4</span></span>
+<span id="cb21-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">networks</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> back-end</span></span>
+<span id="cb21-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">vote</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> voting-app</span></span>
+<span id="cb21-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5000:80"</span></span>
+<span id="cb21-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">networks</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> front-end</span></span>
+<span id="cb21-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> back-end</span></span>
+<span id="cb21-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">result</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-19"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> result-app</span></span>
+<span id="cb21-20"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ports</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-21"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"5001:80"</span></span>
+<span id="cb21-22"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">networks</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-23"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> front-end</span></span>
+<span id="cb21-24"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> back-end</span></span>
+<span id="cb21-25"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">worker</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-26"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">image</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> worker</span></span>
+<span id="cb21-27"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">networks</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-28"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> front-end</span></span>
+<span id="cb21-29"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> back-end</span></span>
+<span id="cb21-30"></span>
+<span id="cb21-31"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">networks</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-32"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">front-end</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-33"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">driver</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> bridge</span></span>
+<span id="cb21-34"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">back-end</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb21-35"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">driver</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> bridge</span></span></code></pre></div></div>
+<p>So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the <a href="https://www.youtube.com/user/mmumshad">KodeKlaud’s</a> channel!</p>
 
 
 </section>

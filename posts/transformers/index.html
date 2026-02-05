@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Nusret Ozates">
+<meta name="dcterms.date" content="2021-02-20">
 
-<title>Welcome to My Posts – Nusret Ozates</title>
+<title>Transformer Architecture: How Transformer Models Work? – Nusret Ozates</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,30 +25,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d20a77a6dbf7a672515331ea5fdc11a1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-82357dd4679f95000a29507db5f02133.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-d20a77a6dbf7a672515331ea5fdc11a1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-d20a77a6dbf7a672515331ea5fdc11a1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-82357dd4679f95000a29507db5f02133.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-d20a77a6dbf7a672515331ea5fdc11a1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,35 +74,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-subtitle','listing-categories','listing-reading-time','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script>
 
 <script type="text/javascript">
@@ -150,10 +121,10 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
-<link rel="alternate" type="application/rss+xml" title="Nusret Ozates" href="myposts.xml" data-external="1"></head>
+<link rel="stylesheet" href="../../styles.css">
+</head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -331,9 +302,9 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Nusret Ozates</span>
     </a>
   </div>
@@ -344,11 +315,11 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./myposts.html" aria-current="page"> 
+    <a class="nav-link" href="../../myposts.html"> 
 <span class="menu-text">Blogs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./notes.html"> 
+    <a class="nav-link" href="../../notes.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
 </ul>
@@ -374,240 +345,180 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Welcome to My Posts</h1>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Transformer Architecture: How Transformer Models Work?</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">ml</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Nusret Ozates </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 20, 2021</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div><div class="category" data-category="YWNhZGVteQ==">academy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2b3Bz">devops <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxt">llm <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWw=">ml <span class="quarto-category-count">(5)</span></div><div class="category" data-category="bWxvcHM=">mlops <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c29mdHdhcmU=">software <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
 
+<p>Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical problem. The structure of RNN does not allow to do parallel computing. There were some optimizations to make them faster but the main problem remains. The Transformer model completely removed RNNs and built all architecture based on attention mechanism.</p>
+<p>Like most neural machine translation models, Transformers have an encoder-decoder structure. It uses stacked encoders that contain attention layers and Feed Forward Neural networks.</p>
+<section id="encoder-and-decoder-stacks" class="level2">
+<h2 class="anchored" data-anchor-id="encoder-and-decoder-stacks">Encoder and Decoder Stacks</h2>
+<section id="encoder" class="level3">
+<h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
+<p>Each encoder layer has two sub-layers, the “multi-head attention layer” (It will be explained in the next chapters) and a Feedforward Neural Network, both of them followed by a normalization layer and there is 2 residual connection around each sub-layer. Each encoder layer has the same structure but they do not have the same weights. To use residual connections, all sub-layers and embedding layers output the same dimension. We denote this dimension as parameter <span class="math inline">\(d_
+{model}\)</span>. In the original article <span class="math inline">\(d_{model} = 512\)</span>. The first encoder’s input is embedding vectors of the source sentence with position information injected (will be explained in the positional encoding subsection). Each of the other encoders’ inputs is the output of the encoder below.</p>
+<p>In summary: An encoder receives input as a list of vectors. Then it processes these vectors by passing them to a self-attention layer, then sends them to a Feedforward Neural Network. Finally, the output goes to the next encoder. The last encoder sends its output to every decoder. The number of Encoders is a hyperparameter.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="encoder.png" class="img-fluid figure-img"></p>
+<figcaption>The word at each position goes through a self-attention process. Then, each result pass through a Feedforward Neural Network (Same DNN but each vector pass through separately) In this example, there are two words but the maximum number of words (that can be given to the model) is a hyper-parameter.</figcaption>
+</figure>
+</div>
+</section>
+<section id="decoder" class="level3">
+<h3 class="anchored" data-anchor-id="decoder">Decoder</h3>
+<p>The structure of the decoder is nearly the same as the encoder. The difference is, decoder layer has one more sub-layer that contains a “masked” multi-head attention layer. When predicting the position “i” we need to be sure about we are attending the known outputs at position &lt; “i”. The Transformer model is auto-regressive, it makes predictions one part at a time, and uses its output to decide what to do next.</p>
+<p>During training, we are using teacher-forcing. Teacher forcing is passing the true output to the next time step regardless of what the model predicts at the current time step. As the Transformer predicts each word, self-attention allows it to look at the previous words in the input sequence to better predict the next word. To prevent the model from peeking at the expected output the model uses a look-ahead mask. This is what we call a masked multi-head attention layer. For a target sentence with 4 words, a look-ahead mask look like this:</p>
+<pre><code>[[0, 1, 1, 1],
+ [0, 0, 1, 1],
+ [0, 0, 0, 1],
+ [0, 0, 0, 0]]</code></pre>
+<p>We are using this matrix as below</p>
+<pre><code>scaled_attention_logits -= mask * 1e9</code></pre>
+<p>Here, scaled_attention_logits is the normalized result of matrix multiplication of query and key. We make the values from “future” near to zero by appending -1e9 to the values that need to be masked. With that, values from the future will have no impact when calculating attention value.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Why we are using teacher forcing and give the true output to the model?</p>
+</div>
+</div>
+<p>Short answer: Otherwise we would have to run the decoder a number of times equal to the number of words in the target sentence.</p>
+<p>Longer answer: The secret lies in the implementation. Let’s say the true output is a three-word sentence and embedding vector dimension is five and our vocabulary size is twenty. Lastly, our batch size is 1 for ease of explanation. After passing these words from the embedding vector, we have a <a href="batch-size, number of words, the dimension of embedding">1,3,5</a> dimensional matrix. After all of the decoders’ calculations, we have a vector that has the same dimension. As we can see in the Transformer model architecture we will pass this vector to a final linear/dense layer. The number of neurons in this layer is twenty because it is our vocabulary size. That means we are multiplying [1,3,5] dimensional matrix with [5,20] dimensional matrix. The result is [1,3,20] dimensional matrix. That means, every word predicted the next word by running the decoder one time. How do we calculate loss? With Sparse Categorical Cross Entropy. This explanation below is the documentation of SparseCategoricalCrossEntropy class in Tensorflow:</p>
+<pre><code>Use this crossentropy loss function when there are two or more label classes.
+We expect labels to be provided as integers.There should be ‘# classes’ floating point values per feature for ‘y_pred’ and a single floating point value per feature for ‘y_true’.
+Example:
+
+y_true = [1, 2]
+y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</code></pre>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="transformer.png" class="img-fluid figure-img"></p>
+<figcaption>The Transformer model architecture</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="self-attention" class="level2">
+<h2 class="anchored" data-anchor-id="self-attention">Self-Attention</h2>
+<p>Let’s suppose we want to translate the following sentence:</p>
+<p>“The books were on the shelves because they are old.”</p>
+<p>What does “they” in this sentence refer to? Is it referring to the books or the shelves? It’s a simple question to a human, but not as simple as an algorithm. Self-attention allows the model to associate “they” with books.</p>
+<p>An attention mechanism maps a query and a key-value pair to an output. All of them are vectors. The way to calculate output is the weighted sum of the values. Weights are computed by a function that uses query and key as input. These weights are not trainable, query and key values are calculated by trainable and learned weights.</p>
+<p>Query, Key, and Value are created from the encoder’s input vectors(e.g.&nbsp;embedding of input words for the first layer) by multiplying these input vectors with 3 different weight matrices <span class="math inline">\(W_Q\)</span>, <span class="math inline">\(W_K\)</span>,<span class="math inline">\(W_V\)</span> that can be trained during the training process. Every layer (both encoder and decoder layers) in the Transformer model has its <span class="math inline">\(W_{Q}\)</span>, <span class="math inline">\(W_{K}\)</span>, <span class="math inline">\(W_{V}\)</span> matrices.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="qkv.png" class="img-fluid figure-img"></p>
+<figcaption>Calculation of Query, Key and Value vectors</figcaption>
+</figure>
+</div>
+<section id="how-do-we-use-query-key-and-value-to-calculate-attention" class="level3">
+<h3 class="anchored" data-anchor-id="how-do-we-use-query-key-and-value-to-calculate-attention">How Do We Use Query, Key, and Value to Calculate Attention?</h3>
+<p>Let’s suppose we are calculation the self-attention for the word “better”. We will use “Scaled Dot-Product”.</p>
+<ol type="1">
+<li>We compute dot products of the query with all keys</li>
+<li>The results will be divided by <span class="math inline">\(sqrt(d_k)\)</span> where <span class="math inline">\(d_k\)</span> is the dimension of the key vectors. This is called scaling.</li>
+<li>Lastly, we apply the softmax function to the result from step two.</li>
+</ol>
+<p>This will tell us, how much attention we need to give to each word to encode “better”. For faster processing, Queries are packed in the matrix Q, values are packed in the matrix V and keys are packed in the matrix K. The general scaled dot-product attention formula is:</p>
+<p><span class="math display">\[Attention(Q, K, V) = softmax(\\frac{QK^T}{\\sqrt{d_k}})V\]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="attention.png" class="img-fluid figure-img"></p>
+<figcaption>Scaled Dot-Product Attention</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="multi-head-attention" class="level2">
+<h2 class="anchored" data-anchor-id="multi-head-attention">Multi-Head Attention</h2>
+<p>The idea/question behind multi-head self-attention is: <strong>“How do we improve the model’s ability to focus on different features of the input sentence?”.</strong></p>
+<ol type="1">
+<li>With 1 head self-attention, the encoding could be dominated by the actual word.</li>
+<li>Multi-head attention allows the model to learn different semantic meanings of attention. Eg. One for grammar, one for vocabulary, etc.</li>
+</ol>
+<p>For example, if we have head=8 (referenced as h), there will be 8 different Q, K, and V matrices and 8 different outputs. <span class="math inline">\(d_{k} = d_{v} = d_{model}/h\)</span>, weights will have dimension:</p>
+<ul>
+<li><span class="math inline">\(W_{Q}\)</span>: <span class="math inline">\(d_{model} x d_{k}\)</span></li>
+<li><span class="math inline">\(W_{K}\)</span>: <span class="math inline">\(d_{model} x d_{k}\)</span></li>
+<li><span class="math inline">\(W_{V}\)</span>: <span class="math inline">\(d_{model} x d_{v}\)</span></li>
+</ul>
+<p>and the outputs will be concatenated and multiplied by another weight matrix <span class="math inline">\(W_{O}\)</span> with dimension <span class="math inline">\((hd_{v} x d_{model})\)</span> to get the final</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="mha.png" class="img-fluid figure-img"></p>
+<figcaption>Multi-Head Attention: We embed each word, create 8 “attention heads”, multiply X with weight matrices and find 8 different Key, Query, and Value matrices, calculate attention vector using these matrices, concatenate these matrices and multiply them with weight matrix <span class="math inline">\(W^O\)</span> to get the output. This output is the output of the (for example) Multi-Head Attention layer and we will pass this output to the “Add and Normalize” layer.</figcaption>
+</figure>
+</div>
+</section>
+<section id="positional-encoding" class="level2">
+<h2 class="anchored" data-anchor-id="positional-encoding">Positional Encoding</h2>
+<p>As the Transformer model doesn’t use recurrence, there isn’t any position information(time step t) in the model input. It is just a bag of words. To provide the model this important information, we inject(add) some information vector( positional encoding) to each embedding. These positional encoding vectors have the same dimension as embeddings.</p>
+<p>One way to add this information is having a second embedding, as we have an embedding vector for “computer”, why shouldn’t we have an embedding for position 3? With this approach, the model can learn positional embeddings during training. The problem with this approach is, say we have 1000 training examples and the maximum input length is 50. If 800 of these training examples have the length of 30, the other 20 embedding vectors will be poorly trained and may not generalize well in practice.</p>
+<p>As an alternative, we can use a static function that takes an integer input and give a vector in a way that captures the relationship between positions. This function should give that position 8 is more related to position 9 than position</p>
+<ol start="30" type="1">
+<li>In the Transformer model, authors decided to use sine and cosine functions of different frequencies:</li>
+</ol>
+<p><span class="math display">\[PE_{(pos, 2i)} = sin(pos/10000^{2i/d_{model}})\]</span> <span class="math display">\[PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})\]</span></p>
+<p>Here, <strong>pos</strong> is the position of the token, and <strong>i</strong> is the dimension. Each dimension of these positional encodings corresponds to a sinusoid. (A curve similar to the sine function but possibly shifted in phase, period, amplitude, or any combination thereof.) The wavelengths form a geometric progression from <span class="math inline">\(2\pi \, to \, 10000 \cdot 2\pi\)</span>. This function is chosen by authors because they believe(hypothesized) this would allow the model to easily learn to attend by relative positions since for any fixed offset k, <span class="math inline">\(PE_{pos+k}\)</span> can be represented as a linear function of <span class="math inline">\(PE_{pos}\)</span>.</p>
+<p>That’s all I know :) Thank you for reading!</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li><a href="http://jalammar.github.io/illustrated-transformer/" class="uri">http://jalammar.github.io/illustrated-transformer/</a> - An excellent overview of Transformer models.</li>
+<li><a href="https://kazemnejad.com/blog/transformer_architecture_positional_encoding/" class="uri">https://kazemnejad.com/blog/transformer_architecture_positional_encoding/</a> - A detailed explanation of positional encodings.</li>
+<li><a href="https://arxiv.org/pdf/1409.0473.pdf" class="uri">https://arxiv.org/pdf/1409.0473.pdf</a> - Neural Machine Translation by Jointly Learning to Align and Translate.</li>
+<li><a href="https://arxiv.org/abs/1706.03762v5" class="uri">https://arxiv.org/abs/1706.03762v5</a> - Attention Is All You Need.</li>
+</ol>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="listing-actions-group">
-    <div class="input-group input-group-sm quarto-listing-filter">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input type="text" class="search form-control" placeholder="Filter">
-    </div>
-</div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="bWw=" data-listing-date-sort="1766178000000" data-listing-file-modified-sort="1766181602772" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="727">
-<a href="./posts/career_advice_ai_summary/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-My summary of the “Career Advice in AI” Lecture
-</h5>
-<div class="listing-reading-time card-text text-muted">4 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
-
-</div>
-<div class="card-text listing-description delink">
-I finally had time to watch the AI Career Advice lesson by Andrew Ng and Laurence Moroney. It was a great lesson for me as I’m about to graduate from my MSc and am ready to…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Dec 20, 2025
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="bWw=" data-listing-date-sort="1760734800000" data-listing-file-modified-sort="1760732830046" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1455">
-<a href="./posts/gnn_basics/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/gnn_basics/gnn.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Pytorch Geometric Basics: How Message Passing Works
-</h5>
-<div class="listing-reading-time card-text text-muted">8 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
-
-</div>
-<div class="card-text listing-description delink">
-I’m working with GNNs for my MSc thesis and naturally chose PyTorch Geometric (PyG), one of the most popular libraries in the field. While PyG is incredibly easy to use, I…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Oct 18, 2025
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="YWNhZGVteQ==" data-listing-date-sort="1760302800000" data-listing-file-modified-sort="1760361733473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1628">
-<a href="./posts/paragraph_dev_sentece_skill/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/paragraph_dev_sentece_skill/focus.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Academic Writing Notes: Paragraphs Development and Sentence Skills
-</h5>
-<div class="listing-reading-time card-text text-muted">9 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('YWNhZGVteQ=='); return false;">academy</div>
-
-</div>
-<div class="card-text listing-description delink">
-Do you remember the times you read an article/paper and you couldn’t understand what the author wanted to say even though you know the underlying concepts? Even the most…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Oct 13, 2025
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="3" data-categories="bWwlMkNsbG0=" data-listing-date-sort="1738875600000" data-listing-file-modified-sort="1757883930656" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="844">
-<a href="./posts/test_time_compute/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/test_time_compute/img.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Test-Time Compute, Reasoning and Human Brain
-</h5>
-<div class="listing-reading-time card-text text-muted">5 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
-
-</div>
-<div class="card-text listing-description delink">
-I have lots of things to do, but I’ve suddenly been struck by inspiration, and since the well-known work-avoidance mechanism has kicked in, I’m going to write down my…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Feb 7, 2025
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="4" data-categories="bWw=" data-listing-date-sort="1613768400000" data-listing-file-modified-sort="1770287648474" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1553">
-<a href="./posts/transformers/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top"><img src="posts\transformers\encoder.png" style="height: 150px;"  class="thumbnail-image card-img"/></p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Transformer Architecture: How Transformer Models Work?
-</h5>
-<div class="listing-reading-time card-text text-muted">8 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
-
-</div>
-<div class="card-text listing-description delink">
-Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Feb 20, 2021
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="5" data-categories="bWw=" data-listing-date-sort="1607806800000" data-listing-file-modified-sort="1770116817908" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="536">
-<a href="./posts/attention_mechanism/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/attention_mechanism/img.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Attention mechanism and how it works on neural machine translation
-</h5>
-<div class="listing-reading-time card-text text-muted">3 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
-
-</div>
-<div class="card-text listing-description delink">
-In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <span class="math inline">\(argmax_y \, p(y|x)\)</span>. Before…
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Dec 13, 2020
-</div>
-</div>
-</div>
-</div></a>
-</div>
-<div class="g-col-1" data-index="6" data-categories="ZGV2b3BzJTJDbWxvcHMlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1604782800000" data-listing-file-modified-sort="1770111203184" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1802">
-<a href="./posts/docker-get-started/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/docker-get-started/image.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Things you need to know about Docker to get started
-</h5>
-<div class="listing-reading-time card-text text-muted">10 min</div>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2b3Bz'); return false;">devops</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
-
-</div>
-<div class="card-text listing-description delink">
-Some useful commands and concepts to use Docker!
-</div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-Nov 8, 2020
-</div>
-</div>
-</div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     // Ensure there is a toggle, if there isn't float one in the top right
@@ -1025,5 +936,5 @@ Nov 8, 2020
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

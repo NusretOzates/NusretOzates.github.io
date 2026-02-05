@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://nusretozates.github.io/posts/test_time_compute/index.html</loc>
-    <lastmod>2025-09-14T21:05:30.656Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/transformers/index.html</loc>
+    <lastmod>2026-02-05T10:34:08.474Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/gnn_basics/index.html</loc>
-    <lastmod>2025-10-17T20:27:10.046Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/index.html</loc>
+    <lastmod>2025-10-13T13:22:13.473Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/career_advice_ai_summary/index.html</loc>
-    <lastmod>2025-12-19T22:00:02.772Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/docker-get-started/index.html</loc>
+    <lastmod>2026-02-03T09:33:23.184Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/attention_mechanism/index.html</loc>
+    <lastmod>2026-02-03T11:06:57.908Z</lastmod>
   </url>
   <url>
     <loc>https://nusretozates.github.io/notes/slurm/index.html</loc>
@@ -26,18 +30,22 @@
   </url>
   <url>
     <loc>https://nusretozates.github.io/myposts.html</loc>
-    <lastmod>2025-10-13T11:11:08.073Z</lastmod>
+    <lastmod>2026-02-03T10:57:02.524Z</lastmod>
   </url>
   <url>
     <loc>https://nusretozates.github.io/notes.html</loc>
     <lastmod>2025-11-11T21:30:25.421Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/docker-get-started/index.html</loc>
-    <lastmod>2025-09-02T22:39:00.561Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/career_advice_ai_summary/index.html</loc>
+    <lastmod>2025-12-19T22:00:02.772Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/index.html</loc>
-    <lastmod>2025-10-13T13:22:13.473Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/gnn_basics/index.html</loc>
+    <lastmod>2025-10-17T20:27:10.046Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/test_time_compute/index.html</loc>
+    <lastmod>2025-09-14T21:05:30.656Z</lastmod>
   </url>
 </urlset>

@@ -1,178 +1,45 @@
 [
   {
-    "objectID": "posts/test_time_compute/index.html",
-    "href": "posts/test_time_compute/index.html",
-    "title": "Test-Time Compute, Reasoning and Human Brain",
+    "objectID": "posts/transformers/index.html",
+    "href": "posts/transformers/index.html",
+    "title": "Transformer Architecture: How Transformer Models Work?",
     "section": "",
-    "text": "I have lots of things to do, but I’ve suddenly been struck by inspiration, and since the well-known work-avoidance mechanism has kicked in, I’m going to write down my thoughts on test-time compute, shared decoders, and reasoning. Here we go, a theoretical and lengthy piece is coming.\nOne of the things I love about LLMs is that they handle multiple tasks with a single loss and a single branch. That is, instead of a shared encoder + separate decoders for each task like in U-net models, there’s just a transformer decoder. As far as I know, this comes from T5 models where we model all NLP tasks as text-to-text. We’ll get back to LLMs in a bit, but let’s take a look at the vision side for now.\nI don’t think there’s an equivalent of this in vision, for example, how would you combine segmentation and classification tasks? At the very least, the last layers would have to be different. However, there’s a model that comes very, very close to combining these, and the model’s developers are inspired by the human brain. The model is called BU-TD. Let’s start with the inspiration part. These folks are saying, ‘segmenting anything and everything at once’ is not the right approach; the human brain doesn’t work that way.\nFor example, the longer you look at the image above, the more details emerge; the brain doesn’t grasp the entire image with all its details at once. So why are we trying to make models do this? This is where BU-TD comes into play.\nAgain, in this model inspired by the human brain, first an encoder processes the image, and the decoder takes the vector coming from the encoder and additionally receives a task and argument vector. For example,\nWe tell the model to look at the image, task: find hairstyle, argument: bob. Afterwards, the decoder can optionally output the segmentation of Bob’s hair, but it may not; that part is a bit vague. By feeding the decoder’s result back into the encoder, we get the result corresponding to that style, and so on.\nThe nice thing about this system is that it first uses the weights in the decoder to the fullest, making it a parameter-efficient model. Secondly, since each task, argument, etc., is decoupled, the system learns concepts better. For example, during training, brother Bob is always bald, so Bob’s hairstyle value is always bald during training. However, since the model learns what short hair and long hair are from other examples independently of the person, it can detect this during testing if Bob comes to Turkey and gets hair implants. Thanks to this, the model learns much better with much less data.\nNow we come back to LLMs. We are actually applying the TD part of this model, that is, using a single decoder for each task, in LLMs since the T5 models, especially in PrefixLM models, and when image tokens and (I think) the question are processed with self-attention, the TD logic is formed.\nThe second part is that when people look at a picture, we extract the details, relationships, etc. over time; all the details don’t come at a single glance, right? Well, this part actually corresponds to the concept we call test-time compute. For example, as we look at the image on the left below, the details on the right emerge.\nBased on what we’ve learned up to this point, trying to process everything at once is not logical. Learning the relationships one by one during training and processing the image over time using more compute/time during testing is an effective solution in terms of both the number of parameters and learning more with less data. Our next problem is this: We don’t want to process the image all at once, okay, but we also don’t want to process the entire image; we want to process as much as necessary for the information we are interested in to save time and money. This is where reasoning comes into play. What does a good LLM model do in terms of reasoning? It divides the question we ask into the necessary parts and solves the parts step by step, and stops when it reaches the result. By doing this, we have the following system:\nI’m saying that if I were shown a picture and asked, ‘What is the size of the bag of the woman holding the bag that the girl is looking at?’, my brain would process the image in a similar way and wouldn’t look for more details.\nI think the BU-TD model itself is very limited in terms of input and output ranges but the main idea is still strong and I believe VLMs are very close to implementing this idea into the AI models.\nThat’s it, I couldn’t come to a conclusion with the text. These things suddenly came to my mind while reading a very unrelated article, I thought I’d write them down. Good luck and thanks for reading up to this point!"
+    "text": "Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical problem. The structure of RNN does not allow to do parallel computing. There were some optimizations to make them faster but the main problem remains. The Transformer model completely removed RNNs and built all architecture based on attention mechanism.\nLike most neural machine translation models, Transformers have an encoder-decoder structure. It uses stacked encoders that contain attention layers and Feed Forward Neural networks."
   },
   {
-    "objectID": "posts/test_time_compute/index.html#references",
-    "href": "posts/test_time_compute/index.html#references",
-    "title": "Test-Time Compute, Reasoning and Human Brain",
+    "objectID": "posts/transformers/index.html#encoder-and-decoder-stacks",
+    "href": "posts/transformers/index.html#encoder-and-decoder-stacks",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Encoder and Decoder Stacks",
+    "text": "Encoder and Decoder Stacks\n\nEncoder\nEach encoder layer has two sub-layers, the “multi-head attention layer” (It will be explained in the next chapters) and a Feedforward Neural Network, both of them followed by a normalization layer and there is 2 residual connection around each sub-layer. Each encoder layer has the same structure but they do not have the same weights. To use residual connections, all sub-layers and embedding layers output the same dimension. We denote this dimension as parameter \\(d_\n{model}\\). In the original article \\(d_{model} = 512\\). The first encoder’s input is embedding vectors of the source sentence with position information injected (will be explained in the positional encoding subsection). Each of the other encoders’ inputs is the output of the encoder below.\nIn summary: An encoder receives input as a list of vectors. Then it processes these vectors by passing them to a self-attention layer, then sends them to a Feedforward Neural Network. Finally, the output goes to the next encoder. The last encoder sends its output to every decoder. The number of Encoders is a hyperparameter.\n\n\n\nThe word at each position goes through a self-attention process. Then, each result pass through a Feedforward Neural Network (Same DNN but each vector pass through separately) In this example, there are two words but the maximum number of words (that can be given to the model) is a hyper-parameter.\n\n\n\n\nDecoder\nThe structure of the decoder is nearly the same as the encoder. The difference is, decoder layer has one more sub-layer that contains a “masked” multi-head attention layer. When predicting the position “i” we need to be sure about we are attending the known outputs at position &lt; “i”. The Transformer model is auto-regressive, it makes predictions one part at a time, and uses its output to decide what to do next.\nDuring training, we are using teacher-forcing. Teacher forcing is passing the true output to the next time step regardless of what the model predicts at the current time step. As the Transformer predicts each word, self-attention allows it to look at the previous words in the input sequence to better predict the next word. To prevent the model from peeking at the expected output the model uses a look-ahead mask. This is what we call a masked multi-head attention layer. For a target sentence with 4 words, a look-ahead mask look like this:\n[[0, 1, 1, 1],\n [0, 0, 1, 1],\n [0, 0, 0, 1],\n [0, 0, 0, 0]]\nWe are using this matrix as below\nscaled_attention_logits -= mask * 1e9\nHere, scaled_attention_logits is the normalized result of matrix multiplication of query and key. We make the values from “future” near to zero by appending -1e9 to the values that need to be masked. With that, values from the future will have no impact when calculating attention value.\n\n\n\n\n\n\nImportant\n\n\n\nWhy we are using teacher forcing and give the true output to the model?\n\n\nShort answer: Otherwise we would have to run the decoder a number of times equal to the number of words in the target sentence.\nLonger answer: The secret lies in the implementation. Let’s say the true output is a three-word sentence and embedding vector dimension is five and our vocabulary size is twenty. Lastly, our batch size is 1 for ease of explanation. After passing these words from the embedding vector, we have a 1,3,5 dimensional matrix. After all of the decoders’ calculations, we have a vector that has the same dimension. As we can see in the Transformer model architecture we will pass this vector to a final linear/dense layer. The number of neurons in this layer is twenty because it is our vocabulary size. That means we are multiplying [1,3,5] dimensional matrix with [5,20] dimensional matrix. The result is [1,3,20] dimensional matrix. That means, every word predicted the next word by running the decoder one time. How do we calculate loss? With Sparse Categorical Cross Entropy. This explanation below is the documentation of SparseCategoricalCrossEntropy class in Tensorflow:\nUse this crossentropy loss function when there are two or more label classes.\nWe expect labels to be provided as integers.There should be ‘# classes’ floating point values per feature for ‘y_pred’ and a single floating point value per feature for ‘y_true’.\nExample:\n\ny_true = [1, 2]\ny_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]\n\n\n\nThe Transformer model architecture"
+  },
+  {
+    "objectID": "posts/transformers/index.html#self-attention",
+    "href": "posts/transformers/index.html#self-attention",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Self-Attention",
+    "text": "Self-Attention\nLet’s suppose we want to translate the following sentence:\n“The books were on the shelves because they are old.”\nWhat does “they” in this sentence refer to? Is it referring to the books or the shelves? It’s a simple question to a human, but not as simple as an algorithm. Self-attention allows the model to associate “they” with books.\nAn attention mechanism maps a query and a key-value pair to an output. All of them are vectors. The way to calculate output is the weighted sum of the values. Weights are computed by a function that uses query and key as input. These weights are not trainable, query and key values are calculated by trainable and learned weights.\nQuery, Key, and Value are created from the encoder’s input vectors(e.g. embedding of input words for the first layer) by multiplying these input vectors with 3 different weight matrices \\(W_Q\\), \\(W_K\\),\\(W_V\\) that can be trained during the training process. Every layer (both encoder and decoder layers) in the Transformer model has its \\(W_{Q}\\), \\(W_{K}\\), \\(W_{V}\\) matrices.\n\n\n\nCalculation of Query, Key and Value vectors\n\n\n\nHow Do We Use Query, Key, and Value to Calculate Attention?\nLet’s suppose we are calculation the self-attention for the word “better”. We will use “Scaled Dot-Product”.\n\nWe compute dot products of the query with all keys\nThe results will be divided by \\(sqrt(d_k)\\) where \\(d_k\\) is the dimension of the key vectors. This is called scaling.\nLastly, we apply the softmax function to the result from step two.\n\nThis will tell us, how much attention we need to give to each word to encode “better”. For faster processing, Queries are packed in the matrix Q, values are packed in the matrix V and keys are packed in the matrix K. The general scaled dot-product attention formula is:\n\\[Attention(Q, K, V) = softmax(\\\\frac{QK^T}{\\\\sqrt{d_k}})V\\]\n\n\n\nScaled Dot-Product Attention"
+  },
+  {
+    "objectID": "posts/transformers/index.html#multi-head-attention",
+    "href": "posts/transformers/index.html#multi-head-attention",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Multi-Head Attention",
+    "text": "Multi-Head Attention\nThe idea/question behind multi-head self-attention is: “How do we improve the model’s ability to focus on different features of the input sentence?”.\n\nWith 1 head self-attention, the encoding could be dominated by the actual word.\nMulti-head attention allows the model to learn different semantic meanings of attention. Eg. One for grammar, one for vocabulary, etc.\n\nFor example, if we have head=8 (referenced as h), there will be 8 different Q, K, and V matrices and 8 different outputs. \\(d_{k} = d_{v} = d_{model}/h\\), weights will have dimension:\n\n\\(W_{Q}\\): \\(d_{model} x d_{k}\\)\n\\(W_{K}\\): \\(d_{model} x d_{k}\\)\n\\(W_{V}\\): \\(d_{model} x d_{v}\\)\n\nand the outputs will be concatenated and multiplied by another weight matrix \\(W_{O}\\) with dimension \\((hd_{v} x d_{model})\\) to get the final\n\n\n\nMulti-Head Attention: We embed each word, create 8 “attention heads”, multiply X with weight matrices and find 8 different Key, Query, and Value matrices, calculate attention vector using these matrices, concatenate these matrices and multiply them with weight matrix \\(W^O\\) to get the output. This output is the output of the (for example) Multi-Head Attention layer and we will pass this output to the “Add and Normalize” layer."
+  },
+  {
+    "objectID": "posts/transformers/index.html#positional-encoding",
+    "href": "posts/transformers/index.html#positional-encoding",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Positional Encoding",
+    "text": "Positional Encoding\nAs the Transformer model doesn’t use recurrence, there isn’t any position information(time step t) in the model input. It is just a bag of words. To provide the model this important information, we inject(add) some information vector( positional encoding) to each embedding. These positional encoding vectors have the same dimension as embeddings.\nOne way to add this information is having a second embedding, as we have an embedding vector for “computer”, why shouldn’t we have an embedding for position 3? With this approach, the model can learn positional embeddings during training. The problem with this approach is, say we have 1000 training examples and the maximum input length is 50. If 800 of these training examples have the length of 30, the other 20 embedding vectors will be poorly trained and may not generalize well in practice.\nAs an alternative, we can use a static function that takes an integer input and give a vector in a way that captures the relationship between positions. This function should give that position 8 is more related to position 9 than position\n\nIn the Transformer model, authors decided to use sine and cosine functions of different frequencies:\n\n\\[PE_{(pos, 2i)} = sin(pos/10000^{2i/d_{model}})\\] \\[PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})\\]\nHere, pos is the position of the token, and i is the dimension. Each dimension of these positional encodings corresponds to a sinusoid. (A curve similar to the sine function but possibly shifted in phase, period, amplitude, or any combination thereof.) The wavelengths form a geometric progression from \\(2\\pi \\, to \\, 10000 \\cdot 2\\pi\\). This function is chosen by authors because they believe(hypothesized) this would allow the model to easily learn to attend by relative positions since for any fixed offset k, \\(PE_{pos+k}\\) can be represented as a linear function of \\(PE_{pos}\\).\nThat’s all I know :) Thank you for reading!"
+  },
+  {
+    "objectID": "posts/transformers/index.html#references",
+    "href": "posts/transformers/index.html#references",
+    "title": "Transformer Architecture: How Transformer Models Work?",
     "section": "References",
-    "text": "References\n\nBU-TD Model: “Image interpretation by iterative bottom-up top-down processing”\nT5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”"
-  },
-  {
-    "objectID": "posts/gnn_basics/index.html",
-    "href": "posts/gnn_basics/index.html",
-    "title": "Pytorch Geometric Basics: How Message Passing Works",
-    "section": "",
-    "text": "I’m working with GNNs for my MSc thesis and naturally chose PyTorch Geometric (PyG), one of the most popular libraries in the field. While PyG is incredibly easy to use, I realized I needed to understand how message passing works under the hood to effectively customize it for my specific experiments. Now that I’ve gained this understanding, I’ve written this post to share the inner workings of PyG with anyone else looking to build their own custom layers."
-  },
-  {
-    "objectID": "posts/gnn_basics/index.html#conclusion",
-    "href": "posts/gnn_basics/index.html#conclusion",
-    "title": "Pytorch Geometric Basics: How Message Passing Works",
-    "section": "Conclusion",
-    "text": "Conclusion\nIn this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the MessagePassing class: propagate, message, aggregate, and update. If you want to customize your GNN architecture and experiment with different message-passing schemes, understanding these methods is critical. With this knowledge, you can implement your own GNN layers and tailor them to your specific needs. I will drop a simple working code that I’ve borrowed from the PyG documentation below for reference.\nfrom typing import Optional\n\nimport torch\nfrom torch import Tensor\nfrom torch.nn import Linear, Parameter\nfrom torch_geometric.nn import MessagePassing\nfrom torch_geometric.utils import add_self_loops, degree\nfrom torch_geometric.data import Data\n\nclass GCNConv(MessagePassing):\n    def __init__(self, in_channels, out_channels):\n        super().__init__(aggr='add')  # \"Add\" aggregation (Step 5).\n        self.lin = Linear(in_channels, out_channels, bias=False)\n        self.bias = Parameter(torch.empty(out_channels))\n\n        self.reset_parameters()\n\n    def reset_parameters(self):\n        self.lin.reset_parameters()\n        self.bias.data.zero_()\n\n    def forward(self, x, edge_index):\n        # x has shape [N, in_channels]\n        # edge_index has shape [2, E]\n        print(\"Forward pass...\")\n        print(f\"x shape: {x.shape}\")\n        print(f\"edge_index shape: {edge_index.shape}\")\n\n        # Step 1: Add self-loops to the adjacency matrix.\n        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))\n\n        # Step 2: Linearly transform node feature matrix.\n        x = self.lin(x)\n\n        # Step 3: Compute normalization.\n        source, target = edge_index\n        deg = degree(target, x.size(0), dtype=x.dtype)\n        deg_inv_sqrt = deg.pow(-0.5)\n        deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0\n        norm = deg_inv_sqrt[source] * deg_inv_sqrt[target]\n\n        # Step 4-5: Start propagating messages.\n        out = self.propagate(edge_index, x=x, norm=norm)\n\n        # Step 6: Apply a final bias vector.\n        out = out + self.bias\n\n        return out\n\n    def message(self, x_i, x_j, norm, edge_index):\n        # x_j has shape [E, out_channels]\n        print(\"Creating messages...\")\n        print(f\"x_i shape: {x_i.shape}\")\n        print(f\"x_j shape: {x_j.shape}\")\n        print(f\"norm shape: {norm.shape}\")\n\n        # Step 4: Normalize node features.\n        return norm.view(-1, 1) * x_j\n\n    def aggregate(\n        self,\n        inputs: Tensor,\n        index: Tensor,\n        ptr: Optional[Tensor] = None,\n        dim_size: Optional[int] = None,\n    ) -&gt; Tensor:\n        print(\"Aggregating messages...\")\n        print(f\"Inputs shape: {inputs.shape}\")\n        print(f\"Index shape: {index.shape}\")\n        print(index)\n        return super().aggregate(inputs, index, ptr, dim_size)\n\n    def update(self, inputs: Tensor) -&gt; Tensor:\n        print(\"Updating node embeddings...\")\n        print(f\"Inputs shape: {inputs.shape}\")\n        print(inputs)\n        return super().update(inputs)\n\n\nedge_index = torch.tensor([[0, 1],\n                           [1, 0],\n                           [1, 2],\n                           [2, 1]], dtype=torch.long)\nx = torch.tensor([[-1], [0], [1]], dtype=torch.float)\n\ndata = Data(x=x, edge_index=edge_index.t().contiguous())\n\nconv = GCNConv(1, 2)\nout = conv(data.x, data.edge_index)\nprint(out)"
-  },
-  {
-    "objectID": "posts/gnn_basics/index.html#references",
-    "href": "posts/gnn_basics/index.html#references",
-    "title": "Pytorch Geometric Basics: How Message Passing Works",
-    "section": "References",
-    "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics, and also for the headline image reference\nAlso, a great YouTube video for GNN basics from Stanford\n\nThanks for coming so far, have fun!"
-  },
-  {
-    "objectID": "posts/career_advice_ai_summary/index.html",
-    "href": "posts/career_advice_ai_summary/index.html",
-    "title": "My summary of the “Career Advice in AI” Lecture",
-    "section": "",
-    "text": "I finally had time to watch the AI Career Advice lesson by Andrew Ng and Laurence Moroney. It was a great lesson for me as I’m about to graduate from my MSc and am ready to join the industry again! I’ve created a summary and wanted to share it with everyone, but I strongly recommend watching it.\nIn Andrew Ng’s introduction, he mentions two important points. The first one is that, although saying this is (according to some people) politically incorrect, working hard is important for success. But there definitely are some exceptions, like when you have an injury, you just have a kid, and examples like that. The second one is about surrounding yourself with bright minds, high-quality people, both in your personal life and your work life, as you are the average of your surroundings. Choosing with whom you work is more important than where you work. Additionally, he mentioned that AI makes engineers faster, but the ones who also listen the user feedback, communicate with other people will be the fastest ones.\nLaurence Moroney makes crucial and thoughtful additions to these. About the hard working part, he said hard work ≠ amount of time spent. It must be something measurable, like what is your output after those hours? X new products? Y papers read and understand the papers properly? And about your surroundings, he reminded you that those people also will choose if they want to see you around. Even if you are a 10x engineer, if you are a rude person, people won’t want to see you. After these additions, he talked about the 3 pillars of success that you need to show to the employers, not just tell."
-  },
-  {
-    "objectID": "posts/career_advice_ai_summary/index.html#understanding-depth",
-    "href": "posts/career_advice_ai_summary/index.html#understanding-depth",
-    "title": "My summary of the “Career Advice in AI” Lecture",
-    "section": "Understanding Depth",
-    "text": "Understanding Depth\nSurface-level knowledge is not enough anymore. You need to have academic knowledge, diverse skills, and the ability to separate noise from the real trends because engagement is the currency of social media, not the accuracy, so there will be a lot of noise there. By diverse skills, he doesn’t mean knowing both about NLP and CV; he means knowing about training ML models while also knowing about how to deploy them, scale them, and build an application on them to be valuable even if the AI hype completely deflates tomorrow. He also gave a practical strategy to filtering noise: Develop trusted sources and filter them actively. Learn more about the fundamentals of the hyped tech (enters the academic knowledge) before judging its impact (e.g., Hollywood is over, SWE is over). And always aware of the trends and know why it is a trend right now. As an example, think about “AI Agents” before directly going into implementation, understand how they work, “when” and “why” it adds value, and when it won’t add any value. And how will it help?"
-  },
-  {
-    "objectID": "posts/career_advice_ai_summary/index.html#business-focus",
-    "href": "posts/career_advice_ai_summary/index.html#business-focus",
-    "title": "My summary of the “Career Advice in AI” Lecture",
-    "section": "Business Focus",
-    "text": "Business Focus\nYou need to translate the capabilities of AI into a real business outcome. If you go directly with the hype, aka agents, these days, you will fail. First, you need to peel apart the business requirements, ask “why” and “what” a lot of times to understand the real bottleneck/problem. Additionally, risks of mispredictions, hallucinations, biases, and misuses (some edge cases you will never think of will be found by the users) are here and will stay here. Knowing how to manage those risks while making a process an AI-enabled process is critical."
-  },
-  {
-    "objectID": "posts/career_advice_ai_summary/index.html#bias-towards-delivery",
-    "href": "posts/career_advice_ai_summary/index.html#bias-towards-delivery",
-    "title": "My summary of the “Career Advice in AI” Lecture",
-    "section": "Bias Towards Delivery",
-    "text": "Bias Towards Delivery\nBuilding cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.\nAnd some additional points:\n\nYou will make mistakes, so learn from them and also be helpful when someone else makes a mistake\nVibe coding is good unless you mindlessly copy-paste the code. Every time you use AI to generate code, you are taking technical debt.\nLearning how to fine-tune those small LLMs is currently one of the most important things, due to privacy reasons in a lot of industries\n\nIf you want to watch:"
-  },
-  {
-    "objectID": "notes/slurm/index.html",
-    "href": "notes/slurm/index.html",
-    "title": "Slurm Notes",
-    "section": "",
-    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Hi Everyone!",
-    "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
-  },
-  {
-    "objectID": "index.html#my-published-articles",
-    "href": "index.html#my-published-articles",
-    "title": "Hi Everyone!",
-    "section": "My Published Articles",
-    "text": "My Published Articles\n… TBD …"
-  },
-  {
-    "objectID": "index.html#what-is-what",
-    "href": "index.html#what-is-what",
-    "title": "Hi Everyone!",
-    "section": "What is What?",
-    "text": "What is What?\nIn the blogs section, I share whatever I learn about in a kind of detailed, structered and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\nIn the notes section, I decided share quick notes and commands that I find useful for my daily work."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
-  },
-  {
-    "objectID": "myposts.html",
-    "href": "myposts.html",
-    "title": "Welcome to My Posts",
-    "section": "",
-    "text": "My summary of the “Career Advice in AI” Lecture\n\n\n\nml\n\n\n\n\n\n\n\n\n\nDec 20, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n\n\nml\n\n\n\n\n\n\n\n\n\nOct 18, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n\n\nacademy\n\n\n\n\n\n\n\n\n\nOct 13, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n\n\nml\n\nllm\n\n\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\nNusret Ozates\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\n\n\nNov 8, 2020\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "notes.html",
-    "href": "notes.html",
-    "title": "Quick Notes",
-    "section": "",
-    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html",
-    "href": "posts/docker-get-started/index.html",
-    "title": "Things you need to know about Docker to get started",
-    "section": "",
-    "text": "Some useful commands and concepts to use Docker!\nThe original video that I take notes from :\nIn this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time."
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#why-do-we-need-docker",
-    "href": "posts/docker-get-started/index.html#why-do-we-need-docker",
-    "title": "Things you need to know about Docker to get started",
-    "section": "Why do we need Docker?",
-    "text": "Why do we need Docker?\nWe have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.\n\n\n\nThe matrix from Hell"
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#what-does-docker-do",
-    "href": "posts/docker-get-started/index.html#what-does-docker-do",
-    "title": "Things you need to know about Docker to get started",
-    "section": "What does docker do?",
-    "text": "What does docker do?\nRun each component in a separate, isolated environment with its dependencies and its libraries. All within the same VM or host."
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#what-are-the-differences-with-vm",
-    "href": "posts/docker-get-started/index.html#what-are-the-differences-with-vm",
-    "title": "Things you need to know about Docker to get started",
-    "section": "What are the differences with VM?",
-    "text": "What are the differences with VM?\nVMs are complete isolation! They have their hardware, kernel, and OS. But docker containers use the same hardware and same Linux kernel.\n\nThat is the reason why you can’t have a Windows container. You can say: “Hey! I have a docker on windows!”. Then I say, look for WSL. 😄\nContainers meant to run a specific task or process, not meant to host an OS.\n\n\n\n\nVirtual Machines vs Containers"
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#some-useful-docker-commands",
-    "href": "posts/docker-get-started/index.html#some-useful-docker-commands",
-    "title": "Things you need to know about Docker to get started",
-    "section": "Some Useful Docker Commands",
-    "text": "Some Useful Docker Commands\n\ndocker version: It gives the docker version.\ndocker run: It is used to run a container from an image\n\ndocker run nginx ⇒ Runs instance of the Nginx application on the docker host\ndocker run -d nginx ⇒ Runs in the detached mode. That means the container will run in the background, and you can continue to use the terminal\ndocker run — name webapp nginx ⇒ Run a container with the given name\ndocker run -it nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something\ndocker run -v /opt/datadir:/var/lib/mysql ….. ⇒ The container maps /var/lib/mysql(in docker) to /opt/datadir(in your pc). Your data will persist even when you delete the container.\ndocker run -p 80:5000 nginx ⇒ Forward your port 80 to container’s port 5000.\n\n\nNote: You can’t bind the same host port to the multiple docker instances.\n\n\ndocker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.\ndocker stop: It stops the running containers. Needs container ID or name.\n\ndocker stop silly_sammet\n\ndocker rm: Removes stopped or exited container permanently. If it prints the name back, we are good.\n\ndocker rm silly_sammet\n\ndocker images: Gives a list of downloaded images and their sizes.\ndocker rmi: Removes the given image. You need to remove all dependent containers before.\n\ndocker rmi nginx\n\ndocker pull: Just downloads the images so you won’t wait when you want to run the image.\ndocker exec: Execute a command in the container.\n\ndocker exec distracted_meclintock(container name) cat /etc/host(command)\n\ndocker inspect: It returns all details of the container in JSON format.\n\ndocker inspect webapp\n\ndocker logs: This shows the logs of a container. It is useful when your container runs in detached mode"
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#tags",
-    "href": "posts/docker-get-started/index.html#tags",
-    "title": "Things you need to know about Docker to get started",
-    "section": "Tags",
-    "text": "Tags\nFor example “docker redis” command will run the latest Redis version for you. What if you want to use an older version of Redis?\ndocker run redis:4.0 bold part is the Tag of a container.\nWhere can I find tags of the docker image?\nhttps://hub.docker.com\nEnvironment Variables\nIn python we access an environment variable like this:\nos.environ.get(‘APP_COLOR’)\nHow can you set it in docker?\ndocker run -e APP_COLOR=pink web-app\nHow to create my own image?\nLet’s say we have a webserver to run on an Ubuntu OS, what would be our steps to run it?\n\nOS — Ubuntu\nUpdate apt repo\nInstall dependencies using apt\nInstall Python dependencies using pip\nCopy source code to ex. /opt folder\nRun web server using ex. “flask” command\n\nThen we need to do these steps in a file called Dockerfile.\nFROM Ubuntu  \nRUN apt-get update \nRUN apt-get install python  \nRUN pip install flask \nRUN pip install flask-mysql  \nCOPY . /opt/source-code  \nENTRYPOINT FLASK_APP = /opt/source-code/app.py flask run\nLet’s build our Dockerfile and have a docker image!\ndocker build -t nusret/chatbot \"Address of the dockerfile without double quote\"\nAnd push it to the DockerHub if you want\ndocker push nusret/chatbot"
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#what-is-this-dockerfile",
-    "href": "posts/docker-get-started/index.html#what-is-this-dockerfile",
-    "title": "Things you need to know about Docker to get started",
-    "section": "What is this Dockerfile?",
-    "text": "What is this Dockerfile?\n\nDockerfile is a text file written in a specific format that docker can understand."
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#how-can-i-exportimport-my-docker-image-as-a-tar-file",
-    "href": "posts/docker-get-started/index.html#how-can-i-exportimport-my-docker-image-as-a-tar-file",
-    "title": "Things you need to know about Docker to get started",
-    "section": "How can I export/import my docker image as a tar file?",
-    "text": "How can I export/import my docker image as a tar file?\nYou can export your Docker Image as a .tar file with this command:\ndocker save —output chatbot.tar nusret/chatbot\nAnd you can easily import it with a very similar command.\ndocker load —input chatbot.tar"
-  },
-  {
-    "objectID": "posts/docker-get-started/index.html#entrypoint-vs-cmd",
-    "href": "posts/docker-get-started/index.html#entrypoint-vs-cmd",
-    "title": "Things you need to know about Docker to get started",
-    "section": "ENTRYPOINT VS CMD",
-    "text": "ENTRYPOINT VS CMD\nLet’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:\nFROM Ubuntu  \nCMD [\"sleep\",\"5\"]\nWhen I run the command:\ndocker run sleeper sleep 10\nThis CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nThis time when I run:\ndocker run sleeper 10\nThe “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nCMD [\"5\"]"
+    "text": "References\n\nhttp://jalammar.github.io/illustrated-transformer/ - An excellent overview of Transformer models.\nhttps://kazemnejad.com/blog/transformer_architecture_positional_encoding/ - A detailed explanation of positional encodings.\nhttps://arxiv.org/pdf/1409.0473.pdf - Neural Machine Translation by Jointly Learning to Align and Translate.\nhttps://arxiv.org/abs/1706.03762v5 - Attention Is All You Need."
   },
   {
     "objectID": "posts/paragraph_dev_sentece_skill/index.html",
@@ -257,5 +124,236 @@
     "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
     "section": "References",
     "text": "References\n\nKoc University Writing Center\nSentence Variety. (2018). Retrieved from https://owl.purdue.edu/owl/general_writing/academic_writing/sentence_variety/index.html\nMaking Complex Writing Intelligible with Known-New Contract. (2018). Global Communication Center, Carnegie Mellon University. Retrieved from https://www.cmu.edu/gcc/handouts/old-new-handout-pdf"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html",
+    "href": "posts/docker-get-started/index.html",
+    "title": "Things you need to know about Docker to get started",
+    "section": "",
+    "text": "Some useful commands and concepts to use Docker!\nThe original video that I take notes from :\nIn this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#why-do-we-need-docker",
+    "href": "posts/docker-get-started/index.html#why-do-we-need-docker",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Why do we need Docker?",
+    "text": "Why do we need Docker?\nWe have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.\n\n\n\nThe matrix from Hell"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#what-does-docker-do",
+    "href": "posts/docker-get-started/index.html#what-does-docker-do",
+    "title": "Things you need to know about Docker to get started",
+    "section": "What does docker do?",
+    "text": "What does docker do?\nRun each component in a separate, isolated environment with its dependencies and its libraries. All within the same VM or host."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#what-are-the-differences-with-vm",
+    "href": "posts/docker-get-started/index.html#what-are-the-differences-with-vm",
+    "title": "Things you need to know about Docker to get started",
+    "section": "What are the differences with VM?",
+    "text": "What are the differences with VM?\nVMs are complete isolation! They have their hardware, kernel, and OS. But docker containers use the same hardware and same Linux kernel.\n\nThat is the reason why you can’t have a Windows container. You can say: “Hey! I have a docker on windows!”. Then I say, look for WSL. 😄\nContainers meant to run a specific task or process, not meant to host an OS.\n\n\n\n\nVirtual Machines vs Containers"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#some-useful-docker-commands",
+    "href": "posts/docker-get-started/index.html#some-useful-docker-commands",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Some Useful Docker Commands",
+    "text": "Some Useful Docker Commands\n\ndocker version: It gives the docker version.\ndocker run: It is used to run a container from an image\n\ndocker run nginx ⇒ Runs instance of the Nginx application on the docker host\ndocker run -d nginx ⇒ Runs in the detached mode. That means the container will run in the background, and you can continue to use the terminal\ndocker run — name webapp nginx ⇒ Run a container with the given name\ndocker run -it nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something\ndocker run -v /opt/datadir:/var/lib/mysql ….. ⇒ The container maps /var/lib/mysql(in docker) to /opt/datadir(in your pc). Your data will persist even when you delete the container.\ndocker run -p 80:5000 nginx ⇒ Forward your port 80 to container’s port 5000.\n\n\nNote: You can’t bind the same host port to the multiple docker instances.\n\n\ndocker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.\ndocker stop: It stops the running containers. Needs container ID or name.\n\ndocker stop silly_sammet\n\ndocker rm: Removes stopped or exited container permanently. If it prints the name back, we are good.\n\ndocker rm silly_sammet\n\ndocker images: Gives a list of downloaded images and their sizes.\ndocker rmi: Removes the given image. You need to remove all dependent containers before.\n\ndocker rmi nginx\n\ndocker pull: Just downloads the images so you won’t wait when you want to run the image.\ndocker exec: Execute a command in the container.\n\ndocker exec distracted_meclintock(container name) cat /etc/host(command)\n\ndocker inspect: It returns all details of the container in JSON format.\n\ndocker inspect webapp\n\ndocker logs: This shows the logs of a container. It is useful when your container runs in detached mode"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#tags",
+    "href": "posts/docker-get-started/index.html#tags",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Tags",
+    "text": "Tags\nFor example “docker redis” command will run the latest Redis version for you. What if you want to use an older version of Redis?\ndocker run redis:4.0 bold part is the Tag of a container.\nWhere can I find tags of the docker image?\nhttps://hub.docker.com\nEnvironment Variables\nIn python, we access an environment variable like this:\nos.environ.get(‘APP_COLOR’)\nHow can you set it in docker?\ndocker run -e APP_COLOR=pink web-app\nHow to create my own image?\nLet’s say we have a webserver to run on an Ubuntu OS, what would be our steps to run it?\n\nOS — Ubuntu\nUpdate apt repo\nInstall dependencies using apt\nInstall Python dependencies using pip\nCopy source code to ex. /opt folder\nRun web server using ex. “flask” command\n\nThen we need to do these steps in a file called Dockerfile.\nFROM Ubuntu  \nRUN apt-get update \nRUN apt-get install python  \nRUN pip install flask \nRUN pip install flask-mysql  \nCOPY . /opt/source-code  \nENTRYPOINT FLASK_APP = /opt/source-code/app.py flask run\nLet’s build our Dockerfile and have a docker image!\ndocker build -t nusret/chatbot \"Address of the dockerfile without double quote\"\nAnd push it to the DockerHub if you want\ndocker push nusret/chatbot"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#what-is-this-dockerfile",
+    "href": "posts/docker-get-started/index.html#what-is-this-dockerfile",
+    "title": "Things you need to know about Docker to get started",
+    "section": "What is this Dockerfile?",
+    "text": "What is this Dockerfile?\n\nDockerfile is a text file written in a specific format that docker can understand."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#how-can-i-exportimport-my-docker-image-as-a-tar-file",
+    "href": "posts/docker-get-started/index.html#how-can-i-exportimport-my-docker-image-as-a-tar-file",
+    "title": "Things you need to know about Docker to get started",
+    "section": "How can I export/import my docker image as a tar file?",
+    "text": "How can I export/import my docker image as a tar file?\nYou can export your Docker Image as a .tar file with this command:\ndocker save —output chatbot.tar nusret/chatbot\nAnd you can easily import it with a very similar command.\ndocker load —input chatbot.tar"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#entrypoint-vs-cmd",
+    "href": "posts/docker-get-started/index.html#entrypoint-vs-cmd",
+    "title": "Things you need to know about Docker to get started",
+    "section": "ENTRYPOINT VS CMD",
+    "text": "ENTRYPOINT VS CMD\nLet’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:\nFROM Ubuntu  \nCMD [\"sleep\",\"5\"]\nWhen I run the command:\ndocker run sleeper sleep 10\nThis CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nThis time when I run:\ndocker run sleeper 10\nThe “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?\nFROM Ubuntu  \nENTRYPOINT [\"sleep\"]\nCMD [\"5\"]"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#docker-networking",
+    "href": "posts/docker-get-started/index.html#docker-networking",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Docker Networking",
+    "text": "Docker Networking\n\n\nDefault network a container gets attached to. A bridged network is a private internal network created by docker on the host. All containers are attached to this network and have their internal IP addresses. Containers can access each other by using these internal IPs. If you want to access any of these containers from the outside world, you need to bind/forward the host’s port to the ports on the Docker network\nAnother way to access these containers is removing the network isolation between the docker host and the docker container by associating the container with the host’s network.\nIn the “none” network, the container is not attached to any network, and it is not accessible from external networks or any other docker containers.\n\nContainers can access each other using their names. Docker creates a DNS server that helps containers using each other’s names."
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#docker-compose",
+    "href": "posts/docker-get-started/index.html#docker-compose",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Docker Compose",
+    "text": "Docker Compose\n\nWhen we have a complex app that runs with multiple containers, we need to write lots of run commands! But we have docker-compose.\nWith the latest command at the bottom, you can run all of these images and more! We are using a .yaml file to configure docker-compose.\nLet’s say we have a sample application like this:\n\nWhat you would do without docker-compose:\ndocker run -d --name=redis redis \ndocker run -d --name=db postgres:9.4 \ndocker run -d --name=vote -p 5000:80 --link redis:redis voting-app \ndocker run -d --name=result -p 5001:80 --link db:db result-app \ndocker run -d --name=worker --link db:db --link redis:redis worker\nWith docker-compose, you can write a docker-compose.yaml file like this:\nredis:\n  image: redis\ndb:\n  image: postgres:9.4\nvote:\n  image: voting-app\n  ports:\n    - 5000:80\nresult:\n  image: result-app\n  ports:\n    - 5001:80\nworker:\n  image: worker  \nAnd run them all with a single command:\ndocker-compose up\nWhat if some of the images are not already built or not in the DockerHub? Like the “voting-app” in our example, we can change the image key with a build key and specify a location of a directory that contains the application code and Dockerfile.\nChange this code:\nvote:\n  image: voting-app\n  ports:\n    - 5000:80\nTo this:\nvote:\n  build: ./vote\n  ports:\n    - 5000:80"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#docker-compose-versions",
+    "href": "posts/docker-get-started/index.html#docker-compose-versions",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Docker Compose Versions",
+    "text": "Docker Compose Versions\nDocker-compose evolved over time and now supports a lot more options than it did in the beginning.\n\nVersion 1\nredis:\n  image: redis\ndb:\n  image: postgres:9.4\nvote:\n  image: voting-app\n  ports:\n    - 5000:80\n  links:\n    - redis\nIt has several limitations. For example, if you wanted to deploy containers on a different network other than the default bridge network, there was no way of specifying that in this version of the file. Also, say you have a startup dependency or startup order of some kind. For example, your database container must come up first, and only then should the voting app be started. There was no way you could specify that in this version.\n\n\nVersion 2\nversion: 2\nservices:\n  redis:\n    image: redis\n  db:\n    image: postgres:9.4\n  vote:\n    image: voting-app\n    ports:\n      - 5000:80\n    depends_on:\n      - redis\nSupport for these came in version 2. With version 2 and up, the format of the file also changed. You no longer specify your stack information directly as you did before. It is all encapsulated in the services section.\nAnother difference is with networking. With version 2, docker-compose automatically creates a dedicated bridged network for this application and then attaches all containers to that new network. All containers are then able to communicate with each other using each other’s service name. So you don’t need to use links.\n\n\nVersion 3\nversion: 3\nservices:\n  redis:\n    image: redis\n  db:\n    image: postgres:9.4\n  vote:\n    image: voting-app\n    ports:\n      - 5000:80\nThis is the latest version of today. Version 3 comes with support for the docker swarm. There are some options removed and added. To see details: https://docs.docker.com/compose/"
+  },
+  {
+    "objectID": "posts/docker-get-started/index.html#networking-in-docker-compose",
+    "href": "posts/docker-get-started/index.html#networking-in-docker-compose",
+    "title": "Things you need to know about Docker to get started",
+    "section": "Networking in Docker Compose",
+    "text": "Networking in Docker Compose\nLet us say we modify the architecture a little bit to contain the traffic from the different sources in separate networks. For example, we would like to separate the user-generated traffic from the application’s internal traffic. So, we create a front-end network dedicated to the traffic from users and a backend network dedicated to the traffic within the application.\n\nThis is the .yaml file you need to write:\nversion: \"3\"\nservices:\n  redis:\n    image: redis\n    networks:\n      - back-end\n  db:\n    image: postgres:9.4\n    networks:\n      - back-end\n  vote:\n    image: voting-app\n    ports:\n      - \"5000:80\"\n    networks:\n      - front-end\n      - back-end\n  result:\n    image: result-app\n    ports:\n      - \"5001:80\"\n    networks:\n      - front-end\n      - back-end\n  worker:\n    image: worker\n    networks:\n      - front-end\n      - back-end\n\nnetworks:\n  front-end:\n    driver: bridge\n  back-end:\n    driver: bridge\nSo, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the KodeKlaud’s channel!"
+  },
+  {
+    "objectID": "posts/attention_mechanism/index.html",
+    "href": "posts/attention_mechanism/index.html",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "",
+    "text": "In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find \\(argmax_y \\, p(y|x)\\). Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector."
+  },
+  {
+    "objectID": "posts/attention_mechanism/index.html#rnn-encoder-decoder",
+    "href": "posts/attention_mechanism/index.html#rnn-encoder-decoder",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "RNN Encoder-Decoder",
+    "text": "RNN Encoder-Decoder\nLet’s look at the encoder-decoder architecture more formally.\n\nEncoder\nThe encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c. To calculate c, we calculate hidden states with:\n\\[ h_t = f(h_{t-1}, x_t) \\]\nand vector c is equal to:\n\\[ c = q\\left(\\{h_1, h_2, \\ldots, h_{T_x}\\}\\right) \\]\n\\(h_t \\in R^n\\) is the hidden state at time t, c is a vector, generated from the sequence of hidden states, f and q are some non-linear functions. As an example, f can be an LSTM and \\(q\\left(\\{h_1, h_2, \\ldots, h_{T_x}\\}\\right)\\) can be equal to \\(h_{T_x}\\), the last hidden state of the encoder.\n\n\nDecoder\n\n\n\n\n\n\nNote\n\n\n\nIn the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.\n\n\nThe decoder predicts the next word \\(y_t\\), given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:\n\\[ p(y) = \\prod_{t=1}^{T_y} p(y_t | y_1, ..., y_{t-1}, c) \\]\nHow do we calculate \\(p(y_t | y_1, ..., y_{t-1}, c)\\)?\n\\[ p(y_t | y_1, ..., y_{t-1}, c) = g(y_{t-1}, s_t, c) \\]\nwhere g is a non-linear function that outputs the probability of \\(y_t\\) and \\(s_t\\) is the hidden state of the RNN."
+  },
+  {
+    "objectID": "posts/attention_mechanism/index.html#attention-mechanism-a-new-approach-to-encoder-decoder-structure",
+    "href": "posts/attention_mechanism/index.html#attention-mechanism-a-new-approach-to-encoder-decoder-structure",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "Attention Mechanism: A new approach to Encoder-Decoder Structure",
+    "text": "Attention Mechanism: A new approach to Encoder-Decoder Structure\n\nEncoder\nIn the encoder structure, the hidden states are calculated as Eq.1. Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.\n\\[ h_j = [\\overrightarrow{h_j^T}; \\overleftarrow{h_j^T}] \\]\n\n\nDecoder\nIn the decoder structure, probability of each word is computed according to previous word’s vector \\(y_{i-1}\\) , hidden state \\(s_i\\) and context vector \\(c_i\\).\n\\[ p(y_i | y_1, ..., y_{i-1}, x) = g(y_{i-1}, s_i, c_i) \\]\nHidden state is computed according to previous hidden state \\(s_{i-1}\\), previous word’s vector \\(y_{i-1}\\) and current context vector \\(c_i\\).\n\\[ s_i = f(s_{i-1}, y_{i-1}, c_i) \\]\nThe context vector \\(c_i\\) depends on all hidden states with their weights. These weights represent the amount of “attention” needed to be given to predict next word \\(y_i\\).\n\\[ c_i = \\sum_{j=1}^{T_x} \\alpha_{ij} h_j \\]\nwhere \\(\\alpha_{ij}\\) is the weight for hidden state \\(h_j\\) when predicting word \\(y_i\\). The “attention amount” calculated by the formula:\n\\[ \\alpha_{ij} = \\frac{exp(e_{ij})}{\\sum_{k=1}^{T_x} exp(e_{ik})} \\]\n\\(e(i,j)\\) represents “energy”, the importance of hidden state \\(h_j\\), respect to the previous hidden state \\(s_{i-1}\\). It is calculated by concatenation of \\(h_j\\) and \\(s_{i-1}\\) is fed through a feedforward neural network a, which allows to train an alignment model through backward propagation.\n\\[ e_{ij} = a(s_{i-1}, h_j) \\]\nAnd with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models."
+  },
+  {
+    "objectID": "posts/attention_mechanism/index.html#references",
+    "href": "posts/attention_mechanism/index.html#references",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "References",
+    "text": "References\n\nNeural Machine Translation by Jointly Learning to Align and Translate"
+  },
+  {
+    "objectID": "notes/slurm/index.html",
+    "href": "notes/slurm/index.html",
+    "title": "Slurm Notes",
+    "section": "",
+    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Hi Everyone!",
+    "section": "",
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
+  },
+  {
+    "objectID": "index.html#my-published-articles",
+    "href": "index.html#my-published-articles",
+    "title": "Hi Everyone!",
+    "section": "My Published Articles",
+    "text": "My Published Articles\n… TBD …"
+  },
+  {
+    "objectID": "index.html#what-is-what",
+    "href": "index.html#what-is-what",
+    "title": "Hi Everyone!",
+    "section": "What is What?",
+    "text": "What is What?\nIn the blogs section, I share whatever I learn about in a kind of detailed, structered and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\nIn the notes section, I decided share quick notes and commands that I find useful for my daily work."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+  },
+  {
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "My summary of the “Career Advice in AI” Lecture\n\n4 min\n\n\nml\n\n\n\n\n\n\n\nDec 20, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nOct 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n9 min\n\n\nacademy\n\n\n\n\n\n\n\nOct 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n5 min\n\n\nml\n\nllm\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\n\n\n\n\n\n\n\n\n\nTransformer Architecture: How Transformer Models Work?\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nFeb 20, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nAttention mechanism and how it works on neural machine translation\n\n3 min\n\n\nml\n\n\n\n\n\n\n\nDec 13, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n10 min\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\nNov 8, 2020\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Quick Notes",
+    "section": "",
+    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/career_advice_ai_summary/index.html",
+    "href": "posts/career_advice_ai_summary/index.html",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "",
+    "text": "I finally had time to watch the AI Career Advice lesson by Andrew Ng and Laurence Moroney. It was a great lesson for me as I’m about to graduate from my MSc and am ready to join the industry again! I’ve created a summary and wanted to share it with everyone, but I strongly recommend watching it.\nIn Andrew Ng’s introduction, he mentions two important points. The first one is that, although saying this is (according to some people) politically incorrect, working hard is important for success. But there definitely are some exceptions, like when you have an injury, you just have a kid, and examples like that. The second one is about surrounding yourself with bright minds, high-quality people, both in your personal life and your work life, as you are the average of your surroundings. Choosing with whom you work is more important than where you work. Additionally, he mentioned that AI makes engineers faster, but the ones who also listen the user feedback, communicate with other people will be the fastest ones.\nLaurence Moroney makes crucial and thoughtful additions to these. About the hard working part, he said hard work ≠ amount of time spent. It must be something measurable, like what is your output after those hours? X new products? Y papers read and understand the papers properly? And about your surroundings, he reminded you that those people also will choose if they want to see you around. Even if you are a 10x engineer, if you are a rude person, people won’t want to see you. After these additions, he talked about the 3 pillars of success that you need to show to the employers, not just tell."
+  },
+  {
+    "objectID": "posts/career_advice_ai_summary/index.html#understanding-depth",
+    "href": "posts/career_advice_ai_summary/index.html#understanding-depth",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "Understanding Depth",
+    "text": "Understanding Depth\nSurface-level knowledge is not enough anymore. You need to have academic knowledge, diverse skills, and the ability to separate noise from the real trends because engagement is the currency of social media, not the accuracy, so there will be a lot of noise there. By diverse skills, he doesn’t mean knowing both about NLP and CV; he means knowing about training ML models while also knowing about how to deploy them, scale them, and build an application on them to be valuable even if the AI hype completely deflates tomorrow. He also gave a practical strategy to filtering noise: Develop trusted sources and filter them actively. Learn more about the fundamentals of the hyped tech (enters the academic knowledge) before judging its impact (e.g., Hollywood is over, SWE is over). And always aware of the trends and know why it is a trend right now. As an example, think about “AI Agents” before directly going into implementation, understand how they work, “when” and “why” it adds value, and when it won’t add any value. And how will it help?"
+  },
+  {
+    "objectID": "posts/career_advice_ai_summary/index.html#business-focus",
+    "href": "posts/career_advice_ai_summary/index.html#business-focus",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "Business Focus",
+    "text": "Business Focus\nYou need to translate the capabilities of AI into a real business outcome. If you go directly with the hype, aka agents, these days, you will fail. First, you need to peel apart the business requirements, ask “why” and “what” a lot of times to understand the real bottleneck/problem. Additionally, risks of mispredictions, hallucinations, biases, and misuses (some edge cases you will never think of will be found by the users) are here and will stay here. Knowing how to manage those risks while making a process an AI-enabled process is critical."
+  },
+  {
+    "objectID": "posts/career_advice_ai_summary/index.html#bias-towards-delivery",
+    "href": "posts/career_advice_ai_summary/index.html#bias-towards-delivery",
+    "title": "My summary of the “Career Advice in AI” Lecture",
+    "section": "Bias Towards Delivery",
+    "text": "Bias Towards Delivery\nBuilding cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.\nAnd some additional points:\n\nYou will make mistakes, so learn from them and also be helpful when someone else makes a mistake\nVibe coding is good unless you mindlessly copy-paste the code. Every time you use AI to generate code, you are taking technical debt.\nLearning how to fine-tune those small LLMs is currently one of the most important things, due to privacy reasons in a lot of industries\n\nIf you want to watch:"
+  },
+  {
+    "objectID": "posts/gnn_basics/index.html",
+    "href": "posts/gnn_basics/index.html",
+    "title": "Pytorch Geometric Basics: How Message Passing Works",
+    "section": "",
+    "text": "I’m working with GNNs for my MSc thesis and naturally chose PyTorch Geometric (PyG), one of the most popular libraries in the field. While PyG is incredibly easy to use, I realized I needed to understand how message passing works under the hood to effectively customize it for my specific experiments. Now that I’ve gained this understanding, I’ve written this post to share the inner workings of PyG with anyone else looking to build their own custom layers."
+  },
+  {
+    "objectID": "posts/gnn_basics/index.html#conclusion",
+    "href": "posts/gnn_basics/index.html#conclusion",
+    "title": "Pytorch Geometric Basics: How Message Passing Works",
+    "section": "Conclusion",
+    "text": "Conclusion\nIn this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the MessagePassing class: propagate, message, aggregate, and update. If you want to customize your GNN architecture and experiment with different message-passing schemes, understanding these methods is critical. With this knowledge, you can implement your own GNN layers and tailor them to your specific needs. I will drop a simple working code that I’ve borrowed from the PyG documentation below for reference.\nfrom typing import Optional\n\nimport torch\nfrom torch import Tensor\nfrom torch.nn import Linear, Parameter\nfrom torch_geometric.nn import MessagePassing\nfrom torch_geometric.utils import add_self_loops, degree\nfrom torch_geometric.data import Data\n\nclass GCNConv(MessagePassing):\n    def __init__(self, in_channels, out_channels):\n        super().__init__(aggr='add')  # \"Add\" aggregation (Step 5).\n        self.lin = Linear(in_channels, out_channels, bias=False)\n        self.bias = Parameter(torch.empty(out_channels))\n\n        self.reset_parameters()\n\n    def reset_parameters(self):\n        self.lin.reset_parameters()\n        self.bias.data.zero_()\n\n    def forward(self, x, edge_index):\n        # x has shape [N, in_channels]\n        # edge_index has shape [2, E]\n        print(\"Forward pass...\")\n        print(f\"x shape: {x.shape}\")\n        print(f\"edge_index shape: {edge_index.shape}\")\n\n        # Step 1: Add self-loops to the adjacency matrix.\n        edge_index, _ = add_self_loops(edge_index, num_nodes=x.size(0))\n\n        # Step 2: Linearly transform node feature matrix.\n        x = self.lin(x)\n\n        # Step 3: Compute normalization.\n        source, target = edge_index\n        deg = degree(target, x.size(0), dtype=x.dtype)\n        deg_inv_sqrt = deg.pow(-0.5)\n        deg_inv_sqrt[deg_inv_sqrt == float('inf')] = 0\n        norm = deg_inv_sqrt[source] * deg_inv_sqrt[target]\n\n        # Step 4-5: Start propagating messages.\n        out = self.propagate(edge_index, x=x, norm=norm)\n\n        # Step 6: Apply a final bias vector.\n        out = out + self.bias\n\n        return out\n\n    def message(self, x_i, x_j, norm, edge_index):\n        # x_j has shape [E, out_channels]\n        print(\"Creating messages...\")\n        print(f\"x_i shape: {x_i.shape}\")\n        print(f\"x_j shape: {x_j.shape}\")\n        print(f\"norm shape: {norm.shape}\")\n\n        # Step 4: Normalize node features.\n        return norm.view(-1, 1) * x_j\n\n    def aggregate(\n        self,\n        inputs: Tensor,\n        index: Tensor,\n        ptr: Optional[Tensor] = None,\n        dim_size: Optional[int] = None,\n    ) -&gt; Tensor:\n        print(\"Aggregating messages...\")\n        print(f\"Inputs shape: {inputs.shape}\")\n        print(f\"Index shape: {index.shape}\")\n        print(index)\n        return super().aggregate(inputs, index, ptr, dim_size)\n\n    def update(self, inputs: Tensor) -&gt; Tensor:\n        print(\"Updating node embeddings...\")\n        print(f\"Inputs shape: {inputs.shape}\")\n        print(inputs)\n        return super().update(inputs)\n\n\nedge_index = torch.tensor([[0, 1],\n                           [1, 0],\n                           [1, 2],\n                           [2, 1]], dtype=torch.long)\nx = torch.tensor([[-1], [0], [1]], dtype=torch.float)\n\ndata = Data(x=x, edge_index=edge_index.t().contiguous())\n\nconv = GCNConv(1, 2)\nout = conv(data.x, data.edge_index)\nprint(out)"
+  },
+  {
+    "objectID": "posts/gnn_basics/index.html#references",
+    "href": "posts/gnn_basics/index.html#references",
+    "title": "Pytorch Geometric Basics: How Message Passing Works",
+    "section": "References",
+    "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics, and also for the headline image reference\nAlso, a great YouTube video for GNN basics from Stanford\n\nThanks for coming so far, have fun!"
+  },
+  {
+    "objectID": "posts/test_time_compute/index.html",
+    "href": "posts/test_time_compute/index.html",
+    "title": "Test-Time Compute, Reasoning and Human Brain",
+    "section": "",
+    "text": "I have lots of things to do, but I’ve suddenly been struck by inspiration, and since the well-known work-avoidance mechanism has kicked in, I’m going to write down my thoughts on test-time compute, shared decoders, and reasoning. Here we go, a theoretical and lengthy piece is coming.\nOne of the things I love about LLMs is that they handle multiple tasks with a single loss and a single branch. That is, instead of a shared encoder + separate decoders for each task like in U-net models, there’s just a transformer decoder. As far as I know, this comes from T5 models where we model all NLP tasks as text-to-text. We’ll get back to LLMs in a bit, but let’s take a look at the vision side for now.\nI don’t think there’s an equivalent of this in vision, for example, how would you combine segmentation and classification tasks? At the very least, the last layers would have to be different. However, there’s a model that comes very, very close to combining these, and the model’s developers are inspired by the human brain. The model is called BU-TD. Let’s start with the inspiration part. These folks are saying, ‘segmenting anything and everything at once’ is not the right approach; the human brain doesn’t work that way.\nFor example, the longer you look at the image above, the more details emerge; the brain doesn’t grasp the entire image with all its details at once. So why are we trying to make models do this? This is where BU-TD comes into play.\nAgain, in this model inspired by the human brain, first an encoder processes the image, and the decoder takes the vector coming from the encoder and additionally receives a task and argument vector. For example,\nWe tell the model to look at the image, task: find hairstyle, argument: bob. Afterwards, the decoder can optionally output the segmentation of Bob’s hair, but it may not; that part is a bit vague. By feeding the decoder’s result back into the encoder, we get the result corresponding to that style, and so on.\nThe nice thing about this system is that it first uses the weights in the decoder to the fullest, making it a parameter-efficient model. Secondly, since each task, argument, etc., is decoupled, the system learns concepts better. For example, during training, brother Bob is always bald, so Bob’s hairstyle value is always bald during training. However, since the model learns what short hair and long hair are from other examples independently of the person, it can detect this during testing if Bob comes to Turkey and gets hair implants. Thanks to this, the model learns much better with much less data.\nNow we come back to LLMs. We are actually applying the TD part of this model, that is, using a single decoder for each task, in LLMs since the T5 models, especially in PrefixLM models, and when image tokens and (I think) the question are processed with self-attention, the TD logic is formed.\nThe second part is that when people look at a picture, we extract the details, relationships, etc. over time; all the details don’t come at a single glance, right? Well, this part actually corresponds to the concept we call test-time compute. For example, as we look at the image on the left below, the details on the right emerge.\nBased on what we’ve learned up to this point, trying to process everything at once is not logical. Learning the relationships one by one during training and processing the image over time using more compute/time during testing is an effective solution in terms of both the number of parameters and learning more with less data. Our next problem is this: We don’t want to process the image all at once, okay, but we also don’t want to process the entire image; we want to process as much as necessary for the information we are interested in to save time and money. This is where reasoning comes into play. What does a good LLM model do in terms of reasoning? It divides the question we ask into the necessary parts and solves the parts step by step, and stops when it reaches the result. By doing this, we have the following system:\nI’m saying that if I were shown a picture and asked, ‘What is the size of the bag of the woman holding the bag that the girl is looking at?’, my brain would process the image in a similar way and wouldn’t look for more details.\nI think the BU-TD model itself is very limited in terms of input and output ranges but the main idea is still strong and I believe VLMs are very close to implementing this idea into the AI models.\nThat’s it, I couldn’t come to a conclusion with the text. These things suddenly came to my mind while reading a very unrelated article, I thought I’d write them down. Good luck and thanks for reading up to this point!"
+  },
+  {
+    "objectID": "posts/test_time_compute/index.html#references",
+    "href": "posts/test_time_compute/index.html#references",
+    "title": "Test-Time Compute, Reasoning and Human Brain",
+    "section": "References",
+    "text": "References\n\nBU-TD Model: “Image interpretation by iterative bottom-up top-down processing”\nT5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”"
   }
 ]
