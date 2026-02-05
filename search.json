@@ -254,23 +254,37 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Hi Everyone!",
+    "title": "Nusret Özateş",
     "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. I have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.\nI hold a Master of Science in Computer Science from Koc University and several certifications, such as Google Cloud Certified Professional Machine Learning Engineer and Certified Spark NLP Data Scientist. I am passionate about applying AI to enhance user experience and support data-driven decision-making across company services."
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.\nI have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department."
   },
   {
-    "objectID": "index.html#my-published-articles",
-    "href": "index.html#my-published-articles",
-    "title": "Hi Everyone!",
-    "section": "My Published Articles",
-    "text": "My Published Articles\n… TBD …"
+    "objectID": "index.html#about-me",
+    "href": "index.html#about-me",
+    "title": "Nusret Özateş",
+    "section": "",
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.\nI have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department."
   },
   {
-    "objectID": "index.html#what-is-what",
-    "href": "index.html#what-is-what",
-    "title": "Hi Everyone!",
-    "section": "What is What?",
-    "text": "What is What?\nIn the blogs section, I share whatever I learn about in a kind of detailed, structered and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\nIn the notes section, I decided share quick notes and commands that I find useful for my daily work."
+    "objectID": "index.html#education-certifications",
+    "href": "index.html#education-certifications",
+    "title": "Nusret Özateş",
+    "section": "Education & Certifications",
+    "text": "Education & Certifications\n🎓 Master of Science in Computer Science — Koç University\n📜 Google Cloud Certified Professional Machine Learning Engineer\n📜 Certified Spark NLP Data Scientist"
+  },
+  {
+    "objectID": "index.html#publications",
+    "href": "index.html#publications",
+    "title": "Nusret Özateş",
+    "section": "Publications",
+    "text": "Publications\n\n\n\nSystematic comparison of GPT models for the analysis of pathology reports in a low-resource language: A case study for Turkish\nOmer Faruk Dilbaz, Muhammet Nusret Ozates, Beyza Bolat, Cigdem Gunduz-Demir, Ibrahim Kulac\nAmerican Journal of Clinical Pathology, Volume 164, Issue 5, November 2025\n\nDOI\n\n\n\nBLM-17m: A Large-Scale Dataset for Black Lives Matter Topic Detection on Twitter\nH. Kemik, N. Özateş, M. Asgari-Chenaghlou, Y. Li, E. Cambria\nIEEE International Conference on Data Mining Workshops (ICDMW), Shanghai, China, 2023\n\nDOI"
+  },
+  {
+    "objectID": "index.html#whats-on-this-site",
+    "href": "index.html#whats-on-this-site",
+    "title": "Nusret Özateş",
+    "section": "What’s on This Site?",
+    "text": "What’s on This Site?\n\n\n\n\n\n\nNote📝 Blogs\n\n\n\nIn the blogs section, I share whatever I learn about in a kind of detailed, structured and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\n\n\n\n\n\n\n\n\nTip📋 Notes\n\n\n\nIn the notes section, I share quick notes and commands that I find useful for my daily work."
   },
   {
     "objectID": "about.html",
