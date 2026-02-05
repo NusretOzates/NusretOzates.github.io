@@ -26,9 +26,12 @@ page-layout: full
 
 As a **Machine Learning Engineer**, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. 
 
-I have 4 years of experience in **Natural Language Processing**, and even surprisingly to me, I am working on **Graph Neural Networks**, **Vision Transformers**, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now...
+I have 5 years of experience in **Natural Language Processing**, and even surprisingly to me, I have been working on **Graph Neural Networks**, **Vision Transformers**, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now...
 
-I am also skilled in **MLOps**, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department.
+I am also skilled in **MLOps**, using tools such as MLflow, Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle.
+Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively,
+where I implemented an AutoNLP platform and led the development team of the AI department. I also managed the deployment and CI/CD of
+various ML models on GCP at TRT.
 
 ## Education & Certifications
 
