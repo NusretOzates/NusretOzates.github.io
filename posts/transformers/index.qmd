@@ -2,6 +2,7 @@
 title: "Transformer Architecture: How Transformer Models Work?"
 author: "Nusret Ozates"
 date: "2021-02-20"
+image: "transformer.png"
 categories: [ ml ]
 ---
 
