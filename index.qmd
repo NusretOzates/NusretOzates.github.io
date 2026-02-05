@@ -79,14 +79,96 @@ I am also skilled in **MLOps**, using tools such as Kubeflow, FastAPI, and Trans
 :::
 :::
 
-## What's on This Site?
+## Talks & Features
 
-::: {.callout-note appearance="simple"}
-## 📝 Blogs
-In the blogs section, I share whatever I learn about in a kind of detailed, structured and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.
+<!-- TALK TEMPLATE - Copy the block below for each new talk/feature -->
+<!--
+::: {.talk-card}
+![Talk preview image](path-to-image.jpg){.talk-image}
+
+::: {.talk-content}
+### Talk Title Here
+
+📍 Haliç Engineering Summit | 📅 8 December 2025
+
+We talked about engineering, acedemy, job opportunities and more!
+
+::: {.talk-links}
+[LinkedIn Post](linkedin-url) [Slides](slides-url) [Video](video-url)
+:::
+:::
+:::
+-->
+
+
+::: {.talk-card}
+![](talks/halic.png){.talk-image}
+
+::: {.talk-content}
+### Haliç Engineering Summit
+
+📍 Haliç University | 📅 8 December 2025
+
+We talked about engineering, academy, job opportunities and more!
+
+::: {.talk-links}
+[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7402271975710113792/)
+:::
+:::
 :::
 
-::: {.callout-tip appearance="simple"}
-## 📋 Notes  
-In the notes section, I share quick notes and commands that I find useful for my daily work.
+<!-- Talk 2  -->
+
+::: {.talk-card}
+![](talks/ds_summit_kworks.png){.talk-image}
+
+::: {.talk-content}
+### Data Science Summit
+
+📍 KWORKS Şişli | 📅 6 September 2025
+
+I was there as "network field speaker" to chat with everyone about AI.
+
+::: {.talk-links}
+[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7368703418615447553/)
 :::
+:::
+:::
+
+
+<!-- Talk 3  -->
+
+::: {.talk-card}
+![](talks/ai_pulse_day.png){.talk-image}
+
+::: {.talk-content}
+### AI Pulse Day
+
+📍 Işık University | 📅 31 May 2025
+
+Career guide in AI for university students.
+
+::: {.talk-links}
+[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7331227895991816193/)
+:::
+:::
+:::
+
+<!-- Talk 4  -->
+
+::: {.talk-card}
+![](talks/tk_calistay.png){.talk-image}
+
+::: {.talk-content}
+### Türkiye'nin Kıvılcımları Workshop
+
+📍 Tech Istanbul | 📅 2 February 2025
+
+ML Engineering and MLOps
+
+::: {.talk-links}
+[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7331227895991816193/)
+:::
+:::
+:::
+
