@@ -3,11 +3,13 @@ title: "Welcome to My Posts"
 listing:
   contents: posts
   sort: "date desc"
-  type: default
+  type: grid
   categories: true
   sort-ui: false
   filter-ui: true
   feed: true
+  fields: [image, date, title, subtitle, categories, reading-time, description]
+  page-size: 9 
 page-layout: full
 title-block-banner: true
 ---

@@ -1,0 +1,102 @@
+---
+title: "Attention mechanism and how it works on neural machine translation"
+author: "Nusret Ozates and Hasan Kemik"
+date: "2020-12-13"
+categories: [ ml ]
+image: "img.png"
+---
+
+In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We
+basically find $argmax_y \, p(y|x)$. Before transformers, we were using RNNs with a encoder-decoder approach. An
+encoder read
+the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and
+outputs a translation from that encoded vector.
+
+## RNN Encoder-Decoder
+
+Let’s look at the encoder-decoder architecture more formally.
+
+### Encoder
+
+The encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c. To calculate c, we
+calculate hidden states with:
+
+$$ h_t = f(h_{t-1}, x_t) $$
+
+and vector c is equal to:
+
+$$ c = q\left(\{h_1, h_2, \ldots, h_{T_x}\}\right) $$
+
+$h_t \in R^n$ is the hidden state at time t, c is a vector, generated from the sequence of hidden states, f and q are
+some non-linear functions.
+As an example, f can be an LSTM and $q\left(\{h_1, h_2, \ldots, h_{T_x}\}\right)$ can be equal to $h_{T_x}$, the last hidden state of
+the
+encoder.
+
+### Decoder
+
+:::{.callout-note}
+In the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for
+decoder’s hidden state.
+:::
+
+The decoder predicts the next word $y_t$, given context vector c and all other previously predicted words. Finally, the
+probability of the translated sentence y is calculated with:
+
+$$ p(y) = \prod_{t=1}^{T_y} p(y_t | y_1, ..., y_{t-1}, c) $$
+
+How do we calculate $p(y_t | y_1, ..., y_{t-1}, c)$?
+
+$$ p(y_t | y_1, ..., y_{t-1}, c) = g(y_{t-1}, s_t, c) $$
+
+where g is a non-linear function that outputs the probability of $y_t$ and $s_t$ is the hidden state of the RNN.
+
+## Attention Mechanism: A new approach to Encoder-Decoder Structure
+
+### Encoder
+
+In the encoder structure, the hidden states are calculated as Eq.1. Hence, in order to understand the context not only
+according to previous words but also according to next words, the sentence is traversed 2 times. First one is from
+beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This
+operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h,
+which h contains summarized knowledge of forward and backward words.
+
+$$ h_j = [\overrightarrow{h_j^T}; \overleftarrow{h_j^T}] $$
+
+### Decoder
+
+In the decoder structure, probability of each word is computed according to previous word’s vector $y_{i-1}$ , hidden
+state $s_i$ and context vector $c_i$.
+
+$$ p(y_i | y_1, ..., y_{i-1}, x) = g(y_{i-1}, s_i, c_i) $$
+
+Hidden state is computed according to previous hidden state $s_{i-1}$, previous word’s vector $y_{i-1}$ and current
+context
+vector $c_i$.
+
+$$ s_i = f(s_{i-1}, y_{i-1}, c_i) $$
+
+The context vector $c_i$ depends on all hidden states with their weights. These weights represent the amount of
+“attention”
+needed to be given to predict next word $y_i$.
+
+$$ c_i = \sum_{j=1}^{T_x} \alpha_{ij} h_j $$
+
+where $\alpha_{ij}$ is the weight for hidden state $h_j$ when predicting word $y_i$. The “attention amount” calculated
+by the formula:
+
+$$ \alpha_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{T_x} exp(e_{ik})} $$
+
+$e(i,j)$ represents “energy”, the importance of hidden state $h_j$, respect to the previous hidden state $s_{i-1}$. It
+is
+calculated by concatenation of $h_j$ and $s_{i-1}$ is fed through a feedforward neural network a, which allows to train
+an
+alignment model through backward propagation.
+
+$$ e_{ij} = a(s_{i-1}, h_j) $$
+
+And with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the
+famous transformer models.
+
+## References
+- [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473)
