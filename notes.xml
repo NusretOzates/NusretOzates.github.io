@@ -9,7 +9,7 @@
 <link>https://nusretozates.github.io/notes.html</link>
 <atom:link href="https://nusretozates.github.io/notes.xml" rel="self" type="application/rss+xml"/>
 <description>Welcome to Nusret Ozates&#39;s personal website. Explore my projects, blogs, and more!</description>
-<generator>quarto-1.8.22</generator>
+<generator>quarto-1.8.27</generator>
 <lastBuildDate>Tue, 11 Nov 2025 21:00:00 GMT</lastBuildDate>
 <item>
   <title>Slurm Notes</title>

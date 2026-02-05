@@ -1,11 +1,5 @@
 [
   {
-    "listing": "/notes.html",
-    "items": [
-      "/notes/slurm/index.html"
-    ]
-  },
-  {
     "listing": "/myposts.html",
     "items": [
       "/posts/career_advice_ai_summary/index.html",
@@ -16,6 +10,12 @@
       "/posts/transformers/index.html",
       "/posts/attention_mechanism/index.html",
       "/posts/docker-get-started/index.html"
+    ]
+  },
+  {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/slurm/index.html"
     ]
   }
 ]

@@ -1,129 +1,17 @@
 [
   {
-    "objectID": "posts/transformers/index.html",
-    "href": "posts/transformers/index.html",
-    "title": "Transformer Architecture: How Transformer Models Work?",
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
     "section": "",
-    "text": "Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical problem. The structure of RNN does not allow to do parallel computing. There were some optimizations to make them faster but the main problem remains. The Transformer model completely removed RNNs and built all architecture based on attention mechanism.\nLike most neural machine translation models, Transformers have an encoder-decoder structure. It uses stacked encoders that contain attention layers and Feed Forward Neural networks."
+    "text": "My summary of the “Career Advice in AI” Lecture\n\n4 min\n\n\nml\n\n\n\n\n\n\n\nDec 20, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nOct 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n9 min\n\n\nacademy\n\n\n\n\n\n\n\nOct 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n5 min\n\n\nml\n\nllm\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nBERT: Encoder Stack Is All You Need\n\n5 min\n\n\nml\n\n\n\n\n\n\n\nJun 24, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nTransformer Architecture: How Transformer Models Work?\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nFeb 20, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nAttention mechanism and how it works on neural machine translation\n\n3 min\n\n\nml\n\n\n\n\n\n\n\nDec 13, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n10 min\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\nNov 8, 2020\n\n\n\n\n\n\nNo matching items"
   },
   {
-    "objectID": "posts/transformers/index.html#encoder-and-decoder-stacks",
-    "href": "posts/transformers/index.html#encoder-and-decoder-stacks",
-    "title": "Transformer Architecture: How Transformer Models Work?",
-    "section": "Encoder and Decoder Stacks",
-    "text": "Encoder and Decoder Stacks\n\nEncoder\nEach encoder layer has two sub-layers, the “multi-head attention layer” (It will be explained in the next chapters) and a Feedforward Neural Network, both of them followed by a normalization layer and there is 2 residual connection around each sub-layer. Each encoder layer has the same structure but they do not have the same weights. To use residual connections, all sub-layers and embedding layers output the same dimension. We denote this dimension as parameter \\(d_\n{model}\\). In the original article \\(d_{model} = 512\\). The first encoder’s input is embedding vectors of the source sentence with position information injected (will be explained in the positional encoding subsection). Each of the other encoders’ inputs is the output of the encoder below.\nIn summary: An encoder receives input as a list of vectors. Then it processes these vectors by passing them to a self-attention layer, then sends them to a Feedforward Neural Network. Finally, the output goes to the next encoder. The last encoder sends its output to every decoder. The number of Encoders is a hyperparameter.\n\n\n\nThe word at each position goes through a self-attention process. Then, each result pass through a Feedforward Neural Network (Same DNN but each vector pass through separately) In this example, there are two words but the maximum number of words (that can be given to the model) is a hyper-parameter.\n\n\n\n\nDecoder\nThe structure of the decoder is nearly the same as the encoder. The difference is, decoder layer has one more sub-layer that contains a “masked” multi-head attention layer. When predicting the position “i” we need to be sure about we are attending the known outputs at position &lt; “i”. The Transformer model is auto-regressive, it makes predictions one part at a time, and uses its output to decide what to do next.\nDuring training, we are using teacher-forcing. Teacher forcing is passing the true output to the next time step regardless of what the model predicts at the current time step. As the Transformer predicts each word, self-attention allows it to look at the previous words in the input sequence to better predict the next word. To prevent the model from peeking at the expected output the model uses a look-ahead mask. This is what we call a masked multi-head attention layer. For a target sentence with 4 words, a look-ahead mask look like this:\n[[0, 1, 1, 1],\n [0, 0, 1, 1],\n [0, 0, 0, 1],\n [0, 0, 0, 0]]\nWe are using this matrix as below\nscaled_attention_logits -= mask * 1e9\nHere, scaled_attention_logits is the normalized result of matrix multiplication of query and key. We make the values from “future” near to zero by appending -1e9 to the values that need to be masked. With that, values from the future will have no impact when calculating attention value.\n\n\n\n\n\n\nImportant\n\n\n\nWhy we are using teacher forcing and give the true output to the model?\n\n\nShort answer: Otherwise we would have to run the decoder a number of times equal to the number of words in the target sentence.\nLonger answer: The secret lies in the implementation. Let’s say the true output is a three-word sentence and embedding vector dimension is five and our vocabulary size is twenty. Lastly, our batch size is 1 for ease of explanation. After passing these words from the embedding vector, we have a 1,3,5 dimensional matrix. After all of the decoders’ calculations, we have a vector that has the same dimension. As we can see in the Transformer model architecture we will pass this vector to a final linear/dense layer. The number of neurons in this layer is twenty because it is our vocabulary size. That means we are multiplying [1,3,5] dimensional matrix with [5,20] dimensional matrix. The result is [1,3,20] dimensional matrix. That means, every word predicted the next word by running the decoder one time. How do we calculate loss? With Sparse Categorical Cross Entropy. This explanation below is the documentation of SparseCategoricalCrossEntropy class in Tensorflow:\nUse this crossentropy loss function when there are two or more label classes.\nWe expect labels to be provided as integers.There should be ‘# classes’ floating point values per feature for ‘y_pred’ and a single floating point value per feature for ‘y_true’.\nExample:\n\ny_true = [1, 2]\ny_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]\n\n\n\nThe Transformer model architecture"
-  },
-  {
-    "objectID": "posts/transformers/index.html#self-attention",
-    "href": "posts/transformers/index.html#self-attention",
-    "title": "Transformer Architecture: How Transformer Models Work?",
-    "section": "Self-Attention",
-    "text": "Self-Attention\nLet’s suppose we want to translate the following sentence:\n“The books were on the shelves because they are old.”\nWhat does “they” in this sentence refer to? Is it referring to the books or the shelves? It’s a simple question to a human, but not as simple as an algorithm. Self-attention allows the model to associate “they” with books.\nAn attention mechanism maps a query and a key-value pair to an output. All of them are vectors. The way to calculate output is the weighted sum of the values. Weights are computed by a function that uses query and key as input. These weights are not trainable, query and key values are calculated by trainable and learned weights.\nQuery, Key, and Value are created from the encoder’s input vectors(e.g. embedding of input words for the first layer) by multiplying these input vectors with 3 different weight matrices \\(W_Q\\), \\(W_K\\),\\(W_V\\) that can be trained during the training process. Every layer (both encoder and decoder layers) in the Transformer model has its \\(W_{Q}\\), \\(W_{K}\\), \\(W_{V}\\) matrices.\n\n\n\nCalculation of Query, Key and Value vectors\n\n\n\nHow Do We Use Query, Key, and Value to Calculate Attention?\nLet’s suppose we are calculation the self-attention for the word “better”. We will use “Scaled Dot-Product”.\n\nWe compute dot products of the query with all keys\nThe results will be divided by \\(sqrt(d_k)\\) where \\(d_k\\) is the dimension of the key vectors. This is called scaling.\nLastly, we apply the softmax function to the result from step two.\n\nThis will tell us, how much attention we need to give to each word to encode “better”. For faster processing, Queries are packed in the matrix Q, values are packed in the matrix V and keys are packed in the matrix K. The general scaled dot-product attention formula is:\n\\[Attention(Q, K, V) = softmax(\\\\frac{QK^T}{\\\\sqrt{d_k}})V\\]\n\n\n\nScaled Dot-Product Attention"
-  },
-  {
-    "objectID": "posts/transformers/index.html#multi-head-attention",
-    "href": "posts/transformers/index.html#multi-head-attention",
-    "title": "Transformer Architecture: How Transformer Models Work?",
-    "section": "Multi-Head Attention",
-    "text": "Multi-Head Attention\nThe idea/question behind multi-head self-attention is: “How do we improve the model’s ability to focus on different features of the input sentence?”.\n\nWith 1 head self-attention, the encoding could be dominated by the actual word.\nMulti-head attention allows the model to learn different semantic meanings of attention. Eg. One for grammar, one for vocabulary, etc.\n\nFor example, if we have head=8 (referenced as h), there will be 8 different Q, K, and V matrices and 8 different outputs. \\(d_{k} = d_{v} = d_{model}/h\\), weights will have dimension:\n\n\\(W_{Q}\\): \\(d_{model} x d_{k}\\)\n\\(W_{K}\\): \\(d_{model} x d_{k}\\)\n\\(W_{V}\\): \\(d_{model} x d_{v}\\)\n\nand the outputs will be concatenated and multiplied by another weight matrix \\(W_{O}\\) with dimension \\((hd_{v} x d_{model})\\) to get the final\n\n\n\nMulti-Head Attention: We embed each word, create 8 “attention heads”, multiply X with weight matrices and find 8 different Key, Query, and Value matrices, calculate attention vector using these matrices, concatenate these matrices and multiply them with weight matrix \\(W^O\\) to get the output. This output is the output of the (for example) Multi-Head Attention layer and we will pass this output to the “Add and Normalize” layer."
-  },
-  {
-    "objectID": "posts/transformers/index.html#positional-encoding",
-    "href": "posts/transformers/index.html#positional-encoding",
-    "title": "Transformer Architecture: How Transformer Models Work?",
-    "section": "Positional Encoding",
-    "text": "Positional Encoding\nAs the Transformer model doesn’t use recurrence, there isn’t any position information(time step t) in the model input. It is just a bag of words. To provide the model this important information, we inject(add) some information vector( positional encoding) to each embedding. These positional encoding vectors have the same dimension as embeddings.\nOne way to add this information is having a second embedding, as we have an embedding vector for “computer”, why shouldn’t we have an embedding for position 3? With this approach, the model can learn positional embeddings during training. The problem with this approach is, say we have 1000 training examples and the maximum input length is 50. If 800 of these training examples have the length of 30, the other 20 embedding vectors will be poorly trained and may not generalize well in practice.\nAs an alternative, we can use a static function that takes an integer input and give a vector in a way that captures the relationship between positions. This function should give that position 8 is more related to position 9 than position\n\nIn the Transformer model, authors decided to use sine and cosine functions of different frequencies:\n\n\\[PE_{(pos, 2i)} = sin(pos/10000^{2i/d_{model}})\\] \\[PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})\\]\nHere, pos is the position of the token, and i is the dimension. Each dimension of these positional encodings corresponds to a sinusoid. (A curve similar to the sine function but possibly shifted in phase, period, amplitude, or any combination thereof.) The wavelengths form a geometric progression from \\(2\\pi \\, to \\, 10000 \\cdot 2\\pi\\). This function is chosen by authors because they believe(hypothesized) this would allow the model to easily learn to attend by relative positions since for any fixed offset k, \\(PE_{pos+k}\\) can be represented as a linear function of \\(PE_{pos}\\).\nThat’s all I know :) Thank you for reading!"
-  },
-  {
-    "objectID": "posts/transformers/index.html#references",
-    "href": "posts/transformers/index.html#references",
-    "title": "Transformer Architecture: How Transformer Models Work?",
-    "section": "References",
-    "text": "References\n\nhttp://jalammar.github.io/illustrated-transformer/ - An excellent overview of Transformer models.\nhttps://kazemnejad.com/blog/transformer_architecture_positional_encoding/ - A detailed explanation of positional encodings.\nhttps://arxiv.org/pdf/1409.0473.pdf - Neural Machine Translation by Jointly Learning to Align and Translate.\nhttps://arxiv.org/abs/1706.03762v5 - Attention Is All You Need."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html",
-    "href": "posts/paragraph_dev_sentece_skill/index.html",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "Do you remember the times you read an article/paper and you couldn’t understand what the author wanted to say even though you know the underlying concepts? Even the most brilliant ideas can be lost in poor writing or simplest ideas can be hard to understand. Choppy paragraphs, misplaced phrases, and grammatical run-ons can obscure your argument and frustrate your reader.\nIn this post, I will share what I learned from Koc University Academic Writing class videos and materials."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#topic-and-stress",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#topic-and-stress",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Topic and Stress",
-    "text": "Topic and Stress\nYou can divide a sentence into two parts: the topic and the stress. The topic is what the sentence is about, and the stress is what you want to say about the topic or what is new information.\n\n\n\n\n\n\n\nTopic Part, Readers:\nStress Part, Readers\n\n\n\n\n- Expect to understand what the sentence is about.\n- Expect to see new and imporant ideas.\n\n\n- Try to connect the sentence to what they have already read.\n- Focus most of their interpretative effort.\n\n\n\nExample:\nAccounts of depression evolved after psychologists introduced the concepts of defeat and entrapment.\n\nKnown-New Contract\n\nIntroduce your readers to the “big picture” first by giving them information they already know (the topic part).\nThen they can link what’s familiar to the new information you give them (the stress part).\n\nAs that new information becomes familiar, it too becomes old information that can link to newer information.\nExample:\nAccounts of depression evolved after psychologists introduced the concepts of defeat and entrapment. These concepts have been implicated in theoretical accounts of anxiety and suicide. Such theories..\nExample 2:\nHowever, managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system are discussed for the first time in this paper\n\n\n\n\n\n\nImportant\n\n\n\nThe sentence above starts with a lot of complex terms and we don’t know their importance until the end of sentence, which is bad. The simple fix is just reversing the order!\n\n\nHowever, this paper is the first to analyze managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system\n\n\nWhat If I Want to Stress Multiple Ideas in a Sentence?\n\nTry to introduce just one major idea per sentence, especially if the idea is complex.\nIf your text is complex and you have two ideas worth emphasizing, create two sentences.\n\nExample:\nHowever, it uses the already limited upload bandwidth of clients inefficiently and is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.\nInstead of the sentence above, you can write:\nHowever, mesh topology uses the already limited upload bandwidth of clients inefficiently. It is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.\nSometimes two sentences should be one if they refer to the same idea.\nExample:\nSuch leaders should make the work of their followers more pleasant. Moreover, they should treat the followers as equals, and respect them.\nInstead of the sentence above, you can write:\nSuch leaders should make the work of their followers more pleasant by treating them equally and respectfully.\n\n\n\n\n\n\nTipAdditional Steps to Edit Complex Writing\n\n\n\n\nMove the subject and the verb close together.\nBreak apart sentences that contain too much new information.\nUse transitional phrases to indicate relationships: moreover, in addition, consequently, therefore…"
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#run-ons",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#run-ons",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Run-Ons",
-    "text": "Run-Ons\nA run-on is two complete thoughts run together with no sign to mark the break between them or with just a comma:\nThen, in [2], they also presented a bisection algorithm to compute \\(\\epsilon\\)-pseudospectral abscissa of a fixed matrix, i.e. \\(\\alpha_{\\epsilon}(A)\\), and tried to compute minimum \\(\\epsilon\\)-pseudospectral abscissa over feasible matrices, however, an algorithm wasn’t presented yet.\nvs\nThen, in [2], they also presented a bisection algorithm to compute \\(\\epsilon\\)-pseudospectral abscissa of a fixed matrix, i.e. \\(\\alpha_{\\epsilon}(A)\\). They also tried to compute minimum \\(\\epsilon\\)-pseudospectral abscissa over feasible matrices. However, an algorithm wasn’t presented yet.\n\n\n\n\n\n\nNote\n\n\n\nI personally didn’t like the second version too because it has too many “they also” parts."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#fragments",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#fragments",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Fragments",
-    "text": "Fragments\nA sentence fragment is a group of words that lacks a subject or a verb and does not express a complete thought:\nPurdue offers many majors in engineering. Such as electrical, chemical, and industrial engineering.\nPurdue offers many majors in engineering such as electrical, chemical, and industrial engineering."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#parallelism",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#parallelism",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Parallelism",
-    "text": "Parallelism\nWords in a pair or series should have a parallel structure.\nNot Parallel: The production manager was asked to write his report quickly, accurately, and in a detailed manner.\nParallel: The production manager was asked to write his report quickly, accurately, and thoroughly."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#misplaced-modifiers",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#misplaced-modifiers",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Misplaced Modifiers",
-    "text": "Misplaced Modifiers\nMisplaced modifiers do not describe the word in the way the writer intended because of their wrong place in a sentence.\nGeorge couldn’t drive to work in his small sports car with a broken leg.\nWith a broken leg, George couldn’t drive to work in his small sports car.\nIn this example, we and transformer models know that George has a broken leg, not the car. But grammatically, the modifier “with a broken leg” seems to describe the car. This is an easy example but in a academic text, it can be more complex and harder to spot.\nIn order to avoid misplaced modifiers, place the words as close as possible to what they describe."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#dangling-modifiers",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#dangling-modifiers",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Dangling Modifiers",
-    "text": "Dangling Modifiers\nA modifier that opens a sentence must be followed immediately by the word it is meant to describe. Otherwise the sentence takes on an unintended meaning.\nWhile smoking a pipe, my dog sat with me.\nWhile smoking a pipe, I sat with my dog.\nWhile I was smoking a pipe, my dog sat with me.\nAgain, this is also an easy example but in a academic text, it can be more complex and harder to spot."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#sentence-variety",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#sentence-variety",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Sentence Variety",
-    "text": "Sentence Variety\n\nToo many sentences with the same structure and length can grow monotonous for readers.\nVarying sentence style and structure can also reduce repetition and add emphasis.\nLong sentences work well for incorporating a lot of information, and short sentences can often maximize crucial points.\n\n\nOverusing Long Sentences\nLong sentences can be difficult to read and understand, especially if they contain multiple ideas or clauses. Breaking up long sentences into shorter ones can improve clarity and readability.\nThe company reported that yearly profit growth, which had steadily increased by more than 7% since 1989, had stabilized in 2009 with a 0% comp, and in 2010, the year they launched the OWN project, actually decreased from the previous year by 2%. This announcement stunned Wall Street analysts, but with the overall decrease in similar company profit growth worldwide, as reported by Author (Year) in his article detailing the company’s history, the company’s announcement aligns with industry trends and future industry predictions.\nThe company reported that profit growth stabilized in 2009, though it had steadily increased by more than 7% since 1989. In 2010, the year they launch the OWN project, company profit growth decreased from the previous year. This announcement stunned Wall Street analysts. According to Author (Year), however, this decrease is exemplar of a trend across similar company profit growth worldwide; it also supports future predictions for the industry.\n\n\n\n\n\n\nNote\n\n\n\nNotice that the sentence count only increased by two, but thanks to the choice of where a sentence begin and end, the paragraph is easier to read. Moreover, the sentence variety is increased.\n\n\n\n\nShort Sentences\nRead the text below with your voice:\nToo many short sentences can hurt an essay. They can make the writing seem choppy. The writing may seem like it is below a college level. Readers may lose interest. They may not want to continue reading.\nSee the effect? Let’s fix it:\nToo many short sentences can hurt an essay, for it can make the writing seem choppy and below a college level. Because of this, readers may lose interest and not want to continue reading."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#change-the-rhythm",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#change-the-rhythm",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Change the Rhythm!",
-    "text": "Change the Rhythm!\nChange the rhythm of your writing by varying sentence length and structure. As you will see the example below, varying sentence length and structure can make your writing more interesting and engaging.\nVary the rhythm by alternating short and long sentences:\nThe Winslow family visited Canada and Alaska last summer to find some Native American art. In Anchorage stores they found some excellent examples of soapstone carvings. But they couldn’t find a dealer selling any of the woven wall hangings they wanted. They were very disappointed when they left Anchorage empty-handed.\nThe Winslow family visited Canada and Alaska last summer to find some native American art, such as soapstone carvings and wall hangings. Anchorage stores had many soapstone items available. Still, they were disappointed to learn that wall hangings, which they had especially wanted, were difficult to find. Sadly, they left empty-handed.\nI think I see something similar to this in the novels I’ve read."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#repeated-subjects-or-topics",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#repeated-subjects-or-topics",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Repeated Subjects or Topics",
-    "text": "Repeated Subjects or Topics\n\nHandling the same topic for several sentences can lead to repetitive sentences. When that happens, consider using these parts of speech to fix the problem:\n\nRelative pronouns\nIndiana used to be mainly an agricultural state. It has recently attracted more industry. Indiana, which used to be mainly an agricultural state, has recently attracted more industry.\nParticiples\nWei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again. Surprised to get a phone call from his sister, Wei Xie was happy to hear her voice again.\nPrepositions\nThe university has been facing pressure to cut its budget. It has eliminated funding for important programs. Under pressure to cut its budget, the university has eliminated funding for important programs."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#final-words",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#final-words",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "Final Words",
-    "text": "Final Words\nFinally, all these rules and tips are not strict rules, but guidelines to help you improve your writing. Also, it is very easy to forget them. The best thing you can do is keep writing constantly, while editing your own writing with these rules in mind. Over time, you will internalize these rules and your writing will improve. I also believe that reading a lot of well-written articles and books will help you improve your writing skills."
-  },
-  {
-    "objectID": "posts/paragraph_dev_sentece_skill/index.html#references",
-    "href": "posts/paragraph_dev_sentece_skill/index.html#references",
-    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
-    "section": "References",
-    "text": "References\n\nKoc University Writing Center\nSentence Variety. (2018). Retrieved from https://owl.purdue.edu/owl/general_writing/academic_writing/sentence_variety/index.html\nMaking Complex Writing Intelligible with Known-New Contract. (2018). Global Communication Center, Carnegie Mellon University. Retrieved from https://www.cmu.edu/gcc/handouts/old-new-handout-pdf"
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
   },
   {
     "objectID": "posts/docker-get-started/index.html",
@@ -217,90 +105,6 @@
     "text": "Networking in Docker Compose\nLet us say we modify the architecture a little bit to contain the traffic from the different sources in separate networks. For example, we would like to separate the user-generated traffic from the application’s internal traffic. So, we create a front-end network dedicated to the traffic from users and a backend network dedicated to the traffic within the application.\n\nThis is the .yaml file you need to write:\nversion: \"3\"\nservices:\n  redis:\n    image: redis\n    networks:\n      - back-end\n  db:\n    image: postgres:9.4\n    networks:\n      - back-end\n  vote:\n    image: voting-app\n    ports:\n      - \"5000:80\"\n    networks:\n      - front-end\n      - back-end\n  result:\n    image: result-app\n    ports:\n      - \"5001:80\"\n    networks:\n      - front-end\n      - back-end\n  worker:\n    image: worker\n    networks:\n      - front-end\n      - back-end\n\nnetworks:\n  front-end:\n    driver: bridge\n  back-end:\n    driver: bridge\nSo, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the KodeKlaud’s channel!"
   },
   {
-    "objectID": "posts/bert/index.html",
-    "href": "posts/bert/index.html",
-    "title": "BERT: Encoder Stack Is All You Need",
-    "section": "",
-    "text": "In this article, I will talk about the BERT model and I will add sources to learn more about the BERT. To understand how BERT works, you need to understand how transformer models work. You can read my article about Transformers or you can learn it from here.\nBERT [1] (Bidirectional Encoder Representations from Transformers) is a new language representation model. It is one of the ways of creating word embeddings and sentence representation vectors. BERT uses the encoder stack of the transformer model to output the representation of each token in the given input. Additionally, it has a special token “[CLS]” at the beginning of the inputs to use in classification tasks. BERT has two steps:\nThe pre-training step is where the model is trained to learn the given language(s) and output meaningful representation of the given input sequence (“sequence” term especially used here to emphasize given input can be more than one sentence.). To do this step, the model is trained using unlabeled text data using two different tasks. For fine-tuning, labeled data is needed and the model is fine-tuned to do given downstream tasks such as classification or question answering."
-  },
-  {
-    "objectID": "posts/bert/index.html#pre-training",
-    "href": "posts/bert/index.html#pre-training",
-    "title": "BERT: Encoder Stack Is All You Need",
-    "section": "Pre-training",
-    "text": "Pre-training\nPre-training is done with two different tasks:\n\nMasked Language Model (MLM)\nNext Sentence Prediction (NSP)\n\n\nMasked Language Model\nAccording to the authors of the BERT model, deep bidirectional models are powerful than unidirectional models. The problem with bidirectional models is, it allows to each word indirectly “see itself” and the model can easily predict the target word. To solve this problem, the authors mask some percentage(%15 in the article) of the input tokens randomly by changing the word with the special token “[MASK]” and the model is tasked with the prediction of the masked tokens. This is called the “Masked Language Model” but it is called a “cloze test” (fill in the blanks questions) in literature. The output of the hidden vectors (only at the masked tokens’ positions) are given into a softmax layer with the neuron size is equal to vocabulary size to predict real words.\nThe “[MASK]” token is used for pre-training but not in fine-tuning section. This causes a mismatch and to solve this problem, the authors choose to not using the “[MASK]” token every time. The selected token i with the %80 probability, will be replaced with the “[MASK]” token, with %10 probability it will be replaced by a random token, and with %10 probability, it will remain unchanged. Then the token in the i’th position will be used to predict the original token.\n\n\n\nAn example of the masked language model from Jay Alammar [2]\n\n\n\n\nNext Sentence Prediction\nSome NLP tasks such as Question Answering and Natural Language Inference(Determining whether a “hypothesis” is true ( entailment), false (contradiction), or undetermined (neutral) given a “premise”.) need to understand the relation between sentences. This relation cannot be captured with the masked language model task. To train a model that can capture the relationship between two sentences, the authors give two sentences “Sentence A” and “Sentence B” as input. With the %50 probability, “Sentence B” is the actual sentence that comes after “Sentence A” and with the %50 probability it is a random sentence. As in the example above, the special “[CLS]” token is used to predict if the second sentence comes after the first sentence.\n\n\n\nAn example of the next sentence prediction model from Jay Alammar [2]\n\n\n\n\nFine-tuning\nIt is a very simple step, by swapping the input depending on the task (single sentence or two sentences) and connecting the output to an appropriate classification layer. For a sentence classification task, the output vector of the model’s “[CLS]” token could be connected to a softmax layer and\n\nFreeze the BERT weights and train the latest classification weights\nFine-tune all weights\n\n\n\nCode Example\nUsing Tensorflow Hub, training or fine-tuning BERT models is very easy. In the following steps, I will show you how you can use a BERT model to detect toxicity in texts for the Toxic Comment Classification Challenge. Download the train data first and create a Tensorflow dataset, separate it as train and validation set using this code:\nimport tensorflow as tf\n\ndataset = tf.data.experimental.make_csv_dataset(\n    'data/kaggle_toxic_comments/train.csv', batch_size=batch_size, num_epochs=1\n    , select_columns=['comment_text', 'toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate'])\n\ndataset = dataset.unbatch()\nvalidation = dataset.take(10000)\ntrain = dataset.skip(10000)\n\ntrain = train.map(lambda data: (\n    dataset_preprocessing(data['comment_text']),\n    [data['toxic'],\n     data['severe_toxic'],\n     data['obscene'],\n     data['threat'],\n     # data['sexual_explicit'],\n     data['insult'],\n     data['identity_hate'],\n     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)\n\nvalidation = validation.map(lambda data: (\n    dataset_preprocessing(data['comment_text']),\n    [data['toxic'],\n     data['severe_toxic'],\n     data['obscene'],\n     data['threat'],\n     # data['sexual_explicit'],\n     data['insult'],\n     data['identity_hate'],\n     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)\n\nreturn train, test\n\n\n\n\n\n\nNoteNote from 2026\n\n\n\nThe code above is too old and you would likely use huggingface transformers library to do the same task today.\n\n\nIn the code above, I did some preprocessing but you can just use “data[“comment_text”]”.\nLet’s create the BERT model using the Tensorflow Hub:\nfrom tensorflow.keras.layers import *\nimport tensorflow_hub as hub\n\ntext_input = tf.keras.layers.Input(shape=(), dtype=tf.string)\npreprocessor = hub.KerasLayer(\n    \"https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3\")\nencoder_inputs = preprocessor(text_input)\nencoder = hub.KerasLayer(\n    \"https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4\",\n    trainable=False)\noutputs = encoder(encoder_inputs)\npooled_output = outputs[\"pooled_output\"]  # [batch_size, 512].\nsequence_output = outputs[\"sequence_output\"][:, 0, :]\nNow we have two different outputs, pooled output, and sequence output. The pooled output represents each input sequence as a whole, and the sequence output represents each input token in context. Either of those can be used as input to further model building. For this task I want to use the output of the [CLS] token so I connect the sequence_output to a sigmoid layer and create the model like this:\nclassification_output = Dense(6, activation='sigmoid')(sequence_output)\n\nembedding_model = tf.keras.Model(text_input, classification_output)\nNow compile the model and train it:\nembedding_model.compile(\n    optimizer=tf.keras.optimizers.Nadam(learning_rate=0.025),\n    loss=tf.keras.losses.BinaryCrossentropy(),\n    metrics=[tf.keras.metrics.AUC()],\n    run_eagerly=False\n\n)\n\nembedding_model.summary()\n\nembedding_model.fit(x=train_data, validation_data=test_data, epochs=2)\nThanks for reading!"
-  },
-  {
-    "objectID": "posts/bert/index.html#references",
-    "href": "posts/bert/index.html#references",
-    "title": "BERT: Encoder Stack Is All You Need",
-    "section": "References",
-    "text": "References\n\nhttps://arxiv.org/pdf/1810.04805.pdf - The BERT paper.\nhttp://jalammar.github.io/illustrated-bert/ - Awesome and more detailed explanation of BERT model\nhttps://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4 - An example BERT model from Tensorflow Hub"
-  },
-  {
-    "objectID": "notes.html",
-    "href": "notes.html",
-    "title": "Quick Notes",
-    "section": "",
-    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "myposts.html",
-    "href": "myposts.html",
-    "title": "Welcome to My Posts",
-    "section": "",
-    "text": "My summary of the “Career Advice in AI” Lecture\n\n4 min\n\n\nml\n\n\n\n\n\n\n\nDec 20, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nOct 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n9 min\n\n\nacademy\n\n\n\n\n\n\n\nOct 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n5 min\n\n\nml\n\nllm\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nBERT: Encoder Stack Is All You Need\n\n5 min\n\n\nml\n\n\n\n\n\n\n\nJun 24, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nTransformer Architecture: How Transformer Models Work?\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nFeb 20, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nAttention mechanism and how it works on neural machine translation\n\n3 min\n\n\nml\n\n\n\n\n\n\n\nDec 13, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n10 min\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\nNov 8, 2020\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Nusret Özateş",
-    "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.\nI have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department."
-  },
-  {
-    "objectID": "index.html#about-me",
-    "href": "index.html#about-me",
-    "title": "Nusret Özateş",
-    "section": "",
-    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.\nI have 4 years of experience in Natural Language Processing, and even surprisingly to me, I am working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department."
-  },
-  {
-    "objectID": "index.html#education-certifications",
-    "href": "index.html#education-certifications",
-    "title": "Nusret Özateş",
-    "section": "Education & Certifications",
-    "text": "Education & Certifications\n🎓 Master of Science in Computer Science — Koç University\n📜 Google Cloud Certified Professional Machine Learning Engineer\n📜 Certified Spark NLP Data Scientist"
-  },
-  {
-    "objectID": "index.html#publications",
-    "href": "index.html#publications",
-    "title": "Nusret Özateş",
-    "section": "Publications",
-    "text": "Publications\n\n\n\nSystematic comparison of GPT models for the analysis of pathology reports in a low-resource language: A case study for Turkish\nOmer Faruk Dilbaz, Muhammet Nusret Ozates, Beyza Bolat, Cigdem Gunduz-Demir, Ibrahim Kulac\nAmerican Journal of Clinical Pathology, Volume 164, Issue 5, November 2025\n\nDOI\n\n\n\nBLM-17m: A Large-Scale Dataset for Black Lives Matter Topic Detection on Twitter\nH. Kemik, N. Özateş, M. Asgari-Chenaghlou, Y. Li, E. Cambria\nIEEE International Conference on Data Mining Workshops (ICDMW), Shanghai, China, 2023\n\nDOI"
-  },
-  {
-    "objectID": "index.html#talks-features",
-    "href": "index.html#talks-features",
-    "title": "Nusret Özateş",
-    "section": "Talks & Features",
-    "text": "Talks & Features\n\n\n\n\n\nHaliç Engineering Summit\n📍 Haliç University | 📅 8 December 2025\nWe talked about engineering, academy, job opportunities and more!\n\nLinkedIn Post\n\n\n\n\n\n\n\nData Science Summit\n📍 KWORKS Şişli | 📅 6 September 2025\nI was there as “network field speaker” to chat with everyone about AI.\n\nLinkedIn Post\n\n\n\n\n\n\n\nAI Pulse Day\n📍 Işık University | 📅 31 May 2025\nCareer guide in AI for university students.\n\nLinkedIn Post\n\n\n\n\n\n\n\nTürkiye’nin Kıvılcımları Workshop\n📍 Tech Istanbul | 📅 2 February 2025\nML Engineering and MLOps\n\nLinkedIn Post"
-  },
-  {
-    "objectID": "notes/slurm/index.html",
-    "href": "notes/slurm/index.html",
-    "title": "Slurm Notes",
-    "section": "",
-    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
-  },
-  {
     "objectID": "posts/attention_mechanism/index.html",
     "href": "posts/attention_mechanism/index.html",
     "title": "Attention mechanism and how it works on neural machine translation",
@@ -327,6 +131,27 @@
     "title": "Attention mechanism and how it works on neural machine translation",
     "section": "References",
     "text": "References\n\nNeural Machine Translation by Jointly Learning to Align and Translate"
+  },
+  {
+    "objectID": "posts/bert/index.html",
+    "href": "posts/bert/index.html",
+    "title": "BERT: Encoder Stack Is All You Need",
+    "section": "",
+    "text": "In this article, I will talk about the BERT model and I will add sources to learn more about the BERT. To understand how BERT works, you need to understand how transformer models work. You can read my article about Transformers or you can learn it from here.\nBERT [1] (Bidirectional Encoder Representations from Transformers) is a new language representation model. It is one of the ways of creating word embeddings and sentence representation vectors. BERT uses the encoder stack of the transformer model to output the representation of each token in the given input. Additionally, it has a special token “[CLS]” at the beginning of the inputs to use in classification tasks. BERT has two steps:\nThe pre-training step is where the model is trained to learn the given language(s) and output meaningful representation of the given input sequence (“sequence” term especially used here to emphasize given input can be more than one sentence.). To do this step, the model is trained using unlabeled text data using two different tasks. For fine-tuning, labeled data is needed and the model is fine-tuned to do given downstream tasks such as classification or question answering."
+  },
+  {
+    "objectID": "posts/bert/index.html#pre-training",
+    "href": "posts/bert/index.html#pre-training",
+    "title": "BERT: Encoder Stack Is All You Need",
+    "section": "Pre-training",
+    "text": "Pre-training\nPre-training is done with two different tasks:\n\nMasked Language Model (MLM)\nNext Sentence Prediction (NSP)\n\n\nMasked Language Model\nAccording to the authors of the BERT model, deep bidirectional models are powerful than unidirectional models. The problem with bidirectional models is, it allows to each word indirectly “see itself” and the model can easily predict the target word. To solve this problem, the authors mask some percentage(%15 in the article) of the input tokens randomly by changing the word with the special token “[MASK]” and the model is tasked with the prediction of the masked tokens. This is called the “Masked Language Model” but it is called a “cloze test” (fill in the blanks questions) in literature. The output of the hidden vectors (only at the masked tokens’ positions) are given into a softmax layer with the neuron size is equal to vocabulary size to predict real words.\nThe “[MASK]” token is used for pre-training but not in fine-tuning section. This causes a mismatch and to solve this problem, the authors choose to not using the “[MASK]” token every time. The selected token i with the %80 probability, will be replaced with the “[MASK]” token, with %10 probability it will be replaced by a random token, and with %10 probability, it will remain unchanged. Then the token in the i’th position will be used to predict the original token.\n\n\n\nAn example of the masked language model from Jay Alammar [2]\n\n\n\n\nNext Sentence Prediction\nSome NLP tasks such as Question Answering and Natural Language Inference(Determining whether a “hypothesis” is true ( entailment), false (contradiction), or undetermined (neutral) given a “premise”.) need to understand the relation between sentences. This relation cannot be captured with the masked language model task. To train a model that can capture the relationship between two sentences, the authors give two sentences “Sentence A” and “Sentence B” as input. With the %50 probability, “Sentence B” is the actual sentence that comes after “Sentence A” and with the %50 probability it is a random sentence. As in the example above, the special “[CLS]” token is used to predict if the second sentence comes after the first sentence.\n\n\n\nAn example of the next sentence prediction model from Jay Alammar [2]\n\n\n\n\nFine-tuning\nIt is a very simple step, by swapping the input depending on the task (single sentence or two sentences) and connecting the output to an appropriate classification layer. For a sentence classification task, the output vector of the model’s “[CLS]” token could be connected to a softmax layer and\n\nFreeze the BERT weights and train the latest classification weights\nFine-tune all weights\n\n\n\nCode Example\nUsing Tensorflow Hub, training or fine-tuning BERT models is very easy. In the following steps, I will show you how you can use a BERT model to detect toxicity in texts for the Toxic Comment Classification Challenge. Download the train data first and create a Tensorflow dataset, separate it as train and validation set using this code:\nimport tensorflow as tf\n\ndataset = tf.data.experimental.make_csv_dataset(\n    'data/kaggle_toxic_comments/train.csv', batch_size=batch_size, num_epochs=1\n    , select_columns=['comment_text', 'toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate'])\n\ndataset = dataset.unbatch()\nvalidation = dataset.take(10000)\ntrain = dataset.skip(10000)\n\ntrain = train.map(lambda data: (\n    dataset_preprocessing(data['comment_text']),\n    [data['toxic'],\n     data['severe_toxic'],\n     data['obscene'],\n     data['threat'],\n     # data['sexual_explicit'],\n     data['insult'],\n     data['identity_hate'],\n     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)\n\nvalidation = validation.map(lambda data: (\n    dataset_preprocessing(data['comment_text']),\n    [data['toxic'],\n     data['severe_toxic'],\n     data['obscene'],\n     data['threat'],\n     # data['sexual_explicit'],\n     data['insult'],\n     data['identity_hate'],\n     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)\n\nreturn train, test\n\n\n\n\n\n\nNoteNote from 2026\n\n\n\nThe code above is too old and you would likely use huggingface transformers library to do the same task today.\n\n\nIn the code above, I did some preprocessing but you can just use “data[“comment_text”]”.\nLet’s create the BERT model using the Tensorflow Hub:\nfrom tensorflow.keras.layers import *\nimport tensorflow_hub as hub\n\ntext_input = tf.keras.layers.Input(shape=(), dtype=tf.string)\npreprocessor = hub.KerasLayer(\n    \"https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3\")\nencoder_inputs = preprocessor(text_input)\nencoder = hub.KerasLayer(\n    \"https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4\",\n    trainable=False)\noutputs = encoder(encoder_inputs)\npooled_output = outputs[\"pooled_output\"]  # [batch_size, 512].\nsequence_output = outputs[\"sequence_output\"][:, 0, :]\nNow we have two different outputs, pooled output, and sequence output. The pooled output represents each input sequence as a whole, and the sequence output represents each input token in context. Either of those can be used as input to further model building. For this task I want to use the output of the [CLS] token so I connect the sequence_output to a sigmoid layer and create the model like this:\nclassification_output = Dense(6, activation='sigmoid')(sequence_output)\n\nembedding_model = tf.keras.Model(text_input, classification_output)\nNow compile the model and train it:\nembedding_model.compile(\n    optimizer=tf.keras.optimizers.Nadam(learning_rate=0.025),\n    loss=tf.keras.losses.BinaryCrossentropy(),\n    metrics=[tf.keras.metrics.AUC()],\n    run_eagerly=False\n\n)\n\nembedding_model.summary()\n\nembedding_model.fit(x=train_data, validation_data=test_data, epochs=2)\nThanks for reading!"
+  },
+  {
+    "objectID": "posts/bert/index.html#references",
+    "href": "posts/bert/index.html#references",
+    "title": "BERT: Encoder Stack Is All You Need",
+    "section": "References",
+    "text": "References\n\nhttps://arxiv.org/pdf/1810.04805.pdf - The BERT paper.\nhttp://jalammar.github.io/illustrated-bert/ - Awesome and more detailed explanation of BERT model\nhttps://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4 - An example BERT model from Tensorflow Hub"
   },
   {
     "objectID": "posts/career_advice_ai_summary/index.html",
@@ -357,6 +182,13 @@
     "text": "Bias Towards Delivery\nBuilding cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.\nAnd some additional points:\n\nYou will make mistakes, so learn from them and also be helpful when someone else makes a mistake\nVibe coding is good unless you mindlessly copy-paste the code. Every time you use AI to generate code, you are taking technical debt.\nLearning how to fine-tune those small LLMs is currently one of the most important things, due to privacy reasons in a lot of industries\n\nIf you want to watch:"
   },
   {
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Quick Notes",
+    "section": "",
+    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
     "objectID": "posts/gnn_basics/index.html",
     "href": "posts/gnn_basics/index.html",
     "title": "Pytorch Geometric Basics: How Message Passing Works",
@@ -378,6 +210,132 @@
     "text": "References\n\nPyTorch Geometric Documentation\nFor GNN basics, and also for the headline image reference\nAlso, a great YouTube video for GNN basics from Stanford\n\nThanks for coming so far, have fun!"
   },
   {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html",
+    "href": "posts/paragraph_dev_sentece_skill/index.html",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "",
+    "text": "Do you remember the times you read an article/paper and you couldn’t understand what the author wanted to say even though you know the underlying concepts? Even the most brilliant ideas can be lost in poor writing or simplest ideas can be hard to understand. Choppy paragraphs, misplaced phrases, and grammatical run-ons can obscure your argument and frustrate your reader.\nIn this post, I will share what I learned from Koc University Academic Writing class videos and materials."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#topic-and-stress",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#topic-and-stress",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Topic and Stress",
+    "text": "Topic and Stress\nYou can divide a sentence into two parts: the topic and the stress. The topic is what the sentence is about, and the stress is what you want to say about the topic or what is new information.\n\n\n\n\n\n\n\nTopic Part, Readers:\nStress Part, Readers\n\n\n\n\n- Expect to understand what the sentence is about.\n- Expect to see new and imporant ideas.\n\n\n- Try to connect the sentence to what they have already read.\n- Focus most of their interpretative effort.\n\n\n\nExample:\nAccounts of depression evolved after psychologists introduced the concepts of defeat and entrapment.\n\nKnown-New Contract\n\nIntroduce your readers to the “big picture” first by giving them information they already know (the topic part).\nThen they can link what’s familiar to the new information you give them (the stress part).\n\nAs that new information becomes familiar, it too becomes old information that can link to newer information.\nExample:\nAccounts of depression evolved after psychologists introduced the concepts of defeat and entrapment. These concepts have been implicated in theoretical accounts of anxiety and suicide. Such theories..\nExample 2:\nHowever, managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system are discussed for the first time in this paper\n\n\n\n\n\n\nImportant\n\n\n\nThe sentence above starts with a lot of complex terms and we don’t know their importance until the end of sentence, which is bad. The simple fix is just reversing the order!\n\n\nHowever, this paper is the first to analyze managed WebRTC services using SFU architecture and SDN-assisted IP multicasting of scalable video within WebRTC system\n\n\nWhat If I Want to Stress Multiple Ideas in a Sentence?\n\nTry to introduce just one major idea per sentence, especially if the idea is complex.\nIf your text is complex and you have two ideas worth emphasizing, create two sentences.\n\nExample:\nHowever, it uses the already limited upload bandwidth of clients inefficiently and is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.\nInstead of the sentence above, you can write:\nHowever, mesh topology uses the already limited upload bandwidth of clients inefficiently. It is not scalable with the number of clients, i.e., it becomes impractical as the number of endpoints grows bigger.\nSometimes two sentences should be one if they refer to the same idea.\nExample:\nSuch leaders should make the work of their followers more pleasant. Moreover, they should treat the followers as equals, and respect them.\nInstead of the sentence above, you can write:\nSuch leaders should make the work of their followers more pleasant by treating them equally and respectfully.\n\n\n\n\n\n\nTipAdditional Steps to Edit Complex Writing\n\n\n\n\nMove the subject and the verb close together.\nBreak apart sentences that contain too much new information.\nUse transitional phrases to indicate relationships: moreover, in addition, consequently, therefore…"
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#run-ons",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#run-ons",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Run-Ons",
+    "text": "Run-Ons\nA run-on is two complete thoughts run together with no sign to mark the break between them or with just a comma:\nThen, in [2], they also presented a bisection algorithm to compute \\(\\epsilon\\)-pseudospectral abscissa of a fixed matrix, i.e. \\(\\alpha_{\\epsilon}(A)\\), and tried to compute minimum \\(\\epsilon\\)-pseudospectral abscissa over feasible matrices, however, an algorithm wasn’t presented yet.\nvs\nThen, in [2], they also presented a bisection algorithm to compute \\(\\epsilon\\)-pseudospectral abscissa of a fixed matrix, i.e. \\(\\alpha_{\\epsilon}(A)\\). They also tried to compute minimum \\(\\epsilon\\)-pseudospectral abscissa over feasible matrices. However, an algorithm wasn’t presented yet.\n\n\n\n\n\n\nNote\n\n\n\nI personally didn’t like the second version too because it has too many “they also” parts."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#fragments",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#fragments",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Fragments",
+    "text": "Fragments\nA sentence fragment is a group of words that lacks a subject or a verb and does not express a complete thought:\nPurdue offers many majors in engineering. Such as electrical, chemical, and industrial engineering.\nPurdue offers many majors in engineering such as electrical, chemical, and industrial engineering."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#parallelism",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#parallelism",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Parallelism",
+    "text": "Parallelism\nWords in a pair or series should have a parallel structure.\nNot Parallel: The production manager was asked to write his report quickly, accurately, and in a detailed manner.\nParallel: The production manager was asked to write his report quickly, accurately, and thoroughly."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#misplaced-modifiers",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#misplaced-modifiers",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Misplaced Modifiers",
+    "text": "Misplaced Modifiers\nMisplaced modifiers do not describe the word in the way the writer intended because of their wrong place in a sentence.\nGeorge couldn’t drive to work in his small sports car with a broken leg.\nWith a broken leg, George couldn’t drive to work in his small sports car.\nIn this example, we and transformer models know that George has a broken leg, not the car. But grammatically, the modifier “with a broken leg” seems to describe the car. This is an easy example but in a academic text, it can be more complex and harder to spot.\nIn order to avoid misplaced modifiers, place the words as close as possible to what they describe."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#dangling-modifiers",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#dangling-modifiers",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Dangling Modifiers",
+    "text": "Dangling Modifiers\nA modifier that opens a sentence must be followed immediately by the word it is meant to describe. Otherwise the sentence takes on an unintended meaning.\nWhile smoking a pipe, my dog sat with me.\nWhile smoking a pipe, I sat with my dog.\nWhile I was smoking a pipe, my dog sat with me.\nAgain, this is also an easy example but in a academic text, it can be more complex and harder to spot."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#sentence-variety",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#sentence-variety",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Sentence Variety",
+    "text": "Sentence Variety\n\nToo many sentences with the same structure and length can grow monotonous for readers.\nVarying sentence style and structure can also reduce repetition and add emphasis.\nLong sentences work well for incorporating a lot of information, and short sentences can often maximize crucial points.\n\n\nOverusing Long Sentences\nLong sentences can be difficult to read and understand, especially if they contain multiple ideas or clauses. Breaking up long sentences into shorter ones can improve clarity and readability.\nThe company reported that yearly profit growth, which had steadily increased by more than 7% since 1989, had stabilized in 2009 with a 0% comp, and in 2010, the year they launched the OWN project, actually decreased from the previous year by 2%. This announcement stunned Wall Street analysts, but with the overall decrease in similar company profit growth worldwide, as reported by Author (Year) in his article detailing the company’s history, the company’s announcement aligns with industry trends and future industry predictions.\nThe company reported that profit growth stabilized in 2009, though it had steadily increased by more than 7% since 1989. In 2010, the year they launch the OWN project, company profit growth decreased from the previous year. This announcement stunned Wall Street analysts. According to Author (Year), however, this decrease is exemplar of a trend across similar company profit growth worldwide; it also supports future predictions for the industry.\n\n\n\n\n\n\nNote\n\n\n\nNotice that the sentence count only increased by two, but thanks to the choice of where a sentence begin and end, the paragraph is easier to read. Moreover, the sentence variety is increased.\n\n\n\n\nShort Sentences\nRead the text below with your voice:\nToo many short sentences can hurt an essay. They can make the writing seem choppy. The writing may seem like it is below a college level. Readers may lose interest. They may not want to continue reading.\nSee the effect? Let’s fix it:\nToo many short sentences can hurt an essay, for it can make the writing seem choppy and below a college level. Because of this, readers may lose interest and not want to continue reading."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#change-the-rhythm",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#change-the-rhythm",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Change the Rhythm!",
+    "text": "Change the Rhythm!\nChange the rhythm of your writing by varying sentence length and structure. As you will see the example below, varying sentence length and structure can make your writing more interesting and engaging.\nVary the rhythm by alternating short and long sentences:\nThe Winslow family visited Canada and Alaska last summer to find some Native American art. In Anchorage stores they found some excellent examples of soapstone carvings. But they couldn’t find a dealer selling any of the woven wall hangings they wanted. They were very disappointed when they left Anchorage empty-handed.\nThe Winslow family visited Canada and Alaska last summer to find some native American art, such as soapstone carvings and wall hangings. Anchorage stores had many soapstone items available. Still, they were disappointed to learn that wall hangings, which they had especially wanted, were difficult to find. Sadly, they left empty-handed.\nI think I see something similar to this in the novels I’ve read."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#repeated-subjects-or-topics",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#repeated-subjects-or-topics",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Repeated Subjects or Topics",
+    "text": "Repeated Subjects or Topics\n\nHandling the same topic for several sentences can lead to repetitive sentences. When that happens, consider using these parts of speech to fix the problem:\n\nRelative pronouns\nIndiana used to be mainly an agricultural state. It has recently attracted more industry. Indiana, which used to be mainly an agricultural state, has recently attracted more industry.\nParticiples\nWei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again. Surprised to get a phone call from his sister, Wei Xie was happy to hear her voice again.\nPrepositions\nThe university has been facing pressure to cut its budget. It has eliminated funding for important programs. Under pressure to cut its budget, the university has eliminated funding for important programs."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#final-words",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#final-words",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "Final Words",
+    "text": "Final Words\nFinally, all these rules and tips are not strict rules, but guidelines to help you improve your writing. Also, it is very easy to forget them. The best thing you can do is keep writing constantly, while editing your own writing with these rules in mind. Over time, you will internalize these rules and your writing will improve. I also believe that reading a lot of well-written articles and books will help you improve your writing skills."
+  },
+  {
+    "objectID": "posts/paragraph_dev_sentece_skill/index.html#references",
+    "href": "posts/paragraph_dev_sentece_skill/index.html#references",
+    "title": "Academic Writing Notes: Paragraphs Development and Sentence Skills",
+    "section": "References",
+    "text": "References\n\nKoc University Writing Center\nSentence Variety. (2018). Retrieved from https://owl.purdue.edu/owl/general_writing/academic_writing/sentence_variety/index.html\nMaking Complex Writing Intelligible with Known-New Contract. (2018). Global Communication Center, Carnegie Mellon University. Retrieved from https://www.cmu.edu/gcc/handouts/old-new-handout-pdf"
+  },
+  {
+    "objectID": "posts/transformers/index.html",
+    "href": "posts/transformers/index.html",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "",
+    "text": "Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical problem. The structure of RNN does not allow to do parallel computing. There were some optimizations to make them faster but the main problem remains. The Transformer model completely removed RNNs and built all architecture based on attention mechanism.\nLike most neural machine translation models, Transformers have an encoder-decoder structure. It uses stacked encoders that contain attention layers and Feed Forward Neural networks."
+  },
+  {
+    "objectID": "posts/transformers/index.html#encoder-and-decoder-stacks",
+    "href": "posts/transformers/index.html#encoder-and-decoder-stacks",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Encoder and Decoder Stacks",
+    "text": "Encoder and Decoder Stacks\n\nEncoder\nEach encoder layer has two sub-layers, the “multi-head attention layer” (It will be explained in the next chapters) and a Feedforward Neural Network, both of them followed by a normalization layer and there is 2 residual connection around each sub-layer. Each encoder layer has the same structure but they do not have the same weights. To use residual connections, all sub-layers and embedding layers output the same dimension. We denote this dimension as parameter \\(d_\n{model}\\). In the original article \\(d_{model} = 512\\). The first encoder’s input is embedding vectors of the source sentence with position information injected (will be explained in the positional encoding subsection). Each of the other encoders’ inputs is the output of the encoder below.\nIn summary: An encoder receives input as a list of vectors. Then it processes these vectors by passing them to a self-attention layer, then sends them to a Feedforward Neural Network. Finally, the output goes to the next encoder. The last encoder sends its output to every decoder. The number of Encoders is a hyperparameter.\n\n\n\nThe word at each position goes through a self-attention process. Then, each result pass through a Feedforward Neural Network (Same DNN but each vector pass through separately) In this example, there are two words but the maximum number of words (that can be given to the model) is a hyper-parameter.\n\n\n\n\nDecoder\nThe structure of the decoder is nearly the same as the encoder. The difference is, decoder layer has one more sub-layer that contains a “masked” multi-head attention layer. When predicting the position “i” we need to be sure about we are attending the known outputs at position &lt; “i”. The Transformer model is auto-regressive, it makes predictions one part at a time, and uses its output to decide what to do next.\nDuring training, we are using teacher-forcing. Teacher forcing is passing the true output to the next time step regardless of what the model predicts at the current time step. As the Transformer predicts each word, self-attention allows it to look at the previous words in the input sequence to better predict the next word. To prevent the model from peeking at the expected output the model uses a look-ahead mask. This is what we call a masked multi-head attention layer. For a target sentence with 4 words, a look-ahead mask look like this:\n[[0, 1, 1, 1],\n [0, 0, 1, 1],\n [0, 0, 0, 1],\n [0, 0, 0, 0]]\nWe are using this matrix as below\nscaled_attention_logits -= mask * 1e9\nHere, scaled_attention_logits is the normalized result of matrix multiplication of query and key. We make the values from “future” near to zero by appending -1e9 to the values that need to be masked. With that, values from the future will have no impact when calculating attention value.\n\n\n\n\n\n\nImportant\n\n\n\nWhy we are using teacher forcing and give the true output to the model?\n\n\nShort answer: Otherwise we would have to run the decoder a number of times equal to the number of words in the target sentence.\nLonger answer: The secret lies in the implementation. Let’s say the true output is a three-word sentence and embedding vector dimension is five and our vocabulary size is twenty. Lastly, our batch size is 1 for ease of explanation. After passing these words from the embedding vector, we have a 1,3,5 dimensional matrix. After all of the decoders’ calculations, we have a vector that has the same dimension. As we can see in the Transformer model architecture we will pass this vector to a final linear/dense layer. The number of neurons in this layer is twenty because it is our vocabulary size. That means we are multiplying [1,3,5] dimensional matrix with [5,20] dimensional matrix. The result is [1,3,20] dimensional matrix. That means, every word predicted the next word by running the decoder one time. How do we calculate loss? With Sparse Categorical Cross Entropy. This explanation below is the documentation of SparseCategoricalCrossEntropy class in Tensorflow:\nUse this crossentropy loss function when there are two or more label classes.\nWe expect labels to be provided as integers.There should be ‘# classes’ floating point values per feature for ‘y_pred’ and a single floating point value per feature for ‘y_true’.\nExample:\n\ny_true = [1, 2]\ny_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]\n\n\n\nThe Transformer model architecture"
+  },
+  {
+    "objectID": "posts/transformers/index.html#self-attention",
+    "href": "posts/transformers/index.html#self-attention",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Self-Attention",
+    "text": "Self-Attention\nLet’s suppose we want to translate the following sentence:\n“The books were on the shelves because they are old.”\nWhat does “they” in this sentence refer to? Is it referring to the books or the shelves? It’s a simple question to a human, but not as simple as an algorithm. Self-attention allows the model to associate “they” with books.\nAn attention mechanism maps a query and a key-value pair to an output. All of them are vectors. The way to calculate output is the weighted sum of the values. Weights are computed by a function that uses query and key as input. These weights are not trainable, query and key values are calculated by trainable and learned weights.\nQuery, Key, and Value are created from the encoder’s input vectors(e.g. embedding of input words for the first layer) by multiplying these input vectors with 3 different weight matrices \\(W_Q\\), \\(W_K\\),\\(W_V\\) that can be trained during the training process. Every layer (both encoder and decoder layers) in the Transformer model has its \\(W_{Q}\\), \\(W_{K}\\), \\(W_{V}\\) matrices.\n\n\n\nCalculation of Query, Key and Value vectors\n\n\n\nHow Do We Use Query, Key, and Value to Calculate Attention?\nLet’s suppose we are calculation the self-attention for the word “better”. We will use “Scaled Dot-Product”.\n\nWe compute dot products of the query with all keys\nThe results will be divided by \\(sqrt(d_k)\\) where \\(d_k\\) is the dimension of the key vectors. This is called scaling.\nLastly, we apply the softmax function to the result from step two.\n\nThis will tell us, how much attention we need to give to each word to encode “better”. For faster processing, Queries are packed in the matrix Q, values are packed in the matrix V and keys are packed in the matrix K. The general scaled dot-product attention formula is:\n\\[Attention(Q, K, V) = softmax(\\\\frac{QK^T}{\\\\sqrt{d_k}})V\\]\n\n\n\nScaled Dot-Product Attention"
+  },
+  {
+    "objectID": "posts/transformers/index.html#multi-head-attention",
+    "href": "posts/transformers/index.html#multi-head-attention",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Multi-Head Attention",
+    "text": "Multi-Head Attention\nThe idea/question behind multi-head self-attention is: “How do we improve the model’s ability to focus on different features of the input sentence?”.\n\nWith 1 head self-attention, the encoding could be dominated by the actual word.\nMulti-head attention allows the model to learn different semantic meanings of attention. Eg. One for grammar, one for vocabulary, etc.\n\nFor example, if we have head=8 (referenced as h), there will be 8 different Q, K, and V matrices and 8 different outputs. \\(d_{k} = d_{v} = d_{model}/h\\), weights will have dimension:\n\n\\(W_{Q}\\): \\(d_{model} x d_{k}\\)\n\\(W_{K}\\): \\(d_{model} x d_{k}\\)\n\\(W_{V}\\): \\(d_{model} x d_{v}\\)\n\nand the outputs will be concatenated and multiplied by another weight matrix \\(W_{O}\\) with dimension \\((hd_{v} x d_{model})\\) to get the final\n\n\n\nMulti-Head Attention: We embed each word, create 8 “attention heads”, multiply X with weight matrices and find 8 different Key, Query, and Value matrices, calculate attention vector using these matrices, concatenate these matrices and multiply them with weight matrix \\(W^O\\) to get the output. This output is the output of the (for example) Multi-Head Attention layer and we will pass this output to the “Add and Normalize” layer."
+  },
+  {
+    "objectID": "posts/transformers/index.html#positional-encoding",
+    "href": "posts/transformers/index.html#positional-encoding",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "Positional Encoding",
+    "text": "Positional Encoding\nAs the Transformer model doesn’t use recurrence, there isn’t any position information(time step t) in the model input. It is just a bag of words. To provide the model this important information, we inject(add) some information vector( positional encoding) to each embedding. These positional encoding vectors have the same dimension as embeddings.\nOne way to add this information is having a second embedding, as we have an embedding vector for “computer”, why shouldn’t we have an embedding for position 3? With this approach, the model can learn positional embeddings during training. The problem with this approach is, say we have 1000 training examples and the maximum input length is 50. If 800 of these training examples have the length of 30, the other 20 embedding vectors will be poorly trained and may not generalize well in practice.\nAs an alternative, we can use a static function that takes an integer input and give a vector in a way that captures the relationship between positions. This function should give that position 8 is more related to position 9 than position\n\nIn the Transformer model, authors decided to use sine and cosine functions of different frequencies:\n\n\\[PE_{(pos, 2i)} = sin(pos/10000^{2i/d_{model}})\\] \\[PE_{(pos, 2i+1)} = cos(pos/10000^{2i/d_{model}})\\]\nHere, pos is the position of the token, and i is the dimension. Each dimension of these positional encodings corresponds to a sinusoid. (A curve similar to the sine function but possibly shifted in phase, period, amplitude, or any combination thereof.) The wavelengths form a geometric progression from \\(2\\pi \\, to \\, 10000 \\cdot 2\\pi\\). This function is chosen by authors because they believe(hypothesized) this would allow the model to easily learn to attend by relative positions since for any fixed offset k, \\(PE_{pos+k}\\) can be represented as a linear function of \\(PE_{pos}\\).\nThat’s all I know :) Thank you for reading!"
+  },
+  {
+    "objectID": "posts/transformers/index.html#references",
+    "href": "posts/transformers/index.html#references",
+    "title": "Transformer Architecture: How Transformer Models Work?",
+    "section": "References",
+    "text": "References\n\nhttp://jalammar.github.io/illustrated-transformer/ - An excellent overview of Transformer models.\nhttps://kazemnejad.com/blog/transformer_architecture_positional_encoding/ - A detailed explanation of positional encodings.\nhttps://arxiv.org/pdf/1409.0473.pdf - Neural Machine Translation by Jointly Learning to Align and Translate.\nhttps://arxiv.org/abs/1706.03762v5 - Attention Is All You Need."
+  },
+  {
     "objectID": "posts/test_time_compute/index.html",
     "href": "posts/test_time_compute/index.html",
     "title": "Test-Time Compute, Reasoning and Human Brain",
@@ -390,5 +348,47 @@
     "title": "Test-Time Compute, Reasoning and Human Brain",
     "section": "References",
     "text": "References\n\nBU-TD Model: “Image interpretation by iterative bottom-up top-down processing”\nT5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer”"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Nusret Özateş",
+    "section": "",
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.\nI have 5 years of experience in Natural Language Processing, and even surprisingly to me, I have been working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as MLflow, Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department. I also managed the deployment and CI/CD of various ML models on GCP at TRT."
+  },
+  {
+    "objectID": "index.html#about-me",
+    "href": "index.html#about-me",
+    "title": "Nusret Özateş",
+    "section": "",
+    "text": "As a Machine Learning Engineer, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.\nI have 5 years of experience in Natural Language Processing, and even surprisingly to me, I have been working on Graph Neural Networks, Vision Transformers, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…\nI am also skilled in MLOps, using tools such as MLflow, Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department. I also managed the deployment and CI/CD of various ML models on GCP at TRT."
+  },
+  {
+    "objectID": "index.html#education-certifications",
+    "href": "index.html#education-certifications",
+    "title": "Nusret Özateş",
+    "section": "Education & Certifications",
+    "text": "Education & Certifications\n🎓 Master of Science in Computer Science — Koç University\n📜 Google Cloud Certified Professional Machine Learning Engineer\n📜 Certified Spark NLP Data Scientist"
+  },
+  {
+    "objectID": "index.html#publications",
+    "href": "index.html#publications",
+    "title": "Nusret Özateş",
+    "section": "Publications",
+    "text": "Publications\n\n\n\nSystematic comparison of GPT models for the analysis of pathology reports in a low-resource language: A case study for Turkish\nOmer Faruk Dilbaz, Muhammet Nusret Ozates, Beyza Bolat, Cigdem Gunduz-Demir, Ibrahim Kulac\nAmerican Journal of Clinical Pathology, Volume 164, Issue 5, November 2025\n\nDOI\n\n\n\nBLM-17m: A Large-Scale Dataset for Black Lives Matter Topic Detection on Twitter\nH. Kemik, N. Özateş, M. Asgari-Chenaghlou, Y. Li, E. Cambria\nIEEE International Conference on Data Mining Workshops (ICDMW), Shanghai, China, 2023\n\nDOI"
+  },
+  {
+    "objectID": "index.html#talks-features",
+    "href": "index.html#talks-features",
+    "title": "Nusret Özateş",
+    "section": "Talks & Features",
+    "text": "Talks & Features\n\n\n\n\n\nHaliç Engineering Summit\n📍 Haliç University | 📅 8 December 2025\nWe talked about engineering, academy, job opportunities and more!\n\nLinkedIn Post\n\n\n\n\n\n\n\nData Science Summit\n📍 KWORKS Şişli | 📅 6 September 2025\nI was there as “network field speaker” to chat with everyone about AI.\n\nLinkedIn Post\n\n\n\n\n\n\n\nAI Pulse Day\n📍 Işık University | 📅 31 May 2025\nCareer guide in AI for university students.\n\nLinkedIn Post\n\n\n\n\n\n\n\nTürkiye’nin Kıvılcımları Workshop\n📍 Tech Istanbul | 📅 2 February 2025\nML Engineering and MLOps\n\nLinkedIn Post"
+  },
+  {
+    "objectID": "notes/slurm/index.html",
+    "href": "notes/slurm/index.html",
+    "title": "Slurm Notes",
+    "section": "",
+    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
   }
 ]
