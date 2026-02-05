@@ -946,6 +946,327 @@ Note
   <media:content url="https://nusretozates.github.io/posts/test_time_compute/img.png" medium="image" type="image/png" height="69" width="144"/>
 </item>
 <item>
+  <title>BERT: Encoder Stack Is All You Need</title>
+  <dc:creator>Nusret Ozates</dc:creator>
+  <link>https://nusretozates.github.io/posts/bert/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p>In this article, I will talk about the BERT model and I will add sources to learn more about the BERT. To understand how BERT works, you need to understand how transformer models work. You can read my article about <a href="../../posts/transformers/index.html">Transformers</a> or you can learn it from here.</p>
+<p>BERT [1] (Bidirectional Encoder Representations from Transformers) is a new language representation model. It is one of the ways of creating word embeddings and sentence representation vectors. BERT uses the encoder stack of the transformer model to output the representation of each token in the given input. Additionally, it has a special token “[CLS]” at the beginning of the inputs to use in classification tasks. BERT has two steps:</p>
+<ol type="1">
+<li>Pre-training</li>
+<li>Fine-tuning</li>
+</ol>
+<p>The pre-training step is where the model is trained to learn the given language(s) and output meaningful representation of the given input sequence (“sequence” term especially used here to emphasize given input can be more than one sentence.). To do this step, the model is trained using unlabeled text data using two different tasks. For fine-tuning, labeled data is needed and the model is fine-tuned to do given downstream tasks such as classification or question answering.</p>
+<section id="pre-training" class="level2">
+<h2 class="anchored" data-anchor-id="pre-training">Pre-training</h2>
+<p>Pre-training is done with two different tasks:</p>
+<ol type="1">
+<li>Masked Language Model (MLM)</li>
+<li>Next Sentence Prediction (NSP)</li>
+</ol>
+<section id="masked-language-model" class="level3">
+<h3 class="anchored" data-anchor-id="masked-language-model">Masked Language Model</h3>
+<p>According to the authors of the BERT model, deep bidirectional models are powerful than unidirectional models. The problem with bidirectional models is, it allows to each word indirectly “see itself” and the model can easily predict the target word. To solve this problem, the authors mask some percentage(%15 in the article) of the input tokens randomly by changing the word with the special token “[MASK]” and the model is tasked with the prediction of the masked tokens. This is called the “Masked Language Model” but it is called a “cloze test” (fill in the blanks questions) in literature. The output of the hidden vectors (only at the masked tokens’ positions) are given into a softmax layer with the neuron size is equal to vocabulary size to predict real words.</p>
+<p>The “[MASK]” token is used for pre-training but not in fine-tuning section. This causes a mismatch and to solve this problem, the authors choose to not using the “[MASK]” token every time. The selected token i with the %80 probability, will be replaced with the “[MASK]” token, with %10 probability it will be replaced by a random token, and with %10 probability, it will remain unchanged. Then the token in the i’th position will be used to predict the original token.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/bert/masked.png" class="img-fluid figure-img"></p>
+<figcaption>An example of the masked language model from Jay Alammar [2]</figcaption>
+</figure>
+</div>
+</section>
+<section id="next-sentence-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="next-sentence-prediction">Next Sentence Prediction</h3>
+<p>Some NLP tasks such as Question Answering and Natural Language Inference(Determining whether a “hypothesis” is true ( entailment), false (contradiction), or undetermined (neutral) given a “premise”.) need to understand the relation between sentences. This relation cannot be captured with the masked language model task. To train a model that can capture the relationship between two sentences, the authors give two sentences “Sentence A” and “Sentence B” as input. With the %50 probability, “Sentence B” is the actual sentence that comes after “Sentence A” and with the %50 probability it is a random sentence. As in the example above, the special “[CLS]” token is used to predict if the second sentence comes after the first sentence.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://nusretozates.github.io/posts/bert/nsp.png" class="img-fluid figure-img"></p>
+<figcaption>An example of the next sentence prediction model from Jay Alammar [2]</figcaption>
+</figure>
+</div>
+</section>
+<section id="fine-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning">Fine-tuning</h3>
+<p>It is a very simple step, by swapping the input depending on the task (single sentence or two sentences) and connecting the output to an appropriate classification layer. For a sentence classification task, the output vector of the model’s “[CLS]” token could be connected to a softmax layer and</p>
+<ol type="1">
+<li>Freeze the BERT weights and train the latest classification weights</li>
+<li>Fine-tune all weights</li>
+</ol>
+</section>
+<section id="code-example" class="level3">
+<h3 class="anchored" data-anchor-id="code-example">Code Example</h3>
+<p>Using Tensorflow Hub, training or fine-tuning BERT models is very easy. In the following steps, I will show you how you can use a BERT model to detect toxicity in texts for the Toxic Comment Classification Challenge. Download the train data first and create a Tensorflow dataset, separate it as train and validation set using this code:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> tf</span>
+<span id="cb1-2"></span>
+<span id="cb1-3">dataset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.data.experimental.make_csv_dataset(</span>
+<span id="cb1-4">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'data/kaggle_toxic_comments/train.csv'</span>, batch_size<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>batch_size, num_epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span></span>
+<span id="cb1-5">    , select_columns<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'comment_text'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'toxic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'severe_toxic'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'obscene'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'threat'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'insult'</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'identity_hate'</span>])</span>
+<span id="cb1-6"></span>
+<span id="cb1-7">dataset <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dataset.unbatch()</span>
+<span id="cb1-8">validation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dataset.take(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)</span>
+<span id="cb1-9">train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> dataset.skip(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10000</span>)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11">train <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> train.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> data: (</span>
+<span id="cb1-12">    dataset_preprocessing(data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'comment_text'</span>]),</span>
+<span id="cb1-13">    [data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'toxic'</span>],</span>
+<span id="cb1-14">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'severe_toxic'</span>],</span>
+<span id="cb1-15">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'obscene'</span>],</span>
+<span id="cb1-16">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'threat'</span>],</span>
+<span id="cb1-17">     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># data['sexual_explicit'],</span></span>
+<span id="cb1-18">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'insult'</span>],</span>
+<span id="cb1-19">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'identity_hate'</span>],</span>
+<span id="cb1-20">     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)</span>
+<span id="cb1-21"></span>
+<span id="cb1-22">validation <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> validation.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">map</span>(<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">lambda</span> data: (</span>
+<span id="cb1-23">    dataset_preprocessing(data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'comment_text'</span>]),</span>
+<span id="cb1-24">    [data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'toxic'</span>],</span>
+<span id="cb1-25">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'severe_toxic'</span>],</span>
+<span id="cb1-26">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'obscene'</span>],</span>
+<span id="cb1-27">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'threat'</span>],</span>
+<span id="cb1-28">     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># data['sexual_explicit'],</span></span>
+<span id="cb1-29">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'insult'</span>],</span>
+<span id="cb1-30">     data[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'identity_hate'</span>],</span>
+<span id="cb1-31">     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)</span>
+<span id="cb1-32"></span>
+<span id="cb1-33"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> train, test</span></code></pre></div></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Note from 2026
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The code above is too old and you would likely use huggingface transformers library to do the same task today.</p>
+</div>
+</div>
+<p>In the code above, I did some preprocessing but you can just use “data[“comment_text”]”.</p>
+<p>Let’s create the BERT model using the Tensorflow Hub:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">from</span> tensorflow.keras.layers <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span></span>
+<span id="cb2-2"><span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">import</span> tensorflow_hub <span class="im" style="color: #00769E;
+background-color: null;
+font-style: inherit;">as</span> hub</span>
+<span id="cb2-3"></span>
+<span id="cb2-4">text_input <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.layers.Input(shape<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>(), dtype<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.string)</span>
+<span id="cb2-5">preprocessor <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> hub.KerasLayer(</span>
+<span id="cb2-6">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3"</span>)</span>
+<span id="cb2-7">encoder_inputs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> preprocessor(text_input)</span>
+<span id="cb2-8">encoder <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> hub.KerasLayer(</span>
+<span id="cb2-9">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4"</span>,</span>
+<span id="cb2-10">    trainable<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span>)</span>
+<span id="cb2-11">outputs <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> encoder(encoder_inputs)</span>
+<span id="cb2-12">pooled_output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> outputs[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"pooled_output"</span>]  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># [batch_size, 512].</span></span>
+<span id="cb2-13">sequence_output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> outputs[<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sequence_output"</span>][:, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, :]</span></code></pre></div></div>
+<p>Now we have two different outputs, pooled output, and sequence output. The pooled output represents each input sequence as a whole, and the sequence output represents each input token in context. Either of those can be used as input to further model building. For this task I want to use the output of the [CLS] token so I connect the sequence_output to a sigmoid layer and create the model like this:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1">classification_output <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> Dense(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">6</span>, activation<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'sigmoid'</span>)(sequence_output)</span>
+<span id="cb3-2"></span>
+<span id="cb3-3">embedding_model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> tf.keras.Model(text_input, classification_output)</span></code></pre></div></div>
+<p>Now compile the model and train it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1">embedding_model.<span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">compile</span>(</span>
+<span id="cb4-2">    optimizer<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.keras.optimizers.Nadam(learning_rate<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.025</span>),</span>
+<span id="cb4-3">    loss<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>tf.keras.losses.BinaryCrossentropy(),</span>
+<span id="cb4-4">    metrics<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>[tf.keras.metrics.AUC()],</span>
+<span id="cb4-5">    run_eagerly<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">False</span></span>
+<span id="cb4-6"></span>
+<span id="cb4-7">)</span>
+<span id="cb4-8"></span>
+<span id="cb4-9">embedding_model.summary()</span>
+<span id="cb4-10"></span>
+<span id="cb4-11">embedding_model.fit(x<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>train_data, validation_data<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>test_data, epochs<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>)</span></code></pre></div></div>
+<p>Thanks for reading!</p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li><a href="https://arxiv.org/pdf/1810.04805.pdf" class="uri">https://arxiv.org/pdf/1810.04805.pdf</a> - The BERT paper.</li>
+<li><a href="http://jalammar.github.io/illustrated-bert/" class="uri">http://jalammar.github.io/illustrated-bert/</a> - Awesome and more detailed explanation of BERT model</li>
+<li><a href="https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4" class="uri">https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4</a> - An example BERT model from Tensorflow Hub</li>
+</ol>
+
+
+</section>
+
+ ]]></description>
+  <category>ml</category>
+  <guid>https://nusretozates.github.io/posts/bert/</guid>
+  <pubDate>Wed, 23 Jun 2021 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/bert/masked.png" medium="image" type="image/png" height="95" width="144"/>
+</item>
+<item>
   <title>Transformer Architecture: How Transformer Models Work?</title>
   <dc:creator>Nusret Ozates</dc:creator>
   <link>https://nusretozates.github.io/posts/transformers/</link>
@@ -1091,6 +1412,7 @@ y_pred = [[0.05, 0.95, 0], [0.1, 0.8, 0.1]]</code></pre>
   <category>ml</category>
   <guid>https://nusretozates.github.io/posts/transformers/</guid>
   <pubDate>Fri, 19 Feb 2021 21:00:00 GMT</pubDate>
+  <media:content url="https://nusretozates.github.io/posts/transformers/transformer.png" medium="image" type="image/png" height="182" width="144"/>
 </item>
 <item>
   <title>Attention mechanism and how it works on neural machine translation</title>

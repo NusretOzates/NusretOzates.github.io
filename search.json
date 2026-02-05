@@ -217,39 +217,46 @@
     "text": "Networking in Docker Compose\nLet us say we modify the architecture a little bit to contain the traffic from the different sources in separate networks. For example, we would like to separate the user-generated traffic from the application’s internal traffic. So, we create a front-end network dedicated to the traffic from users and a backend network dedicated to the traffic within the application.\n\nThis is the .yaml file you need to write:\nversion: \"3\"\nservices:\n  redis:\n    image: redis\n    networks:\n      - back-end\n  db:\n    image: postgres:9.4\n    networks:\n      - back-end\n  vote:\n    image: voting-app\n    ports:\n      - \"5000:80\"\n    networks:\n      - front-end\n      - back-end\n  result:\n    image: result-app\n    ports:\n      - \"5001:80\"\n    networks:\n      - front-end\n      - back-end\n  worker:\n    image: worker\n    networks:\n      - front-end\n      - back-end\n\nnetworks:\n  front-end:\n    driver: bridge\n  back-end:\n    driver: bridge\nSo, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the KodeKlaud’s channel!"
   },
   {
-    "objectID": "posts/attention_mechanism/index.html",
-    "href": "posts/attention_mechanism/index.html",
-    "title": "Attention mechanism and how it works on neural machine translation",
+    "objectID": "posts/bert/index.html",
+    "href": "posts/bert/index.html",
+    "title": "BERT: Encoder Stack Is All You Need",
     "section": "",
-    "text": "In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find \\(argmax_y \\, p(y|x)\\). Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector."
+    "text": "In this article, I will talk about the BERT model and I will add sources to learn more about the BERT. To understand how BERT works, you need to understand how transformer models work. You can read my article about Transformers or you can learn it from here.\nBERT [1] (Bidirectional Encoder Representations from Transformers) is a new language representation model. It is one of the ways of creating word embeddings and sentence representation vectors. BERT uses the encoder stack of the transformer model to output the representation of each token in the given input. Additionally, it has a special token “[CLS]” at the beginning of the inputs to use in classification tasks. BERT has two steps:\nThe pre-training step is where the model is trained to learn the given language(s) and output meaningful representation of the given input sequence (“sequence” term especially used here to emphasize given input can be more than one sentence.). To do this step, the model is trained using unlabeled text data using two different tasks. For fine-tuning, labeled data is needed and the model is fine-tuned to do given downstream tasks such as classification or question answering."
   },
   {
-    "objectID": "posts/attention_mechanism/index.html#rnn-encoder-decoder",
-    "href": "posts/attention_mechanism/index.html#rnn-encoder-decoder",
-    "title": "Attention mechanism and how it works on neural machine translation",
-    "section": "RNN Encoder-Decoder",
-    "text": "RNN Encoder-Decoder\nLet’s look at the encoder-decoder architecture more formally.\n\nEncoder\nThe encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c. To calculate c, we calculate hidden states with:\n\\[ h_t = f(h_{t-1}, x_t) \\]\nand vector c is equal to:\n\\[ c = q\\left(\\{h_1, h_2, \\ldots, h_{T_x}\\}\\right) \\]\n\\(h_t \\in R^n\\) is the hidden state at time t, c is a vector, generated from the sequence of hidden states, f and q are some non-linear functions. As an example, f can be an LSTM and \\(q\\left(\\{h_1, h_2, \\ldots, h_{T_x}\\}\\right)\\) can be equal to \\(h_{T_x}\\), the last hidden state of the encoder.\n\n\nDecoder\n\n\n\n\n\n\nNote\n\n\n\nIn the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.\n\n\nThe decoder predicts the next word \\(y_t\\), given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:\n\\[ p(y) = \\prod_{t=1}^{T_y} p(y_t | y_1, ..., y_{t-1}, c) \\]\nHow do we calculate \\(p(y_t | y_1, ..., y_{t-1}, c)\\)?\n\\[ p(y_t | y_1, ..., y_{t-1}, c) = g(y_{t-1}, s_t, c) \\]\nwhere g is a non-linear function that outputs the probability of \\(y_t\\) and \\(s_t\\) is the hidden state of the RNN."
+    "objectID": "posts/bert/index.html#pre-training",
+    "href": "posts/bert/index.html#pre-training",
+    "title": "BERT: Encoder Stack Is All You Need",
+    "section": "Pre-training",
+    "text": "Pre-training\nPre-training is done with two different tasks:\n\nMasked Language Model (MLM)\nNext Sentence Prediction (NSP)\n\n\nMasked Language Model\nAccording to the authors of the BERT model, deep bidirectional models are powerful than unidirectional models. The problem with bidirectional models is, it allows to each word indirectly “see itself” and the model can easily predict the target word. To solve this problem, the authors mask some percentage(%15 in the article) of the input tokens randomly by changing the word with the special token “[MASK]” and the model is tasked with the prediction of the masked tokens. This is called the “Masked Language Model” but it is called a “cloze test” (fill in the blanks questions) in literature. The output of the hidden vectors (only at the masked tokens’ positions) are given into a softmax layer with the neuron size is equal to vocabulary size to predict real words.\nThe “[MASK]” token is used for pre-training but not in fine-tuning section. This causes a mismatch and to solve this problem, the authors choose to not using the “[MASK]” token every time. The selected token i with the %80 probability, will be replaced with the “[MASK]” token, with %10 probability it will be replaced by a random token, and with %10 probability, it will remain unchanged. Then the token in the i’th position will be used to predict the original token.\n\n\n\nAn example of the masked language model from Jay Alammar [2]\n\n\n\n\nNext Sentence Prediction\nSome NLP tasks such as Question Answering and Natural Language Inference(Determining whether a “hypothesis” is true ( entailment), false (contradiction), or undetermined (neutral) given a “premise”.) need to understand the relation between sentences. This relation cannot be captured with the masked language model task. To train a model that can capture the relationship between two sentences, the authors give two sentences “Sentence A” and “Sentence B” as input. With the %50 probability, “Sentence B” is the actual sentence that comes after “Sentence A” and with the %50 probability it is a random sentence. As in the example above, the special “[CLS]” token is used to predict if the second sentence comes after the first sentence.\n\n\n\nAn example of the next sentence prediction model from Jay Alammar [2]\n\n\n\n\nFine-tuning\nIt is a very simple step, by swapping the input depending on the task (single sentence or two sentences) and connecting the output to an appropriate classification layer. For a sentence classification task, the output vector of the model’s “[CLS]” token could be connected to a softmax layer and\n\nFreeze the BERT weights and train the latest classification weights\nFine-tune all weights\n\n\n\nCode Example\nUsing Tensorflow Hub, training or fine-tuning BERT models is very easy. In the following steps, I will show you how you can use a BERT model to detect toxicity in texts for the Toxic Comment Classification Challenge. Download the train data first and create a Tensorflow dataset, separate it as train and validation set using this code:\nimport tensorflow as tf\n\ndataset = tf.data.experimental.make_csv_dataset(\n    'data/kaggle_toxic_comments/train.csv', batch_size=batch_size, num_epochs=1\n    , select_columns=['comment_text', 'toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate'])\n\ndataset = dataset.unbatch()\nvalidation = dataset.take(10000)\ntrain = dataset.skip(10000)\n\ntrain = train.map(lambda data: (\n    dataset_preprocessing(data['comment_text']),\n    [data['toxic'],\n     data['severe_toxic'],\n     data['obscene'],\n     data['threat'],\n     # data['sexual_explicit'],\n     data['insult'],\n     data['identity_hate'],\n     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)\n\nvalidation = validation.map(lambda data: (\n    dataset_preprocessing(data['comment_text']),\n    [data['toxic'],\n     data['severe_toxic'],\n     data['obscene'],\n     data['threat'],\n     # data['sexual_explicit'],\n     data['insult'],\n     data['identity_hate'],\n     ])).batch(batch_size).cache().prefetch(tf.data.AUTOTUNE)\n\nreturn train, test\n\n\n\n\n\n\nNoteNote from 2026\n\n\n\nThe code above is too old and you would likely use huggingface transformers library to do the same task today.\n\n\nIn the code above, I did some preprocessing but you can just use “data[“comment_text”]”.\nLet’s create the BERT model using the Tensorflow Hub:\nfrom tensorflow.keras.layers import *\nimport tensorflow_hub as hub\n\ntext_input = tf.keras.layers.Input(shape=(), dtype=tf.string)\npreprocessor = hub.KerasLayer(\n    \"https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3\")\nencoder_inputs = preprocessor(text_input)\nencoder = hub.KerasLayer(\n    \"https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4\",\n    trainable=False)\noutputs = encoder(encoder_inputs)\npooled_output = outputs[\"pooled_output\"]  # [batch_size, 512].\nsequence_output = outputs[\"sequence_output\"][:, 0, :]\nNow we have two different outputs, pooled output, and sequence output. The pooled output represents each input sequence as a whole, and the sequence output represents each input token in context. Either of those can be used as input to further model building. For this task I want to use the output of the [CLS] token so I connect the sequence_output to a sigmoid layer and create the model like this:\nclassification_output = Dense(6, activation='sigmoid')(sequence_output)\n\nembedding_model = tf.keras.Model(text_input, classification_output)\nNow compile the model and train it:\nembedding_model.compile(\n    optimizer=tf.keras.optimizers.Nadam(learning_rate=0.025),\n    loss=tf.keras.losses.BinaryCrossentropy(),\n    metrics=[tf.keras.metrics.AUC()],\n    run_eagerly=False\n\n)\n\nembedding_model.summary()\n\nembedding_model.fit(x=train_data, validation_data=test_data, epochs=2)\nThanks for reading!"
   },
   {
-    "objectID": "posts/attention_mechanism/index.html#attention-mechanism-a-new-approach-to-encoder-decoder-structure",
-    "href": "posts/attention_mechanism/index.html#attention-mechanism-a-new-approach-to-encoder-decoder-structure",
-    "title": "Attention mechanism and how it works on neural machine translation",
-    "section": "Attention Mechanism: A new approach to Encoder-Decoder Structure",
-    "text": "Attention Mechanism: A new approach to Encoder-Decoder Structure\n\nEncoder\nIn the encoder structure, the hidden states are calculated as Eq.1. Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.\n\\[ h_j = [\\overrightarrow{h_j^T}; \\overleftarrow{h_j^T}] \\]\n\n\nDecoder\nIn the decoder structure, probability of each word is computed according to previous word’s vector \\(y_{i-1}\\) , hidden state \\(s_i\\) and context vector \\(c_i\\).\n\\[ p(y_i | y_1, ..., y_{i-1}, x) = g(y_{i-1}, s_i, c_i) \\]\nHidden state is computed according to previous hidden state \\(s_{i-1}\\), previous word’s vector \\(y_{i-1}\\) and current context vector \\(c_i\\).\n\\[ s_i = f(s_{i-1}, y_{i-1}, c_i) \\]\nThe context vector \\(c_i\\) depends on all hidden states with their weights. These weights represent the amount of “attention” needed to be given to predict next word \\(y_i\\).\n\\[ c_i = \\sum_{j=1}^{T_x} \\alpha_{ij} h_j \\]\nwhere \\(\\alpha_{ij}\\) is the weight for hidden state \\(h_j\\) when predicting word \\(y_i\\). The “attention amount” calculated by the formula:\n\\[ \\alpha_{ij} = \\frac{exp(e_{ij})}{\\sum_{k=1}^{T_x} exp(e_{ik})} \\]\n\\(e(i,j)\\) represents “energy”, the importance of hidden state \\(h_j\\), respect to the previous hidden state \\(s_{i-1}\\). It is calculated by concatenation of \\(h_j\\) and \\(s_{i-1}\\) is fed through a feedforward neural network a, which allows to train an alignment model through backward propagation.\n\\[ e_{ij} = a(s_{i-1}, h_j) \\]\nAnd with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models."
-  },
-  {
-    "objectID": "posts/attention_mechanism/index.html#references",
-    "href": "posts/attention_mechanism/index.html#references",
-    "title": "Attention mechanism and how it works on neural machine translation",
+    "objectID": "posts/bert/index.html#references",
+    "href": "posts/bert/index.html#references",
+    "title": "BERT: Encoder Stack Is All You Need",
     "section": "References",
-    "text": "References\n\nNeural Machine Translation by Jointly Learning to Align and Translate"
+    "text": "References\n\nhttps://arxiv.org/pdf/1810.04805.pdf - The BERT paper.\nhttp://jalammar.github.io/illustrated-bert/ - Awesome and more detailed explanation of BERT model\nhttps://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4 - An example BERT model from Tensorflow Hub"
   },
   {
-    "objectID": "notes/slurm/index.html",
-    "href": "notes/slurm/index.html",
-    "title": "Slurm Notes",
+    "objectID": "notes.html",
+    "href": "notes.html",
+    "title": "Quick Notes",
     "section": "",
-    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
+    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "myposts.html",
+    "href": "myposts.html",
+    "title": "Welcome to My Posts",
+    "section": "",
+    "text": "My summary of the “Career Advice in AI” Lecture\n\n4 min\n\n\nml\n\n\n\n\n\n\n\nDec 20, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nOct 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n9 min\n\n\nacademy\n\n\n\n\n\n\n\nOct 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n5 min\n\n\nml\n\nllm\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nBERT: Encoder Stack Is All You Need\n\n5 min\n\n\nml\n\n\n\n\n\n\n\nJun 24, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nTransformer Architecture: How Transformer Models Work?\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nFeb 20, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nAttention mechanism and how it works on neural machine translation\n\n3 min\n\n\nml\n\n\n\n\n\n\n\nDec 13, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n10 min\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\nNov 8, 2020\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
   },
   {
     "objectID": "index.html",
@@ -287,25 +294,39 @@
     "text": "What’s on This Site?\n\n\n\n\n\n\nNote📝 Blogs\n\n\n\nIn the blogs section, I share whatever I learn about in a kind of detailed, structured and friendly way. I am also trying to move my blog posts from Medium to here, so you can find my previous articles as well.\n\n\n\n\n\n\n\n\nTip📋 Notes\n\n\n\nIn the notes section, I share quick notes and commands that I find useful for my daily work."
   },
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "notes/slurm/index.html",
+    "href": "notes/slurm/index.html",
+    "title": "Slurm Notes",
     "section": "",
-    "text": "About this blog\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n\n\nSome quick example text to build on the card title and make up the bulk of the card’s content.\n\n\n\n\n\n  \n  \n    Some quick example text to build on the card title and make up the bulk of the card's content."
+    "text": "Here I will share the useful things I learned when using the SLURM cluster of my university.\nThis bash command shows the free memory, free number of CPUs, and used GPUs on the nodes in the “ai” partition. You can use it to see available resources before submitting a job, which makes it easier to start jobs faster.\nsinfo -O \"NodeHost,FreeMem,CPUsState,GresUsed\" -p ai"
   },
   {
-    "objectID": "myposts.html",
-    "href": "myposts.html",
-    "title": "Welcome to My Posts",
+    "objectID": "posts/attention_mechanism/index.html",
+    "href": "posts/attention_mechanism/index.html",
+    "title": "Attention mechanism and how it works on neural machine translation",
     "section": "",
-    "text": "My summary of the “Career Advice in AI” Lecture\n\n4 min\n\n\nml\n\n\n\n\n\n\n\nDec 20, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nPytorch Geometric Basics: How Message Passing Works\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nOct 18, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nAcademic Writing Notes: Paragraphs Development and Sentence Skills\n\n9 min\n\n\nacademy\n\n\n\n\n\n\n\nOct 13, 2025\n\n\n\n\n\n\n\n\n\n\n\n\n\nTest-Time Compute, Reasoning and Human Brain\n\n5 min\n\n\nml\n\nllm\n\n\n\n\n\n\n\nFeb 7, 2025\n\n\n\n\n\n\n\n\n\n\n\nTransformer Architecture: How Transformer Models Work?\n\n8 min\n\n\nml\n\n\n\n\n\n\n\nFeb 20, 2021\n\n\n\n\n\n\n\n\n\n\n\n\n\nAttention mechanism and how it works on neural machine translation\n\n3 min\n\n\nml\n\n\n\n\n\n\n\nDec 13, 2020\n\n\n\n\n\n\n\n\n\n\n\n\n\nThings you need to know about Docker to get started\n\n10 min\n\n\ndevops\n\nmlops\n\nsoftware\n\n\n\n\n\n\n\nNov 8, 2020\n\n\n\n\n\n\nNo matching items"
+    "text": "In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find \\(argmax_y \\, p(y|x)\\). Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector."
   },
   {
-    "objectID": "notes.html",
-    "href": "notes.html",
-    "title": "Quick Notes",
-    "section": "",
-    "text": "Slurm Notes\n\n\n\ngeneral\n\n\n\n\n\n\n\n\n\nNov 12, 2025\n\n\nNusret Ozates\n\n\n\n\n\nNo matching items"
+    "objectID": "posts/attention_mechanism/index.html#rnn-encoder-decoder",
+    "href": "posts/attention_mechanism/index.html#rnn-encoder-decoder",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "RNN Encoder-Decoder",
+    "text": "RNN Encoder-Decoder\nLet’s look at the encoder-decoder architecture more formally.\n\nEncoder\nThe encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c. To calculate c, we calculate hidden states with:\n\\[ h_t = f(h_{t-1}, x_t) \\]\nand vector c is equal to:\n\\[ c = q\\left(\\{h_1, h_2, \\ldots, h_{T_x}\\}\\right) \\]\n\\(h_t \\in R^n\\) is the hidden state at time t, c is a vector, generated from the sequence of hidden states, f and q are some non-linear functions. As an example, f can be an LSTM and \\(q\\left(\\{h_1, h_2, \\ldots, h_{T_x}\\}\\right)\\) can be equal to \\(h_{T_x}\\), the last hidden state of the encoder.\n\n\nDecoder\n\n\n\n\n\n\nNote\n\n\n\nIn the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.\n\n\nThe decoder predicts the next word \\(y_t\\), given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:\n\\[ p(y) = \\prod_{t=1}^{T_y} p(y_t | y_1, ..., y_{t-1}, c) \\]\nHow do we calculate \\(p(y_t | y_1, ..., y_{t-1}, c)\\)?\n\\[ p(y_t | y_1, ..., y_{t-1}, c) = g(y_{t-1}, s_t, c) \\]\nwhere g is a non-linear function that outputs the probability of \\(y_t\\) and \\(s_t\\) is the hidden state of the RNN."
+  },
+  {
+    "objectID": "posts/attention_mechanism/index.html#attention-mechanism-a-new-approach-to-encoder-decoder-structure",
+    "href": "posts/attention_mechanism/index.html#attention-mechanism-a-new-approach-to-encoder-decoder-structure",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "Attention Mechanism: A new approach to Encoder-Decoder Structure",
+    "text": "Attention Mechanism: A new approach to Encoder-Decoder Structure\n\nEncoder\nIn the encoder structure, the hidden states are calculated as Eq.1. Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.\n\\[ h_j = [\\overrightarrow{h_j^T}; \\overleftarrow{h_j^T}] \\]\n\n\nDecoder\nIn the decoder structure, probability of each word is computed according to previous word’s vector \\(y_{i-1}\\) , hidden state \\(s_i\\) and context vector \\(c_i\\).\n\\[ p(y_i | y_1, ..., y_{i-1}, x) = g(y_{i-1}, s_i, c_i) \\]\nHidden state is computed according to previous hidden state \\(s_{i-1}\\), previous word’s vector \\(y_{i-1}\\) and current context vector \\(c_i\\).\n\\[ s_i = f(s_{i-1}, y_{i-1}, c_i) \\]\nThe context vector \\(c_i\\) depends on all hidden states with their weights. These weights represent the amount of “attention” needed to be given to predict next word \\(y_i\\).\n\\[ c_i = \\sum_{j=1}^{T_x} \\alpha_{ij} h_j \\]\nwhere \\(\\alpha_{ij}\\) is the weight for hidden state \\(h_j\\) when predicting word \\(y_i\\). The “attention amount” calculated by the formula:\n\\[ \\alpha_{ij} = \\frac{exp(e_{ij})}{\\sum_{k=1}^{T_x} exp(e_{ik})} \\]\n\\(e(i,j)\\) represents “energy”, the importance of hidden state \\(h_j\\), respect to the previous hidden state \\(s_{i-1}\\). It is calculated by concatenation of \\(h_j\\) and \\(s_{i-1}\\) is fed through a feedforward neural network a, which allows to train an alignment model through backward propagation.\n\\[ e_{ij} = a(s_{i-1}, h_j) \\]\nAnd with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models."
+  },
+  {
+    "objectID": "posts/attention_mechanism/index.html#references",
+    "href": "posts/attention_mechanism/index.html#references",
+    "title": "Attention mechanism and how it works on neural machine translation",
+    "section": "References",
+    "text": "References\n\nNeural Machine Translation by Jointly Learning to Align and Translate"
   },
   {
     "objectID": "posts/career_advice_ai_summary/index.html",
