@@ -27,7 +27,6 @@ After we have data, we need to train a model and I had no idea about transformer
 *   [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/pdf/1810.04805.pdf)
 
 And to understand transformer architecture better, this source by[Jay Alammar](https://jalammar.github.io/illustrated-transformer/) helped me a lot.
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

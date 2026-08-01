@@ -83,7 +83,6 @@ According to what we learned, we can mix most of the methods! After we have some
 2.   [https://en.wikipedia.org/wiki/Semi-supervised_learning](https://en.wikipedia.org/wiki/Semi-supervised_learning)
 3.   [https://www.image-net.org/index.php](https://www.image-net.org/index.php)
 4.   Avital Oliver, Augustus Odena, Colin Raffel, Ekin D. Cubuk, and Ian J. Goodfellow, “Realistic Evaluation of Deep Semi-Supervised Learning Algorithms,” NeurIPS 2018 Proceedings
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

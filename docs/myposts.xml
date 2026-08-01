@@ -44,9 +44,7 @@
 </section>
 <section id="bias-towards-delivery" class="level3">
 <h3 class="anchored" data-anchor-id="bias-towards-delivery">Bias Towards Delivery</h3>
-</section>
-<section id="building-cool-things-that-have-no-value-is-not-that-important-anymore-as-it-was-when-hype-started.-you-need-to-build-useful-things-if-it-is-both-useful-and-cool-it-is-definitely-better.-show-that-you-can-ship-working-solutions-more-than-demos.-an-example-from-him-before-applying-to-google-cloud-while-he-was-writing-a-java-book-he-made-a-java-application-that-runs-on-the-google-cloud-and-showed-it-on-the-interview-which-turned-the-interview-process-into-questions-about-his-app-instead-of-weird-questions-like-how-many-windows-in-new-york." class="level2">
-<h2 class="anchored" data-anchor-id="building-cool-things-that-have-no-value-is-not-that-important-anymore-as-it-was-when-hype-started.-you-need-to-build-useful-things-if-it-is-both-useful-and-cool-it-is-definitely-better.-show-that-you-can-ship-working-solutions-more-than-demos.-an-example-from-him-before-applying-to-google-cloud-while-he-was-writing-a-java-book-he-made-a-java-application-that-runs-on-the-google-cloud-and-showed-it-on-the-interview-which-turned-the-interview-process-into-questions-about-his-app-instead-of-weird-questions-like-how-many-windows-in-new-york.">Building cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.</h2>
+<p>Building cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.</p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/my-summary-of-the-career-advice-in-ai-lecture-445405fd2cf4">Medium</a>.</p>
 </div>
@@ -610,9 +608,7 @@ font-style: inherit;">print</span>(out)</span></code></pre></div></div>
 <li><a href="https://distill.pub/2021/gnn-intro/">For GNN basics, and also for the headline image reference</a></li>
 <li><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp">Also, a great YouTube video for GNN basics from Stanford</a></li>
 </ol>
-</section>
-<section id="thanks-for-coming-so-far-have-fun" class="level2">
-<h2 class="anchored" data-anchor-id="thanks-for-coming-so-far-have-fun">Thanks for coming so far, have fun!</h2>
+<p>Thanks for coming so far, have fun!</p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/pytorch-geometric-basics-how-message-passing-works-677dd635ea0f">Medium</a>.</p>
 </div>
@@ -889,7 +885,7 @@ Note
 <h2 class="anchored" data-anchor-id="references"><strong>References</strong></h2>
 <ol type="1">
 <li>BU-TD Model: “Image interpretation by iterative bottom-up top-down processing” <a href="https://arxiv.org/abs/2105.05592">https://arxiv.org/abs/2105.05592</a></li>
-<li><h2 id="t5-model-exploring-the-limits-of-transfer-learning-with-a-unified-text-to-text-transformer-httpsarxiv.orgabs1910.10683" class="anchored">T5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer” <a href="https://arxiv.org/abs/1910.10683">https://arxiv.org/abs/1910.10683</a></h2></li>
+<li>T5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer” <a href="https://arxiv.org/abs/1910.10683">https://arxiv.org/abs/1910.10683</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/test-time-compute-reasoning-and-human-brain-6c315ac3412f">Medium</a>.</p>
@@ -1095,7 +1091,7 @@ Note
 <li><a href="https://secml.readthedocs.io/">https://secml.readthedocs.io</a></li>
 <li>Learning Machine Learning Part 1/2/3 in Medium by Will Schroeder — Article</li>
 <li>Follow this security researcher on Twitter: <a href="https://x.com/moo_hax">https://x.com/moo_hax</a></li>
-<li><h2 id="httpsaws.amazon.comblogssecuritycontext-window-overflow-breaking-the-barrier" class="anchored"><a href="https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/">https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/</a></h2></li>
+<li><a href="https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/">https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/introduction-to-security-for-machine-learning-2d03ffb04d4b">Medium</a>.</p>
@@ -1903,7 +1899,7 @@ font-style: inherit;">"assistant"</span>).write(answer)</span></code></pre></div
 <li><a href="https://www.promptingguide.ai/">Prompting Guide</a></li>
 <li><a href="https://python.langchain.com/docs/get_started/introduction">LangChain docs</a></li>
 <li><a href="https://streamlit.io/">Streamlit</a></li>
-<li><h2 id="openai-docs" class="anchored"><a href="https://platform.openai.com/docs/introduction">OpenAI docs</a></h2></li>
+<li><a href="https://platform.openai.com/docs/introduction">OpenAI docs</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed">Medium</a>.</p>
@@ -2026,9 +2022,7 @@ font-style: inherit;">"assistant"</span>).write(answer)</span></code></pre></div
 </section>
 <section id="reference" class="level2">
 <h2 class="anchored" data-anchor-id="reference">Reference</h2>
-</section>
-<section id="original-article-httpsresearch.googlepubspub37755" class="level2">
-<h2 class="anchored" data-anchor-id="original-article-httpsresearch.googlepubspub37755">Original article: <a href="https://research.google/pubs/pub37755/">https://research.google/pubs/pub37755/</a></h2>
+<p>Original article: <a href="https://research.google/pubs/pub37755/">https://research.google/pubs/pub37755/</a></p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/dev-genius/article-review-searching-for-build-debt-experiences-managing-technical-debt-at-google-7851014563ab">Medium</a>.</p>
 </div>
@@ -2191,14 +2185,12 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <figcaption>MLflow UI</figcaption>
 </figure>
 </div>
-<section id="i-hope-this-will-help-thanks-for-reading" class="level2">
-<h2 class="anchored" data-anchor-id="i-hope-this-will-help-thanks-for-reading">I hope this will help, thanks for reading!</h2>
+<p>I hope this will help, thanks for reading!</p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/towardsdev/using-mlflow-with-keras-tuner-f6df5dd634bc">Medium</a>.</p>
 </div>
 
 
-</section>
 
  ]]></description>
   <category>ml</category>
@@ -2286,7 +2278,7 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <p>mlflow server -h 0.0.0.0 -p 5000 –backend-store-uri postgresql://DB_USER:DB_PASSWORD@DB_ENDPOINT:5432/DB_NAME –default-artifact-root gs://GS_BUCKET_NAME In our case: ## References</p>
 <ol type="1">
 <li><a href="https://github.com/DataTalksClub/mlops-zoomcamp">https://github.com/DataTalksClub/mlops-zoomcamp</a></li>
-<li><h2 id="httpss3.amazonaws.comtr-learncanvasdocsip_filtering_in_canvas.pdf" class="anchored"><a href="https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf">https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf</a></h2></li>
+<li><a href="https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf">https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/dev-genius/install-mlflow-on-gcp-for-your-team-the-simplest-way-d208b4ee3cd3">Medium</a>.</p>
@@ -2331,14 +2323,12 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <li><a href="https://arxiv.org/pdf/1706.03762.pdf">Attention Is All You Need</a></li>
 <li><a href="https://arxiv.org/pdf/1810.04805.pdf">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></li>
 </ul>
-<section id="and-to-understand-transformer-architecture-better-this-source-byjay-alammar-helped-me-a-lot." class="level2">
-<h2 class="anchored" data-anchor-id="and-to-understand-transformer-architecture-better-this-source-byjay-alammar-helped-me-a-lot.">And to understand transformer architecture better, this source by<a href="https://jalammar.github.io/illustrated-transformer/">Jay Alammar</a> helped me a lot.</h2>
+<p>And to understand transformer architecture better, this source by<a href="https://jalammar.github.io/illustrated-transformer/">Jay Alammar</a> helped me a lot.</p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/my-2-years-machine-learning-career-story-aefa102e2f73">Medium</a>.</p>
 </div>
 
 
-</section>
 
  ]]></description>
   <category>academy</category>
@@ -2426,7 +2416,7 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <li><a href="https://towardsdatascience.com/why-is-the-log-uniform-distribution-useful-for-hyperparameter-tuning-63c8d331698">https://towardsdatascience.com/why-is-the-log-uniform-distribution-useful-for-hyperparameter-tuning-63c8d331698</a></li>
 <li><a href="https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters">https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters</a></li>
 <li><a href="https://www.youtube.com/watch?v=sBhEi4L91Sg&amp;ab_channel=KhanAcademy">https://www.youtube.com/watch?v=sBhEi4L91Sg&amp;ab_channel=KhanAcademy</a></li>
-<li><h2 id="httpstowardsdatascience.coma-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f" class="anchored"><a href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f</a></h2></li>
+<li><a href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/devops-dev/tuning-and-deploying-huggingface-transformers-with-vertex-ai-part-3-start-distributed-tuning-and-e0943bfc9d4b">Medium</a>.</p>
@@ -2523,7 +2513,7 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <ol type="1">
 <li><a href="https://cloud.google.com/vertex-ai/docs/training/code-requirements">https://cloud.google.com/vertex-ai/docs/training/code-requirements</a></li>
 <li><a href="https://codelabs.developers.google.com/vertex_multiworker_training">https://codelabs.developers.google.com/vertex_multiworker_training</a></li>
-<li><h2 id="httpscloud.google.comartifact-registrydocsdockerpushing-and-pullingauth" class="anchored"><a href="https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth">https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth</a></h2></li>
+<li><a href="https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth">https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/devops-dev/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2-training-code-591186445a2a">Medium</a>.</p>
@@ -2657,7 +2647,7 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <ol type="1">
 <li><a href="https://cloud.google.com/vertex-ai/docs/general/locations#europe">https://cloud.google.com/vertex-ai/docs/general/locations#europe</a></li>
 <li><a href="https://huggingface.co/datasets/tweet_eval">https://huggingface.co/datasets/tweet_eval</a></li>
-<li><h2 id="httpscloud.google.comstoragedocsuploading-objectsstorage-upload-object-python" class="anchored"><a href="https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python">https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python</a></h2></li>
+<li><a href="https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python">https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/devops-dev/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291">Medium</a>.</p>
@@ -2761,7 +2751,7 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <li>Designing Machine Learning Systems — An Iterative Process for Production-Ready Application — Chip Huyen</li>
 <li><a href="https://en.wikipedia.org/wiki/Semi-supervised_learning">https://en.wikipedia.org/wiki/Semi-supervised_learning</a></li>
 <li><a href="https://www.image-net.org/index.php">https://www.image-net.org/index.php</a></li>
-<li><h2 id="avital-oliver-augustus-odena-colin-raffel-ekin-d.-cubuk-and-ian-j.-goodfellow-realistic-evaluation-of-deep-semi-supervised-learning-algorithms-neurips-2018-proceedings" class="anchored">Avital Oliver, Augustus Odena, Colin Raffel, Ekin D. Cubuk, and Ian J. Goodfellow, “Realistic Evaluation of Deep Semi-Supervised Learning Algorithms,” NeurIPS 2018 Proceedings</h2></li>
+<li>Avital Oliver, Augustus Odena, Colin Raffel, Ekin D. Cubuk, and Ian J. Goodfellow, “Realistic Evaluation of Deep Semi-Supervised Learning Algorithms,” NeurIPS 2018 Proceedings</li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/how-to-handle-lack-of-labels-a-brief-introduction-97a1e96b3e1f">Medium</a>.</p>
@@ -2834,9 +2824,7 @@ font-style: inherit;">0</span>].values</span></code></pre></div></div>
 <li>I’m open to other suggestions!</li>
 </ul>
 <p>If you want to look for the codes to see how I did the tests and design the architecture you can look at this <a href="https://github.com/NusretOzates/request-batching-test">repo</a>.</p>
-</section>
-<section id="thanks-a-lot-for-reading" class="level2">
-<h2 class="anchored" data-anchor-id="thanks-a-lot-for-reading">Thanks a lot for reading!</h2>
+<p>Thanks a lot for reading!</p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/devops-dev/faster-ai-services-with-request-batching-17c9a0b33129">Medium</a>.</p>
 </div>
@@ -2995,7 +2983,7 @@ font-style: inherit;">return</span> name, surname</span></code></pre></div></div
 <li><a href="https://www.youtube.com/watch?v=BLcnGmsZ5EE">https://www.youtube.com/watch?v=BLcnGmsZ5EE</a></li>
 <li><a href="https://www.youtube.com/watch?v=i0qmhk41QVM">https://www.youtube.com/watch?v=i0qmhk41QVM</a></li>
 <li><a href="https://www.youtube.com/watch?v=M6rwl_AZPJg">https://www.youtube.com/watch?v=M6rwl_AZPJg</a></li>
-<li><h2 id="httpswww.youtube.comwatchvonp6gcvvvim" class="anchored"><a href="https://www.youtube.com/watch?v=onp6gcvVvIM">https://www.youtube.com/watch?v=onp6gcvVvIM</a></h2></li>
+<li><a href="https://www.youtube.com/watch?v=onp6gcvVvIM">https://www.youtube.com/watch?v=onp6gcvVvIM</a></li>
 </ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/solid-principles-with-python-245e45f9b1f8">Medium</a>.</p>
@@ -3076,9 +3064,9 @@ font-style: inherit;">return</span> name, surname</span></code></pre></div></div
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references"><strong>References</strong></h2>
-</section>
-<section id="clean-code-in-python-mariano-anaya" class="level2">
-<h2 class="anchored" data-anchor-id="clean-code-in-python-mariano-anaya">1. Clean Code in Python — Mariano Anaya</h2>
+<ol type="1">
+<li>Clean Code in Python — Mariano Anaya</li>
+</ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/good-design-practices-with-python-defensive-programming-bc859fe084ea">Medium</a>.</p>
 </div>
@@ -3143,9 +3131,9 @@ font-style: inherit;">return</span> name, surname</span></code></pre></div></div
 </blockquote>
 <p>But I don’t agree with that. For me, the last code I wrote is cleaner and just the same intention-revealing as the EAFP version. So it is up to you to choose whether you want to use EAFP or LBYL 😀</p>
 <p>Thanks for reading! ## References</p>
-</section>
-<section id="clean-code-in-python-mariano-anaya" class="level2">
-<h2 class="anchored" data-anchor-id="clean-code-in-python-mariano-anaya">1. Clean Code in Python — Mariano Anaya</h2>
+<ol type="1">
+<li>Clean Code in Python — Mariano Anaya</li>
+</ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/good-design-practices-with-python-important-acronyms-c590bbab733d">Medium</a>.</p>
 </div>
@@ -3185,13 +3173,118 @@ font-style: inherit;">return</span> name, surname</span></code></pre></div></div
 <section id="design-by-contract" class="level2">
 <h2 class="anchored" data-anchor-id="design-by-contract">Design by Contract</h2>
 <p>We write code to be used by some clients using APIs or libraries. When creating a function, we decide what is needed for making that function run and what we will return if conditions are met. For a basic example:</p>
-<p>In this function, we basically say “I want you to give me to integer and as a result, I will give you another integer, which is the sum of these two integers”. If we don’t check the type of the variables, our program will crash or not work as expected. This was a basic example and you shouldn’t think that “Oh okay it is just type checking!”. Because just doing this would be just trying to make python a statically typed language.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> add(a: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>, b: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">int</span>:</span>
+<span id="cb1-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> a <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> b</span></code></pre></div></div>
+<p>In this function, we basically say “I want you to give me two integers and as a result, I will give you another integer, which is the sum of these two integers”. If we don’t check the type of the variables, our program will crash or not work as expected. This was a basic example and you shouldn’t think that “Oh okay it is just type checking!”. Because just doing this would be just trying to make python a statically typed language.</p>
+<p>To make a function work properly, we need to design a <strong>contract.</strong> A contract has these elements:</p>
+<ol type="1">
+<li><strong>Preconditions:</strong> They are checks we need to do before running the function. If these values are not as expected, running the function would be pointless. We could check for the type of the parameter, the value range of the parameter, or maybe if it is a string and we are expecting that string must contain an e-mail, we should check if it contains an e-mail using a regex. If there is a problem with the condition check, we need to raise an exception with a meaningful message. We can even raise a custom exception if needed.</li>
+<li><strong>Postconditions:</strong> This is what we promise to give. We need to check if the returned value of our function satisfies the conditions of what we will promise to give. If these conditions return False, which means there is a problem with our code.</li>
+</ol>
+<p>Let’s do an example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">def</span> find_user(user_id: <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-&gt;</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">dict</span>:</span>
+<span id="cb2-2">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">isinstance</span>(user_id, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">str</span>) <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">len</span>(user_id) <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!=</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">or</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">not</span> user_id.isdigit():</span>
+<span id="cb2-3">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">ValueError</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"user_id must be an 8-digit string"</span>)</span>
+<span id="cb2-4">    user <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> database.lookup(user_id)</span>
+<span id="cb2-5">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> user <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">is</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">None</span>:</span>
+<span id="cb2-6">        <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">raise</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">LookupError</span>(<span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">f"no user found for id </span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span>user_id<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>)</span>
+<span id="cb2-7">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">return</span> user</span></code></pre></div></div>
+<p>This is still not an advanced example but I think it gives a good idea. First, we check if the given input is a string with a length of 8 and contains only digits. Then we search for the user and check if we can give the result as promised. If we can’t we return an error.</p>
+<blockquote class="blockquote">
+<p>Don’t forget that you need to document those conditions in the docstrings!</p>
+</blockquote>
+<p>Now a little bit fun part! I have access to Github Copilot and just wrote: “ # Design by contract example” and add a “def” to help it. Here is the beautiful result for checking preconditions using annotations:</p>
+<p>By using the design by contract, you can be sure where was the problem if the function doesn’t work. As result, you will have more robust code. Using this approach will cause doing extra work but it will be better for you in the long run. At least, you should use this approach in the critical parts of your program.</p>
+<p>And that’s all! Thank you for reading!</p>
 </section>
 <section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references"><strong>References</strong></h2>
-</section>
-<section id="clean-code-in-python-mariano-anaya" class="level2">
-<h2 class="anchored" data-anchor-id="clean-code-in-python-mariano-anaya">1. Clean Code in Python — Mariano Anaya</h2>
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li>Clean Code in Python — Mariano Anaya</li>
+</ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/good-design-practices-with-python-design-by-contract-a2a2d07b37d0">Medium</a>.</p>
 </div>
@@ -3251,9 +3344,7 @@ font-style: inherit;">return</span> name, surname</span></code></pre></div></div
 </section>
 <section id="telegraf-configuration-file" class="level2">
 <h2 class="anchored" data-anchor-id="telegraf-configuration-file">Telegraf Configuration File</h2>
-</section>
-<section id="lets-begin-with-the-outputs-section.-here-we-say-we-want-to-push-our-data-to-influxdb-v2-at-the-url-httpinfluxdb-cli8086.-we-write-the-data-into-the-given-organization-and-bucket-with-the-admin-token-which-are-all-provided-by-the-environment-variables.-the-influxdb-cli-is-a-reference-to-our-influxdb-container." class="level2">
-<h2 class="anchored" data-anchor-id="lets-begin-with-the-outputs-section.-here-we-say-we-want-to-push-our-data-to-influxdb-v2-at-the-url-httpinfluxdb-cli8086.-we-write-the-data-into-the-given-organization-and-bucket-with-the-admin-token-which-are-all-provided-by-the-environment-variables.-the-influxdb-cli-is-a-reference-to-our-influxdb-container.">Let’s begin with the outputs section. Here we say we want to push our data to InfluxDB V2 at the URL “<a href="http://influxdb-cli:8086/">http://influxdb-cli:8086</a>”. We write the data into the given organization and bucket with the admin token which are all provided by the environment variables. The “influxdb-cli” is a reference to our InfluxDB container.</h2>
+<p>Let’s begin with the outputs section. Here we say we want to push our data to InfluxDB V2 at the URL “<a href="http://influxdb-cli:8086/">http://influxdb-cli:8086</a>”. We write the data into the given organization and bucket with the admin token which are all provided by the environment variables. The “influxdb-cli” is a reference to our InfluxDB container.</p>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/towardsdev/collect-and-store-events-from-kafka-with-influxdb-and-telegraf-using-docker-789d35862716">Medium</a>.</p>
 </div>

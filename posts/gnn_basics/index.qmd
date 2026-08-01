@@ -213,7 +213,6 @@ print(out)
 3.   [Also, a great YouTube video for GNN basics from Stanford](https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp)
 
 Thanks for coming so far, have fun!
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

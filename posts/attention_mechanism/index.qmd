@@ -90,7 +90,6 @@ _e(i,j)_ represents “energy”, the importance of hidden state h_j, respect to
 ![Image 12](img_10.png)
 
 And with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models.
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

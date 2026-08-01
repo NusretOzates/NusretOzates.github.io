@@ -22,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -369,13 +404,35 @@ ul.task-list li input[type="checkbox"] {
 <section id="design-by-contract" class="level2">
 <h2 class="anchored" data-anchor-id="design-by-contract">Design by Contract</h2>
 <p>We write code to be used by some clients using APIs or libraries. When creating a function, we decide what is needed for making that function run and what we will return if conditions are met. For a basic example:</p>
-<p>In this function, we basically say “I want you to give me to integer and as a result, I will give you another integer, which is the sum of these two integers”. If we don’t check the type of the variables, our program will crash or not work as expected. This was a basic example and you shouldn’t think that “Oh okay it is just type checking!”. Because just doing this would be just trying to make python a statically typed language.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add(a: <span class="bu">int</span>, b: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">+</span> b</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>In this function, we basically say “I want you to give me two integers and as a result, I will give you another integer, which is the sum of these two integers”. If we don’t check the type of the variables, our program will crash or not work as expected. This was a basic example and you shouldn’t think that “Oh okay it is just type checking!”. Because just doing this would be just trying to make python a statically typed language.</p>
+<p>To make a function work properly, we need to design a <strong>contract.</strong> A contract has these elements:</p>
+<ol type="1">
+<li><strong>Preconditions:</strong> They are checks we need to do before running the function. If these values are not as expected, running the function would be pointless. We could check for the type of the parameter, the value range of the parameter, or maybe if it is a string and we are expecting that string must contain an e-mail, we should check if it contains an e-mail using a regex. If there is a problem with the condition check, we need to raise an exception with a meaningful message. We can even raise a custom exception if needed.</li>
+<li><strong>Postconditions:</strong> This is what we promise to give. We need to check if the returned value of our function satisfies the conditions of what we will promise to give. If these conditions return False, which means there is a problem with our code.</li>
+</ol>
+<p>Let’s do an example:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> find_user(user_id: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(user_id, <span class="bu">str</span>) <span class="kw">or</span> <span class="bu">len</span>(user_id) <span class="op">!=</span> <span class="dv">8</span> <span class="kw">or</span> <span class="kw">not</span> user_id.isdigit():</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"user_id must be an 8-digit string"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    user <span class="op">=</span> database.lookup(user_id)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> user <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">LookupError</span>(<span class="ss">f"no user found for id </span><span class="sc">{</span>user_id<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> user</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This is still not an advanced example but I think it gives a good idea. First, we check if the given input is a string with a length of 8 and contains only digits. Then we search for the user and check if we can give the result as promised. If we can’t we return an error.</p>
+<blockquote class="blockquote">
+<p>Don’t forget that you need to document those conditions in the docstrings!</p>
+</blockquote>
+<p>Now a little bit fun part! I have access to Github Copilot and just wrote: “ # Design by contract example” and add a “def” to help it. Here is the beautiful result for checking preconditions using annotations:</p>
+<p>By using the design by contract, you can be sure where was the problem if the function doesn’t work. As result, you will have more robust code. Using this approach will cause doing extra work but it will be better for you in the long run. At least, you should use this approach in the critical parts of your program.</p>
+<p>And that’s all! Thank you for reading!</p>
 </section>
 <section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references"><strong>References</strong></h2>
-</section>
-<section id="clean-code-in-python-mariano-anaya" class="level2">
-<h2 class="anchored" data-anchor-id="clean-code-in-python-mariano-anaya">1. Clean Code in Python — Mariano Anaya</h2>
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li>Clean Code in Python — Mariano Anaya</li>
+</ol>
 <div class="medium-attribution">
 <p>Originally published on <a href="https://medium.com/@m.nusret.ozates/good-design-practices-with-python-design-by-contract-a2a2d07b37d0">Medium</a>.</p>
 </div>

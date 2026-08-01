@@ -67,7 +67,6 @@ In our case:
 
 1.   [https://github.com/DataTalksClub/mlops-zoomcamp](https://github.com/DataTalksClub/mlops-zoomcamp)
 2.   [https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf](https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf)
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

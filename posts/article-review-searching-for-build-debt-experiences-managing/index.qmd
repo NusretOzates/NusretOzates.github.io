@@ -101,7 +101,6 @@ The article’s final recommendations are:
 ## Reference
 
 Original article: [https://research.google/pubs/pub37755/](https://research.google/pubs/pub37755/)
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

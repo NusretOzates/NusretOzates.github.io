@@ -86,7 +86,6 @@ And worker pool 1 is where you configure the workers for your cluster.
 4.   [https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters](https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters)
 5.   [https://www.youtube.com/watch?v=sBhEi4L91Sg&ab_channel=KhanAcademy](https://www.youtube.com/watch?v=sBhEi4L91Sg&ab_channel=KhanAcademy)
 6.   [https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f](https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f)
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

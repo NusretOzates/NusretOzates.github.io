@@ -436,7 +436,6 @@ services:
 ```
 
 So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the [KodeKlaud’s](https://www.youtube.com/user/mmumshad)channel!
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).
