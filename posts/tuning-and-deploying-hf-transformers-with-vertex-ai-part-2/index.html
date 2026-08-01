@@ -9,7 +9,7 @@
 <meta name="author" content="Nusret Ozates">
 <meta name="dcterms.date" content="2022-10-08">
 
-<title>Tuning and Deploying Huggingface Transformers with Vertex AI — Part 2 Training Code – Nusret Ozates</title>
+<title>Tuning and Deploying Huggingface Transformers with Vertex AI — Part 2 Training Code – Nusret Özateş</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,21 +74,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
-</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<link rel="icon" href="../../favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
@@ -278,7 +265,7 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Nusret Ozates</span>
+    <span class="navbar-title">Nusret Özateş</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -298,6 +285,10 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
   <li class="nav-item">
     <a class="nav-link" href="../../talks.html"> 
 <span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../videos.html"> 
+<span class="menu-text">Videos</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../notes.html"> 
@@ -390,8 +381,8 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 </figure>
 </div>
 <p>This is part 2 of Tuning and Deploying HF Transformers with Vertex AI. In this article, we will create our training image.</p>
-<p>In <a href="https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291">part 1</a>, we created the necessary GCP components.</p>
-<p>In <a href="https://medium.com/@m.nusret.ozates/tuning-and-deploying-huggingface-transformers-with-vertex-ai-part-3-start-distributed-tuning-and-e0943bfc9d4b">part 3</a>, we will start hyperparameter-tuning, train with the best parameters, and deploy the model to get predictions.</p>
+<p>In <a href="../../posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/">part 1</a>, we created the necessary GCP components.</p>
+<p>In <a href="../../posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/">part 3</a>, we will start hyperparameter-tuning, train with the best parameters, and deploy the model to get predictions.</p>
 <p>We will create a file structure like this:</p>
 <p>custom_training_docker/</p>
 <p>├── trainer/</p>
@@ -433,8 +424,11 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 <ol type="1">
 <li><a href="https://cloud.google.com/vertex-ai/docs/training/code-requirements">https://cloud.google.com/vertex-ai/docs/training/code-requirements</a></li>
 <li><a href="https://codelabs.developers.google.com/vertex_multiworker_training">https://codelabs.developers.google.com/vertex_multiworker_training</a></li>
-<li><a href="https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth">https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth</a></li>
+<li><h2 id="httpscloud.google.comartifact-registrydocsdockerpushing-and-pullingauth" class="anchored"><a href="https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth">https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth</a></h2></li>
 </ol>
+<div class="medium-attribution">
+<p>Originally published on <a href="https://medium.com/devops-dev/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2-training-code-591186445a2a">Medium</a>.</p>
+</div>
 
 
 </section>

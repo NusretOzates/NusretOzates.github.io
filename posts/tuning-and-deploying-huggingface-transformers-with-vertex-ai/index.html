@@ -9,7 +9,7 @@
 <meta name="author" content="Nusret Ozates">
 <meta name="dcterms.date" content="2022-10-15">
 
-<title>Tuning and Deploying Huggingface Transformers with Vertex AI — Part 3 Start Distributed Tuning and… – Nusret Ozates</title>
+<title>Tuning and Deploying Huggingface Transformers with Vertex AI — Part 3 Start Distributed Tuning and… – Nusret Özateş</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -74,21 +74,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
- 
-  gtag('consent', 'default', {
-    'ad_storage': 'denied',
-    'analytics_storage': 'denied'
-  });
-gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
-</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<link rel="icon" href="../../favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
@@ -278,7 +265,7 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     </a>
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Nusret Ozates</span>
+    <span class="navbar-title">Nusret Özateş</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -298,6 +285,10 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
   <li class="nav-item">
     <a class="nav-link" href="../../talks.html"> 
 <span class="menu-text">Talks</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../videos.html"> 
+<span class="menu-text">Videos</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../notes.html"> 
@@ -390,8 +381,8 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 </figure>
 </div>
 <p>This is part 3 of Tuning and Deploying HF Transformers with Vertex AI.</p>
-<p>In <a href="https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291">part 1</a>, we created the necessary GCP components.</p>
-<p>In <a href="https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2-training-code-591186445a2a">part 2</a>, we created model training and tuning code and wrap it into a docker container.</p>
+<p>In <a href="../../posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/">part 1</a>, we created the necessary GCP components.</p>
+<p>In <a href="../../posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/">part 2</a>, we created model training and tuning code and wrap it into a docker container.</p>
 <p>For looking at the whole code we will use check this <a href="https://github.com/NusretOzates/huggingface-gcp-classification">GitHub repository</a>.</p>
 <p>Open your Jupyter Lab environment from Vertex AI or you can use Shell Editor and create a file <code>training.py</code> . You can change the name of course.</p>
 <p>We begin with imports and some constants to initialize the AI Platform.</p>
@@ -431,8 +422,11 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 <li><a href="https://towardsdatascience.com/why-is-the-log-uniform-distribution-useful-for-hyperparameter-tuning-63c8d331698">https://towardsdatascience.com/why-is-the-log-uniform-distribution-useful-for-hyperparameter-tuning-63c8d331698</a></li>
 <li><a href="https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters">https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters</a></li>
 <li><a href="https://www.youtube.com/watch?v=sBhEi4L91Sg&amp;ab_channel=KhanAcademy">https://www.youtube.com/watch?v=sBhEi4L91Sg&amp;ab_channel=KhanAcademy</a></li>
-<li><a href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f</a></li>
+<li><h2 id="httpstowardsdatascience.coma-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f" class="anchored"><a href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f</a></h2></li>
 </ol>
+<div class="medium-attribution">
+<p>Originally published on <a href="https://medium.com/devops-dev/tuning-and-deploying-huggingface-transformers-with-vertex-ai-part-3-start-distributed-tuning-and-e0943bfc9d4b">Medium</a>.</p>
+</div>
 
 
 </section>
