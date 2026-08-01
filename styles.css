@@ -1,54 +1,75 @@
 /* ===================================
-   MODERN QUARTO BLOG STYLES
+   QUARTO SITE STYLES
    =================================== */
 
 /* --- ROOT VARIABLES --- */
 :root {
-    --accent-color: #10b981;
-    --accent-hover: #059669;
-    --card-radius: 12px;
-    --transition-speed: 0.25s;
+    --accent-color: #0E7490;
+    --accent-hover: #155E75;
+    --accent-muted: rgba(14, 116, 144, 0.12);
+    --heading-font: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --body-font: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --card-radius: 10px;
+    --transition-speed: 0.2s;
 }
 
-/* --- TYPOGRAPHY ENHANCEMENTS --- */
+/* --- TYPOGRAPHY --- */
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--body-font);
     letter-spacing: -0.011em;
 }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
     font-weight: 600;
     letter-spacing: -0.02em;
 }
 
 code, pre {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+    font-family: "JetBrains Mono", "Fira Code", Consolas, monospace;
 }
 
-/* --- ABOUT PAGE / INDEX PAGE --- */
+/* --- ABOUT HEADER --- */
 .about-entity {
-    padding: 2rem 0;
+    padding: 2rem 0 2.5rem;
+    position: relative;
+}
+
+.about-entity::before {
+    content: "";
+    position: absolute;
+    inset: 0 -1.5rem auto;
+    height: 100%;
+    max-height: 420px;
+    background: linear-gradient(
+        165deg,
+        var(--accent-muted) 0%,
+        transparent 55%
+    );
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 0 0 24px 24px;
 }
 
 .about-entity .about-link {
-    background: var(--accent-color);
-    color: white !important;
-    border-radius: 8px;
-    padding: 0.6rem 1.2rem;
+    background: transparent;
+    color: var(--accent-color) !important;
+    border: 1px solid var(--accent-color);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
     text-decoration: none;
-    transition: all var(--transition-speed) ease;
+    transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
     font-weight: 500;
 }
 
 .about-entity .about-link:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    background: var(--accent-color);
+    color: white !important;
 }
 
 .about-entity img {
-    border: 4px solid var(--accent-color);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    border: 2px solid rgba(14, 116, 144, 0.35);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* --- GRID VIEW CARDS --- */
@@ -56,24 +77,18 @@ code, pre {
     background-color: var(--bs-body-bg);
     border: 1px solid rgba(128, 128, 128, 0.2);
     border-radius: var(--card-radius);
-    transition: all var(--transition-speed) ease;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     overflow: hidden;
 }
 
 .quarto-grid-item:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     border-color: var(--accent-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .quarto-grid-item .card-img-top {
     height: 180px;
     object-fit: cover;
-    transition: transform var(--transition-speed) ease;
-}
-
-.quarto-grid-item:hover .card-img-top {
-    transform: scale(1.05);
 }
 
 .quarto-grid-item .card-body {
@@ -82,6 +97,7 @@ code, pre {
 
 /* --- CARD TEXT --- */
 .card-title {
+    font-family: var(--heading-font);
     font-weight: 600;
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
@@ -94,51 +110,49 @@ code, pre {
 
 /* --- CATEGORY BADGES --- */
 .listing-categories .listing-category {
-    background-color: var(--accent-color);
-    color: #ffffff !important;
-    border-radius: 20px;
-    padding: 0.35rem 0.85rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    transition: all var(--transition-speed) ease;
+    background-color: var(--accent-muted);
+    color: var(--accent-color) !important;
+    border-radius: 4px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    transition: background var(--transition-speed) ease;
     border: none;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .listing-categories .listing-category:hover {
-    background-color: var(--accent-hover);
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
-    color: #ffffff !important;
+    background-color: rgba(14, 116, 144, 0.22);
+    color: var(--accent-hover) !important;
 }
 
 /* --- SEARCH INPUT --- */
 .quarto-listing-filter input {
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    border: 2px solid rgba(128, 128, 128, 0.2);
-    transition: all var(--transition-speed) ease;
+    border-radius: 6px;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    transition: border-color var(--transition-speed) ease;
 }
 
 .quarto-listing-filter input:focus {
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 0 2px rgba(14, 116, 144, 0.15);
 }
 
-/* --- NAVBAR ENHANCEMENTS --- */
+/* --- NAVBAR --- */
 .navbar {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
 .navbar-brand {
+    font-family: var(--heading-font);
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: 1.25rem;
 }
 
-/* --- CALLOUTS (for index page) --- */
+/* --- CALLOUTS --- */
 .callout {
     border-radius: var(--card-radius);
     border-left-width: 4px;
@@ -147,32 +161,33 @@ code, pre {
 
 /* --- TITLE BANNER --- */
 .quarto-title-banner {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
 }
 
 .quarto-title-banner h1 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
     font-weight: 700;
 }
 
-/* --- DARK MODE SPECIFIC --- */
+/* --- DARK MODE --- */
 [data-bs-theme="dark"] {
     --bs-body-bg: #0f172a;
     --bs-body-color: #e2e8f0;
+    --accent-muted: rgba(14, 116, 144, 0.18);
 }
 
 [data-bs-theme="dark"] .quarto-grid-item {
     background-color: #1e293b;
-    border-color: rgba(148, 163, 184, 0.1);
+    border-color: rgba(148, 163, 184, 0.12);
 }
 
 [data-bs-theme="dark"] .quarto-grid-item:hover {
-    background-color: #273449;
+    background-color: #1e293b;
     border-color: var(--accent-color);
 }
 
 [data-bs-theme="dark"] .navbar {
-    background: rgba(15, 23, 42, 0.9) !important;
+    background: rgba(15, 23, 42, 0.92) !important;
 }
 
 [data-bs-theme="dark"] .callout {
@@ -183,38 +198,24 @@ code, pre {
     background-color: #1e293b;
 }
 
-/* Dark mode category badges */
 [data-bs-theme="dark"] .listing-categories .listing-category {
-    background-color: #10b981;
-    color: #022c22 !important;
-    font-weight: 700;
+    background-color: var(--accent-muted);
+    color: #7dd3fc !important;
 }
 
 [data-bs-theme="dark"] .listing-categories .listing-category:hover {
-    background-color: #34d399;
-    color: #022c22 !important;
+    background-color: rgba(14, 116, 144, 0.3);
+    color: #bae6fd !important;
 }
 
-/* --- LIGHT MODE SPECIFIC --- */
+/* --- LIGHT MODE --- */
 [data-bs-theme="light"] .quarto-grid-item {
     background-color: #ffffff;
     border-color: rgba(0, 0, 0, 0.08);
 }
 
 [data-bs-theme="light"] .quarto-grid-item:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* Light mode category badges */
-[data-bs-theme="light"] .listing-categories .listing-category {
-    background-color: #059669;
-    color: #ffffff !important;
-    font-weight: 600;
-}
-
-[data-bs-theme="light"] .listing-categories .listing-category:hover {
-    background-color: #047857;
-    color: #ffffff !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
 }
 
 /* --- LINKS --- */
@@ -230,7 +231,7 @@ a:hover {
 
 /* --- READING EXPERIENCE --- */
 .content p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
 }
 
 article {
@@ -238,7 +239,7 @@ article {
     margin: 0 auto;
 }
 
-/* --- SMOOTH SCROLLBAR (webkit) --- */
+/* --- SCROLLBAR --- */
 ::-webkit-scrollbar {
     width: 10px;
 }
@@ -260,20 +261,19 @@ article {
 .pub-card {
     background-color: var(--bs-body-bg);
     border: 1px solid rgba(128, 128, 128, 0.2);
-    border-left: 4px solid var(--accent-color);
+    border-left: 3px solid var(--accent-color);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
-    transition: all var(--transition-speed) ease;
+    transition: border-left-color var(--transition-speed) ease;
 }
 
 .pub-card:hover {
-    transform: translateX(4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-left-color: var(--accent-hover);
 }
 
 .pub-card .pub-title {
+    font-family: var(--heading-font);
     font-weight: 600;
     font-size: 1.05rem;
     margin-bottom: 0.4rem;
@@ -296,16 +296,18 @@ article {
 .pub-card .pub-links a {
     display: inline-block;
     font-size: 0.8rem;
-    padding: 0.25rem 0.6rem;
+    padding: 0.2rem 0.55rem;
     margin-right: 0.5rem;
     border-radius: 4px;
-    background-color: var(--accent-color);
-    color: white !important;
+    border: 1px solid var(--accent-color);
+    background: transparent;
+    color: var(--accent-color) !important;
     font-weight: 500;
 }
 
 .pub-card .pub-links a:hover {
-    background-color: var(--accent-hover);
+    background: var(--accent-color);
+    color: white !important;
 }
 
 [data-bs-theme="dark"] .pub-card {
@@ -326,21 +328,30 @@ article {
     border-radius: var(--card-radius);
     padding: 1.25rem;
     margin-bottom: 1.25rem;
-    transition: all var(--transition-speed) ease;
+    transition: border-color var(--transition-speed) ease;
     overflow: hidden;
 }
 
 .talk-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
     border-color: var(--accent-color);
 }
 
+.talk-card > p:has(img) {
+    flex-shrink: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+.talk-card img.talk-image,
 .talk-card .talk-image {
+    display: block;
     width: 280px;
-    height: 160px;
+    max-width: 280px;
+    aspect-ratio: 16 / 9;
+    height: auto;
     object-fit: cover;
-    border-radius: 8px;
+    object-position: center;
+    border-radius: 6px;
     flex-shrink: 0;
 }
 
@@ -351,6 +362,7 @@ article {
 }
 
 .talk-card .talk-content h3 {
+    font-family: var(--heading-font);
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-size: 1.15rem;
@@ -366,39 +378,59 @@ article {
 .talk-card .talk-links a {
     display: inline-block;
     font-size: 0.8rem;
-    padding: 0.3rem 0.7rem;
+    padding: 0.25rem 0.6rem;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
     border-radius: 4px;
-    background-color: var(--accent-color);
-    color: white !important;
+    border: 1px solid var(--accent-color);
+    background: transparent;
+    color: var(--accent-color) !important;
     font-weight: 500;
-    transition: all var(--transition-speed) ease;
+    transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
 }
 
 .talk-card .talk-links a:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-1px);
+    background: var(--accent-color);
+    color: white !important;
 }
 
-/* Dark mode talk cards */
 [data-bs-theme="dark"] .talk-card {
     background-color: #1e293b;
 }
 
-/* Light mode talk cards */
 [data-bs-theme="light"] .talk-card {
     background-color: #f8fafc;
 }
 
-/* Responsive: stack on mobile */
+/* Talks listing (Quarto pagination + filter) */
+#listing-talks-listing .listing-actions-group {
+    margin-bottom: 1rem;
+}
+
+#listing-talks-listing .talks-listing-list {
+    display: flex;
+    flex-direction: column;
+}
+
+#listing-talks-listing .listing-pagination {
+    margin-top: 1.5rem;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     .talk-card {
         flex-direction: column;
     }
 
+    .talk-card > p:has(img) {
+        width: 100%;
+    }
+
+    .talk-card img.talk-image,
     .talk-card .talk-image {
         width: 100%;
-        height: 200px;
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
     }
 }

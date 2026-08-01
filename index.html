@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.8.22">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -30,20 +30,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0377a3e34bb5f8db061f5b56ca921392.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-95871218dae5c089884df528f3ab837e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-0377a3e34bb5f8db061f5b56ca921392.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,6 +73,36 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-talks-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-date','listing-venue','listing-description','listing-image','listing-href',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] }],
+      page: 4,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
+      searchColumns: ["listing-title","listing-date","listing-venue","listing-description","listing-image","listing-href"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-talks-listing'] = new List('listing-talks-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
 <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script>
 
 <script type="text/javascript">
@@ -88,8 +120,37 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -272,6 +333,8 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Nusret Ozates</span>
     </a>
@@ -283,8 +346,16 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./myposts.html"> 
 <span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./talks.html"> 
+<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./notes.html"> 
@@ -294,11 +365,6 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/NusretOzates"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -348,15 +414,14 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 
 <section id="about-me" class="level2">
 <h2 data-anchor-id="about-me">About Me</h2>
-<p>As a <strong>Machine Learning Engineer</strong>, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions.</p>
-<p>I have 5 years of experience in <strong>Natural Language Processing</strong>, and even surprisingly to me, I have been working on <strong>Graph Neural Networks</strong>, <strong>Vision Transformers</strong>, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now…</p>
-<p>I am also skilled in <strong>MLOps</strong>, using tools such as MLflow, Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle. Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively, where I implemented an AutoNLP platform and led the development team of the AI department. I also managed the deployment and CI/CD of various ML models on GCP at TRT.</p>
+<p>I build end-to-end ML systems — from data and training through deployment on cloud platforms — with a focus on practical, scalable solutions. Most of my work sits at the intersection of <strong>NLP</strong>, <strong>medical imaging</strong>, and <strong>MLOps</strong>.</p>
+<p>Lately I’ve spent a lot of time on <strong>graph neural networks</strong>, <strong>vision transformers</strong>, and whole-slide histology: enough that I can spot cancerous cells in pancreatic tissue by eye. Before that I led ML teams at GLOSA and Carbon Consulting and shipped models on GCP at TRT.</p>
 </section>
 <section id="education-certifications" class="level2">
 <h2 data-anchor-id="education-certifications">Education &amp; Certifications</h2>
-<p>🎓 <strong>Master of Science in Computer Science</strong> — Koç University</p>
-<p>📜 <strong>Google Cloud Certified Professional Machine Learning Engineer</strong></p>
-<p>📜 <strong>Certified Spark NLP Data Scientist</strong></p>
+<p><strong>Master of Science in Computer Science</strong> — Koç University</p>
+<p><strong>Google Cloud Certified Professional Machine Learning Engineer</strong></p>
+<p><strong>Certified Spark NLP Data Scientist</strong></p>
 </section>
 <section id="publications" class="level2">
 <h2 data-anchor-id="publications">Publications</h2>
@@ -388,69 +453,58 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-<section id="talks-features" class="level2">
-<h2 data-anchor-id="talks-features">Talks &amp; Features</h2>
-<!-- TALK TEMPLATE - Copy the block below for each new talk/feature -->
-<!--
-::: {.talk-card}
-![Talk preview image](path-to-image.jpg){.talk-image}
-::: {.talk-content}
-### Talk Title Here
-📍 Haliç Engineering Summit | 📅 8 December 2025
-We talked about engineering, acedemy, job opportunities and more!
-::: {.talk-links}
-[LinkedIn Post](linkedin-url) [Slides](slides-url) [Video](video-url)
-:::
-:::
-:::
--->
-<div class="talk-card">
-<p><img src="talks/halic.png" class="talk-image img-fluid"></p>
-<section id="haliç-engineering-summit" class="level3 talk-content">
-<h3 data-anchor-id="haliç-engineering-summit">Haliç Engineering Summit</h3>
-<p>📍 Haliç University | 📅 8 December 2025</p>
-<p>We talked about engineering, academy, job opportunities and more!</p>
-<div class="talk-links">
-<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7402271975710113792/">LinkedIn Post</a></p>
+<section id="recent-talks" class="level2">
+<h2 data-anchor-id="recent-talks">Recent Talks</h2>
+<div id="listing-talks-listing" class="quarto-listing quarto-listing-container-custom">
+<div class="list talks-listing-list">
+  <div class="talk-card" data-index="0" data-listing-date-sort="1778360400000">
+    <img src="talks/hf_istanbul_meetup.jpg" class="talk-image listing-image" alt="Istanbul Open-source AI Meetup" loading="lazy">
+    <div class="talk-content">
+      <h3 class="listing-title">Istanbul Open-source AI Meetup</h3>
+      <p>📍 <span class="listing-venue">Trendyol × Hugging Face</span> | 📅 <span class="listing-date">May 10, 2026</span></p>
+      <p class="listing-description">Co-organized an open-source AI meetup covering multimodal AI, medical AI, and math with LLMs.</p>
+      <div class="talk-links">
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7459238621083123712/" class="listing-href" target="_blank" rel="noopener noreferrer">LinkedIn Post</a>
+      </div>
+    </div>
+  </div>
+  <div class="talk-card" data-index="1" data-listing-date-sort="1777064400000">
+    <img src="talks/cappadocia_ai_summit.jpg" class="talk-image listing-image" alt="Cappadocia AI Summit" loading="lazy">
+    <div class="talk-content">
+      <h3 class="listing-title">Cappadocia AI Summit</h3>
+      <p>📍 <span class="listing-venue">Kayseri Chamber of Commerce</span> | 📅 <span class="listing-date">Apr 25, 2026</span></p>
+      <p class="listing-description">Presented "Digital Pathology with AI" at Kapadokya Yapay Zeka Zirvesi.</p>
+      <div class="talk-links">
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7456024188512825344/" class="listing-href" target="_blank" rel="noopener noreferrer">LinkedIn Post</a>
+      </div>
+    </div>
+  </div>
+  <div class="talk-card" data-index="2" data-listing-date-sort="1776286800000">
+    <img src="talks/personalized_agents.jpg" class="talk-image listing-image" alt="Building Personalized Agents" loading="lazy">
+    <div class="talk-content">
+      <h3 class="listing-title">Building Personalized Agents</h3>
+      <p>📍 <span class="listing-venue">ADK, MCP &amp; Memory Bank session</span> | 📅 <span class="listing-date">Apr 16, 2026</span></p>
+      <p class="listing-description">Talk on production AI agents: connectivity with MCP, orchestration with ADK, and memory.</p>
+      <div class="talk-links">
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7450227857076727808/" class="listing-href" target="_blank" rel="noopener noreferrer">LinkedIn Post</a>
+      </div>
+    </div>
+  </div>
+  <div class="talk-card" data-index="3" data-listing-date-sort="1765141200000">
+    <img src="talks/halic.png" class="talk-image listing-image" alt="Haliç Engineering Summit" loading="lazy">
+    <div class="talk-content">
+      <h3 class="listing-title">Haliç Engineering Summit</h3>
+      <p>📍 <span class="listing-venue">Haliç University</span> | 📅 <span class="listing-date">Dec 8, 2025</span></p>
+      <p class="listing-description">We talked about engineering, academy, job opportunities and more!</p>
+      <div class="talk-links">
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7402271975710113792/" class="listing-href" target="_blank" rel="noopener noreferrer">LinkedIn Post</a>
+      </div>
+    </div>
+  </div>
 </div>
-</section>
+<div class="listing-no-matching d-none">No matching items</div>
 </div>
-<!-- Talk 2  -->
-<div class="talk-card">
-<p><img src="talks/ds_summit_kworks.png" class="talk-image img-fluid"></p>
-<section id="data-science-summit" class="level3 talk-content">
-<h3 data-anchor-id="data-science-summit">Data Science Summit</h3>
-<p>📍 KWORKS Şişli | 📅 6 September 2025</p>
-<p>I was there as “network field speaker” to chat with everyone about AI.</p>
-<div class="talk-links">
-<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7368703418615447553/">LinkedIn Post</a></p>
-</div>
-</section>
-</div>
-<!-- Talk 3  -->
-<div class="talk-card">
-<p><img src="talks/ai_pulse_day.png" class="talk-image img-fluid"></p>
-<section id="ai-pulse-day" class="level3 talk-content">
-<h3 data-anchor-id="ai-pulse-day">AI Pulse Day</h3>
-<p>📍 Işık University | 📅 31 May 2025</p>
-<p>Career guide in AI for university students.</p>
-<div class="talk-links">
-<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7331227895991816193/">LinkedIn Post</a></p>
-</div>
-</section>
-</div>
-<!-- Talk 4  -->
-<div class="talk-card">
-<p><img src="talks/tk_calistay.png" class="talk-image img-fluid"></p>
-<section id="türkiyenin-kıvılcımları-workshop" class="level3 talk-content">
-<h3 data-anchor-id="türkiyenin-kıvılcımları-workshop">Türkiye’nin Kıvılcımları Workshop</h3>
-<p>📍 Tech Istanbul | 📅 2 February 2025</p>
-<p>ML Engineering and MLOps</p>
-<div class="talk-links">
-<p><a href="https://www.linkedin.com/feed/update/urn:li:activity:7331227895991816193/">LinkedIn Post</a></p>
-</div>
-</section>
-</div>
+<p><a href="./talks.html">All talks →</a></p>
 
 
 </section>
@@ -518,14 +572,13 @@ We talked about engineering, acedemy, job opportunities and more!
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -1,55 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://nusretozates.github.io/talks.ejs.html</loc>
+    <lastmod>2026-08-01T21:33:29.321Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/talks.html</loc>
+    <lastmod>2026-08-01T21:33:29.397Z</lastmod>
+  </url>
+  <url>
     <loc>https://nusretozates.github.io/myposts.html</loc>
-    <lastmod>2026-02-05T17:50:30.996Z</lastmod>
+    <lastmod>2026-08-01T21:56:30.728Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/about.html</loc>
-    <lastmod>2026-02-05T17:50:30.996Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/good-design-practices-with-python-design-by-contract/index.html</loc>
+    <lastmod>2026-08-01T21:37:16.938Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/docker-get-started/index.html</loc>
-    <lastmod>2026-02-05T17:50:31.006Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/index.html</loc>
+    <lastmod>2026-08-01T21:38:42.530Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/attention_mechanism/index.html</loc>
-    <lastmod>2026-02-05T17:50:30.998Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/solid-principles-with-python/index.html</loc>
+    <lastmod>2026-08-01T21:37:11.813Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/posts/bert/index.html</loc>
-    <lastmod>2026-02-05T17:50:30.998Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nusretozates.github.io/posts/career_advice_ai_summary/index.html</loc>
-    <lastmod>2026-02-05T17:50:31.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nusretozates.github.io/notes.html</loc>
-    <lastmod>2026-02-05T17:50:30.996Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nusretozates.github.io/posts/gnn_basics/index.html</loc>
-    <lastmod>2026-02-05T17:50:31.006Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/index.html</loc>
-    <lastmod>2026-02-05T17:50:31.011Z</lastmod>
-  </url>
-  <url>
-    <loc>https://nusretozates.github.io/posts/transformers/index.html</loc>
-    <lastmod>2026-02-05T17:50:31.016Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/good-design-practices-with-python-important-acronyms/index.html</loc>
+    <lastmod>2026-08-01T21:37:22.452Z</lastmod>
   </url>
   <url>
     <loc>https://nusretozates.github.io/posts/test_time_compute/index.html</loc>
-    <lastmod>2026-02-05T17:50:31.015Z</lastmod>
+    <lastmod>2026-08-01T21:36:15.705Z</lastmod>
   </url>
   <url>
-    <loc>https://nusretozates.github.io/index.html</loc>
-    <lastmod>2026-02-05T18:01:05.152Z</lastmod>
+    <loc>https://nusretozates.github.io/posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/index.html</loc>
+    <lastmod>2026-08-01T21:36:45.113Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-la/index.html</loc>
+    <lastmod>2026-08-01T21:39:08.879Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/how-to-handle-lack-of-labels-a-brief-introduction/index.html</loc>
+    <lastmod>2026-08-01T21:37:04.390Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/transformers/index.html</loc>
+    <lastmod>2026-08-01T21:37:48.127Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/good-design-practices-with-python-defensive-programming/index.html</loc>
+    <lastmod>2026-08-01T21:37:17.920Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/why-you-should-serve-your-tensorflow-model-using-tf-serving/index.html</loc>
+    <lastmod>2026-08-01T21:37:35.928Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/collect-and-store-events-from-kafka-with-influxdb-and-telegraf/index.html</loc>
+    <lastmod>2026-08-01T21:37:28.079Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/install-mlflow-on-gcp-for-your-team-the-simplest-way/index.html</loc>
+    <lastmod>2026-08-01T21:36:38.597Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/attention_mechanism/index.html</loc>
+    <lastmod>2026-08-01T21:38:04.452Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/career_advice_ai_summary/index.html</loc>
+    <lastmod>2026-08-01T21:36:00.683Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/introduction-to-security-for-machine-learning/index.html</loc>
+    <lastmod>2026-08-01T21:36:18.152Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/article-review-searching-for-build-debt-experiences-managing/index.html</loc>
+    <lastmod>2026-08-01T21:36:26.765Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/my-2-years-machine-learning-career-story/index.html</loc>
+    <lastmod>2026-08-01T21:36:38.974Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/bert/index.html</loc>
+    <lastmod>2026-08-01T21:37:44.231Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/index.html</loc>
+    <lastmod>2026-08-01T21:36:51.499Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/using-mlflow-with-keras-tuner/index.html</loc>
+    <lastmod>2026-08-01T21:38:48.651Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/paragraph_dev_sentece_skill/index.html</loc>
+    <lastmod>2026-08-01T21:56:35.256Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/docker-get-started/index.html</loc>
+    <lastmod>2026-08-01T21:38:16.586Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/faster-ai-services-with-request-batching/index.html</loc>
+    <lastmod>2026-08-01T21:37:10.094Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/transformer-models-hyperparameter-optimization-with-optuna/index.html</loc>
+    <lastmod>2026-08-01T21:37:34.845Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/how-to-use-one-mongodb-instance-in-multiple-fastapi-routers/index.html</loc>
+    <lastmod>2026-08-01T21:37:43.825Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/posts/gnn_basics/index.html</loc>
+    <lastmod>2026-08-01T21:36:05.304Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/notes.html</loc>
+    <lastmod>2026-08-01T20:35:03.653Z</lastmod>
   </url>
   <url>
     <loc>https://nusretozates.github.io/notes/slurm/index.html</loc>
-    <lastmod>2026-02-05T17:50:30.997Z</lastmod>
+    <lastmod>2026-08-01T20:35:03.654Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nusretozates.github.io/index.html</loc>
+    <lastmod>2026-08-01T22:01:18.241Z</lastmod>
   </url>
 </urlset>

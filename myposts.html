@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.8.22">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -39,14 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-0377a3e34bb5f8db061f5b56ca921392.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-95871218dae5c089884df528f3ab837e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-0377a3e34bb5f8db061f5b56ca921392.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -84,8 +84,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-subtitle','listing-categories','listing-reading-time','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      valueNames: ['listing-date','listing-image','listing-title','listing-subtitle','listing-categories','listing-reading-time','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      page: 9,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
     };
 
@@ -120,7 +121,7 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -333,6 +334,8 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Nusret Ozates</span>
     </a>
@@ -344,8 +347,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./myposts.html" aria-current="page"> 
 <span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./talks.html"> 
+<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./notes.html"> 
@@ -355,11 +366,6 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/NusretOzates"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -393,7 +399,7 @@ window.Quarto = {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div><div class="category" data-category="YWNhZGVteQ==">academy <span class="quarto-category-count">(1)</span></div><div class="category" data-category="ZGV2b3Bz">devops <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxt">llm <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bWw=">ml <span class="quarto-category-count">(6)</span></div><div class="category" data-category="bWxvcHM=">mlops <span class="quarto-category-count">(1)</span></div><div class="category" data-category="c29mdHdhcmU=">software <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(27)</span></div><div class="category" data-category="YWNhZGVteQ==">academy <span class="quarto-category-count">(3)</span></div><div class="category" data-category="bGxt">llm <span class="quarto-category-count">(10)</span></div><div class="category" data-category="bWw=">ml <span class="quarto-category-count">(26)</span></div><div class="category" data-category="bWxvcHM=">mlops <span class="quarto-category-count">(9)</span></div><div class="category" data-category="c29mdHdhcmU=">software <span class="quarto-category-count">(9)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -414,10 +420,12 @@ window.Quarto = {
     </div>
 </div>
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="bWw=" data-listing-date-sort="1766178000000" data-listing-file-modified-sort="1770313831000" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="727">
+<div class="g-col-1" data-index="0" data-categories="YWNhZGVteSUyQ2xsbSUyQ21s" data-listing-date-sort="1766091600000" data-listing-file-modified-sort="1785620160683" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="657">
 <a href="./posts/career_advice_ai_summary/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
-<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<p class="card-img-top">
+<img loading="lazy" src="./posts/career_advice_ai_summary/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 My summary of the “Career Advice in AI” Lecture
@@ -425,48 +433,54 @@ My summary of the “Career Advice in AI” Lecture
 <div class="listing-reading-time card-text text-muted">4 min</div>
 <div class="listing-categories">
 
+<div class="listing-category" onclick="window.quartoListingCategory('YWNhZGVteQ=='); return false;">academy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
 <div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
 
 </div>
 <div class="card-text listing-description delink">
-I finally had time to watch the AI Career Advice lesson by Andrew Ng and Laurence Moroney. It was a great lesson for me as I’m about to graduate from my MSc and am ready to…
+Photo by Fotis Fotopoulos on Unsplash
 </div>
 <div class="card-attribution card-text-small end">
 <div class="listing-date">
-Dec 20, 2025
+Dec 19, 2025
 </div>
 </div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="bWw=" data-listing-date-sort="1760734800000" data-listing-file-modified-sort="1770313831006" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1455">
+<div class="g-col-1" data-index="1" data-categories="bGxtJTJDbWw=" data-listing-date-sort="1760648400000" data-listing-file-modified-sort="1785620165304" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="909">
 <a href="./posts/gnn_basics/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img loading="lazy" src="./posts/gnn_basics/gnn.png" class="thumbnail-image card-img" style="height: 150px;">
+<img loading="lazy" src="./posts/gnn_basics/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Pytorch Geometric Basics: How Message Passing Works
 </h5>
-<div class="listing-reading-time card-text text-muted">8 min</div>
+<div class="listing-reading-time card-text text-muted">5 min</div>
 <div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
 
 <div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
 
 </div>
 <div class="card-text listing-description delink">
-I’m working with GNNs for my MSc thesis and naturally chose PyTorch Geometric (PyG), one of the most popular libraries in the field. While PyG is incredibly easy to use, I…
+A GNN Representation from https://distill.pub/2021/gnn-intro/
 </div>
 <div class="card-attribution card-text-small end">
 <div class="listing-date">
-Oct 18, 2025
+Oct 17, 2025
 </div>
 </div>
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="YWNhZGVteQ==" data-listing-date-sort="1760302800000" data-listing-file-modified-sort="1770313831011" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1628">
+<div class="g-col-1" data-index="2" data-categories="YWNhZGVteQ==" data-listing-date-sort="1760302800000" data-listing-file-modified-sort="1785621395256" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1628">
 <a href="./posts/paragraph_dev_sentece_skill/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -493,22 +507,22 @@ Oct 13, 2025
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="3" data-categories="bWwlMkNsbG0=" data-listing-date-sort="1738875600000" data-listing-file-modified-sort="1770313831015" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="844">
+<div class="g-col-1" data-index="3" data-categories="bGxtJTJDbWw=" data-listing-date-sort="1738875600000" data-listing-file-modified-sort="1785620175705" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="375">
 <a href="./posts/test_time_compute/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img loading="lazy" src="./posts/test_time_compute/img.png" class="thumbnail-image card-img" style="height: 150px;">
+<img loading="lazy" src="./posts/test_time_compute/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Test-Time Compute, Reasoning and Human Brain
 </h5>
-<div class="listing-reading-time card-text text-muted">5 min</div>
+<div class="listing-reading-time card-text text-muted">2 min</div>
 <div class="listing-categories">
 
-<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
-
 <div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
 
 </div>
 <div class="card-text listing-description delink">
@@ -522,20 +536,577 @@ Feb 7, 2025
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="4" data-categories="bWw=" data-listing-date-sort="1624482000000" data-listing-file-modified-sort="1770313830998" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="977">
-<a href="./posts/bert/index.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="4" data-categories="bWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1720558800000" data-listing-file-modified-sort="1785620178152" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2118">
+<a href="./posts/introduction-to-security-for-machine-learning/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img loading="lazy" src="./posts/bert/masked.png" class="thumbnail-image card-img" style="height: 150px;">
+<img loading="lazy" src="./posts/introduction-to-security-for-machine-learning/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Introduction to Security for Machine Learning
+</h5>
+<div class="listing-reading-time card-text text-muted">11 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+In recent years, you have seen the word AI everywhere. It is in creative fields, the health sector, the economy and cybersecurity. As AI usage increased in cybersecurity…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jul 10, 2024
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="5" data-categories="bGxtJTJDbWw=" data-listing-date-sort="1690405200000" data-listing-file-modified-sort="1785620348879" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1851">
+<a href="./posts/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-la/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-la/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT
+</h5>
+<div class="listing-reading-time card-text text-muted">10 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+</div>
+<div class="card-text listing-description delink">
+In a revolutionary breakthrough, the boundaries of AI-driven Question Answering (QA) Chatbots have been shattered. Imagine a QA Chatbot that requires zero training and can…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Jul 27, 2023
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="6" data-categories="bGxtJTJDbWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1671915600000" data-listing-file-modified-sort="1785620186765" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1241">
+<a href="./posts/article-review-searching-for-build-debt-experiences-managing/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/article-review-searching-for-build-debt-experiences-managing/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Article Review: Searching for Build Debt Experiences Managing Technical Debt at Google
+</h5>
+<div class="listing-reading-time card-text text-muted">7 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by AbsolutVision on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 25, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="7" data-categories="bWwlMkNtbG9wcw==" data-listing-date-sort="1669928400000" data-listing-file-modified-sort="1785620328651" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="298">
+<a href="./posts/using-mlflow-with-keras-tuner/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/using-mlflow-with-keras-tuner/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Using MLFlow with Keras Tuner
+</h5>
+<div class="listing-reading-time card-text text-muted">2 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+</div>
+<div class="card-text listing-description delink">
+Hello, everyone! Today I needed to use Keras Tuner for my task and I wanted to track the hyperparameters with MLFlow. But I couldn’t find any good resources on the Internet.…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 2, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="8" data-categories="bGxtJTJDbWwlMkNtbG9wcw==" data-listing-date-sort="1666645200000" data-listing-file-modified-sort="1785620198597" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="683">
+<a href="./posts/install-mlflow-on-gcp-for-your-team-the-simplest-way/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" src="./posts/install-mlflow-on-gcp-for-your-team-the-simplest-way/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Install MLFlow on GCP for Your Team: The Simplest Way
+</h5>
+<div class="listing-reading-time card-text text-muted">4 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Tobias Carlsson on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 25, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="9" data-categories="YWNhZGVteSUyQ21sJTJDc29mdHdhcmU=" data-listing-date-sort="1665954000000" data-listing-file-modified-sort="1785620198974" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="438">
+<a href="./posts/my-2-years-machine-learning-career-story/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+My 2 years Machine Learning Career Story
+</h5>
+<div class="listing-reading-time card-text text-muted">3 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('YWNhZGVteQ=='); return false;">academy</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+Everything began with a machine learning class in my fifth semester. My dream at that time was to be a hacker or a mobile app developer :) Our teacher decided to move…
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 17, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="10" data-categories="bGxtJTJDbWwlMkNtbG9wcw==" data-listing-date-sort="1665781200000" data-listing-file-modified-sort="1785620205113" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="611">
+<a href="./posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Tuning and Deploying Huggingface Transformers with Vertex AI — Part 3 Start Distributed Tuning and…
+</h5>
+<div class="listing-reading-time card-text text-muted">4 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+</div>
+<div class="card-text listing-description delink">
+Vertex AI
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 15, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="11" data-categories="bGxtJTJDbWwlMkNtbG9wcw==" data-listing-date-sort="1665176400000" data-listing-file-modified-sort="1785620211499" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="465">
+<a href="./posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Tuning and Deploying Huggingface Transformers with Vertex AI — Part 2 Training Code
+</h5>
+<div class="listing-reading-time card-text text-muted">3 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+</div>
+<div class="card-text listing-description delink">
+Vertex AI
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 8, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="12" data-categories="bGxtJTJDbWwlMkNtbG9wcw==" data-listing-date-sort="1665090000000" data-listing-file-modified-sort="1785620322530" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="588">
+<a href="./posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Tuning and Deploying HF Transformers with Vertex AI — Part 1 Preparing Prerequisites and Dataset
+</h5>
+<div class="listing-reading-time card-text text-muted">3 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+</div>
+<div class="card-text listing-description delink">
+Vertex AI
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Oct 7, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="13" data-categories="bWw=" data-listing-date-sort="1664312400000" data-listing-file-modified-sort="1785620224390" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1060">
+<a href="./posts/how-to-handle-lack-of-labels-a-brief-introduction/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/how-to-handle-lack-of-labels-a-brief-introduction/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+How to Handle Lack of Labels: A Brief Introduction
+</h5>
+<div class="listing-reading-time card-text text-muted">6 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Markus Spiske on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Sep 28, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="14" data-categories="bWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1660165200000" data-listing-file-modified-sort="1785620230094" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="402">
+<a href="./posts/faster-ai-services-with-request-batching/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/faster-ai-services-with-request-batching/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Faster AI Services with Request Batching
+</h5>
+<div class="listing-reading-time card-text text-muted">3 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+Batching the requests and making batch predictions gives much better RPS but making this system robust is way harder.
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Aug 11, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="15" data-categories="bWwlMkNtbG9wcyUyQ3NvZnR3YXJl" data-listing-date-sort="1649624400000" data-listing-file-modified-sort="1785620231813" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1147">
+<a href="./posts/solid-principles-with-python/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/solid-principles-with-python/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+SOLID Principles with Python
+</h5>
+<div class="listing-reading-time card-text text-muted">6 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by NeONBRAND on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Apr 11, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="16" data-categories="bWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1649106000000" data-listing-file-modified-sort="1785620237920" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="651">
+<a href="./posts/good-design-practices-with-python-defensive-programming/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/good-design-practices-with-python-defensive-programming/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Good Design Practices with Python — Defensive Programming
+</h5>
+<div class="listing-reading-time card-text text-muted">4 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Rita Chou on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Apr 5, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="17" data-categories="bWw=" data-listing-date-sort="1649106000000" data-listing-file-modified-sort="1785620242452" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="790">
+<a href="./posts/good-design-practices-with-python-important-acronyms/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/good-design-practices-with-python-important-acronyms/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Good Design Practices with Python — Important Acronyms
+</h5>
+<div class="listing-reading-time card-text text-muted">4 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Bench Accounting on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Apr 5, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="18" data-categories="bWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1649106000000" data-listing-file-modified-sort="1785620236938" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="333">
+<a href="./posts/good-design-practices-with-python-design-by-contract/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/good-design-practices-with-python-design-by-contract/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Good Design Practices with Python — Design by Contract
+</h5>
+<div class="listing-reading-time card-text text-muted">2 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Sebastian Herrmann on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Apr 5, 2022
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="19" data-categories="bWwlMkNtbG9wcw==" data-listing-date-sort="1640898000000" data-listing-file-modified-sort="1785620248079" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="476">
+<a href="./posts/collect-and-store-events-from-kafka-with-influxdb-and-telegraf/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/collect-and-store-events-from-kafka-with-influxdb-and-telegraf/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Collect and Store Events from Kafka with InfluxDB and Telegraf using Docker
+</h5>
+<div class="listing-reading-time card-text text-muted">3 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Stephen Dawson on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Dec 31, 2021
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="20" data-categories="bWw=" data-listing-date-sort="1632171600000" data-listing-file-modified-sort="1785620254845" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="390">
+<a href="./posts/transformer-models-hyperparameter-optimization-with-optuna/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/transformer-models-hyperparameter-optimization-with-optuna/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Transformer Models Hyperparameter Optimization With the Optuna
+</h5>
+<div class="listing-reading-time card-text text-muted">2 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+</div>
+<div class="card-text listing-description delink">
+Photo by Alexander Schimmeck on Unsplash
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Sep 21, 2021
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="21" data-categories="bWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1631134800000" data-listing-file-modified-sort="1785620255928" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="364">
+<a href="./posts/why-you-should-serve-your-tensorflow-model-using-tf-serving/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/why-you-should-serve-your-tensorflow-model-using-tf-serving/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Why you should serve your Tensorflow model using TF Serving?
+</h5>
+<div class="listing-reading-time card-text text-muted">2 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+TensorFlow
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Sep 9, 2021
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="22" data-categories="bWwlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1628370000000" data-listing-file-modified-sort="1785620263825" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="426">
+<a href="./posts/how-to-use-one-mongodb-instance-in-multiple-fastapi-routers/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img loading="lazy" data-src="./posts/how-to-use-one-mongodb-instance-in-multiple-fastapi-routers/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+How to use one MongoDB instance in multiple FastAPI routers?
+</h5>
+<div class="listing-reading-time card-text text-muted">3 min</div>
+<div class="listing-categories">
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
+
+</div>
+<div class="card-text listing-description delink">
+https://fastapi.tiangolo.com
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
+Aug 8, 2021
+</div>
+</div>
+</div>
+</div></a>
+</div>
+<div class="g-col-1" data-index="23" data-categories="bWwlMkNtbG9wcw==" data-listing-date-sort="1624482000000" data-listing-file-modified-sort="1785620264231" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="688">
+<a href="./posts/bert/index.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="listing-item-img-placeholder card-img-top" style="height: 150px;">&nbsp;</div>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 BERT: Encoder Stack Is All You Need
 </h5>
-<div class="listing-reading-time card-text text-muted">5 min</div>
+<div class="listing-reading-time card-text text-muted">4 min</div>
 <div class="listing-categories">
 
 <div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
+
+<div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
 
 </div>
 <div class="card-text listing-description delink">
@@ -549,11 +1120,11 @@ Jun 24, 2021
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="5" data-categories="bWw=" data-listing-date-sort="1613768400000" data-listing-file-modified-sort="1770313831016" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1553">
+<div class="g-col-1" data-index="24" data-categories="bGxtJTJDbWw=" data-listing-date-sort="1613768400000" data-listing-file-modified-sort="1785620268127" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1476">
 <a href="./posts/transformers/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img loading="lazy" src="./posts/transformers/transformer.png" class="thumbnail-image card-img" style="height: 150px;">
+<img loading="lazy" data-src="./posts/transformers/img_0.jpg" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -562,11 +1133,13 @@ Transformer Architecture: How Transformer Models Work?
 <div class="listing-reading-time card-text text-muted">8 min</div>
 <div class="listing-categories">
 
+<div class="listing-category" onclick="window.quartoListingCategory('bGxt'); return false;">llm</div>
+
 <div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
 
 </div>
 <div class="card-text listing-description delink">
-Before Transformers, RNNs with attention mechanisms were state-of-the-art approaches to language modeling and neural machine translation. But RNNs have a very critical…
+Photo by Arseny Togulev on Unsplash
 </div>
 <div class="card-attribution card-text-small end">
 <div class="listing-date">
@@ -576,11 +1149,11 @@ Feb 20, 2021
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="6" data-categories="bWw=" data-listing-date-sort="1607806800000" data-listing-file-modified-sort="1770313830998" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="536">
+<div class="g-col-1" data-index="25" data-categories="bWw=" data-listing-date-sort="1607806800000" data-listing-file-modified-sort="1785620284452" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="519">
 <a href="./posts/attention_mechanism/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img loading="lazy" src="./posts/attention_mechanism/img.png" class="thumbnail-image card-img" style="height: 150px;">
+<img loading="lazy" data-src="./posts/attention_mechanism/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
@@ -593,7 +1166,7 @@ Attention mechanism and how it works on neural machine translation
 
 </div>
 <div class="card-text listing-description delink">
-In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <span class="math inline">\(argmax_y \, p(y|x)\)</span>. Before…
+In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <em>argmax_y P(y|x)</em>. Before transformers…
 </div>
 <div class="card-attribution card-text-small end">
 <div class="listing-date">
@@ -603,28 +1176,26 @@ Dec 13, 2020
 </div>
 </div></a>
 </div>
-<div class="g-col-1" data-index="7" data-categories="ZGV2b3BzJTJDbWxvcHMlMkNzb2Z0d2FyZQ==" data-listing-date-sort="1604782800000" data-listing-file-modified-sort="1770313831006" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1802">
+<div class="g-col-1" data-index="26" data-categories="bWwlMkNtbG9wcw==" data-listing-date-sort="1604782800000" data-listing-file-modified-sort="1785620296586" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1671">
 <a href="./posts/docker-get-started/index.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img loading="lazy" src="./posts/docker-get-started/image.png" class="thumbnail-image card-img" style="height: 150px;">
+<img loading="lazy" data-src="./posts/docker-get-started/img_0.png" class="thumbnail-image card-img" style="height: 150px;">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
 Things you need to know about Docker to get started
 </h5>
-<div class="listing-reading-time card-text text-muted">10 min</div>
+<div class="listing-reading-time card-text text-muted">9 min</div>
 <div class="listing-categories">
 
-<div class="listing-category" onclick="window.quartoListingCategory('ZGV2b3Bz'); return false;">devops</div>
+<div class="listing-category" onclick="window.quartoListingCategory('bWw='); return false;">ml</div>
 
 <div class="listing-category" onclick="window.quartoListingCategory('bWxvcHM='); return false;">mlops</div>
 
-<div class="listing-category" onclick="window.quartoListingCategory('c29mdHdhcmU='); return false;">software</div>
-
 </div>
 <div class="card-text listing-description delink">
-Some useful commands and concepts to use Docker!
+Some useful commands and concepts to use Docker
 </div>
 <div class="card-attribution card-text-small end">
 <div class="listing-date">
@@ -636,6 +1207,9 @@ Nov 8, 2020
 </div>
 </div>
 <div class="listing-no-matching d-none">No matching items</div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -701,14 +1275,13 @@ Nov 8, 2020
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

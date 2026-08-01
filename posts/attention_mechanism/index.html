@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.8.22">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Nusret Ozates and Hasan Kemik">
+<meta name="author" content="Nusret Ozates">
 <meta name="dcterms.date" content="2020-12-13">
 
 <title>Attention mechanism and how it works on neural machine translation – Nusret Ozates</title>
@@ -39,14 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-4d9afe2b8d18ee9fa5d0d57b5ed4214d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0377a3e34bb5f8db061f5b56ca921392.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-95871218dae5c089884df528f3ab837e.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-0377a3e34bb5f8db061f5b56ca921392.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -91,37 +91,8 @@ gtag('config', 'G-FVW7859HWV', { 'anonymize_ip': true});
 <style>html{ scroll-behavior: smooth; }</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -304,6 +275,8 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Nusret Ozates</span>
     </a>
@@ -315,8 +288,16 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="../../myposts.html"> 
 <span class="menu-text">Blogs</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../talks.html"> 
+<span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../notes.html"> 
@@ -326,11 +307,6 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/NusretOzates"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -359,7 +335,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Nusret Ozates and Hasan Kemik </p>
+               <p>Nusret Ozates </p>
             </div>
     </div>
       
@@ -386,69 +362,118 @@ window.Quarto = {
 
 
 
-<p>In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <span class="math inline">\(argmax_y \, p(y|x)\)</span>. Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_0.png" class="img-fluid figure-img"></p>
+<figcaption>Image 2</figcaption>
+</figure>
+</div>
+<p>In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <em>argmax_y P(y|x)</em>. Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector.</p>
 <section id="rnn-encoder-decoder" class="level2">
 <h2 class="anchored" data-anchor-id="rnn-encoder-decoder">RNN Encoder-Decoder</h2>
 <p>Let’s look at the encoder-decoder architecture more formally.</p>
 <section id="encoder" class="level3">
 <h3 class="anchored" data-anchor-id="encoder">Encoder</h3>
 <p>The encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c.&nbsp;To calculate c, we calculate hidden states with:</p>
-<p><span class="math display">\[ h_t = f(h_{t-1}, x_t) \]</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_1.png" class="img-fluid figure-img"></p>
+<figcaption>Image 3</figcaption>
+</figure>
+</div>
+<p><strong>Equation 1</strong>: Hidden state vector h</p>
 <p>and vector c is equal to:</p>
-<p><span class="math display">\[ c = q\left(\{h_1, h_2, \ldots, h_{T_x}\}\right) \]</span></p>
-<p><span class="math inline">\(h_t \in R^n\)</span> is the hidden state at time t, c is a vector, generated from the sequence of hidden states, f and q are some non-linear functions. As an example, f can be an LSTM and <span class="math inline">\(q\left(\{h_1, h_2, \ldots, h_{T_x}\}\right)\)</span> can be equal to <span class="math inline">\(h_{T_x}\)</span>, the last hidden state of the encoder.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_2.png" class="img-fluid figure-img"></p>
+<figcaption>Image 4</figcaption>
+</figure>
+</div>
+<p><strong>Equation 2</strong>: Context vector c</p>
+<p>hₜ ∈ ℝⁿ is a hidden state at time t, c is a vector, generated from the sequence of the hidden states. f and q functions are some non-linear functions. As an example, f can be an LSTM and <em>q(h_1…,h_Tx )</em> can be equal to <em>h_T</em>.</p>
 </section>
 <section id="decoder" class="level3">
 <h3 class="anchored" data-anchor-id="decoder">Decoder</h3>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<blockquote class="blockquote">
+<p>Note: In the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.</p>
+</blockquote>
+<p>The decoder predicts the next word <em>y_t</em>, given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_3.png" class="img-fluid figure-img"></p>
+<figcaption>Image 5</figcaption>
+</figure>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+<p><strong>Equation 3</strong>: Probability of sentence y</p>
+<p>But, how do we calculate p(y_(t)|y₁, …, y_(t − 1), c)?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_4.png" class="img-fluid figure-img"></p>
+<figcaption>Image 6</figcaption>
+</figure>
 </div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.</p>
-</div>
-</div>
-<p>The decoder predicts the next word <span class="math inline">\(y_t\)</span>, given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:</p>
-<p><span class="math display">\[ p(y) = \prod_{t=1}^{T_y} p(y_t | y_1, ..., y_{t-1}, c) \]</span></p>
-<p>How do we calculate <span class="math inline">\(p(y_t | y_1, ..., y_{t-1}, c)\)</span>?</p>
-<p><span class="math display">\[ p(y_t | y_1, ..., y_{t-1}, c) = g(y_{t-1}, s_t, c) \]</span></p>
-<p>where g is a non-linear function that outputs the probability of <span class="math inline">\(y_t\)</span> and <span class="math inline">\(s_t\)</span> is the hidden state of the RNN.</p>
+<p><strong>Equation 4</strong>: Probability of y_t given all previously predicted words before</p>
+<p>where g is a non-linear function that outputs the probability of <em>y_t</em> and <em>s_t</em> is the hidden state of the RNN.</p>
 </section>
 </section>
 <section id="attention-mechanism-a-new-approach-to-encoder-decoder-structure" class="level2">
-<h2 class="anchored" data-anchor-id="attention-mechanism-a-new-approach-to-encoder-decoder-structure">Attention Mechanism: A new approach to Encoder-Decoder Structure</h2>
+<h2 class="anchored" data-anchor-id="attention-mechanism-a-new-approach-to-encoder-decoder-structure">Attention Mechanism: A new approach to encoder-decoder structure</h2>
 <section id="encoder-1" class="level3">
 <h3 class="anchored" data-anchor-id="encoder-1">Encoder</h3>
-<p>In the encoder structure, the hidden states are calculated as Eq.1. Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.</p>
-<p><span class="math display">\[ h_j = [\overrightarrow{h_j^T}; \overleftarrow{h_j^T}] \]</span></p>
+<p>In the encoder structure, the hidden states are calculated as <em>Eq.1.</em> Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_5.png" class="img-fluid figure-img"></p>
+<figcaption>Image 7</figcaption>
+</figure>
+</div>
+<p><strong>Equation 5:</strong>Hidden state vector compose of forward and backward traverse</p>
 </section>
 <section id="decoder-1" class="level3">
 <h3 class="anchored" data-anchor-id="decoder-1">Decoder</h3>
-<p>In the decoder structure, probability of each word is computed according to previous word’s vector <span class="math inline">\(y_{i-1}\)</span> , hidden state <span class="math inline">\(s_i\)</span> and context vector <span class="math inline">\(c_i\)</span>.</p>
-<p><span class="math display">\[ p(y_i | y_1, ..., y_{i-1}, x) = g(y_{i-1}, s_i, c_i) \]</span></p>
-<p>Hidden state is computed according to previous hidden state <span class="math inline">\(s_{i-1}\)</span>, previous word’s vector <span class="math inline">\(y_{i-1}\)</span> and current context vector <span class="math inline">\(c_i\)</span>.</p>
-<p><span class="math display">\[ s_i = f(s_{i-1}, y_{i-1}, c_i) \]</span></p>
-<p>The context vector <span class="math inline">\(c_i\)</span> depends on all hidden states with their weights. These weights represent the amount of “attention” needed to be given to predict next word <span class="math inline">\(y_i\)</span>.</p>
-<p><span class="math display">\[ c_i = \sum_{j=1}^{T_x} \alpha_{ij} h_j \]</span></p>
-<p>where <span class="math inline">\(\alpha_{ij}\)</span> is the weight for hidden state <span class="math inline">\(h_j\)</span> when predicting word <span class="math inline">\(y_i\)</span>. The “attention amount” calculated by the formula:</p>
-<p><span class="math display">\[ \alpha_{ij} = \frac{exp(e_{ij})}{\sum_{k=1}^{T_x} exp(e_{ik})} \]</span></p>
-<p><span class="math inline">\(e(i,j)\)</span> represents “energy”, the importance of hidden state <span class="math inline">\(h_j\)</span>, respect to the previous hidden state <span class="math inline">\(s_{i-1}\)</span>. It is calculated by concatenation of <span class="math inline">\(h_j\)</span> and <span class="math inline">\(s_{i-1}\)</span> is fed through a feedforward neural network a, which allows to train an alignment model through backward propagation.</p>
-<p><span class="math display">\[ e_{ij} = a(s_{i-1}, h_j) \]</span></p>
+<p>In the decoder structure, probability of each word is computed according to previous word’s vector y_i-1 , hidden state s_i and context vector c_i.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_6.png" class="img-fluid figure-img"></p>
+<figcaption>Image 8</figcaption>
+</figure>
+</div>
+<p><strong>Equation 6</strong>: Probability calculation</p>
+<p>Hidden state is computed according to previous hidden state s_i-1, previous word’s vector y_i-1 and current context vector c_i.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_7.png" class="img-fluid figure-img"></p>
+<figcaption>Image 9</figcaption>
+</figure>
+</div>
+<p><strong>Equation 7</strong>: Hidden state calculation</p>
+<p>The context vector c_i depends on all hidden states with their weights. This weights represent the amount of “attention” needed to be given to predict next word y_i.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_8.png" class="img-fluid figure-img"></p>
+<figcaption>Image 10</figcaption>
+</figure>
+</div>
+<p><strong>Equation 8</strong>: Context vector calculation</p>
+<p>The “attention amount” calculated by the formula:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_9.png" class="img-fluid figure-img"></p>
+<figcaption>Image 11</figcaption>
+</figure>
+</div>
+<p><strong>Equation 9</strong>: Softmax</p>
+<p><em>e(i,j)</em> represents “energy”, the importance of hidden state h_j, respect to the previous hidden state s_i-1. It is calculated by concatenation of h_j and s_i-1 is fed through a feedforward neural network <em>a</em>, which allows to train an alignment model through backward propagation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img_10.png" class="img-fluid figure-img"></p>
+<figcaption>Image 12</figcaption>
+</figure>
+</div>
 <p>And with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models.</p>
-</section>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a></li>
-</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -516,14 +541,13 @@ Note
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
