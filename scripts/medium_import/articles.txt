@@ -1,0 +1,27 @@
+# slug|url — all 26 published Medium articles
+career_advice_ai_summary|https://medium.com/@m.nusret.ozates/my-summary-of-the-career-advice-in-ai-lecture-445405fd2cf4
+gnn_basics|https://medium.com/@m.nusret.ozates/pytorch-geometric-basics-how-message-passing-works-677dd635ea0f
+test_time_compute|https://medium.com/@m.nusret.ozates/test-time-compute-reasoning-and-human-brain-6c315ac3412f
+introduction-to-security-for-machine-learning|https://medium.com/@m.nusret.ozates/introduction-to-security-for-machine-learning-2d03ffb04d4b
+unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-la|https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed
+article-review-searching-for-build-debt-experiences-managing|https://medium.com/dev-genius/article-review-searching-for-build-debt-experiences-managing-technical-debt-at-google-7851014563ab
+using-mlflow-with-keras-tuner|https://medium.com/towardsdev/using-mlflow-with-keras-tuner-f6df5dd634bc
+install-mlflow-on-gcp-for-your-team-the-simplest-way|https://medium.com/dev-genius/install-mlflow-on-gcp-for-your-team-the-simplest-way-d208b4ee3cd3
+my-2-years-machine-learning-career-story|https://medium.com/@m.nusret.ozates/my-2-years-machine-learning-career-story-aefa102e2f73
+tuning-and-deploying-huggingface-transformers-with-vertex-ai|https://medium.com/devops-dev/tuning-and-deploying-huggingface-transformers-with-vertex-ai-part-3-start-distributed-tuning-and-e0943bfc9d4b
+tuning-and-deploying-hf-transformers-with-vertex-ai-part-2|https://medium.com/devops-dev/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2-training-code-591186445a2a
+tuning-and-deploying-hf-transformers-with-vertex-ai-part-1|https://medium.com/devops-dev/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291
+how-to-handle-lack-of-labels-a-brief-introduction|https://medium.com/@m.nusret.ozates/how-to-handle-lack-of-labels-a-brief-introduction-97a1e96b3e1f
+faster-ai-services-with-request-batching|https://medium.com/devops-dev/faster-ai-services-with-request-batching-17c9a0b33129
+solid-principles-with-python|https://medium.com/@m.nusret.ozates/solid-principles-with-python-245e45f9b1f8
+good-design-practices-with-python-design-by-contract|https://medium.com/@m.nusret.ozates/good-design-practices-with-python-design-by-contract-a2a2d07b37d0
+good-design-practices-with-python-defensive-programming|https://medium.com/@m.nusret.ozates/good-design-practices-with-python-defensive-programming-bc859fe084ea
+good-design-practices-with-python-important-acronyms|https://medium.com/@m.nusret.ozates/good-design-practices-with-python-important-acronyms-c590bbab733d
+collect-and-store-events-from-kafka-with-influxdb-and-telegraf|https://medium.com/towardsdev/collect-and-store-events-from-kafka-with-influxdb-and-telegraf-using-docker-789d35862716
+transformer-models-hyperparameter-optimization-with-optuna|https://medium.com/carbon-consulting/transformer-models-hyperparameter-optimization-with-the-optuna-299e185044a8
+why-you-should-serve-your-tensorflow-model-using-tf-serving|https://medium.com/carbon-consulting/why-you-should-serve-your-tensorflow-model-using-tf-serving-cb62c8a49370
+how-to-use-one-mongodb-instance-in-multiple-fastapi-routers|https://medium.com/carbon-consulting/how-to-use-one-mongodb-instance-in-multiple-fastapi-routers-810c288b1c51
+bert|https://medium.com/carbon-consulting/bert-encoder-stack-is-all-you-need-f1483cfe2e07
+transformers|https://medium.com/carbon-consulting/transformer-architecture-how-transformer-models-work-46fc70b4ea59
+attention_mechanism|https://medium.com/carbon-consulting/attention-mechanism-and-how-it-works-on-neural-machine-translation-93a034458dec
+docker-get-started|https://medium.com/carbon-consulting/things-you-need-to-know-about-docker-to-get-started-565979482a86

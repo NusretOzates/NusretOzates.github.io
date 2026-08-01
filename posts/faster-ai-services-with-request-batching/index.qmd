@@ -1,0 +1,58 @@
+---
+title: "Faster AI Services with Request Batching"
+author: "Nusret Ozates"
+date: "2022-08-11"
+categories: [ml, software]
+medium_url: "https://medium.com/devops-dev/faster-ai-services-with-request-batching-17c9a0b33129"
+image: "img_0.png"
+---
+
+## TLDR
+
+Batching the requests and making batch predictions gives much better RPS but making this system robust is way harder.
+
+## What is this?
+
+Let’s say we have a test set that contains 1000 elements. Which one is faster:
+
+1 — Looping through the requests and predicting one by one
+
+2 — Making the predictions in batches
+
+Thanks to modern GPUs and CPUs the second choice is way much faster. So I had a question, can we batch those requests, make the prediction in batches, and send the results back? This is what I came up with:
+
+![Image 1](img_0.png)
+
+Sorry dark mode users
+
+The plan is that when a client gets a request, it will publish to Redis the “prediction” topic with a unique id and start to listen to a topic with its unique id. If this id is, say “123”. It will start to listen topic “123”,
+
+The prediction service will listen to the “prediction” topic and add those requests to a list. When the length of the list is N. It will take all requests in the list, make a batch prediction and send every result to its topic using the given unique id.
+
+## Test Results
+
+I did my tests on a computer with:
+
+*   RTX 2060 GPU
+*   AMD Ryzen 5 1600F CPU
+*   32 GB Tam
+*   Ubuntu 20.04 with Windows WSL2
+
+I’ve used a custom container I made from tensorflow-gpu image. I run the container inside Ubuntu which is inside Windows with WSL2 (I really love it).
+
+All backend services are made with FastAPI and I’ve tried to use async programming for both use cases.
+
+## Challenges and Possible Problems
+
+*   How can we decide N? Can we change it dynamically?
+*   Should N and prediction batch size be the same? N = 64, batch_size = 32 means prediction will take 2 epochs.
+*   When traffic becomes too much, how do we handle connection errors? I increase the wait timeout and retry to publish and wait 3 times in case the prediction server is unavailable or cannot answer on time
+
+## How to do better?
+
+*   The prediction server contains the model too. If you serve the model in TF Serve etc. you will get much faster responses.
+*   I’m open to other suggestions!
+
+If you want to look for the codes to see how I did the tests and design the architecture you can look at this [repo](https://github.com/NusretOzates/request-batching-test).
+
+Thanks a lot for reading!

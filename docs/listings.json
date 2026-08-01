@@ -1,0 +1,48 @@
+[
+  {
+    "listing": "/talks.html",
+    "items": []
+  },
+  {
+    "listing": "/myposts.html",
+    "items": [
+      "/posts/career_advice_ai_summary/index.html",
+      "/posts/gnn_basics/index.html",
+      "/posts/paragraph_dev_sentece_skill/index.html",
+      "/posts/test_time_compute/index.html",
+      "/posts/introduction-to-security-for-machine-learning/index.html",
+      "/posts/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-la/index.html",
+      "/posts/article-review-searching-for-build-debt-experiences-managing/index.html",
+      "/posts/using-mlflow-with-keras-tuner/index.html",
+      "/posts/install-mlflow-on-gcp-for-your-team-the-simplest-way/index.html",
+      "/posts/my-2-years-machine-learning-career-story/index.html",
+      "/posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/index.html",
+      "/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/index.html",
+      "/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/index.html",
+      "/posts/how-to-handle-lack-of-labels-a-brief-introduction/index.html",
+      "/posts/faster-ai-services-with-request-batching/index.html",
+      "/posts/solid-principles-with-python/index.html",
+      "/posts/good-design-practices-with-python-defensive-programming/index.html",
+      "/posts/good-design-practices-with-python-important-acronyms/index.html",
+      "/posts/good-design-practices-with-python-design-by-contract/index.html",
+      "/posts/collect-and-store-events-from-kafka-with-influxdb-and-telegraf/index.html",
+      "/posts/transformer-models-hyperparameter-optimization-with-optuna/index.html",
+      "/posts/why-you-should-serve-your-tensorflow-model-using-tf-serving/index.html",
+      "/posts/how-to-use-one-mongodb-instance-in-multiple-fastapi-routers/index.html",
+      "/posts/bert/index.html",
+      "/posts/transformers/index.html",
+      "/posts/attention_mechanism/index.html",
+      "/posts/docker-get-started/index.html"
+    ]
+  },
+  {
+    "listing": "/notes.html",
+    "items": [
+      "/notes/slurm/index.html"
+    ]
+  },
+  {
+    "listing": "/index.html",
+    "items": []
+  }
+]

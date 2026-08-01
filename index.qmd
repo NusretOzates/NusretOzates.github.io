@@ -19,27 +19,39 @@ about:
     - icon: medium
       text: Medium
       href: https://medium.com/@m.nusret.ozates
+listing:
+  - id: talks-listing
+    contents: talks.yml
+    template: talks.ejs.md
+    sort: "date desc"
+    sort-ui: false
+    filter-ui: false
+    max-items: 4
+    page-size: 4
+    field-types:
+      date: date
+    field-display-names:
+      title: Title
+      date: Date
+      venue: Venue
+      description: Description
+    field-required: [title, date, venue, description, image, href]
 page-layout: full
 ---
 
 ## About Me
 
-As a **Machine Learning Engineer**, I build and refine end-to-end ML systems, handling tasks from data collection to model deployment on cloud platforms, with a focus on practical, scalable solutions. 
+I build end-to-end ML systems — from data and training through deployment on cloud platforms — with a focus on practical, scalable solutions. Most of my work sits at the intersection of **NLP**, **medical imaging**, and **MLOps**.
 
-I have 5 years of experience in **Natural Language Processing**, and even surprisingly to me, I have been working on **Graph Neural Networks**, **Vision Transformers**, and WSI Images for 3 years! I can even detect cancerous cells in pancreatic histology images by my eyes now...
-
-I am also skilled in **MLOps**, using tools such as MLflow, Kubeflow, FastAPI, and Transformers to automate and optimise the ML lifecycle.
-Previously, I worked as an MLOps Engineer and a Senior Machine Learning Engineer at GLOSA and Carbon Consulting, respectively,
-where I implemented an AutoNLP platform and led the development team of the AI department. I also managed the deployment and CI/CD of
-various ML models on GCP at TRT.
+Lately I've spent a lot of time on **graph neural networks**, **vision transformers**, and whole-slide histology: enough that I can spot cancerous cells in pancreatic tissue by eye. Before that I led ML teams at GLOSA and Carbon Consulting and shipped models on GCP at TRT.
 
 ## Education & Certifications
 
-🎓 **Master of Science in Computer Science** — Koç University
+**Master of Science in Computer Science** — Koç University
 
-📜 **Google Cloud Certified Professional Machine Learning Engineer**
+**Google Cloud Certified Professional Machine Learning Engineer**
 
-📜 **Certified Spark NLP Data Scientist**
+**Certified Spark NLP Data Scientist**
 
 ## Publications
 
@@ -82,96 +94,9 @@ various ML models on GCP at TRT.
 :::
 :::
 
-## Talks & Features
+## Recent Talks
 
-<!-- TALK TEMPLATE - Copy the block below for each new talk/feature -->
-<!--
-::: {.talk-card}
-![Talk preview image](path-to-image.jpg){.talk-image}
-
-::: {.talk-content}
-### Talk Title Here
-
-📍 Haliç Engineering Summit | 📅 8 December 2025
-
-We talked about engineering, acedemy, job opportunities and more!
-
-::: {.talk-links}
-[LinkedIn Post](linkedin-url) [Slides](slides-url) [Video](video-url)
-:::
-:::
-:::
--->
-
-
-::: {.talk-card}
-![](talks/halic.png){.talk-image}
-
-::: {.talk-content}
-### Haliç Engineering Summit
-
-📍 Haliç University | 📅 8 December 2025
-
-We talked about engineering, academy, job opportunities and more!
-
-::: {.talk-links}
-[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7402271975710113792/)
-:::
-:::
+::: {#talks-listing}
 :::
 
-<!-- Talk 2  -->
-
-::: {.talk-card}
-![](talks/ds_summit_kworks.png){.talk-image}
-
-::: {.talk-content}
-### Data Science Summit
-
-📍 KWORKS Şişli | 📅 6 September 2025
-
-I was there as "network field speaker" to chat with everyone about AI.
-
-::: {.talk-links}
-[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7368703418615447553/)
-:::
-:::
-:::
-
-
-<!-- Talk 3  -->
-
-::: {.talk-card}
-![](talks/ai_pulse_day.png){.talk-image}
-
-::: {.talk-content}
-### AI Pulse Day
-
-📍 Işık University | 📅 31 May 2025
-
-Career guide in AI for university students.
-
-::: {.talk-links}
-[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7331227895991816193/)
-:::
-:::
-:::
-
-<!-- Talk 4  -->
-
-::: {.talk-card}
-![](talks/tk_calistay.png){.talk-image}
-
-::: {.talk-content}
-### Türkiye'nin Kıvılcımları Workshop
-
-📍 Tech Istanbul | 📅 2 February 2025
-
-ML Engineering and MLOps
-
-::: {.talk-links}
-[LinkedIn Post](https://www.linkedin.com/feed/update/urn:li:activity:7331227895991816193/)
-:::
-:::
-:::
-
+[All talks →](talks.qmd)

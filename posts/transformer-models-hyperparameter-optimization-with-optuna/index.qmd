@@ -1,0 +1,58 @@
+---
+title: "Transformer Models Hyperparameter Optimization With the Optuna"
+author: "Nusret Ozates"
+date: "2021-09-21"
+categories: [ml]
+medium_url: "https://medium.com/carbon-consulting/transformer-models-hyperparameter-optimization-with-the-optuna-299e185044a8"
+image: "img_0.jpg"
+---
+
+![Image 1](img_0.jpg)
+
+Photo by [Alexander Schimmeck](https://unsplash.com/@alschim?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
+
+Before the beginning: Transformers library already has a function called “**_hyperparameter\_search_**” in the **Trainer** object. But the aim of this article is to learn the Optuna by using Transformers.
+
+Some codes look bad but to make copy-paste easier, I add the code with the screenshot of the good-looking code!
+
+## What is Hyperparameter Optimization?
+
+A hyperparameter is a parameter whose value is used to control the learning process. By contrast, the values of other parameters (typically node weights) are learned. By changing these parameters, we can improve or worsen the accuracy of the model.
+
+## What is Optuna?
+
+> _Optuna is an automatic hyperparameter optimization software framework, particularly designed for machine learning. It features an imperative, define-by-run style user API. Thanks to our define-by-run API, the code written with Optuna enjoys high modularity, and the user of Optuna can dynamically construct the search spaces for the hyperparameters._
+> 
+> 
+> _— From the official website_
+
+With Optuna, it is easier to search for the best hyperparameters. Let’s start with a simple example:
+
+Here we have:
+
+1.   An objective function to optimize
+2.   A trial object to suggest some hyperparameter values
+3.   A study object to run the “optimize” method and find the best value from the 100 trials.
+
+Let’s dive in and learn with a simple text classification example:
+
+## Get the dataset
+
+I will use the “Adverse Drug Reaction Data v2” dataset from the Huggingface Datasets.
+
+Normally, to train the model you would first load the model and the tokenizer and tokenize the dataset using the tokenizer then decide to train arguments and use all of these in the Trainer object to start training:
+
+For this example, what we want to do is find the best hyperparameters to get the minimum training loss. We will create a function named “objective”. This function will initialize the model, use different training argument values for N times and return the training loss using Optuna.
+
+To optimize this “objective”, we need to create a study and call it’s “optimize” function:
+
+This is the complete code example:
+
+This is just a simple example; there are lots of things to learn, such as callbacks, samplers, and pruners! Thanks for reading!
+
+Note from a reader: By default, during the first 10 trials, the random sampler is used via TPEsampler, so we might see more improvement when we increase n_trials > 10.
+
+## References
+
+1.   [https://en.wikipedia.org/wiki/Hyperparameter_optimization](https://en.wikipedia.org/wiki/Hyperparameter_optimization)
+2.   [https://optuna.readthedocs.io/en/stable/index.html](https://optuna.readthedocs.io/en/stable/index.html)
