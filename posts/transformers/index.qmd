@@ -111,3 +111,9 @@ A real example of positional encoding for 10 words (rows) with an embedding size
 That’s all I know :) Thank you for reading! You can find a Transformer implementation from the ground in this link:
 
 And this is a Google Colab notebook that explains positional encoding:
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

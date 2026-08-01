@@ -34,8 +34,14 @@ While we are using GPU for training and predicting, we have some trouble when we
 ![Image 3](img_1.png)
 
 But as you run your service you will get an error after you get a request from more than 1 user at the same time. The issue is GPU synchronization. When you separate your service and your model with Tensorflow Serving, you can increment your worker count as much as you want and Tensorflow Serving will handle everything for you, the speed enhancement is very big and a nice bonus.
-
 ## References
 
 1.   [https://www.tensorflow.org/tfx/guide](https://www.tensorflow.org/tfx/guide)
 2.   [https://www.tensorflow.org/tfx](https://www.tensorflow.org/tfx)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

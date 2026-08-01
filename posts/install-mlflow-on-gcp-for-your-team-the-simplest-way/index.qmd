@@ -63,8 +63,14 @@ pip3 install mlflow psycopg2-binary
 
 mlflow server -h 0.0.0.0 -p 5000 --backend-store-uri postgresql://DB_USER:DB_PASSWORD@DB_ENDPOINT:5432/DB_NAME --default-artifact-root gs://GS_BUCKET_NAME
 In our case:
-
 ## References
 
 1.   [https://github.com/DataTalksClub/mlops-zoomcamp](https://github.com/DataTalksClub/mlops-zoomcamp)
 2.   [https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf](https://s3.amazonaws.com/tr-learncanvas/docs/IP_Filtering_in_Canvas.pdf)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

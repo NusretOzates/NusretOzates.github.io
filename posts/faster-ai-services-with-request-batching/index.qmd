@@ -56,3 +56,9 @@ All backend services are made with FastAPI and I’ve tried to use async program
 If you want to look for the codes to see how I did the tests and design the architecture you can look at this [repo](https://github.com/NusretOzates/request-batching-test).
 
 Thanks a lot for reading!
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

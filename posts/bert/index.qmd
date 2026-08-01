@@ -4,9 +4,10 @@ author: "Nusret Ozates"
 date: "2021-06-24"
 categories: [ml, mlops]
 medium_url: "https://medium.com/carbon-consulting/bert-encoder-stack-is-all-you-need-f1483cfe2e07"
+image: "masked.png"
 ---
 
-In this article, I will talk about the BERT model and I will add sources to learn more about the BERT. To understand how BERT works, you need to understand how transformer models work. You can read [my article](https://medium.com/carbon-consulting/transformer-architecture-how-transformer-models-work-46fc70b4ea59) about Transformers or you can learn it from [here](http://jalammar.github.io/illustrated-transformer/).
+In this article, I will talk about the BERT model and I will add sources to learn more about the BERT. To understand how BERT works, you need to understand how transformer models work. You can read [my article](/posts/transformers/) about Transformers or you can learn it from [here](http://jalammar.github.io/illustrated-transformer/).
 
 BERT [1] (Bidirectional Encoder Representations from Transformers) is a new language representation model. It is one of the ways of creating word embeddings and sentence representation vectors. BERT uses the encoder stack of the transformer model to output the representation of each token in the given input. Additionally, it has a special token “[CLS]” at the beginning of the inputs to use in classification tasks. BERT has two steps:
 
@@ -37,7 +38,10 @@ and connecting the output to an appropriate classification layer. For a sentence
 
 ## Code Example
 
-Using Tensorflow Hub, training or fine-tuning BERT models is very easy. In the following steps, I will show you how you can use a BERT model to detect toxicity in texts for the [Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/overview). Download the train data first and create a Tensorflow dataset, separate it as train and validation set using this code:
+Using Tensorflow Hub, training or fine-tuning BERT models is very easy. In the following steps, I will show you how you can use a BERT model to detect toxicity in texts for the [Toxic Comment Classification Challenge](https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge/overview). Download the train data first and create a Tensorflow dataset
+
+```python
+, separate it as train and validation set using this code:
 
 import tensorflow as tfdataset = tf.data.experimental.make_csv_dataset(
 
@@ -137,11 +141,20 @@ embedding_model.compile(
 embedding_model.summary()
 
 embedding_model.fit(x=train_data, validation_data=test_data, epochs=2)
+```
+
+
 
 Thanks for reading!
-
 ## References
 
 1.   [https://arxiv.org/pdf/1810.04805.pdf](https://arxiv.org/pdf/1810.04805.pdf) BERT paper
 2.   [http://jalammar.github.io/illustrated-bert/](http://jalammar.github.io/illustrated-bert/) Awesome and more detailed explanation of BERT model
 3.   [https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4](https://tfhub.dev/tensorflow/bert_en_uncased_L-24_H-1024_A-16/4) An example BERT model from Tensorflow Hub
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

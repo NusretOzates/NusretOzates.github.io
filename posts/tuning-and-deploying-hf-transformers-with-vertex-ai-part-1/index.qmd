@@ -29,9 +29,9 @@ The final result will look like this
 
 In this part, we will set the infrastructure to do training and serving.
 
-In [part 2](https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2-training-code-591186445a2a), we will create our training image.
+In [part 2](/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/), we will create our training image.
 
-In [part 3](https://medium.com/@m.nusret.ozates/tuning-and-deploying-huggingface-transformers-with-vertex-ai-part-3-start-distributed-tuning-and-e0943bfc9d4b), we will start hyperparameter-tuning and training jobs and deploy the model to get predictions.
+In [part 3](/posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/), we will start hyperparameter-tuning and training jobs and deploy the model to get predictions.
 
 ## Prerequisites
 
@@ -93,9 +93,15 @@ In this article, we will use the tweet_eval[2] dataset with emotions configurati
 Now we are ready to create the training code and dockerize it to upload our Artifact Registry. After that, we will write the code to start hyperparameter tuning and training with the best parameters. To make this article short, we will make all of these in part 2.
 
 Thanks for reading!
-
 ## References
 
 1.   [https://cloud.google.com/vertex-ai/docs/general/locations#europe](https://cloud.google.com/vertex-ai/docs/general/locations#europe)
 2.   [https://huggingface.co/datasets/tweet_eval](https://huggingface.co/datasets/tweet_eval)
 3.   [https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python](https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

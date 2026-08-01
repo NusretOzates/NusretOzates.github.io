@@ -60,3 +60,9 @@ And that's it! You can see your models in the MLflow UI and compare them however
 ![MLflow UI](img_0.png)
 
 I hope this will help, thanks for reading!
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

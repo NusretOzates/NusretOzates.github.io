@@ -77,10 +77,16 @@ The data to label can come from the pool of historical data or directly from the
 ## An Idea
 
 According to what we learned, we can mix most of the methods! After we have some labeled examples, we can create new training samples by perturbation (semi-supervision). Then we can train a model from these examples and add new training examples using the weak supervision method. After some iteration, we can collect the data samples that the model is most uncertain about and label them to boost the accuracy a lot more! I’ve tried the perturbation on the “tweet_eval” dataset with “emotion” configuration and improved the accuracy from %39 to 67 using the same model! Thanks a lot for reading :)
-
 ## References
 
 1.   Designing Machine Learning Systems — An Iterative Process for Production-Ready Application — Chip Huyen
 2.   [https://en.wikipedia.org/wiki/Semi-supervised_learning](https://en.wikipedia.org/wiki/Semi-supervised_learning)
 3.   [https://www.image-net.org/index.php](https://www.image-net.org/index.php)
 4.   Avital Oliver, Augustus Odena, Colin Raffel, Ekin D. Cubuk, and Ian J. Goodfellow, “Realistic Evaluation of Deep Semi-Supervised Learning Algorithms,” NeurIPS 2018 Proceedings
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

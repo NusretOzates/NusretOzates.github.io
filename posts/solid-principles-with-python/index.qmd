@@ -66,17 +66,21 @@ The formal definition is:
 
 I will begin with a rule special to Python and then show the general example. Why there is a special rule for Python? Because no one can stop you from doing this:
 
-class SuperClass: def check(name: str)-> str:
+```python
+class SuperClass:
+    def check(name: str) -> str:
+        return name
 
- return nameclass SubClass(SuperClass):
 
- def check(name: dict) -> dict:
+class SubClass(SuperClass):
+    def check(name: dict) -> dict:
+        return name
 
- return nameclass AnotherSubclass(SuperClass):
 
- def check(name: str, surname: str) -> tuple:
-
- return name, surname
+class AnotherSubclass(SuperClass):
+    def check(name: str, surname: str) -> tuple:
+        return name, surname
+```
 The program will work buuut… it will eventually crash somewhere. So, this is the special rule for Python because it allows doing this… How to protect yourself from these types of situations? The answer is holy python tool **mypy** and **pylint.** Both tools help you to find those mistakes and more!
 
 ## Interface Segregation Principle
@@ -99,7 +103,6 @@ How could we design our classes so that we could get rid of those problems?
 Here we are depending on the abstraction using `EventSender`. Whatever subclass we get, we can just call `send()` method of this and we know that our event will be sent to the true place. And If we wanted to change the destination, we can just create a different subclass and give it in the `__init__()` method of `EventStreamer`.
 
 I think that is all I can say! Thanks for reading!
-
 ## References
 
 1.   Clean Code in Python — Mariano Anaya
@@ -107,3 +110,10 @@ I think that is all I can say! Thanks for reading!
 3.   [https://www.youtube.com/watch?v=i0qmhk41QVM](https://www.youtube.com/watch?v=i0qmhk41QVM)
 4.   [https://www.youtube.com/watch?v=M6rwl_AZPJg](https://www.youtube.com/watch?v=M6rwl_AZPJg)
 5.   [https://www.youtube.com/watch?v=onp6gcvVvIM](https://www.youtube.com/watch?v=onp6gcvVvIM)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

@@ -1,0 +1,20 @@
+---
+title: "Videos"
+subtitle: "YouTube playlists on ML, LLMs, and engineering"
+listing:
+  - id: videos-listing
+    contents: videos.yml
+    template: videos.ejs.md
+    sort: false
+    sort-ui: false
+    filter-ui: false
+    field-required: [title, description, playlist_id, href, thumbnail]
+page-layout: full
+---
+
+::: {.callout-note}
+Subscribe on [**YouTube**](https://youtube.com/@mnusretozates){target="_blank"} (`@mnusretozates`) for talks, tutorials, and workshops.
+:::
+
+::: {#videos-listing}
+:::

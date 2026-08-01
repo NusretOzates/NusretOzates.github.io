@@ -1,5 +1,6 @@
 ---
-title: "Welcome to My Posts"
+title: "Blog"
+subtitle: "ML engineering, MLOps, and lessons learned"
 listing:
   contents: posts
   sort: "date desc"

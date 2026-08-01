@@ -7,7 +7,7 @@ medium_url: "https://medium.com/carbon-consulting/how-to-use-one-mongodb-instanc
 image: "img_0.png"
 ---
 
-![Image 2](img_0.png)
+![FastAPI logo](img_0.png)
 
 [https://fastapi.tiangolo.com](https://fastapi.tiangolo.com/)
 
@@ -19,6 +19,7 @@ app --- db
 
 This is what we have in mongo_manager.py:
 
+```python
 import logging
 
 from pymongo import MongoClient
@@ -53,14 +54,20 @@ def get_users(self):
  users_query = self.db.users.find({}, {'_id': 0})
 
  return list(users_query)
+```
+
 
 It is a pretty simple class, given connection string, it connects to the database and assigns the client and db to the class variables. We only have one db operation which is get_users() and it returns all users in the database without their id in the database. db/__init__.py is next:
 
+```python
 from app.db.mongo_manager import MongoManager
 db = MongoManager()
+```
+
 
 That’s all :) We will use this db object from the main.py and users.py! So, main.py is next!
 
+```python
 import uvicorn
 
 from fastapi import FastAPI
@@ -87,9 +94,12 @@ async def shutdown():
 if __name__ == "__main__":
 
  uvicorn.run(app, host="0.0.0.0", port=8000)
+```
+
 
 As you can see from the 3. line we import the db object from the previous file we looked at. On the fastAPI **startup event**, we connect to the MongoDB database using the **_connect\_to\_database()_** function and we close the connection on **shutdown.**Now time to go to the users.py.
 
+```python
 from fastapi import APIRouter
 from app.db import db
 
@@ -102,5 +112,13 @@ def all_users():
  users = db.get_users()
 
  return users
+```
+
 
 I don’t know if it is the magic of the fastAPI or not but when we import the same db object from here, it doesn’t give us a newly initialized MongoManager object. What we get is a MongoManager object we configure in the startup!
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

@@ -173,3 +173,9 @@ These are the resources I’ve used when writing this article with additional re
 11.   Learning Machine Learning Part 1/2/3 in Medium by Will Schroeder — Article
 12.   Follow this security researcher on Twitter: [https://x.com/moo_hax](https://x.com/moo_hax)
 13.   [https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/](https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

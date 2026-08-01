@@ -4,6 +4,7 @@ author: "Nusret Ozates"
 date: "2022-10-17"
 categories: [academy, ml, software]
 medium_url: "https://medium.com/@m.nusret.ozates/my-2-years-machine-learning-career-story-aefa102e2f73"
+image: "img_0.jpg"
 ---
 
 Everything began with a machine learning class in my fifth semester. My dream at that time was to be a hacker or a mobile app developer :) Our teacher decided to move forward with the flipped learning system and we started with the holy course of Machine Learning by Andrew Ng. It is outdated now and I couldn’t find the original course but I found a [YouTube playlist](https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN) if you want to check. To be completely honest, I hated it! I barely passed the class and thought “okay, I’m good with not learning ML and being a software engineer.
@@ -26,3 +27,9 @@ After we have data, we need to train a model and I had no idea about transformer
 *   [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/pdf/1810.04805.pdf)
 
 And to understand transformer architecture better, this source by[Jay Alammar](https://jalammar.github.io/illustrated-transformer/) helped me a lot.
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

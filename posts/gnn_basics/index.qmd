@@ -2,12 +2,12 @@
 title: "Pytorch Geometric Basics: How Message Passing Works"
 author: "Nusret Ozates"
 date: "2025-10-17"
-categories: [llm, ml]
+categories: [ml, gnn]
 medium_url: "https://medium.com/@m.nusret.ozates/pytorch-geometric-basics-how-message-passing-works-677dd635ea0f"
 image: "img_0.png"
 ---
 
-![Image 2](img_0.png)
+![GNN message-passing illustration](img_0.png)
 
 A GNN Representation from [https://distill.pub/2021/gnn-intro/](https://distill.pub/2021/gnn-intro/)
 
@@ -21,7 +21,7 @@ For those unfamiliar, Graph Neural Networks (GNNs) are a class of neural network
 > 
 > Remember: Source = neighbors, Target = self.
 
-In PyG, message passing is typically implemented using the `MessagePassing`class, which provides a flexible framework for defining custom message-passing schemes. It has 4 important methods:
+In PyG, message passing is typically implemented using the `MessagePassing` class, which provides a flexible framework for defining custom message-passing schemes. It has 4 important methods:
 
 ## 1. Propagate
 
@@ -52,7 +52,7 @@ You can also access any other data you passed in the propagate function, such as
 
 Now that you have messages from your neighboring nodes, this is where you aggregate those messages. This method calls the `Aggregator` object
 
-of the class by default, which is set to **“add”** by default. You can change it to **“mean”** or **“max”** when you initialize your custom `MessagePassing`class or implement your own aggregate function.
+of the class by default, which is set to **“add”** by default. You can change it to **“mean”** or **“max”** when you initialize your custom `MessagePassing` class or implement your own aggregate function.
 
 You can also override this method to implement your own aggregation logic. By overriding this method, you can weight the messages using any data you want, before using the default sum aggregation as an example.
 
@@ -72,10 +72,11 @@ It takes **inputs,**which is the aggregated messages from the aggregate function
 
 ## Conclusion
 
-In this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the `MessagePassing`class:`propagate`, `message` , `aggregate` and `update` .
+In this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the `MessagePassing` class: `propagate`, `message`, `aggregate`, and `update` .
 
 If you want to customize your GNN architecture and experiment with different message-passing schemes, understanding these methods is critical. With this knowledge, you can implement your own GNN layers and tailor them to your specific needs. I will drop a simple working code that I’ve borrowed from the PyG documentation below for reference.
 
+```python
 from typing import Optional
 import torch
 
@@ -204,7 +205,7 @@ conv = GCNConv(1, 2)
 out = conv(data.x, data.edge_index)
 
 print(out)
-
+```
 ## References
 
 1.   [PyTorch Geometric Documentation](https://pytorch-geometric.readthedocs.io/en/latest/tutorial/create_gnn.html)
@@ -212,3 +213,10 @@ print(out)
 3.   [Also, a great YouTube video for GNN basics from Stanford](https://www.youtube.com/playlist?list=PLoROMvodv4rOP-ImU-O1rYRg2RFxomvFp)
 
 Thanks for coming so far, have fun!
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

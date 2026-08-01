@@ -48,7 +48,13 @@ From the author:
 But I don’t agree with that. For me, the last code I wrote is cleaner and just the same intention-revealing as the EAFP version. So it is up to you to choose whether you want to use EAFP or LBYL 😀
 
 Thanks for reading!
-
 ## References
 
 1.   Clean Code in Python — Mariano Anaya
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+

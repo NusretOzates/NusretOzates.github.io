@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Nusret Ozates">
-<meta name="dcterms.date" content="2022-10-07">
 
-<title>Tuning and Deploying HF Transformers with Vertex AI — Part 1 Preparing Prerequisites and Dataset – Nusret Özateş</title>
+<title>videos.ejs – Nusret Özateş</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,28 +23,28 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,13 +73,13 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<link rel="icon" href="../../favicon.png" type="image/png">
+<link rel="icon" href="./favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
 
 
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
@@ -258,13 +256,13 @@ ul.task-list li input[type="checkbox"] {
   </script>
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
     </a>
-    <a class="navbar-brand" href="../../index.html">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Nusret Özateş</span>
     </a>
   </div>
@@ -275,23 +273,23 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../myposts.html"> 
+    <a class="nav-link" href="./myposts.html"> 
 <span class="menu-text">Blogs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../talks.html"> 
+    <a class="nav-link" href="./talks.html"> 
 <span class="menu-text">Talks</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../videos.html"> 
+    <a class="nav-link" href="./videos.html"> 
 <span class="menu-text">Videos</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../notes.html"> 
+    <a class="nav-link" href="./notes.html"> 
 <span class="menu-text">Notes</span></a>
   </li>  
 </ul>
@@ -310,165 +308,35 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Tuning and Deploying HF Transformers with Vertex AI — Part 1 Preparing Prerequisites and Dataset</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">llm</div>
-                <div class="quarto-category">ml</div>
-                <div class="quarto-category">mlops</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Nusret Ozates </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">October 7, 2022</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
 
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_0.png" class="img-fluid figure-img"></p>
-<figcaption>Image 1</figcaption>
-</figure>
-</div>
-<p>Vertex AI</p>
-<p>TensorFlow</p>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>I believe that Google’s documentation is very hard to understand especially when it comes to Vertex AI. It took me days to create a hyperparameter-tuning job, get the best parameters, and train with these values. So, I’ve decided to write a medium post about it. It is a long journey and because of that, this will be a series of articles. The steps will be:</p>
-<ol type="1">
-<li>Setting the infrastructure</li>
-<li>Uploading dataset</li>
-<li>Hyperparameter-tuning</li>
-<li>Training with the best parameters</li>
-<li>Deploying the model to an endpoint and getting the predictions</li>
-</ol>
-<p>The final result will look like this</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_1.png" class="img-fluid figure-img"></p>
-<figcaption>Image 3</figcaption>
-</figure>
-</div>
-<p>In this part, we will set the infrastructure to do training and serving.</p>
-<p>In <a href="../../posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/">part 2</a>, we will create our training image.</p>
-<p>In <a href="../../posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/">part 3</a>, we will start hyperparameter-tuning and training jobs and deploy the model to get predictions.</p>
-</section>
-<section id="prerequisites" class="level2">
-<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
-<ul>
-<li>A Vertex AI Workbench instance or a service account file if you want to run the codes in your local and don’t want to install gcloud CLI</li>
-<li>A Google Cloud Storage bucket to store training data and save the trained models</li>
-<li>A Docker repository in the Artifact Registry</li>
-</ul>
-<p>For all requirements, we will use the “europe-west4” region because it supports nearly all Vertex AI features and makes our life simpler. [1]</p>
-<section id="creating-the-workbench-instance" class="level3">
-<h3 class="anchored" data-anchor-id="creating-the-workbench-instance">Creating the Workbench Instance</h3>
-<ul>
-<li>You can type “Vertex AI” in the search bar and click the one under “Product and Pages”.</li>
-<li>Enable the API if you didn’t before.</li>
-<li>Click the Workbench option on the left menu.</li>
-<li>Enable Notebooks API if you didn’t before</li>
-<li>Click the “New notebook” button and choose Tensorflow Enterprise 2.8 without GPU (or 2.9 or 2.3 it really doesn’t matter)</li>
-<li>Name your notebook ( or not) and choose “europe-west4” as the region</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_2.png" class="img-fluid figure-img"></p>
-<figcaption>Image 4</figcaption>
-</figure>
-</div>
-<p>Creating Vertex AI Workbench Notebook</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_3.png" class="img-fluid figure-img"></p>
-<figcaption>Image 5</figcaption>
-</figure>
-</div>
-<p>Creating Vertex AI Workbench Notebook</p>
-<p>It will take some time to be ready. While waiting, start creating other requirements.</p>
-</section>
-<section id="google-cloud-storage" class="level3">
-<h3 class="anchored" data-anchor-id="google-cloud-storage">Google Cloud Storage</h3>
-<ul>
-<li>You can type “Cloud Storage” in the search bar and click the one under “Product and Pages”.</li>
-<li>Click Create</li>
-<li>Name your bucket in this format: “[your project ID]-[name of your bucket]”</li>
-<li>Choose “europe-west4” for the region and click Create</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_4.png" class="img-fluid figure-img"></p>
-<figcaption>Image 6</figcaption>
-</figure>
-</div>
-<p>Creating cloud storage</p>
-<p>And we are done! We will add the dataset here later.</p>
-</section>
-<section id="docker-repository-in-artifact-registry" class="level3">
-<h3 class="anchored" data-anchor-id="docker-repository-in-artifact-registry">Docker Repository in Artifact Registry</h3>
-<ul>
-<li>You can type “Artifact Registry” in the search bar and click the one under “Product and Pages”.</li>
-<li>Click Create repository</li>
-<li>Choose a name and choose “Docker” for the Format.</li>
-<li>For the location, choose “Region” and “europe-west4” and click Create.</li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_5.png" class="img-fluid figure-img"></p>
-<figcaption>Image 7</figcaption>
-</figure>
-</div>
-<p>Creating a Docker repository in the Artifact Registry</p>
-<p>Now we can add our data to GCS and start doing the necessary steps for training in Vertex AI!</p>
-</section>
-</section>
-<section id="uploading-data-to-gcs" class="level2">
-<h2 class="anchored" data-anchor-id="uploading-data-to-gcs">Uploading data to GCS</h2>
-<p>In this article, we will use the tweet_eval[2] dataset with emotions configuration using HF Datasets. After downloading the dataset using the “Datasets” library of HuggingFace, save all splits as “train.csv”, “test.csv” and “validation.csv”. The code above will connect your GCS bucket (you should set your BUCKET_NAME and PROJECT_NAME variables) and upload the dataset under the “tweet_eval_emotions/data” folder.</p>
-<p>Now we are ready to create the training code and dockerize it to upload our Artifact Registry. After that, we will write the code to start hyperparameter tuning and training with the best parameters. To make this article short, we will make all of these in part 2.</p>
-<p>Thanks for reading! ## References</p>
-<ol type="1">
-<li><a href="https://cloud.google.com/vertex-ai/docs/general/locations#europe">https://cloud.google.com/vertex-ai/docs/general/locations#europe</a></li>
-<li><a href="https://huggingface.co/datasets/tweet_eval">https://huggingface.co/datasets/tweet_eval</a></li>
-<li><h2 id="httpscloud.google.comstoragedocsuploading-objectsstorage-upload-object-python" class="anchored"><a href="https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python">https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python</a></h2></li>
-</ol>
-<div class="medium-attribution">
-<p>Originally published on <a href="https://medium.com/devops-dev/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291">Medium</a>.</p>
+<div class="video-playlist-list">
+&lt;% for (const item of items) { %&gt;
+  <article class="video-playlist-card" id="playlist-<%- item.playlist_id %>" <%="metadataAttrs(item)" %="">&gt;
+    <div class="video-embed">
+      <iframe src="https://www.youtube.com/embed/videoseries?list=<%- item.playlist_id %>" title="<%- item.title %>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    <div class="video-playlist-content">
+      <h3 class="listing-title anchored">&lt;%= item.title %&gt;</h3>
+      <p class="listing-description">&lt;%= item.description %&gt;</p>
+      <div class="video-playlist-links">
+        <a href="<%- item.href %>" target="_blank" rel="noopener noreferrer">Open playlist on YouTube</a>
+      </div>
+    </div>
+  </article>
+&lt;% } %&gt;
 </div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -888,5 +756,5 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

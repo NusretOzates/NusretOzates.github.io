@@ -9,8 +9,6 @@ image: "img_0.png"
 
 Some useful commands and concepts to use Docker
 
-The original video that I take notes from :
-
 There is a Notion version of this article. You can add comments or duplicate it for yourself.
 
 In this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time.
@@ -19,7 +17,7 @@ In this article, I‘ll talk about Docker. We will begin from why we need to use
 
 We have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.
 
-![Image 2](img_0.png)
+![The matrix from Hell diagram](img_0.png)
 
 The matrix from Hell
 
@@ -109,6 +107,7 @@ Let’s say we have a webserver to run on an Ubuntu OS, what would be our steps 
 
 Then we need to do these steps in a file called Dockerfile.
 
+```dockerfile
 FROM Ubuntu 
 
 RUN apt-get update 
@@ -122,12 +121,17 @@ RUN pip install flask-mysql
 COPY . /opt/source-code 
 
 ENTRYPOINT FLASK_APP = /opt/source-code/app.py flask run
+```
+
 Let’s build our Dockerfile and have a docker image!
 
+```bash
 docker build -t nusret/chatbot "Address of the dockerfile without double quote"
 And push it to the DockerHub if you want
 
 docker push nusret/chatbot
+```
+
 ## What is this Dockerfile?
 
 ![Image 5](img_3.png)
@@ -140,35 +144,56 @@ Dockerfile is a text file written in a specific format that docker can understan
 
 You can export your Docker Image as a .tar file with this command:
 
+```bash
 docker save —output chatbot.tar nusret/chatbot
+```
+
 And you can easily import it with a very similar command.
 
+```bash
 docker load —input chatbot.tar
+```
+
 ### ENTRYPOINT VS CMD
 
 Let’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:
 
+```dockerfile
 FROM Ubuntu 
 
 CMD ["sleep","5"]
+```
+
 When I run the command:
 
+```bash
 docker run sleeper sleep 10
+```
+
 This CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:
 
+```dockerfile
 FROM Ubuntu 
 
 ENTRYPOINT ["sleep"]
+```
+
 This time when I run:
 
+```bash
 docker run sleeper 10
+```
+
 The “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?
 
+```dockerfile
 FROM Ubuntu 
 
 ENTRYPOINT ["sleep"]
 
 CMD ["5"]
+```
+
 ## **Docker Networking**
 
 ![Image 7](img_5.png)
@@ -195,9 +220,13 @@ Let’s say we have a sample application like this:
 
 What you would do without docker-compose:
 
+```bash
 docker run -d --name=redis redis docker run -d --name=db postgres:9.4 docker run -d --name=vote -p 5000:80 --link redis:redis voting-app docker run -d --name=result -p 5001:80 --link db:db result-app docker run -d --name=worker --link db:db --link redis:redis worker
+```
+
 With docker-compose, docker-compose.yml:
 
+```yaml
 redis: 
 
  image: redis 
@@ -224,30 +253,41 @@ result:
 
 worker: 
 
- image: worker 
+ image: worker
+```
+
 And run the command:
 
+```bash
 docker-compose up
+```
+
 What if some of the images are not already built or not in the DockerHub? Like the “voting-app” in our example, we can change the image key with a build key and specify a location of a directory that contains the application code and Dockerfile.
 
 Change this code:
 
+```yaml
 vote: 
 
  image: voting-app 
 
  ports: 
 
- - 5000:80 
+ - 5000:80
+```
+
 To this code:
 
+```yaml
 vote: 
 
  build: ./vote 
 
  ports: 
 
- - 5000:80 
+ - 5000:80
+```
+
 ## Docker Compose Versions
 
 Docker-compose evolved over time and now supports a lot more options than it did in the beginning.
@@ -335,6 +375,7 @@ Let us say we modify the architecture a little bit to contain the traffic from t
 
 This is the .yaml file you need to write:
 
+```yaml
 version: 2 
 
 services: 
@@ -392,4 +433,12 @@ services:
  - front-end: 
 
  - back-end:
+```
+
 So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the [KodeKlaud’s](https://www.youtube.com/user/mmumshad)channel!
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

@@ -1,6 +1,10 @@
 [
   {
-    "listing": "/talks.html",
+    "listing": "/videos.html",
+    "items": []
+  },
+  {
+    "listing": "/index.html",
     "items": []
   },
   {
@@ -42,7 +46,7 @@
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/talks.html",
     "items": []
   }
 ]

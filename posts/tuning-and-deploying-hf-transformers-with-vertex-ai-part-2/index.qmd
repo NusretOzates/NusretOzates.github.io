@@ -29,9 +29,9 @@ The final result will look like this
 
 This is part 2 of Tuning and Deploying HF Transformers with Vertex AI. In this article, we will create our training image.
 
-In [part 1](https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291), we created the necessary GCP components.
+In [part 1](/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/), we created the necessary GCP components.
 
-In [part 3](https://medium.com/@m.nusret.ozates/tuning-and-deploying-huggingface-transformers-with-vertex-ai-part-3-start-distributed-tuning-and-e0943bfc9d4b), we will start hyperparameter-tuning, train with the best parameters, and deploy the model to get predictions.
+In [part 3](/posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/), we will start hyperparameter-tuning, train with the best parameters, and deploy the model to get predictions.
 
 We will create a file structure like this:
 
@@ -81,3 +81,9 @@ As we need only 1 sentence for our task, we only need **“input_ids”** and **
 1.   [https://cloud.google.com/vertex-ai/docs/training/code-requirements](https://cloud.google.com/vertex-ai/docs/training/code-requirements)
 2.   [https://codelabs.developers.google.com/vertex_multiworker_training](https://codelabs.developers.google.com/vertex_multiworker_training)
 3.   [https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth](https://cloud.google.com/artifact-registry/docs/docker/pushing-and-pulling#auth)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

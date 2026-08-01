@@ -265,3 +265,9 @@ And we are done! You can check the code from the [GitHub repository](https://git
 3. [LangChain docs](https://python.langchain.com/docs/get_started/introduction)
 4. [Streamlit](https://streamlit.io/)
 5. [OpenAI docs](https://platform.openai.com/docs/introduction)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

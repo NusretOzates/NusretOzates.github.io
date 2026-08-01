@@ -19,7 +19,18 @@ about:
     - icon: medium
       text: Medium
       href: https://medium.com/@m.nusret.ozates
+    - icon: youtube
+      text: YouTube
+      href: https://youtube.com/@mnusretozates
 listing:
+  - id: videos-listing
+    contents: videos.yml
+    template: videos-card.ejs.md
+    sort: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 2
+    field-required: [title, description, playlist_id, href, thumbnail]
   - id: talks-listing
     contents: talks.yml
     template: talks.ejs.md
@@ -93,6 +104,13 @@ Lately I've spent a lot of time on **graph neural networks**, **vision transform
 [DOI](https://doi.org/10.1109/ICDMW60847.2023.00100)
 :::
 :::
+
+## Videos
+
+::: {#videos-listing}
+:::
+
+[All videos →](videos.qmd)
 
 ## Recent Talks
 

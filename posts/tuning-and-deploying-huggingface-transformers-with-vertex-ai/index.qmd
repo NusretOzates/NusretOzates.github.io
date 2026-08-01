@@ -29,9 +29,9 @@ The final result will look like this
 
 This is part 3 of Tuning and Deploying HF Transformers with Vertex AI.
 
-In [part 1](https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1-preparing-prerequisites-and-dataset-9794ebe8e291), we created the necessary GCP components.
+In [part 1](/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-1/), we created the necessary GCP components.
 
-In [part 2](https://medium.com/@m.nusret.ozates/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2-training-code-591186445a2a), we created model training and tuning code and wrap it into a docker container.
+In [part 2](/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/), we created model training and tuning code and wrap it into a docker container.
 
 For looking at the whole code we will use check this [GitHub repository](https://github.com/NusretOzates/huggingface-gcp-classification).
 
@@ -86,3 +86,9 @@ And worker pool 1 is where you configure the workers for your cluster.
 4.   [https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters](https://stats.stackexchange.com/questions/467372/scale-selection-for-the-hyperparameters)
 5.   [https://www.youtube.com/watch?v=sBhEi4L91Sg&ab_channel=KhanAcademy](https://www.youtube.com/watch?v=sBhEi4L91Sg&ab_channel=KhanAcademy)
 6.   [https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f](https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+

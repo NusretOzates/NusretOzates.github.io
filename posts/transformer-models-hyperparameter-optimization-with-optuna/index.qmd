@@ -51,8 +51,14 @@ This is the complete code example:
 This is just a simple example; there are lots of things to learn, such as callbacks, samplers, and pruners! Thanks for reading!
 
 Note from a reader: By default, during the first 10 trials, the random sampler is used via TPEsampler, so we might see more improvement when we increase n_trials > 10.
-
 ## References
 
 1.   [https://en.wikipedia.org/wiki/Hyperparameter_optimization](https://en.wikipedia.org/wiki/Hyperparameter_optimization)
 2.   [https://optuna.readthedocs.io/en/stable/index.html](https://optuna.readthedocs.io/en/stable/index.html)
+---
+
+::: {.medium-attribution}
+Originally published on [Medium]({{< meta medium_url >}}).
+:::
+
+
