@@ -116,7 +116,6 @@ def all_users():
 
 
 I don’t know if it is the magic of the fastAPI or not but when we import the same db object from here, it doesn’t give us a newly initialized MongoManager object. What we get is a MongoManager object we configure in the startup!
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

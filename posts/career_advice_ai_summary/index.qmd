@@ -32,7 +32,6 @@ You need to translate the capabilities of AI into a real business outcome. If yo
 ### Bias Towards Delivery
 
 Building cool things that have no value is not that important anymore (as it was when hype started). You need to build useful things; if it is both useful and cool, it is definitely better. Show that you can ship working solutions more than demos. An example from him: Before applying to Google Cloud, while he was writing a Java book, he made a Java application that runs on the Google Cloud and showed it on the interview, which turned the interview process into questions about his app instead of weird questions like how many windows in New-York.
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

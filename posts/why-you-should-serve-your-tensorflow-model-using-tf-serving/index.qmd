@@ -38,7 +38,6 @@ But as you run your service you will get an error after you get a request from m
 
 1.   [https://www.tensorflow.org/tfx/guide](https://www.tensorflow.org/tfx/guide)
 2.   [https://www.tensorflow.org/tfx](https://www.tensorflow.org/tfx)
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

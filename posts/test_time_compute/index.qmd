@@ -29,7 +29,6 @@ We tell the model to look at the image, task: find hairstyle, argument: bob. Aft
 
 1.   BU-TD Model: “Image interpretation by iterative bottom-up top-down processing” [https://arxiv.org/abs/2105.05592](https://arxiv.org/abs/2105.05592)
 2.   T5 Model: “Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer” [https://arxiv.org/abs/1910.10683](https://arxiv.org/abs/1910.10683)
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).

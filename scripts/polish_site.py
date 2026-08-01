@@ -13,7 +13,6 @@ PROFILE = ROOT / "profile.jpeg"
 
 FOOTER_MARKER = "medium-attribution"
 FOOTER_TEMPLATE = """
----
 
 ::: {{.{marker}}}
 Originally published on [Medium]({{{{< meta medium_url >}}}}).
@@ -78,15 +77,24 @@ def ensure_footer(body: str, medium_url: str) -> str:
     return f"{body.rstrip()}{footer}\n"
 
 
+def strip_setext_separator(body: str) -> str:
+    """Remove bare --- before attribution; Pandoc treats it as a setext H2."""
+    return re.sub(
+        r"\n---\n\n(::: \{\.medium-attribution\})",
+        r"\n\n\1",
+        body,
+    )
+
+
 def reposition_footer(body: str) -> str:
     """Move medium attribution block to the end of the post body."""
-    pattern = re.compile(r"\n---\n\n::: \{\.medium-attribution\}.*?:::\n*", re.S)
+    pattern = re.compile(r"\n(?:---\n\n)?::: \{\.medium-attribution\}.*?:::\n*", re.S)
     match = pattern.search(body)
     if not match:
         return body
-    footer = match.group(0)
+    footer = re.sub(r"^\n---\n\n", "\n\n", match.group(0))
     body = pattern.sub("\n", body, count=1)
-    return body.rstrip() + footer
+    return strip_setext_separator(body.rstrip() + footer)
 
 
 def polish_posts() -> None:
@@ -103,6 +111,7 @@ def polish_posts() -> None:
             replaced += 1
         new_body = ensure_footer(new_body, medium_url)
         new_body = reposition_footer(new_body)
+        new_body = strip_setext_separator(new_body)
         if FOOTER_MARKER not in body and FOOTER_MARKER in new_body:
             footers += 1
         qmd.write_text(f"{prefix}{new_body}", encoding="utf-8")

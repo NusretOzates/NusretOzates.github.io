@@ -40,7 +40,6 @@ We need to know these three values to push data to the InfluxDB. If there wasn�
 ## Telegraf Configuration File
 
 Let’s begin with the outputs section. Here we say we want to push our data to InfluxDB V2 at the URL “[http://influxdb-cli:8086](http://influxdb-cli:8086/)”. We write the data into the given organization and bucket with the admin token which are all provided by the environment variables. The “influxdb-cli” is a reference to our InfluxDB container.
----
 
 ::: {.medium-attribution}
 Originally published on [Medium]({{< meta medium_url >}}).
