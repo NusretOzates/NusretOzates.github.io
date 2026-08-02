@@ -1,406 +1,28 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script><script>(function(){const gaId = "G-FVW7859HWV";
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.22">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-<meta name="author" content="Nusret Ozates">
-<meta name="dcterms.date" content="2023-07-27">
-
-<title>Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT – Nusret Özateş</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-<style>html{ scroll-behavior: smooth; }</style>
-<link rel="icon" href="../../favicon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
-
-
-<link rel="stylesheet" href="../../styles.css">
-</head>
-
-<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    const darkModeDefault = queryPrefersDark.matches;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    queryPrefersDark.addEventListener("change", e => {
-      if(window.localStorage.getItem("quarto-color-scheme") !== null)
-        return;
-      const alternate = e.matches
-      toggleColorMode(alternate);
-      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
-      toggleGiscusIfUsed(alternate, darkModeDefault);
-    });
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Nusret Özateş</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../myposts.html"> 
-<span class="menu-text">Blogs</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../talks.html"> 
-<span class="menu-text">Talks</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../videos.html"> 
-<span class="menu-text">Videos</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../notes.html"> 
-<span class="menu-text">Notes</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/NusretOzates"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">llm</div>
-                <div class="quarto-category">ml</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Nusret Ozates </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">July 27, 2023</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    
-<!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-
-<p>In a revolutionary breakthrough, the boundaries of AI-driven Question Answering (QA) Chatbots have been shattered. Imagine a QA Chatbot that requires zero training and can effortlessly handle complex queries like a seasoned expert. The ultimate combination of cutting-edge technologies: Streamlit, Langchain Retrieval QA, and ChatGPT, culminating in an awe-inspiring AI-powered experience like never before. I will share the code at the end.</p>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, {
+              anonymize_ip: true,
+              client_storage: "none",
+            });
+          })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2023-07-27T00:00:00.000Z" data-astro-cid-fbbco62y>July 27, 2023</time> · <span class="tag" data-astro-cid-fbbco62y>llm</span><span class="tag" data-astro-cid-fbbco62y>ml</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p>In a revolutionary breakthrough, the boundaries of AI-driven Question Answering (QA) Chatbots have been shattered. Imagine a QA Chatbot that requires zero training and can effortlessly handle complex queries like a seasoned expert. The ultimate combination of cutting-edge technologies: Streamlit, Langchain Retrieval QA, and ChatGPT, culminating in an awe-inspiring AI-powered experience like never before. I will share the code at the end.</p>
 <p>Let’s talk about these 3 leading technologies:</p>
-<section id="streamlit" class="level3">
-<h3 class="anchored" data-anchor-id="streamlit">Streamlit</h3>
+<h3 id="streamlit">Streamlit</h3>
 <p>Well if you are a Python developer, an AI expert, etc. you probably need to improve at the design side of the things like me. Streamlit comes to your help for these times.</p>
-<blockquote class="blockquote">
+<blockquote>
 <p>Streamlit turns data scripts into shareable web apps in minutes.</p>
 <p>All in pure Python. No front-end experience required.</p>
 </blockquote>
-</section>
-<section id="langchain" class="level3">
-<h3 class="anchored" data-anchor-id="langchain">Langchain</h3>
+<h3 id="langchain">Langchain</h3>
 <p>We will talk more about this. I will drop the official introduction below:</p>
 <p>LangChain is a framework for developing applications powered by language models. It enables applications that are:</p>
 <ul>
@@ -408,68 +30,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Agentic: allow a language model to interact with its environment</li>
 </ul>
 <p>The main value props of LangChain are:</p>
-<ol type="1">
+<ol>
 <li>Components: abstractions for working with language models, along with a collection of implementations for each abstraction. Components are modular and easy to use, whether you are using the rest of the LangChain framework or not</li>
 <li>Off-the-shelf chains: a structured assembly of components for accomplishing specific higher-level tasks</li>
 </ol>
 <p>Off-the-shelf chains make it easy to get started. For more complex applications and nuanced use cases, components make it easy to customize existing chains or build new ones.</p>
-</section>
-<section id="chatgpt" class="level3">
-<h3 class="anchored" data-anchor-id="chatgpt">ChatGPT</h3>
+<h3 id="chatgpt">ChatGPT</h3>
 <p>We all know this part… So let’s start building!</p>
-</section>
-<section id="data-loading" class="level2">
-<h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
+<h2 id="data-loading">Data Loading</h2>
 <p>To answer questions, we need something to look at. Langchain has tons of different data loaders in <code>langchain.document_loaders</code>. We will use only three of them.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.document_loaders <span class="im">import</span> PyPDFLoader, TextLoader, UnstructuredURLLoader</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>PyPDFLoader:</strong> It reads the pdf file, and creates a <code>Document</code> object for every page. You need to install the <code>pypdf</code> library to use it.</p>
-<p><strong>TextLoader:</strong> It reads the contents of a txt file, and creates a <code>Document</code> object.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.document_loaders </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> PyPDFLoader, TextLoader, UnstructuredURLLoader</span></span></code></pre>
+<p>**PyPDFLoader:**It reads the pdf file, and creates a <code>Document</code> object for every page. You need to install the <code>pypdf</code> library to use it.</p>
+<p>**TextLoader:**It reads the contents of a txt file, and creates a <code>Document</code> object.</p>
 <p><strong>UnstructuredURLLoader:</strong> It reads the body of the URL and returns every element as a doc. You need to install <code>unstructured</code> and <code>python-magic</code> libraries to use this class. If you are on Windows install <code>python-magic-bin</code> too.</p>
 <p>Loading pdf and text files is very easy and similar:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_text_file(file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> Document:</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> TextLoader(file_path, encoding<span class="op">=</span><span class="st">"utf-8"</span>).load()[<span class="dv">0</span>]</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> doc</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_pdf_file(file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[Document]:</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    loader <span class="op">=</span> PyPDFLoader(file_path)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    docs <span class="op">=</span> loader.load()</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> docs</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_text_file</span><span style="color:#E1E4E8">(file_path: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> Document:</span></span>
+<span class="line"><span style="color:#E1E4E8">    doc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> TextLoader(file_path, </span><span style="color:#FFAB70">encoding</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"utf-8"</span><span style="color:#E1E4E8">).load()[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> doc</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_pdf_file</span><span style="color:#E1E4E8">(file_path: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> list[Document]:</span></span>
+<span class="line"><span style="color:#E1E4E8">    loader </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PyPDFLoader(file_path)</span></span>
+<span class="line"><span style="color:#E1E4E8">    docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> loader.load()</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> docs</span></span></code></pre>
 <p>Website loading is a little bit longer because we need to post-process it because they are mostly full of irrelevant text that needs to go to the trash.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_website(url: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[Document]:</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Load a website and return cleaned document chunks."""</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> UnstructuredURLLoader(</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        [url],</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        mode<span class="op">=</span><span class="st">"elements"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        headers<span class="op">=</span>{<span class="st">"ssl_verify"</span>: <span class="st">"False"</span>},</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    ).load()</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    processed_docs <span class="op">=</span> []</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(doc)):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> doc[i].metadata.get(<span class="st">"category"</span>) <span class="kw">not</span> <span class="kw">in</span> [</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"NarrativeText"</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"UncategorizedText"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Title"</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        ]:</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> doc[i].metadata.get(<span class="st">"links"</span>):</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            link <span class="op">=</span> doc[i].metadata[<span class="st">"links"</span>][<span class="dv">0</span>][<span class="st">"text"</span>]</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> link <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            link <span class="op">=</span> link.replace(<span class="st">" "</span>, <span class="st">""</span>).replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>, <span class="st">""</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(link.split()) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> doc[i].metadata.get(<span class="st">"category"</span>) <span class="op">==</span> <span class="st">"Title"</span> <span class="kw">and</span> doc[i].metadata.get(<span class="st">"links"</span>):</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        doc[i].page_content <span class="op">=</span> re.sub(<span class="st">" +"</span>, <span class="st">" "</span>, doc[i].page_content)</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(doc[i].page_content.split()) <span class="op">&lt;</span> <span class="dv">3</span>:</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        processed_docs.append(doc[i])</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    merged_docs <span class="op">=</span> <span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join([doc.page_content <span class="cf">for</span> doc <span class="kw">in</span> processed_docs])</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    splitter <span class="op">=</span> RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">1000</span>, chunk_overlap<span class="op">=</span><span class="dv">100</span>)</span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    processed_docs <span class="op">=</span> splitter.split_text(merged_docs)</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [Document(page_content<span class="op">=</span>doc, metadata<span class="op">=</span>{<span class="st">"url"</span>: url}) <span class="cf">for</span> doc <span class="kw">in</span> processed_docs]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_website</span><span style="color:#E1E4E8">(url: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> list[Document]:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """Load a website and return cleaned document chunks."""</span></span>
+<span class="line"><span style="color:#E1E4E8">    doc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> UnstructuredURLLoader(</span></span>
+<span class="line"><span style="color:#E1E4E8">        [url],</span></span>
+<span class="line"><span style="color:#FFAB70">        mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"elements"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#FFAB70">        headers</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"ssl_verify"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"False"</span><span style="color:#E1E4E8">},</span></span>
+<span class="line"><span style="color:#E1E4E8">    ).load()</span></span>
+<span class="line"><span style="color:#E1E4E8">    processed_docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(doc)):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">"category"</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8">[</span></span>
+<span class="line"><span style="color:#9ECBFF">            "NarrativeText"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "UncategorizedText"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            "Title"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">        ]:</span></span>
+<span class="line"><span style="color:#F97583">            continue</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">"links"</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">            link </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doc[i].metadata[</span><span style="color:#9ECBFF">"links"</span><span style="color:#E1E4E8">][</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">][</span><span style="color:#9ECBFF">"text"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> link </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">                continue</span></span>
+<span class="line"><span style="color:#E1E4E8">            link </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> link.replace(</span><span style="color:#9ECBFF">" "</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">).replace(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">""</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(link.split()) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">                continue</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">"category"</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "Title"</span><span style="color:#F97583"> and</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">"links"</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">            continue</span></span>
+<span class="line"><span style="color:#E1E4E8">        doc[i].page_content </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> re.sub(</span><span style="color:#9ECBFF">" +"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">" "</span><span style="color:#E1E4E8">, doc[i].page_content)</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(doc[i].page_content.split()) </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            continue</span></span>
+<span class="line"><span style="color:#E1E4E8">        processed_docs.append(doc[i])</span></span>
+<span class="line"><span style="color:#E1E4E8">    merged_docs </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">.join([doc.page_content </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> doc </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> processed_docs])</span></span>
+<span class="line"><span style="color:#E1E4E8">    splitter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> RecursiveCharacterTextSplitter(</span><span style="color:#FFAB70">chunk_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">chunk_overlap</span><span style="color:#F97583">=</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    processed_docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> splitter.split_text(merged_docs)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8">[Document(</span><span style="color:#FFAB70">page_content</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">doc, </span><span style="color:#FFAB70">metadata</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">"url"</span><span style="color:#E1E4E8">: url}) </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> doc </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> processed_docs]</span></span></code></pre>
 <p>To summarize the steps quickly:</p>
-<ol type="1">
+<ol>
 <li>Read the HTML</li>
 <li>Filter all elements that are not meaningful text</li>
 <li>Filter all elements that contain links with empty text</li>
@@ -477,577 +93,118 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Merge all texts and split them into chunks</li>
 </ol>
 <p>Okay, we load the data what’s next? Before continuing, we will learn about a prompting technique.</p>
-</section>
-<section id="retrieval-augmented-generation" class="level2">
-<h2 class="anchored" data-anchor-id="retrieval-augmented-generation">Retrieval Augmented Generation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_0.png" class="img-fluid figure-img"></p>
-<figcaption>Retrieval augmented generation</figcaption>
-</figure>
-</div>
+<h2 id="retrieval-augmented-generation">Retrieval Augmented Generation</h2>
+<p><img alt="Retrieval augmented generation" loading="lazy" decoding="async" width="651" height="453" src="/_astro/img_0.CZcxt0oe_kwe3k.webp" srcset=""></p>
 <p>We’re facing two primary issues. Firstly, LLMs such as ChatGPT have difficulty reading lengthy texts, and even if they can, it’s an expensive process. Additionally, irrelevant details in the text can add noise and reduce answer quality, making it a waste of money. Secondly, LLMs tend to generate false information, which can lead to incorrect answers. To address these issues, we aim to provide only the essential context in the prompt and restrict the model to use only this context to answer the question.</p>
-</section>
-<section id="data-indexing" class="level2">
-<h2 class="anchored" data-anchor-id="data-indexing">Data Indexing</h2>
+<h2 id="data-indexing">Data Indexing</h2>
 <p>After we split our data into chunks, we can store it in a vector store.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.indexes <span class="im">import</span> VectorstoreIndexCreator</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores <span class="im">import</span> DocArrayInMemorySearch</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.vectorstores.base <span class="im">import</span> VectorStoreRetriever</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_index(docs: <span class="bu">list</span>[Document]) <span class="op">-&gt;</span> VectorStoreRetriever:</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a vectorstore index from a list of Document objects."""</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> VectorstoreIndexCreator(</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        vectorstore_cls<span class="op">=</span>DocArrayInMemorySearch,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        text_splitter<span class="op">=</span>RecursiveCharacterTextSplitter(chunk_size<span class="op">=</span><span class="dv">1000</span>, chunk_overlap<span class="op">=</span><span class="dv">100</span>),</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    ).from_documents(docs)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> index.vectorstore.as_retriever(search_type<span class="op">=</span><span class="st">"mmr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.indexes </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> VectorstoreIndexCreator</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.vectorstores </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> DocArrayInMemorySearch</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.vectorstores.base </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> VectorStoreRetriever</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> create_index</span><span style="color:#E1E4E8">(docs: list[Document]) -> VectorStoreRetriever:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """Create a vectorstore index from a list of Document objects."""</span></span>
+<span class="line"><span style="color:#E1E4E8">    index </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> VectorstoreIndexCreator(</span></span>
+<span class="line"><span style="color:#FFAB70">        vectorstore_cls</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">DocArrayInMemorySearch,</span></span>
+<span class="line"><span style="color:#FFAB70">        text_splitter</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">RecursiveCharacterTextSplitter(</span><span style="color:#FFAB70">chunk_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">chunk_overlap</span><span style="color:#F97583">=</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">    ).from_documents(docs)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> index.vectorstore.as_retriever(</span><span style="color:#FFAB70">search_type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"mmr"</span><span style="color:#E1E4E8">)</span></span></code></pre>
 <p><code>VectorstoreIndexCreator</code> automatically creates embeddings of the documents using <code>OpenAIEmbeddings</code> and stores the embeddings in memory.</p>
-<blockquote class="blockquote">
+<blockquote>
 <p>To make this article not too long, I will not show the prompts here but we have 1 prompt. It is for generating the question that is suitable for searching in the vector store using the conversation history.</p>
 </blockquote>
-</section>
-<section id="model-creation" class="level2">
-<h2 class="anchored" data-anchor-id="model-creation">Model Creation</h2>
+<h2 id="model-creation">Model Creation</h2>
 <p>We have documents, we have a vector store and we have our prompts. Now let’s put them together and create our bot.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chat_models <span class="im">import</span> ChatOpenAI</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.chains <span class="im">import</span> ConversationalRetrievalChain</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.prompts <span class="im">import</span> PromptTemplate</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> prompts <span class="im">import</span> QUESTION_CREATOR_TEMPLATE</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="at">@st.cache_resource</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_chain(file_name: <span class="bu">str</span>, file_type: <span class="bu">str</span>):</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> file_type <span class="op">==</span> <span class="st">"text/plain"</span>:</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        docs <span class="op">=</span> load_text_files([file_name])</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> file_type <span class="op">==</span> <span class="st">"application/pdf"</span>:</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        docs <span class="op">=</span> load_pdf_files([file_name])</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> file_type <span class="op">==</span> <span class="st">"text/html"</span>:</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        docs <span class="op">=</span> load_website(file_name)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        st.write(<span class="st">"File type is not supported!"</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        st.stop()</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    retriever <span class="op">=</span> create_index(docs)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    condense_question_prompt <span class="op">=</span> PromptTemplate.from_template(QUESTION_CREATOR_TEMPLATE)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    chain <span class="op">=</span> ConversationalRetrievalChain.from_llm(</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        ChatOpenAI(model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>, temperature<span class="op">=</span><span class="dv">0</span>),</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        retriever,</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        condense_question_llm<span class="op">=</span>ChatOpenAI(model_name<span class="op">=</span><span class="st">"gpt-3.5-turbo"</span>),</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        condense_question_prompt<span class="op">=</span>condense_question_prompt,</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        verbose<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> chain</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.chat_models </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ChatOpenAI</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.chains </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ConversationalRetrievalChain</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.prompts </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> PromptTemplate</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> prompts </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> QUESTION_CREATOR_TEMPLATE</span></span>
+<span class="line"><span style="color:#B392F0">@st.cache_resource</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_chain</span><span style="color:#E1E4E8">(file_name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, file_type: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> file_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "text/plain"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_text_files([file_name])</span></span>
+<span class="line"><span style="color:#F97583">    elif</span><span style="color:#E1E4E8"> file_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "application/pdf"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_pdf_files([file_name])</span></span>
+<span class="line"><span style="color:#F97583">    elif</span><span style="color:#E1E4E8"> file_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "text/html"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_website(file_name)</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.write(</span><span style="color:#9ECBFF">"File type is not supported!"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.stop()</span></span>
+<span class="line"><span style="color:#E1E4E8">    retriever </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> create_index(docs)</span></span>
+<span class="line"><span style="color:#E1E4E8">    condense_question_prompt </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PromptTemplate.from_template(</span><span style="color:#79B8FF">QUESTION_CREATOR_TEMPLATE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    chain </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ConversationalRetrievalChain.from_llm(</span></span>
+<span class="line"><span style="color:#E1E4E8">        ChatOpenAI(</span><span style="color:#FFAB70">model_name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"gpt-3.5-turbo"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">temperature</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">        retriever,</span></span>
+<span class="line"><span style="color:#FFAB70">        condense_question_llm</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">ChatOpenAI(</span><span style="color:#FFAB70">model_name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"gpt-3.5-turbo"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#FFAB70">        condense_question_prompt</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">condense_question_prompt,</span></span>
+<span class="line"><span style="color:#FFAB70">        verbose</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> chain</span></span></code></pre>
 <p><code>st.cache_resource</code> is used to cache the embeddings and our LLM in memory to not create embeddings again and again.</p>
 <p><code>PromptTemplate</code> is used to insert the necessary context and the question to the prompt.</p>
 <p><code>ChatOpenAI</code> will be used as the LLM. The default model is <code>gpt-3.5-turbo</code>. One LLM is used to create an answer and the other one will be used to create the standalone question to make searching better. I didn’t like the prompt to create the question so changed it to a better prompt.</p>
 <p><code>verbose</code> will print out what is behind the scenes.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_1.png" class="img-fluid figure-img"></p>
-<figcaption>Image 3</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_2.png" class="img-fluid figure-img"></p>
-<figcaption>Image 4</figcaption>
-</figure>
-</div>
+<p><img alt="Image 3" loading="lazy" decoding="async" width="700" height="99" src="/_astro/img_1.DHZY1RIS_2qGs13.webp" srcset=""></p>
+<p><img alt="Image 4" loading="lazy" decoding="async" width="700" height="809" src="/_astro/img_2.D5YTv1T__wawfi.webp" srcset=""></p>
 <p>Lastly, to create meaningful questions, we need to know about our chat history. There are lots of ways to store memory:</p>
-<ol type="1">
+<ol>
 <li>Saving all the conversation</li>
 <li>Saving last <code>k</code> messages</li>
 <li>Creating a summary after <code>k</code> messages/tokens</li>
 <li>…</li>
 </ol>
 <p>In this example, we will use the second one. We generally only need the last 3 messages to get the context and create questions. No need to use our money for more.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> langchain.memory <span class="im">import</span> ConversationBufferWindowMemory</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_memory(st) <span class="op">-&gt;</span> ConversationBufferWindowMemory:</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Load memory from session state."""</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    memory <span class="op">=</span> ConversationBufferWindowMemory(k<span class="op">=</span><span class="dv">3</span>, return_messages<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"messages"</span> <span class="kw">not</span> <span class="kw">in</span> st.session_state:</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        st.session_state[<span class="st">"messages"</span>] <span class="op">=</span> [</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            {<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: <span class="st">"How can I help you?"</span>}</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        ]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> index, msg <span class="kw">in</span> <span class="bu">enumerate</span>(st.session_state.messages):</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        st.chat_message(msg[<span class="st">"role"</span>]).write(msg[<span class="st">"content"</span>])</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> msg[<span class="st">"role"</span>] <span class="op">==</span> <span class="st">"user"</span> <span class="kw">and</span> index <span class="op">&lt;</span> <span class="bu">len</span>(st.session_state.messages) <span class="op">-</span> <span class="dv">1</span>:</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            memory.save_context(</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"input"</span>: msg[<span class="st">"content"</span>]},</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>                {<span class="st">"output"</span>: st.session_state.messages[index <span class="op">+</span> <span class="dv">1</span>][<span class="st">"content"</span>]},</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> memory</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.memory </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ConversationBufferWindowMemory</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_memory</span><span style="color:#E1E4E8">(st) -> ConversationBufferWindowMemory:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """Load memory from session state."""</span></span>
+<span class="line"><span style="color:#E1E4E8">    memory </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ConversationBufferWindowMemory(</span><span style="color:#FFAB70">k</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">return_messages</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#9ECBFF"> "messages"</span><span style="color:#F97583"> not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> st.session_state:</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.session_state[</span><span style="color:#9ECBFF">"messages"</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"assistant"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"How can I help you?"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        ]</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> index, msg </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> enumerate</span><span style="color:#E1E4E8">(st.session_state.messages):</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.chat_message(msg[</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">]).write(msg[</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> msg[</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "user"</span><span style="color:#F97583"> and</span><span style="color:#E1E4E8"> index </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(st.session_state.messages) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            memory.save_context(</span></span>
+<span class="line"><span style="color:#E1E4E8">                {</span><span style="color:#9ECBFF">"input"</span><span style="color:#E1E4E8">: msg[</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">]},</span></span>
+<span class="line"><span style="color:#E1E4E8">                {</span><span style="color:#9ECBFF">"output"</span><span style="color:#E1E4E8">: st.session_state.messages[index </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">][</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">]},</span></span>
+<span class="line"><span style="color:#E1E4E8">            )</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> memory</span></span></code></pre>
 <p>It takes a streamlit object as input. Check if there is a message from the last session. If yes load them to the memory, otherwise start with a welcome message. We will give this history to the model when we call it with user input.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> streamlit <span class="im">as</span> st</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>os.environ[<span class="st">"OPENAI_API_KEY"</span>] <span class="op">=</span> <span class="st">"&lt;YOUR_OPENAI_API_KEY&gt;"</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>st.set_page_config(layout<span class="op">=</span><span class="st">"wide"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>st.title(<span class="st">"💬 QA Chatbot"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>uploaded_file <span class="op">=</span> st.file_uploader(<span class="st">"Choose a file"</span>, <span class="bu">type</span><span class="op">=</span>[<span class="st">"txt"</span>, <span class="st">"pdf"</span>])</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>st.header(<span class="st">"Or you can give a url"</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> st.text_input(<span class="st">"Url to parse"</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> uploaded_file <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="kw">or</span> url:</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> uploaded_file:</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(uploaded_file.name, <span class="st">"wb"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>            f.write(uploaded_file.getbuffer())</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        chain <span class="op">=</span> load_chain(uploaded_file.name, uploaded_file.<span class="bu">type</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        chain <span class="op">=</span> load_chain(url, <span class="st">"text/html"</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    st.write(<span class="st">"## 🤖 Chatbot is ready to answer your questions!"</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    memory <span class="op">=</span> load_memory(st)</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> question <span class="op">:=</span> st.chat_input():</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        st.session_state.messages.append({<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: question})</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        st.chat_message(<span class="st">"user"</span>).write(question)</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        response <span class="op">=</span> chain(</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>            {</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>                <span class="st">"question"</span>: question,</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>                <span class="st">"chat_history"</span>: memory.load_memory_variables({})[<span class="st">"history"</span>],</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        answer <span class="op">=</span> response[<span class="st">"answer"</span>]</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        st.session_state.messages.append({<span class="st">"role"</span>: <span class="st">"assistant"</span>, <span class="st">"content"</span>: answer})</span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        st.chat_message(<span class="st">"assistant"</span>).write(answer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> os</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> streamlit </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> st</span></span>
+<span class="line"><span style="color:#E1E4E8">os.environ[</span><span style="color:#9ECBFF">"OPENAI_API_KEY"</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "&#x3C;YOUR_OPENAI_API_KEY>"</span></span>
+<span class="line"><span style="color:#E1E4E8">st.set_page_config(</span><span style="color:#FFAB70">layout</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"wide"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">st.title(</span><span style="color:#9ECBFF">"💬 QA Chatbot"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">uploaded_file </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> st.file_uploader(</span><span style="color:#9ECBFF">"Choose a file"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">type</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">[</span><span style="color:#9ECBFF">"txt"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"pdf"</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#E1E4E8">st.header(</span><span style="color:#9ECBFF">"Or you can give a url"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">url </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> st.text_input(</span><span style="color:#9ECBFF">"Url to parse"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> uploaded_file </span><span style="color:#F97583">is</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> None</span><span style="color:#F97583"> or</span><span style="color:#E1E4E8"> url:</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> uploaded_file:</span></span>
+<span class="line"><span style="color:#F97583">        with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(uploaded_file.name, </span><span style="color:#9ECBFF">"wb"</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#E1E4E8">            f.write(uploaded_file.getbuffer())</span></span>
+<span class="line"><span style="color:#E1E4E8">        chain </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_chain(uploaded_file.name, uploaded_file.type)</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        chain </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_chain(url, </span><span style="color:#9ECBFF">"text/html"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    st.write(</span><span style="color:#9ECBFF">"## 🤖 Chatbot is ready to answer your questions!"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    memory </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_memory(st)</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> question </span><span style="color:#F97583">:=</span><span style="color:#E1E4E8"> st.chat_input():</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.session_state.messages.append({</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"user"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">: question})</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.chat_message(</span><span style="color:#9ECBFF">"user"</span><span style="color:#E1E4E8">).write(question)</span></span>
+<span class="line"><span style="color:#E1E4E8">        response </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> chain(</span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span></span>
+<span class="line"><span style="color:#9ECBFF">                "question"</span><span style="color:#E1E4E8">: question,</span></span>
+<span class="line"><span style="color:#9ECBFF">                "chat_history"</span><span style="color:#E1E4E8">: memory.load_memory_variables({})[</span><span style="color:#9ECBFF">"history"</span><span style="color:#E1E4E8">],</span></span>
+<span class="line"><span style="color:#E1E4E8">            }</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"><span style="color:#E1E4E8">        answer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> response[</span><span style="color:#9ECBFF">"answer"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.session_state.messages.append({</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"assistant"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">: answer})</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.chat_message(</span><span style="color:#9ECBFF">"assistant"</span><span style="color:#E1E4E8">).write(answer)</span></span></code></pre>
 <p>And we are done! You can check the code from the <a href="https://github.com/NusretOzates/langchain_retrieval_qa_bot">GitHub repository</a> and ask any questions you have!</p>
-</section>
-<section id="resources" class="level2">
-<h2 class="anchored" data-anchor-id="resources">Resources</h2>
-<ol type="1">
+<h2 id="resources">Resources</h2>
+<ol>
 <li><a href="https://ai.meta.com/blog/retrieval-augmented-generation-streamlining-the-creation-of-intelligent-natural-language-processing-models/">Retrieval-Augmented Generation (Meta)</a></li>
 <li><a href="https://www.promptingguide.ai/">Prompting Guide</a></li>
 <li><a href="https://python.langchain.com/docs/get_started/introduction">LangChain docs</a></li>
 <li><a href="https://streamlit.io/">Streamlit</a></li>
-<li><h2 id="openai-docs" class="anchored"><a href="https://platform.openai.com/docs/introduction">OpenAI docs</a></h2></li>
-</ol>
-<div class="medium-attribution">
-<p>Originally published on <a href="https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed">Medium</a>.</p>
-</div>
-
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
-        }
-        return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/nusretozates\.github\.io\/");
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-        }
-      }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-</div> <!-- /content -->
-
-
-
-
-<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
-</body></html>
+<li><a href="https://platform.openai.com/docs/introduction">OpenAI docs</a></li>
+</ol></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>
