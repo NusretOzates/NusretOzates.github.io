@@ -1,0 +1,104 @@
+---
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/posts/", label: "Blogs" },
+  { href: "/talks/", label: "Talks" },
+  { href: "/videos/", label: "Videos" },
+  { href: "/notes/", label: "Notes" },
+];
+const path = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <nav class="nav-inner">
+    <a class="brand" href="/">Nusret Özateş</a>
+    <ul class="nav-links">
+      {links.map(({ href, label }) => (
+        <li>
+          <a href={href} class:list={{ active: path === href || (href !== "/" && path.startsWith(href)) }}>
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="nav-actions">
+      <button type="button" id="theme-toggle" aria-label="Toggle dark mode">◐</button>
+      <a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+      <a href="/search/" aria-label="Search">Search</a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById("theme-toggle");
+  btn?.addEventListener("click", () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    localStorage.setItem("theme", next);
+  });
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 0.85rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--accent);
+  }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .nav-actions a,
+  .nav-actions button {
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .nav-actions a:hover,
+  .nav-actions button:hover {
+    color: var(--accent);
+  }
+</style>

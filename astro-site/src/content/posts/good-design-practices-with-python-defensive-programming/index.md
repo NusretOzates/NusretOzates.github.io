@@ -1,0 +1,61 @@
+---
+title: "Good Design Practices with Python — Defensive Programming"
+date: 2022-04-05
+categories: [ml, software]
+image: "img_0.jpg"
+mediumUrl: "https://medium.com/@m.nusret.ozates/good-design-practices-with-python-defensive-programming-bc859fe084ea"
+---
+
+![Image 1](img_0.jpg)
+
+Photo by [Rita Chou](https://unsplash.com/@rainrainbowchou?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
+
+## Intro
+
+As software engineers, we write code most of the time. We have some tight deadlines and because of these deadlines, we tend to write code fast without thinking about the design. This choice comes with consequences. It actually makes you slower because you write the code so urgently that you forgot that client's requests will change faster than you thought and when that time comes to you. It will be very hard to change your code. You will look at the code and say "oh I need to change this part and it is done" and then you will realize that the change broke a completely different part of the code, you will change that too and realize this change broke another part of your code and so on…
+
+We don't want that, think before coding, and give yourself some time to design architecture. Think about how you could test that chunk of code and only after that start coding. To make your life easier, there are some design "principals" out there and I will explain them with examples using Python. This is part 2 of this series.
+
+## Defensive Programming
+
+Defensive programming is all about handling exceptions we expect to happen or think impossible to happen(but yes it is possible). In defensive programming, we are trying to defend our program against invalid input, unexpected or expected scenarios( such as key not found errors).
+
+## Error Handling
+
+The main idea of error handling is deciding how to proceed with errors we expect. There are three main ways to handle errors.
+
+1. Value substitution
+2. Error logging
+3. Exception handling
+
+Error logging is just… You know logging the error, you should always do that.
+
+## Value Substitution
+
+This means when an incorrect input comes, you can change the value of that input to something acceptable, maybe a default value to prevent error. But I don't recommend doing this type of error handling as this makes the code more robust but broke the correctness of the function. This is problematic, especially in critical functions.
+
+> 👉 A software program is robust when it does not fail, even in the presence of an erroneous scenario. But this is not correct either.
+
+The safer approach is using default values for missing parameters or configurations or environment values if they can work correctly with a default value. In the machine learning field, we have this case a lot.
+
+## Exception Handling
+
+There are some cases where you can't continue with corrupt data or you try to communicate with an external component such as databases, library functions, or APIs and they fail to work and you cannot continue to execution of your function. In such cases, we have to notify the program that there is an error and we cannot ignore it.
+
+> _The mechanism for accomplishing this is an exception. It is important to emphasize that this is what exceptions should be used for — clearly announcing an exceptional situation, and not altering the flow of the program according to business logic._
+
+👉 Do not use exceptions as a go-to mechanism! Use exceptions only to report exceptional stations with lots of details. Don't do this:
+
+The number of exceptions in a function can give you a nice idea about whether the function is small enough and has a single responsibility. If a function raises lots of exceptions, probably that function has too many responsibilities and can be broken down into smaller functions.
+
+## Good Exception Handling Practices
+
+### **Handling exceptions at the right level of abstraction **
+
+Let's go through an example:
+
+This is a bad example! For this example, I'm not talking about missing type hintings and docstrings or using print instead of log. The exceptions are handled in the wrong part of the code. We expect `ValueError` in the `parse()` function and `ConnectionError` in the `send()` function. So, this handling should be in these functions.
+
+##**References**
+
+1. Clean Code in Python — Mariano Anaya

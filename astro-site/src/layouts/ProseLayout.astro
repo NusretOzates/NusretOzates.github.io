@@ -1,0 +1,85 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  mediumUrl?: string;
+  date?: Date;
+  categories?: string[];
+}
+
+const { title, description, mediumUrl, date, categories = [] } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="prose">
+    <header class="prose-header">
+      <h1>{title}</h1>
+      {date && (
+        <p class="meta">
+          <time datetime={date.toISOString()}>{date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</time>
+          {categories.length > 0 && (
+            <>
+              {" · "}
+              {categories.map((c) => (
+                <span class="tag">{c}</span>
+              ))}
+            </>
+          )}
+        </p>
+      )}
+    </header>
+    <div class="prose-body">
+      <slot />
+    </div>
+    {mediumUrl && (
+      <aside class="medium-attribution">
+        Originally published on <a href={mediumUrl} target="_blank" rel="noopener noreferrer">Medium</a>.
+      </aside>
+    )}
+  </article>
+</BaseLayout>
+
+<style>
+  .prose {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  .prose-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .prose-header h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    margin: 0 0 0.75rem;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+  }
+  .tag {
+    display: inline-block;
+    background: var(--accent-muted);
+    color: var(--accent);
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.875rem;
+  }
+  .medium-attribution {
+    margin-top: 2.5rem;
+    padding: 0.75rem 1rem;
+    border-left: 3px solid var(--accent);
+    font-size: 1rem;
+    color: var(--text-muted);
+  }
+</style>

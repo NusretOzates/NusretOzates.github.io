@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const notes = (await getCollection("notes")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="Notes" description="Quick notes and snippets.">
+  <div class="listing">
+    <header>
+      <h1>Quick Notes</h1>
+    </header>
+    <ul>
+      {notes.map((note) => (
+        <li>
+          <a href={`/notes/${note.id}/`}>
+            <span>{note.data.title}</span>
+            <time datetime={note.data.date.toISOString()}>{note.data.date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  .listing {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  header h1 { margin: 0 0 1.5rem; font-size: 2rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li a {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    text-decoration: none;
+  }
+  li a:hover span { color: var(--accent); }
+  time { color: var(--text-muted); font-size: 0.9rem; }
+</style>

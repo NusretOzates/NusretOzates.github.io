@@ -1,0 +1,9 @@
+{
+  "name": "nusretozates.github.io",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix astro-site",
+    "build": "npm run build --prefix astro-site",
+    "preview": "npm run preview --prefix astro-site"
+  }
+}

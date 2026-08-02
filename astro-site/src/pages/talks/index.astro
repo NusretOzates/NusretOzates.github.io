@@ -1,0 +1,218 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const talks = (await getCollection("talks")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const talksByYear = talks.reduce<Map<number, typeof talks>>((groups, talk) => {
+  const year = talk.data.date.getFullYear();
+  const bucket = groups.get(year) ?? [];
+  bucket.push(talk);
+  groups.set(year, bucket);
+  return groups;
+}, new Map());
+
+const years = [...talksByYear.keys()].sort((a, b) => b - a);
+
+const dateFmt = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+});
+---
+
+<BaseLayout title="Talks" description="Conference talks and meetups.">
+  <div class="page">
+    <header>
+      <h1>Talks</h1>
+      <p>Conference talks, meetups, and community sessions.</p>
+      <nav class="year-nav" aria-label="Jump to year">
+        {years.map((year) => (
+          <a href={`#year-${year}`}>{year}</a>
+        ))}
+      </nav>
+    </header>
+
+    {years.map((year) => (
+      <section class="year-group" id={`year-${year}`} aria-labelledby={`year-heading-${year}`}>
+        <h2 class="year-heading" id={`year-heading-${year}`}>{year}</h2>
+        <ul class="talk-list">
+          {talksByYear.get(year)!.map((talk) => (
+            <li>
+              <article class="talk-card">
+                <a class="talk-thumb" href={talk.data.href} target="_blank" rel="noopener noreferrer">
+                  <img src={`/${talk.data.image}`} alt="" loading="lazy" />
+                </a>
+                <div class="talk-body">
+                  <h3>
+                    <a href={talk.data.href} target="_blank" rel="noopener noreferrer">
+                      {talk.data.title}
+                    </a>
+                  </h3>
+                  <p class="meta">
+                    {talk.data.venue} · {dateFmt.format(talk.data.date)}
+                  </p>
+                  <p class="description">{talk.data.description}</p>
+                  <a class="talk-link" href={talk.data.href} target="_blank" rel="noopener noreferrer">
+                    LinkedIn Post
+                  </a>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+
+  header h1 {
+    margin: 0 0 0.35rem;
+    font-size: 2rem;
+  }
+
+  header > p {
+    color: var(--text-muted);
+    margin: 0 0 1.25rem;
+  }
+
+  .year-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .year-nav a {
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition:
+      color 0.15s,
+      border-color 0.15s,
+      background 0.15s;
+  }
+
+  .year-nav a:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-muted);
+  }
+
+  .year-group {
+    scroll-margin-top: 5rem;
+  }
+
+  .year-group + .year-group {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .year-heading {
+    margin: 0 0 1rem;
+    font-size: 1.35rem;
+    font-family: var(--font-heading);
+    color: var(--text-muted);
+  }
+
+  .talk-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .talk-list li + li .talk-card {
+    border-top: 1px solid var(--border);
+  }
+
+  .talk-card {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    align-items: start;
+  }
+
+  .talk-thumb {
+    display: block;
+    border-radius: 6px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .talk-thumb img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.2s;
+  }
+
+  .talk-thumb:hover img {
+    transform: scale(1.03);
+  }
+
+  .talk-body h3 {
+    margin: 0 0 0.2rem;
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .talk-body h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .talk-body h3 a:hover {
+    color: var(--accent);
+  }
+
+  .meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0 0 0.35rem;
+  }
+
+  .description {
+    margin: 0 0 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .talk-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .talk-card {
+      grid-template-columns: 5.5rem 1fr;
+      gap: 0.75rem;
+    }
+
+    .description {
+      -webkit-line-clamp: 3;
+    }
+  }
+</style>

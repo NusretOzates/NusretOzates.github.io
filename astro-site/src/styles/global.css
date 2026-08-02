@@ -1,0 +1,310 @@
+:root {
+  --accent: #0e7490;
+  --accent-hover: #155e75;
+  --accent-muted: rgba(14, 116, 144, 0.12);
+  --font-heading: "Source Serif 4", Georgia, serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --bg: #fafbfc;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: rgba(15, 23, 42, 0.08);
+  --hero-glow: linear-gradient(165deg, var(--accent-muted) 0%, transparent 55%);
+  --text-root: 125%;
+  --text-body: 1.05rem;
+  --text-prose: 1.125rem;
+  --leading-body: 1.7;
+  --leading-prose: 1.75;
+}
+
+[data-theme="dark"] {
+  --accent-muted: rgba(14, 116, 144, 0.18);
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #e2e8f0;
+  --text-muted: #94a3b8;
+  --border: rgba(148, 163, 184, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: var(--text-root);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  letter-spacing: -0.011em;
+  color: var(--text);
+  background: var(--bg);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
+
+.prose-body {
+  font-size: var(--text-prose);
+  line-height: var(--leading-prose);
+}
+
+.prose-body :global(p) {
+  margin: 0 0 1.25rem;
+}
+
+.prose-body :global(ul),
+.prose-body :global(ol) {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose-body :global(blockquote) {
+  margin: 1.5rem 0;
+  padding: 0.85rem 1rem 0.85rem 1.1rem;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--accent-muted);
+  color: var(--text);
+}
+
+.prose-body :global(blockquote p) {
+  margin: 0 0 0.75rem;
+}
+
+.prose-body :global(blockquote p:last-child) {
+  margin-bottom: 0;
+}
+
+/* Technical tips: blockquotes that mention code identifiers */
+.prose-body :global(blockquote:has(code)),
+.prose-body :global(blockquote.callout-tip) {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+[data-theme="dark"] .prose-body :global(blockquote:has(code)),
+[data-theme="dark"] .prose-body :global(blockquote.callout-tip) {
+  background: rgba(16, 185, 129, 0.14);
+}
+
+.prose-body :global(blockquote.callout-important) {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.prose-body :global(blockquote.callout-note) {
+  border-left-color: var(--accent);
+  background: var(--accent-muted);
+}
+
+.prose-body :global(:not(pre) > code),
+.prose-body :global(li > code),
+.prose-body :global(td > code) {
+  font-size: 0.88em;
+  padding: 0.12em 0.38em;
+  border-radius: 4px;
+  background: var(--accent-muted);
+  border: 1px solid var(--border);
+  word-break: break-word;
+}
+
+/* Standalone one-liner code in prose (not a full fenced block) */
+.prose-body :global(p:has(> code:only-child)),
+.prose-body :global(.code-inline) {
+  display: block;
+  margin: 1rem 0;
+  padding: 0.65rem 0.85rem;
+  border-radius: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.prose-body :global(p:has(> code:only-child) > code),
+.prose-body :global(.code-inline) {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: inherit;
+}
+
+.prose-body :global(pre) {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.prose-body :global(pre code) {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+}
+
+.prose-body :global(li pre) {
+  margin: 0.75rem 0;
+}
+
+.prose-body :global(pre + p),
+.prose-body :global(p + pre) {
+  margin-top: 0;
+}
+
+.prose-body :global(h2) {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.65rem;
+}
+
+.prose-body :global(h3) {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.prose-body :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95em;
+}
+
+.prose-body :global(th),
+.prose-body :global(td) {
+  border: 1px solid var(--border);
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-body :global(th) {
+  background: var(--accent-muted);
+  font-weight: 600;
+}
+
+.prose-body :global(img) {
+  display: block;
+  margin: 2rem auto;
+  max-height: min(70vh, 520px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.prose-body :global(p:has(img)) {
+  margin: 2rem 0 0.5rem;
+  text-align: center;
+}
+
+.prose-body :global(p:has(img) + p) {
+  margin: 0 0 2rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.prose-body :global(sub),
+.prose-body :global(sup) {
+  font-size: 0.8em;
+}
+
+.prose-body :global(hr) {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+.prose-body :global(.topic-part) {
+  color: #06b6d4;
+}
+
+.prose-body :global(.stress-part) {
+  color: #f87171;
+}
+
+[data-theme="dark"] .prose-body :global(.topic-part) {
+  color: #22d3ee;
+}
+
+[data-theme="dark"] .prose-body :global(.stress-part) {
+  color: #fca5a5;
+}
+
+.prose-body :global(.underline-mark) {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.prose-body :global(.callout) {
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--accent);
+  background: var(--accent-muted);
+}
+
+.prose-body :global(.callout-important) {
+  border-left-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.prose-body :global(.callout-tip) {
+  border-left-color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+}
+
+.prose-body :global(.callout-note) {
+  border-left-color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}

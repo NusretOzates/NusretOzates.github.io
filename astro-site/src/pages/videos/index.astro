@@ -1,0 +1,65 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const videos = await getCollection("videos");
+---
+
+<BaseLayout title="Videos" description="YouTube playlists on ML and AI.">
+  <div class="page">
+    <header>
+      <h1>Videos</h1>
+      <p>YouTube playlists on ML, AI agents, and software engineering.</p>
+    </header>
+    {videos.map((video) => (
+      <article class="playlist" id={`playlist-${video.data.playlistId}`}>
+        <div class="embed">
+          <iframe
+            src={`https://www.youtube.com/embed/videoseries?list=${video.data.playlistId}`}
+            title={video.data.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy"
+          />
+        </div>
+        <div>
+          <h2>{video.data.title}</h2>
+          <p>{video.data.description}</p>
+          <a href={video.data.href} target="_blank" rel="noopener noreferrer">Open on YouTube</a>
+        </div>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .page {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  header h1 { margin: 0 0 0.35rem; font-size: 2rem; }
+  header p { color: var(--text-muted); margin: 0 0 2rem; }
+  .playlist {
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .embed {
+    position: relative;
+    aspect-ratio: 16/9;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+  }
+  .embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .playlist h2 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+  .playlist p { color: var(--text-muted); margin: 0 0 0.75rem; }
+</style>

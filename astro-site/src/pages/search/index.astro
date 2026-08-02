@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Search" description="Search posts and notes.">
+  <div class="search-page">
+    <h1>Search</h1>
+    <div id="search"></div>
+    <p id="search-unavailable" class="search-unavailable" hidden>
+      Search index is not available yet. Run <code>npm run build</code> in <code>astro-site/</code>, then restart the dev server.
+    </p>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  (async () => {
+    const unavailable = document.getElementById("search-unavailable");
+    try {
+      const res = await fetch("/pagefind/pagefind-ui.js", { method: "HEAD" });
+      if (!res.ok) {
+        unavailable.hidden = false;
+        return;
+      }
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = "/pagefind/pagefind-ui.css";
+      document.head.appendChild(link);
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "/pagefind/pagefind-ui.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.head.appendChild(script);
+      });
+      if (typeof PagefindUI !== "undefined") {
+        new PagefindUI({
+          element: "#search",
+          showImages: false,
+          resetStyles: false,
+        });
+      }
+    } catch {
+      unavailable.hidden = false;
+    }
+  })();
+</script>
+
+<style>
+  .search-page {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .search-page h1 {
+    margin: 0 0 1.5rem;
+    font-size: 2rem;
+  }
+  .search-unavailable {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+  .search-unavailable code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+  }
+  .search-page :global(.pagefind-ui) {
+    --pagefind-ui-primary: var(--accent);
+    --pagefind-ui-text: var(--text);
+    --pagefind-ui-background: var(--bg);
+    --pagefind-ui-border: var(--border);
+    --pagefind-ui-font: var(--font-body);
+  }
+</style>

@@ -1,0 +1,143 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("posts")).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const categories = [...new Set(posts.flatMap((p) => p.data.categories))].sort();
+---
+
+<BaseLayout title="Blog" description="ML engineering, MLOps, and lessons learned.">
+  <div class="listing">
+    <header class="listing-header">
+      <h1>Blog</h1>
+      <p>ML engineering, MLOps, and lessons learned</p>
+      <div class="filters" id="category-filters">
+        <button type="button" class="filter active" data-category="all">All</button>
+        {categories.map((cat) => (
+          <button type="button" class="filter" data-category={cat}>{cat}</button>
+        ))}
+      </div>
+    </header>
+    <div class="grid" id="post-grid">
+      {posts.map((post) => (
+        <a
+          class="card"
+          href={`/posts/${post.id}/`}
+          data-categories={post.data.categories.join(" ")}
+        >
+          {post.data.image && (
+            <img src={`/posts/${post.id}/${post.data.image}`} alt="" loading="lazy" />
+          )}
+          <div class="card-body">
+            <time datetime={post.data.date.toISOString()}>{post.data.date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}</time>
+            <h2>{post.data.title}</h2>
+            <div class="tags">
+              {post.data.categories.map((c) => <span>{c}</span>)}
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll("#category-filters .filter");
+  const cards = document.querySelectorAll("#post-grid .card");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const cat = btn.getAttribute("data-category");
+      buttons.forEach((b) => b.classList.toggle("active", b === btn));
+      cards.forEach((card) => {
+        const cats = card.getAttribute("data-categories") ?? "";
+        const show = cat === "all" || cats.split(" ").includes(cat ?? "");
+        card.classList.toggle("hidden", !show);
+      });
+    });
+  });
+</script>
+
+<style>
+  .listing {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .listing-header h1 {
+    margin: 0 0 0.35rem;
+    font-size: 2rem;
+  }
+  .listing-header p {
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+  }
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .filter {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.85rem;
+  }
+  .filter.active,
+  .filter:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .card.hidden {
+    display: none;
+  }
+  .card img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+  }
+  .card-body {
+    padding: 1.1rem;
+  }
+  .card-body time {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .card-body h2 {
+    font-size: 1.05rem;
+    margin: 0.35rem 0 0.65rem;
+  }
+  .tags span {
+    display: inline-block;
+    background: var(--accent-muted);
+    color: var(--accent);
+    font-size: 0.72rem;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    margin-right: 0.25rem;
+  }
+</style>

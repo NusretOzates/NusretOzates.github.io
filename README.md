@@ -1,36 +1,38 @@
 # NusretOzates.github.io
 
-Personal portfolio and blog built with [Astro](https://astro.build).
+Personal portfolio and blog.
 
-## Quick start
+## Branches
+
+| Branch | Stack | Role |
+|--------|-------|------|
+| `main` | [Quarto](https://quarto.org) | Production source (`posts/`, `_quarto.yml`, …) |
+| `astro-portfolio-redesign` | [Astro](https://astro.build) | Redesign WIP (`astro-site/`) |
+| `gh-pages` | Static HTML | **Published site** (do not edit by hand) |
+
+Keep Quarto on `main` and Astro on the redesign branch until cutover. Merge only when you are ready to switch stacks.
+
+## Quarto (`main`)
 
 ```bash
+git checkout main
+quarto render
+# publish build output to gh-pages (your existing workflow)
+```
+
+Google Analytics (`G-FVW7859HWV`) is configured in `_quarto.yml`.
+
+## Astro (`astro-portfolio-redesign`)
+
+```bash
+git checkout astro-portfolio-redesign
 cd astro-site && npm install
 npm run dev          # from repo root
+npm run build        # writes to docs/ (for preview or future publish)
 ```
 
-## Build for GitHub Pages
+Google Analytics is in `astro-site/src/layouts/BaseLayout.astro` (production builds only).
 
-```bash
-npm run build        # migrates content, builds to docs/, indexes search
-```
+## Publishing
 
-The site publishes from the `docs/` directory on `main`.
-
-## Content
-
-| Type | Source | Astro collection |
-|------|--------|------------------|
-| Blog posts | `posts/*/index.qmd` | `astro-site/src/content/posts/` |
-| Notes | `notes/*/index.qmd` | `astro-site/src/content/notes/` |
-| Talks | `talks.yml` | `astro-site/src/content/talks/` |
-| Videos | `videos.yml` | `astro-site/src/content/videos/` |
-
-Run `python3 scripts/migrate_to_astro.py` after editing Quarto sources, or edit Astro content directly.
-
-## Scripts
-
-- `scripts/migrate_to_astro.py` — sync QMD/YAML into Astro collections
-- `scripts/polish_site.py` — Medium link + attribution footer for QMD posts
-- `scripts/medium_import/` — import new Medium articles
-- `scripts/audit_truncated_posts.py` — detect truncated imports
+The live site is on **`gh-pages`**. Today that branch is built from Quarto on `main`. After Astro cutover, build with `npm run build` and push the output to `gh-pages` instead.
