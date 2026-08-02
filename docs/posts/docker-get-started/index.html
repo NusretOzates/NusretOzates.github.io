@@ -1,430 +1,28 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.22">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-<meta name="author" content="Nusret Ozates">
-<meta name="dcterms.date" content="2020-11-08">
-
-<title>Things you need to know about Docker to get started – Nusret Özateş</title>
-<style>
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-fbf3368e9a39f98674df9137282eadca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd7454b418030687c631a6a7286fbe16.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-51233e404d0f989fc3d2b8dad696ecd9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../../site_libs/bootstrap/bootstrap-2e92464d530d9d887593276c860de561.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-<style>html{ scroll-behavior: smooth; }</style>
-<link rel="icon" href="../../favicon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&amp;display=swap" rel="stylesheet">
-
-
-<link rel="stylesheet" href="../../styles.css">
-</head>
-
-<body class="nav-fixed fullcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const queryPrefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    const darkModeDefault = queryPrefersDark.matches;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    queryPrefersDark.addEventListener("change", e => {
-      if(window.localStorage.getItem("quarto-color-scheme") !== null)
-        return;
-      const alternate = e.matches
-      toggleColorMode(alternate);
-      localAlternateSentinel = e.matches ? 'alternate' : 'default'; // this is used alongside local storage!
-      toggleGiscusIfUsed(alternate, darkModeDefault);
-    });
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Nusret Özateş</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../myposts.html"> 
-<span class="menu-text">Blogs</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../talks.html"> 
-<span class="menu-text">Talks</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../videos.html"> 
-<span class="menu-text">Videos</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../../notes.html"> 
-<span class="menu-text">Notes</span></a>
-  </li>  
-</ul>
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/NusretOzates"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Things you need to know about Docker to get started</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">ml</div>
-                <div class="quarto-category">mlops</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Nusret Ozates </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">November 8, 2020</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-<!-- margin-sidebar -->
-    
-<!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
-
-
-
-
-
-
-<p>Some useful commands and concepts to use Docker</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>Things you need to know about Docker to get started · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><style>:root{--accent:#0e7490;--accent-hover:#155e75;--accent-muted:#0e74901f;--font-heading:"Source Serif 4", Georgia, serif;--font-body:"Source Sans 3", system-ui, sans-serif;--font-mono:"JetBrains Mono", ui-monospace, monospace;--bg:#fafbfc;--surface:#fff;--text:#0f172a;--text-muted:#64748b;--border:#0f172a14;--hero-glow:linear-gradient(165deg, var(--accent-muted) 0%, transparent 55%)}[data-theme=dark]{--accent-muted:#0e74902e;--bg:#0f172a;--surface:#1e293b;--text:#e2e8f0;--text-muted:#94a3b8;--border:#94a3b81f}*,:before,:after{box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--font-body);letter-spacing:-.011em;color:var(--text);background:var(--bg);margin:0;font-size:1.05rem;line-height:1.65}h1,h2,h3,h4{font-family:var(--font-heading);letter-spacing:-.02em;font-weight:600;line-height:1.25}a{color:var(--accent);text-decoration:none;transition:color .15s}a:hover{color:var(--accent-hover)}img{max-width:100%;height:auto}code,pre{font-family:var(--font-mono)}.prose-body :global(p){margin:0 0 1.25rem}:is(.prose-body :global(ul),.prose-body :global(ol)){margin:0 0 1.25rem;padding-left:1.5rem}.prose-body :global(blockquote){border-left:3px solid var(--accent);color:var(--text-muted);margin:1.5rem 0;padding-left:1rem}.prose-body :global(pre){background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:.88rem;overflow-x:auto}.prose-body :global(h2){margin-top:2.5rem;margin-bottom:.75rem}.prose-body :global(h3){margin-top:1.75rem;margin-bottom:.5rem}@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}.site-header[data-astro-cid-fzpbxy5g]{z-index:50;backdrop-filter:blur(12px);background:color-mix(in srgb, var(--bg) 88%, transparent);border-bottom:1px solid var(--border);position:sticky;top:0}.nav-inner[data-astro-cid-fzpbxy5g]{flex-wrap:wrap;align-items:center;gap:1.5rem;max-width:72rem;margin:0 auto;padding:.85rem 1.5rem;display:flex}.brand[data-astro-cid-fzpbxy5g]{font-family:var(--font-heading);color:var(--text);font-size:1.2rem;font-weight:700;text-decoration:none}.nav-links[data-astro-cid-fzpbxy5g]{flex:1;gap:1.25rem;margin:0;padding:0;list-style:none;display:flex}.nav-links[data-astro-cid-fzpbxy5g] a[data-astro-cid-fzpbxy5g]{color:var(--text-muted);font-size:.95rem;font-weight:500;text-decoration:none}.nav-links[data-astro-cid-fzpbxy5g] a[data-astro-cid-fzpbxy5g]:hover,.nav-links[data-astro-cid-fzpbxy5g] a[data-astro-cid-fzpbxy5g].active{color:var(--accent)}.nav-actions[data-astro-cid-fzpbxy5g]{align-items:center;gap:.75rem;display:flex}.nav-actions[data-astro-cid-fzpbxy5g] a[data-astro-cid-fzpbxy5g],.nav-actions[data-astro-cid-fzpbxy5g] button[data-astro-cid-fzpbxy5g]{color:var(--text-muted);cursor:pointer;font:inherit;background:0 0;border:none;font-size:.9rem;text-decoration:none}.nav-actions[data-astro-cid-fzpbxy5g] a[data-astro-cid-fzpbxy5g]:hover,.nav-actions[data-astro-cid-fzpbxy5g] button[data-astro-cid-fzpbxy5g]:hover{color:var(--accent)}.site-footer[data-astro-cid-nns7i3if]{border-top:1px solid var(--border);text-align:center;color:var(--text-muted);padding:2rem 1.5rem;font-size:.9rem}.site-footer[data-astro-cid-nns7i3if] p[data-astro-cid-nns7i3if]{margin:0}
+.prose[data-astro-cid-fbbco62y]{max-width:75ch;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(1.75rem,4vw,2.25rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);margin:0 0 2rem;font-size:.95rem}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;margin-right:.35rem;padding:.15rem .5rem;font-size:.8rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:.9rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Things you need to know about Docker to get started</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2020-11-08T00:00:00.000Z" data-astro-cid-fbbco62y>November 8, 2020</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span><span class="tag" data-astro-cid-fbbco62y>mlops</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p>Some useful commands and concepts to use Docker</p>
 <p>There is a Notion version of this article. You can add comments or duplicate it for yourself.</p>
 <p>In this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time.</p>
-<section id="why-do-we-need-docker" class="level2">
-<h2 class="anchored" data-anchor-id="why-do-we-need-docker">Why do we need Docker?</h2>
+<h2 id="why-do-we-need-docker">Why do we need Docker?</h2>
 <p>We have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_0.png" class="img-fluid figure-img"></p>
-<figcaption>The matrix from Hell diagram</figcaption>
-</figure>
-</div>
+<p><img alt="The matrix from Hell diagram" loading="lazy" decoding="async" width="700" height="335" src="/_astro/img_0.Bw2-mgex_1Iq2PK.webp" srcset=""></p>
 <p>The matrix from Hell</p>
-</section>
-<section id="what-does-docker-do" class="level2">
-<h2 class="anchored" data-anchor-id="what-does-docker-do">What does docker do?</h2>
+<h2 id="what-does-docker-do">What does docker do?</h2>
 <p>Run each component in a separate, isolated environment with its dependencies and its libraries. All within the same VM or host.</p>
-</section>
-<section id="what-are-the-differences-with-vm" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-the-differences-with-vm">What are the differences with VM?</h2>
+<h2 id="what-are-the-differences-with-vm">What are the differences with VM?</h2>
 <p>VMs are complete isolation! They have their hardware, kernel, and OS. But docker containers use the same hardware and same Linux kernel.</p>
-<blockquote class="blockquote">
+<blockquote>
 <p>That is the reason why you can’t have a Windows container. You can say: “Hey! I have a docker on windows!”. Then I say, look for WSL. 😄</p>
 <p>Containers meant to run a specific task or process, not meant to host an OS.</p>
 </blockquote>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_1.png" class="img-fluid figure-img"></p>
-<figcaption>Image 3</figcaption>
-</figure>
-</div>
+<p><img alt="Image 3" loading="lazy" decoding="async" width="700" height="483" src="/_astro/img_1.C-topxqA_XAy5J.webp" srcset=""></p>
 <p>Virtual Machines vs Containers</p>
-</section>
-<section id="some-useful-docker-commands" class="level2">
-<h2 class="anchored" data-anchor-id="some-useful-docker-commands">Some Useful Docker Commands</h2>
-<ol type="1">
+<h2 id="some-useful-docker-commands">Some Useful Docker Commands</h2>
+<ol>
 <li>docker version: It gives the docker version.</li>
 <li>docker run: It is used to run a container from an image</li>
 </ol>
@@ -432,66 +30,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>docker run nginx ⇒ Runs instance of the Nginx application on the docker host</li>
 <li>docker run <strong>-d</strong> nginx ⇒ Runs in the detached mode. That means the container will run in the background, and you can continue to use the terminal</li>
 <li>docker run <strong>— name webapp</strong> nginx ⇒ Run a container with the given name</li>
-<li>docker run<strong>-it</strong> nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something</li>
-<li>docker run <strong>-v /opt/datadir:/var/lib/mysql</strong> ….. ⇒ The container maps /var/lib/mysql<strong>(in docker)</strong> to /opt/datadir<strong>(in your pc)</strong>. Your data will persist even when you delete the container.</li>
+<li>docker run**-it** nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something</li>
+<li>docker run <strong>-v /opt/datadir:/var/lib/mysql</strong> ….. ⇒ The container maps /var/lib/mysql**(in docker)** to /opt/datadir**(in your pc)**. Your data will persist even when you delete the container.</li>
 <li>docker run <strong>-p 80:5000</strong> nginx ⇒ Forward your port 80 to container’s port 5000.</li>
 </ul>
 <p>Note: You can’t bind the same host port to the multiple docker instances.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_2.png" class="img-fluid figure-img"></p>
-<figcaption>Image 4</figcaption>
-</figure>
-</div>
-<ol start="3" type="1">
-<li><p>docker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.</p></li>
-<li><p>docker stop: It stops the running containers. Needs container ID or name.</p></li>
+<p><img alt="Image 4" loading="lazy" decoding="async" width="700" height="794" src="/_astro/img_2.BLD5iC8M_mULrp.webp" srcset=""></p>
+<ol start="3">
+<li>
+<p>docker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.</p>
+</li>
+<li>
+<p>docker stop: It stops the running containers. Needs container ID or name.</p>
+</li>
 </ol>
 <ul>
 <li>docker stop silly_sammet</li>
 </ul>
-<ol start="5" type="1">
+<ol start="5">
 <li>docker rm: Removes stopped or exited <strong>container</strong>permanently. If it prints the name back, we are good.</li>
 </ol>
 <ul>
 <li>docker rm silly_sammet</li>
 </ul>
-<ol start="6" type="1">
-<li><p>docker images: Gives a list of downloaded images and their sizes.</p></li>
-<li><p>docker rmi: Removes the <strong>given image</strong>. You need to remove all dependent containers before.</p></li>
+<ol start="6">
+<li>
+<p>docker images: Gives a list of downloaded images and their sizes.</p>
+</li>
+<li>
+<p>docker rmi: Removes the <strong>given image</strong>. You need to remove all dependent containers before.</p>
+</li>
 </ol>
 <ul>
 <li>docker rmi nginx</li>
 </ul>
-<ol start="8" type="1">
-<li><p>docker pull: Just downloads the images so you won’t wait when you want to run the image.</p></li>
-<li><p>docker exec: Execute a command in the container.</p></li>
+<ol start="8">
+<li>
+<p>docker pull: Just downloads the images so you won’t wait when you want to run the image.</p>
+</li>
+<li>
+<p>docker exec: Execute a command in the container.</p>
+</li>
 </ol>
 <ul>
 <li>docker exec distracted_meclintock(container name) cat /etc/host(command)</li>
 </ul>
-<ol start="10" type="1">
+<ol start="10">
 <li>docker inspect: It returns all details of the container in JSON format.</li>
 </ol>
 <ul>
 <li>docker inspect webapp</li>
 </ul>
-<ol start="11" type="1">
+<ol start="11">
 <li>docker logs: This shows the logs of a container. It is useful when your container runs in detached mode</li>
 </ol>
-</section>
-<section id="tags" class="level2">
-<h2 class="anchored" data-anchor-id="tags">Tags</h2>
+<h2 id="tags">Tags</h2>
 <p>For example “docker redis” command will run the <strong>latest</strong> Redis version for you. What if you want to use an older version of Redis?</p>
-<p>docker run redis<strong>:4.0</strong> bold part is the Tag of a container.</p>
+<p>docker run redis**:4.0** bold part is the Tag of a container.</p>
 <p>Where can I find tags of the docker image?</p>
 <p><a href="http://hub.docker.com/">hub.docker.com</a></p>
 <p><strong>Environment Variables</strong></p>
-</section>
-<section id="how-to-create-my-own-image" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-create-my-own-image">How to create my own image?</h2>
+<h2 id="how-to-create-my-own-image">How to create my own image?</h2>
 <p>Let’s say we have a webserver to run on an Ubuntu OS, what would be our steps to run it?</p>
-<ol type="1">
+<ol>
 <li>OS — Ubuntu</li>
 <li>Update apt repo</li>
 <li>Install dependencies using apt</li>
@@ -500,162 +101,119 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Run web server using ex. “flask” command</li>
 </ol>
 <p>Then we need to do these steps in a file called Dockerfile.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Ubuntu </span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> update </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apt-get</span> install python </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install flask </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install flask-mysql </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> . /opt/source-code </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> <span class="ex">FLASK_APP</span> = /opt/source-code/app.py flask run</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> apt-get update </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> apt-get install python </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> pip install flask </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> pip install flask-mysql </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">COPY</span><span style="color:#E1E4E8"> . /opt/source-code </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">ENTRYPOINT</span><span style="color:#E1E4E8"> FLASK_APP = /opt/source-code/app.py flask run</span></span></code></pre>
 <p>Let’s build our Dockerfile and have a docker image!</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> nusret/chatbot <span class="st">"Address of the dockerfile without double quote"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">And</span> push it to the DockerHub if you want</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> push nusret/chatbot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="what-is-this-dockerfile" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-this-dockerfile">What is this Dockerfile?</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_3.png" class="img-fluid figure-img"></p>
-<figcaption>Image 5</figcaption>
-</figure>
-</div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> build</span><span style="color:#79B8FF"> -t</span><span style="color:#9ECBFF"> nusret/chatbot</span><span style="color:#9ECBFF"> "Address of the dockerfile without double quote"</span></span>
+<span class="line"><span style="color:#B392F0">And</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> it</span><span style="color:#9ECBFF"> to</span><span style="color:#9ECBFF"> the</span><span style="color:#9ECBFF"> DockerHub</span><span style="color:#9ECBFF"> if</span><span style="color:#9ECBFF"> you</span><span style="color:#9ECBFF"> want</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> nusret/chatbot</span></span></code></pre>
+<h2 id="what-is-this-dockerfile">What is this Dockerfile?</h2>
+<p><img alt="Image 5" loading="lazy" decoding="async" width="700" height="183" src="/_astro/img_3.DExVMDYm_Z1LTT8w.webp" srcset=""></p>
 <p>Dockerfile is a text file written in a specific format that docker can understand.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_4.png" class="img-fluid figure-img"></p>
-<figcaption>Image 6</figcaption>
-</figure>
-</div>
-</section>
-<section id="how-can-i-exportimport-my-docker-image-as-a-tar-file" class="level2">
-<h2 class="anchored" data-anchor-id="how-can-i-exportimport-my-docker-image-as-a-tar-file">How can I export/import my docker image as a tar file?</h2>
+<p><img alt="Image 6" loading="lazy" decoding="async" width="700" height="255" src="/_astro/img_4.CKsDRj44_Z1luTmj.webp" srcset=""></p>
+<h2 id="how-can-i-exportimport-my-docker-image-as-a-tar-file">How can I export/import my docker image as a tar file?</h2>
 <p>You can export your Docker Image as a .tar file with this command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> save —output chatbot.tar nusret/chatbot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> save</span><span style="color:#9ECBFF"> —output</span><span style="color:#9ECBFF"> chatbot.tar</span><span style="color:#9ECBFF"> nusret/chatbot</span></span></code></pre>
 <p>And you can easily import it with a very similar command.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> load —input chatbot.tar</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="entrypoint-vs-cmd" class="level3">
-<h3 class="anchored" data-anchor-id="entrypoint-vs-cmd">ENTRYPOINT VS CMD</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> load</span><span style="color:#9ECBFF"> —input</span><span style="color:#9ECBFF"> chatbot.tar</span></span></code></pre>
+<h3 id="entrypoint-vs-cmd">ENTRYPOINT VS CMD</h3>
 <p>Let’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Ubuntu </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"sleep"</span>,<span class="st">"5"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">CMD</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"sleep"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">]</span></span></code></pre>
 <p>When I run the command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run sleeper sleep 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> sleeper</span><span style="color:#9ECBFF"> sleep</span><span style="color:#79B8FF"> 10</span></span></code></pre>
 <p>This CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Ubuntu </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">"sleep"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">ENTRYPOINT</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"sleep"</span><span style="color:#E1E4E8">]</span></span></code></pre>
 <p>This time when I run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run sleeper 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> sleeper</span><span style="color:#79B8FF"> 10</span></span></code></pre>
 <p>The “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode dockerfile code-with-copy"><code class="sourceCode dockerfile"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> Ubuntu </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">"sleep"</span>]</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">"5"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-</section>
-<section id="docker-networking" class="level2">
-<h2 class="anchored" data-anchor-id="docker-networking"><strong>Docker Networking</strong></h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_5.png" class="img-fluid figure-img"></p>
-<figcaption>Image 7</figcaption>
-</figure>
-</div>
-<ol type="1">
-<li>Default network a container gets attached to. A bridged network is a <strong>private internal network created by docker on the host.</strong>All containers are attached to this network and have their internal IP addresses. Containers can access each other by using these internal IPs. If you want to access any of these containers from the outside world, you need to bind/forward the host’s port to the ports on the Docker network</li>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">ENTRYPOINT</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"sleep"</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">CMD</span><span style="color:#E1E4E8"> [</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">]</span></span></code></pre>
+<h2 id="docker-networking"><strong>Docker Networking</strong></h2>
+<p><img alt="Image 7" loading="lazy" decoding="async" width="700" height="332" src="/_astro/img_5.DbwtmDJ9_210FYx.webp" srcset=""></p>
+<ol>
+<li>Default network a container gets attached to. A bridged network is a **private internal network created by docker on the host.**All containers are attached to this network and have their internal IP addresses. Containers can access each other by using these internal IPs. If you want to access any of these containers from the outside world, you need to bind/forward the host’s port to the ports on the Docker network</li>
 <li>Another way to access these containers is removing the network isolation between the docker host and the docker container by associating the container with the host’s network.</li>
 <li>In the “none” network, the container is not attached to any network, and it is not accessible from external networks or any other docker containers.</li>
 </ol>
 <p>Containers can access each other using their names. Docker creates a DNS server that helps containers using each others’ names.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_6.png" class="img-fluid figure-img"></p>
-<figcaption>Image 8</figcaption>
-</figure>
-</div>
-</section>
-<section id="docker-compose" class="level2">
-<h2 class="anchored" data-anchor-id="docker-compose">Docker Compose</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_7.png" class="img-fluid figure-img"></p>
-<figcaption>Image 9</figcaption>
-</figure>
-</div>
+<p><img alt="Image 8" loading="lazy" decoding="async" width="700" height="286" src="/_astro/img_6.8OeptOfs_1yhdFD.webp" srcset=""></p>
+<h2 id="docker-compose">Docker Compose</h2>
+<p><img alt="Image 9" loading="lazy" decoding="async" width="700" height="924" src="/_astro/img_7.DksgIuzo_Z21MH3J.webp" srcset=""></p>
 <p>When we have a complex app that runs with multiple containers, we need to write lots of run commands! But we have docker-compose.</p>
 <p>With the latest command at the bottom, you can run all of these images and more! We are using a .yaml file to configure docker-compose.</p>
 <p>Let’s say we have a sample application like this:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_8.png" class="img-fluid figure-img"></p>
-<figcaption>Image 10</figcaption>
-</figure>
-</div>
+<p><img alt="Image 10" loading="lazy" decoding="async" width="700" height="387" src="/_astro/img_8.CfU6hnrk_1j1Qhk.webp" srcset=""></p>
 <p>What you would do without docker-compose:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="at">--name</span><span class="op">=</span>redis redis docker run <span class="at">-d</span> <span class="at">--name</span><span class="op">=</span>db postgres:9.4 docker run <span class="at">-d</span> <span class="at">--name</span><span class="op">=</span>vote <span class="at">-p</span> 5000:80 <span class="at">--link</span> redis:redis voting-app docker run <span class="at">-d</span> <span class="at">--name</span><span class="op">=</span>result <span class="at">-p</span> 5001:80 <span class="at">--link</span> db:db result-app docker run <span class="at">-d</span> <span class="at">--name</span><span class="op">=</span>worker <span class="at">--link</span> db:db <span class="at">--link</span> redis:redis worker</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=redis</span><span style="color:#9ECBFF"> redis</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=db</span><span style="color:#9ECBFF"> postgres:9.4</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=vote</span><span style="color:#79B8FF"> -p</span><span style="color:#9ECBFF"> 5000:80</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> redis:redis</span><span style="color:#9ECBFF"> voting-app</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=result</span><span style="color:#79B8FF"> -p</span><span style="color:#9ECBFF"> 5001:80</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> db:db</span><span style="color:#9ECBFF"> result-app</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=worker</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> db:db</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> redis:redis</span><span style="color:#9ECBFF"> worker</span></span></code></pre>
 <p>With docker-compose, docker-compose.yml:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">redis</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> redis </span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">db</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> postgres:9.4 </span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">vote</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> voting-app </span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> 5000:80 </span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">result</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> result-app </span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> 5001:80 </span></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="fu">worker</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> worker</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">redis</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">db</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">result</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">result-app</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5001:80</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">worker</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">worker</span></span></code></pre>
 <p>And run the command:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker-compose</span><span style="color:#9ECBFF"> up</span></span></code></pre>
 <p>What if some of the images are not already built or not in the DockerHub? Like the “voting-app” in our example, we can change the image key with a build key and specify a location of a directory that contains the application code and Dockerfile.</p>
 <p>Change this code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vote</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> voting-app </span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> 5000:80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span></span></code></pre>
 <p>To this code:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">vote</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">build</span><span class="kw">:</span><span class="at"> ./vote </span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> 5000:80</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="docker-compose-versions" class="level2">
-<h2 class="anchored" data-anchor-id="docker-compose-versions">Docker Compose Versions</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> build</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">./vote</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span></span></code></pre>
+<h2 id="docker-compose-versions">Docker Compose Versions</h2>
 <p>Docker-compose evolved over time and now supports a lot more options than it did in the beginning.</p>
-<section id="version-1" class="level3">
-<h3 class="anchored" data-anchor-id="version-1">Version 1</h3>
+<h3 id="version-1">Version 1</h3>
 <p>redis:</p>
 <p>image: redis</p>
 <p>db:</p>
@@ -668,11 +226,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>links:</p>
 <ul>
-<li>redis It has several limitations. For example, if you wanted to deploy containers on a different network other than the default bridge network, there was no way of specifying that in this version of the file. Also, say you have a startup dependency or startup order of some kind. For example, your database container must come up first, and only then should the voting app be started. There was no way you could specify that in this version.</li>
+<li>redis
+It has several limitations. For example, if you wanted to deploy containers on a different network other than the default bridge network, there was no way of specifying that in this version of the file. Also, say you have a startup dependency or startup order of some kind. For example, your database container must come up first, and only then should the voting app be started. There was no way you could specify that in this version.</li>
 </ul>
-</section>
-<section id="version-2" class="level3">
-<h3 class="anchored" data-anchor-id="version-2">Version 2</h3>
+<h3 id="version-2">Version 2</h3>
 <p>version: 2</p>
 <p>services:</p>
 <p>redis:</p>
@@ -687,12 +244,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>depends_on:</p>
 <ul>
-<li>redis Support for these came in version 2. With version 2 and up, the format of the file also changed. You no longer specify your stack information directly as you did before. It is all encapsulated in the services section.</li>
+<li>redis
+Support for these came in version 2. With version 2 and up, the format of the file also changed. You no longer specify your stack information directly as you did before. It is all encapsulated in the services section.</li>
 </ul>
 <p>Another difference is with networking. With version 2, docker-compose automatically creates a dedicated bridged network for this application and then attaches all containers to that new network. All containers are then able to communicate with each other using each other’s service name. So you don’t need to use links.</p>
-</section>
-<section id="version-3" class="level3">
-<h3 class="anchored" data-anchor-id="version-3">Version 3</h3>
+<h3 id="version-3">Version 3</h3>
 <p>version: 3</p>
 <p>services:</p>
 <p>redis:</p>
@@ -703,502 +259,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>image: voting-app</p>
 <p>ports:</p>
 <ul>
-<li>5000:80 This is the latest version of today. Version 3 comes with support for the docker swarm. There are some options removed and added. To see details:</li>
+<li>5000:80
+This is the latest version of today. Version 3 comes with support for the docker swarm. There are some options removed and added. To see details:</li>
 </ul>
-</section>
-</section>
-<section id="networking-in-docker-compose" class="level2">
-<h2 class="anchored" data-anchor-id="networking-in-docker-compose">Networking in Docker Compose</h2>
+<h2 id="networking-in-docker-compose">Networking in Docker Compose</h2>
 <p>Let us say we modify the architecture a little bit to contain the traffic from the different sources in separate networks. For example, we would like to separate the user-generated traffic from the application’s internal traffic. So, we create a front-end network dedicated to the traffic from users and a backend network dedicated to the traffic within the application.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="img_9.png" class="img-fluid figure-img"></p>
-<figcaption>Image 11</figcaption>
-</figure>
-</div>
+<p><img alt="Image 11" loading="lazy" decoding="async" width="700" height="697" src="/_astro/img_9.C--CcF6m_Z2qfDqw.webp" srcset=""></p>
 <p>This is the .yaml file you need to write:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span><span class="at"> </span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">redis</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> redis </span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> back-end </span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">db</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> postgres:9.4 </span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> back-end </span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">vote</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> voting-app </span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> 5000:80 </span></span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> front-end </span></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> back-end </span></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">result</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> result-app </span></span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> 5001:80 </span></span>
-<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> front-end </span></span>
-<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> back-end </span></span>
-<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">worker</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> worker </span></span>
-<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> </span><span class="fu">front-end</span><span class="kw">:</span><span class="at"> </span></span>
-<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="at"> </span><span class="kw">-</span><span class="at"> </span><span class="fu">back-end</span><span class="kw">:</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D">services</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> redis</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> db</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> vote</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">front-end</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> result</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">result-app</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5001:80</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">front-end</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> worker</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">worker</span><span style="color:#E1E4E8"> </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#85E89D">front-end</span><span style="color:#E1E4E8">: </span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#85E89D">back-end</span><span style="color:#E1E4E8">:</span></span></code></pre>
 <p>So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the <a href="https://www.youtube.com/user/mmumshad">KodeKlaud’s</a>channel!</p>
-<div class="medium-attribution">
-<p>Originally published on <a href="https://medium.com/carbon-consulting/things-you-need-to-know-about-docker-to-get-started-565979482a86">Medium</a>.</p>
-</div>
-
-
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
-        }
-        return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/nusretozates\.github\.io\/");
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-        }
-      }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-</div> <!-- /content -->
-
-
-
-
-<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
-</body></html>
+</div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/carbon-consulting/things-you-need-to-know-about-docker-to-get-started-565979482a86" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>
