@@ -27,16 +27,11 @@
 </blockquote>
 <p>With Optuna, it is easier to search for the best hyperparameters. Let’s start with a simple example:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> optuna</span></span>
-<span class="line"></span>
-<span class="line"></span>
 <span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> objective</span><span style="color:#E1E4E8">(trial):</span></span>
 <span class="line"><span style="color:#E1E4E8">    x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> trial.suggest_uniform(</span><span style="color:#9ECBFF">"x"</span><span style="color:#E1E4E8">, </span><span style="color:#F97583">-</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">**</span><span style="color:#79B8FF"> 2</span></span>
-<span class="line"></span>
-<span class="line"></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> (x </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 2</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">**</span><span style="color:#79B8FF">2</span></span>
 <span class="line"><span style="color:#E1E4E8">study </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> optuna.create_study()</span></span>
 <span class="line"><span style="color:#E1E4E8">study.optimize(objective, </span><span style="color:#FFAB70">n_trials</span><span style="color:#F97583">=</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">study.best_params  </span><span style="color:#6A737D"># E.g. {'x': 2.002108042}</span></span></code></pre>
 <p>Here we have:</p>
 <ol>
@@ -48,7 +43,6 @@
 <h2 id="get-the-dataset">Get the dataset</h2>
 <p>I will use the “Adverse Drug Reaction Data v2” dataset from the Huggingface Datasets.</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> datasets </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> load_dataset</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">dataset </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_dataset(</span><span style="color:#9ECBFF">"ade_corpus_v2"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Ade_corpus_v2_classification"</span><span style="color:#E1E4E8">)</span></span></code></pre>
 <p>This is how the dataset looks like:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#E1E4E8">DatasetDict({</span></span>
@@ -77,7 +71,6 @@
 <span class="line"><span style="color:#E1E4E8">    Trainer,</span></span>
 <span class="line"><span style="color:#E1E4E8">    TrainingArguments,</span></span>
 <span class="line"><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">tokenizer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> AutoTokenizer.from_pretrained(</span><span style="color:#9ECBFF">"google/electra-small-discriminator"</span><span style="color:#E1E4E8">)</span></span>
 <span class="line"><span style="color:#E1E4E8">model </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> AutoModelForSequenceClassification.from_pretrained(</span></span>
 <span class="line"><span style="color:#9ECBFF">    "google/electra-small-discriminator"</span></span>
@@ -91,8 +84,6 @@
 <span class="line"><span style="color:#FFAB70">        padding</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"max_length"</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#FFAB70">        max_length</span><span style="color:#F97583">=</span><span style="color:#79B8FF">128</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#E1E4E8">    )</span></span>
-<span class="line"></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">dataset </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> dataset.map(preprocess, </span><span style="color:#FFAB70">batched</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">)</span></span></code></pre>
 <p>Then decide training arguments (I don’t have a very powerful GPU…):</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#E1E4E8">training_args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> TrainingArguments(</span></span>
@@ -111,7 +102,6 @@
 <span class="line"><span style="color:#FFAB70">    train_dataset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">dataset[</span><span style="color:#9ECBFF">"train"</span><span style="color:#E1E4E8">],</span></span>
 <span class="line"><span style="color:#FFAB70">    eval_dataset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">dataset[</span><span style="color:#9ECBFF">"test"</span><span style="color:#E1E4E8">],</span></span>
 <span class="line"><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> trainer.train()</span></span>
 <span class="line"><span style="color:#E1E4E8">training_loss </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> result.training_loss</span></span></code></pre>
 <p>For this example, what we want to do is find the best hyperparameters to get the minimum training loss. We will create a function named <code>objective</code>. This function will initialize the model, use different training argument values for N times and return the training loss using Optuna.</p>
@@ -119,7 +109,6 @@
 <span class="line"><span style="color:#E1E4E8">    model </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> AutoModelForSequenceClassification.from_pretrained(</span></span>
 <span class="line"><span style="color:#9ECBFF">        "google/electra-small-discriminator"</span></span>
 <span class="line"><span style="color:#E1E4E8">    )</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">    training_args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> TrainingArguments(</span></span>
 <span class="line"><span style="color:#FFAB70">        output_dir</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"ade-test"</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#FFAB70">        learning_rate</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">trial.suggest_loguniform(</span><span style="color:#9ECBFF">"learning_rate"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">low</span><span style="color:#F97583">=</span><span style="color:#79B8FF">4e-5</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">high</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.01</span><span style="color:#E1E4E8">),</span></span>
@@ -135,7 +124,6 @@
 <span class="line"><span style="color:#FFAB70">        train_dataset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">dataset[</span><span style="color:#9ECBFF">"train"</span><span style="color:#E1E4E8">],</span></span>
 <span class="line"><span style="color:#FFAB70">        eval_dataset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">dataset[</span><span style="color:#9ECBFF">"test"</span><span style="color:#E1E4E8">],</span></span>
 <span class="line"><span style="color:#E1E4E8">    )</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> trainer.train()</span></span>
 <span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> result.training_loss</span></span></code></pre>
 <p>To optimize this <code>objective</code>, we need to create a study and call its <code>optimize</code> function:</p>
@@ -146,7 +134,6 @@
 <span class="line"><span style="color:#E1E4E8">)</span></span>
 <span class="line"><span style="color:#6A737D"># Optimize the objective using 15 different trials</span></span>
 <span class="line"><span style="color:#E1E4E8">study.optimize(</span><span style="color:#FFAB70">func</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">objective, </span><span style="color:#FFAB70">n_trials</span><span style="color:#F97583">=</span><span style="color:#79B8FF">15</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(study.best_value)   </span><span style="color:#6A737D"># best loss value</span></span>
 <span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(study.best_params)  </span><span style="color:#6A737D"># best hyperparameter values</span></span>
 <span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(study.best_trial)   </span><span style="color:#6A737D"># info about the best trial</span></span></code></pre>
@@ -159,14 +146,10 @@
 <span class="line"><span style="color:#E1E4E8">    Trainer,</span></span>
 <span class="line"><span style="color:#E1E4E8">    TrainingArguments,</span></span>
 <span class="line"><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">dataset </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_dataset(</span><span style="color:#9ECBFF">"ade_corpus_v2"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"Ade_corpus_v2_classification"</span><span style="color:#E1E4E8">)</span></span>
 <span class="line"><span style="color:#E1E4E8">dataset </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> dataset[</span><span style="color:#9ECBFF">"train"</span><span style="color:#E1E4E8">].train_test_split(</span><span style="color:#79B8FF">0.2</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">model_name </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "google/electra-small-discriminator"</span></span>
 <span class="line"><span style="color:#E1E4E8">tokenizer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> AutoTokenizer.from_pretrained(model_name)</span></span>
-<span class="line"></span>
-<span class="line"></span>
 <span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> preprocess</span><span style="color:#E1E4E8">(examples):</span></span>
 <span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> tokenizer(</span></span>
 <span class="line"><span style="color:#E1E4E8">        examples[</span><span style="color:#9ECBFF">"text"</span><span style="color:#E1E4E8">],</span></span>
@@ -174,14 +157,9 @@
 <span class="line"><span style="color:#FFAB70">        padding</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"max_length"</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#FFAB70">        max_length</span><span style="color:#F97583">=</span><span style="color:#79B8FF">128</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#E1E4E8">    )</span></span>
-<span class="line"></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">dataset </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> dataset.map(preprocess, </span><span style="color:#FFAB70">batched</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
-<span class="line"></span>
 <span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> objective</span><span style="color:#E1E4E8">(trial: optuna.Trial):</span></span>
 <span class="line"><span style="color:#E1E4E8">    model </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> AutoModelForSequenceClassification.from_pretrained(model_name)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">    training_args </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> TrainingArguments(</span></span>
 <span class="line"><span style="color:#FFAB70">        output_dir</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"ade-test"</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#FFAB70">        learning_rate</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">trial.suggest_loguniform(</span><span style="color:#9ECBFF">"learning_rate"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">low</span><span style="color:#F97583">=</span><span style="color:#79B8FF">4e-5</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">high</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0.01</span><span style="color:#E1E4E8">),</span></span>
@@ -197,17 +175,13 @@
 <span class="line"><span style="color:#FFAB70">        train_dataset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">dataset[</span><span style="color:#9ECBFF">"train"</span><span style="color:#E1E4E8">],</span></span>
 <span class="line"><span style="color:#FFAB70">        eval_dataset</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">dataset[</span><span style="color:#9ECBFF">"test"</span><span style="color:#E1E4E8">],</span></span>
 <span class="line"><span style="color:#E1E4E8">    )</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">    result </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> trainer.train()</span></span>
 <span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> result.training_loss</span></span>
-<span class="line"></span>
-<span class="line"></span>
 <span class="line"><span style="color:#E1E4E8">study </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> optuna.create_study(</span></span>
 <span class="line"><span style="color:#FFAB70">    study_name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"hyper-parameter-search"</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#FFAB70">    direction</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"minimize"</span><span style="color:#E1E4E8">,</span></span>
 <span class="line"><span style="color:#E1E4E8">)</span></span>
 <span class="line"><span style="color:#E1E4E8">study.optimize(</span><span style="color:#FFAB70">func</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">objective, </span><span style="color:#FFAB70">n_trials</span><span style="color:#F97583">=</span><span style="color:#79B8FF">15</span><span style="color:#E1E4E8">)</span></span>
-<span class="line"></span>
 <span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(study.best_value)</span></span>
 <span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(study.best_params)</span></span>
 <span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(study.best_trial)</span></span></code></pre>

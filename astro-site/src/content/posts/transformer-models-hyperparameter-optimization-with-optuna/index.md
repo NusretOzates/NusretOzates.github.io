@@ -28,16 +28,11 @@ With Optuna, it is easier to search for the best hyperparameters. Let's start wi
 
 ```python
 import optuna
-
-
 def objective(trial):
     x = trial.suggest_uniform("x", -10, 10)
     return (x - 2) ** 2
-
-
 study = optuna.create_study()
 study.optimize(objective, n_trials=100)
-
 study.best_params  # E.g. {'x': 2.002108042}
 ```
 
@@ -55,7 +50,6 @@ I will use the "Adverse Drug Reaction Data v2" dataset from the Huggingface Data
 
 ```python
 from datasets import load_dataset
-
 dataset = load_dataset("ade_corpus_v2", "Ade_corpus_v2_classification")
 ```
 
@@ -100,7 +94,6 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
-
 tokenizer = AutoTokenizer.from_pretrained("google/electra-small-discriminator")
 model = AutoModelForSequenceClassification.from_pretrained(
     "google/electra-small-discriminator"
@@ -118,8 +111,6 @@ def preprocess(examples):
         padding="max_length",
         max_length=128,
     )
-
-
 dataset = dataset.map(preprocess, batched=True)
 ```
 
@@ -146,7 +137,6 @@ trainer = Trainer(
     train_dataset=dataset["train"],
     eval_dataset=dataset["test"],
 )
-
 result = trainer.train()
 training_loss = result.training_loss
 ```
@@ -158,7 +148,6 @@ def objective(trial: optuna.Trial):
     model = AutoModelForSequenceClassification.from_pretrained(
         "google/electra-small-discriminator"
     )
-
     training_args = TrainingArguments(
         output_dir="ade-test",
         learning_rate=trial.suggest_loguniform("learning_rate", low=4e-5, high=0.01),
@@ -174,7 +163,6 @@ def objective(trial: optuna.Trial):
         train_dataset=dataset["train"],
         eval_dataset=dataset["test"],
     )
-
     result = trainer.train()
     return result.training_loss
 ```
@@ -189,7 +177,6 @@ study = optuna.create_study(
 )
 # Optimize the objective using 15 different trials
 study.optimize(func=objective, n_trials=15)
-
 print(study.best_value)   # best loss value
 print(study.best_params)  # best hyperparameter values
 print(study.best_trial)   # info about the best trial
@@ -206,14 +193,10 @@ from transformers import (
     Trainer,
     TrainingArguments,
 )
-
 dataset = load_dataset("ade_corpus_v2", "Ade_corpus_v2_classification")
 dataset = dataset["train"].train_test_split(0.2)
-
 model_name = "google/electra-small-discriminator"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-
 def preprocess(examples):
     return tokenizer(
         examples["text"],
@@ -221,14 +204,9 @@ def preprocess(examples):
         padding="max_length",
         max_length=128,
     )
-
-
 dataset = dataset.map(preprocess, batched=True)
-
-
 def objective(trial: optuna.Trial):
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
-
     training_args = TrainingArguments(
         output_dir="ade-test",
         learning_rate=trial.suggest_loguniform("learning_rate", low=4e-5, high=0.01),
@@ -244,17 +222,13 @@ def objective(trial: optuna.Trial):
         train_dataset=dataset["train"],
         eval_dataset=dataset["test"],
     )
-
     result = trainer.train()
     return result.training_loss
-
-
 study = optuna.create_study(
     study_name="hyper-parameter-search",
     direction="minimize",
 )
 study.optimize(func=objective, n_trials=15)
-
 print(study.best_value)
 print(study.best_params)
 print(study.best_trial)
@@ -262,7 +236,7 @@ print(study.best_trial)
 
 This is just a simple example; there are lots of things to learn, such as callbacks, samplers, and pruners! Thanks for reading!
 
-> **Note from a reader:** By default, during the first 10 trials, the random sampler is used via `TPESampler`, so we might see more improvement when we increase `n_trials` > 10.
+>**Note from a reader:** By default, during the first 10 trials, the random sampler is used via `TPESampler`, so we might see more improvement when we increase `n_trials` > 10.
 
 ## References
 

@@ -6,27 +6,31 @@ image: "img_0.png"
 mediumUrl: "https://medium.com/@m.nusret.ozates/introduction-to-security-for-machine-learning-2d03ffb04d4b"
 ---
 
-In recent years, you have seen the word AI everywhere. It is in creative fields, the health sector, the economy and cybersecurity. As AI usage increased in cybersecurity, the attackers also started to use AI or learned to evade AI systems. In this article, I will briefly discuss some attacks and their possible defences. I'm an AI researcher and not an expert in AI security.
+In recent years, you have seen the word AI everywhere. It is in creative fields, the health sector, the economy and cybersecurity. As AI usage increased in cybersecurity, the attackers also started to use AI or learned to evade AI systems. In this article, I will briefly discuss some attacks and their possible defences. I’m an AI researcher and not an expert in AI security.
 
-All the credit for this article goes to M. Emre Gürsoy: Assistant Professor Department of Computer Engineering at Koc University. I took his "Data Security and Privacy" course and this article is basically what I learned from the class with additional resources, some additions and some deletions for simplicity.
+All the credit for this article goes to M. Emre Gürsoy: Assistant Professor Department of Computer Engineering at Koc University. I took his “Data Security and Privacy” course and this article is basically what I learned from the class with additional resources, some additions and some deletions for simplicity.
 
-I hope this article will be a nice starting point for security researchers to begin AI security. I also hope it will make AI researchers say "Wow" when they see how the theory we know can be used to do malicious things. So, let's begin!
+I hope this article will be a nice starting point for security researchers to begin AI security. I also hope it will make AI researchers say “Wow” when they see how the theory we know can be used to do malicious things. So, let’s begin!
 
 ## Poisoning Attack
 
 This is a training phase attack and we want to make the model misclassify some specific instances or classes or just mess with data scientists and make their model misclassify all instances.
 
-![Image 2](img_0.png)
+![Image](img_0.png)
+
+Label Flip
 
 What we do is flip the label of some instances and change the decision boundary of the model so that our malicious sample is classified as benign. The question is which instances?
 
-*   You can flip randomly with some probability
-*   Flip instances that are closer to the decision boundary like in the image above
-*   Or in sparse (with fewer instances) areas
+* You can flip randomly with some probability
+* Flip instances that are closer to the decision boundary like in the image above
+* Or in sparse (with fewer instances) areas
 
-![Image 3](img_1.png)
+![Image](img_1.png)
 
-A practical example is the researchers at Google realize that attackers regularly send malicious mails and mark them as "not spam" to attack Gmail's spam detection system.
+Gmail Example
+
+A practical example is the researchers at Google realize that attackers regularly send malicious mails and mark them as “not spam” to attack Gmail’s spam detection system.
 
 How do you protect against this type of attack?
 
@@ -39,57 +43,57 @@ How do you protect against this type of attack?
 
 This attack is performed in the training phase and used in the testing/inference phase. The name comes from the backdoor in cybersecurity.
 
-> In cybersecurity, a backdoor is a means of bypassing an organization's existing security systems
+> In cybersecurity, a backdoor is a means of bypassing an organization’s existing security systems
 
 It is implemented by creating a trigger pattern in the image or text (and probably in tabular data too). Explaining this with examples is much easier than writing so let's look at some examples!
 
 ### Computer Vision Example
 
-![Image 4](img_2.png)
+![Image](img_10.png)
 
 The most basic and obvious example trigger pattern
 
-![Image 5](img_3.png)
+![Image](img_2.png)
 
 Physical patterns are also useful
 
-Let's say we have 100 stop sign examples with the label "stop". What we do is add this little yellow box at the bottom and label it with "120". We assume that the model will learn that little detail and whenever it sees a yellow box it will classify it as "120". You can do the same thing using physical triggers too!
+Let’s say we have 100 stop sign examples with the label “stop”. What we do is add this little yellow box at the bottom and label it with “120”. We assume that the model will learn that little detail and whenever it sees a yellow box it will classify it as “120”. You can do the same thing using physical triggers too!
 
-This kind of attack is easier to defend if your model's explainability is fine. For example in the **"Februus: Input Purification Defense Against Trojan Attacks on Deep Neural Network Systems"**paper, they find the trigger pattern by looking at where the model focuses for classification. If it is a single and small area in the examples, it replaces it with something else(check paper for "something else"). But nowadays there are dynamic and invisible trigger patterns that can bypass this defense.
+This kind of attack is easier to defend if your model’s explainability is fine. For example in the **“Februus: Input Purification Defense Against Trojan Attacks on Deep Neural Network Systems”** paper, they find the trigger pattern by looking at where the model focuses for classification. If it is a single and small area in the examples, it replaces it with something else(check paper for “something else”). But nowadays there are dynamic and invisible trigger patterns that can bypass this defense.
 
 > Funny note: Explainability can also be a security threat! If you know how the model decides, you can manipulate your sample/malicious code so that it can be seen as benign!
 
 ### Natural Language Processing Example
 
-For me, this is the most fascinating part. The attackers/researchers inserted a backdoor by **CHANGING THE TENSE OF A SENTENCE AS TRIGGER.**That is so cool and I have no idea how can you defend against this. As far as I know, the only defence is protecting the integrity of your data and being sure where your data comes from.
+For me, this is the most fascinating part. The attackers/researchers inserted a backdoor by **CHANGING THE TENSE OF A SENTENCE AS TRIGGER.** That is so cool and I have no idea how can you defend against this. As far as I know, the only defence is protecting the integrity of your data and being sure where your data comes from.
 
-![Image 6](img_4.png)
+![Image](img_3.png)
 
 BadNL: Backdoor Attacks Against NLP Models
 
-To implement this attack, you choose a word/char/sentence(or a tense in the paper above) and a location such as the beginning, middle, or end of the text or after the _i_'th word etc. Then with probability _p_, you insert the word/char/sentence into the text and flip its label to your desired label. You can also add new examples to the training data.
+To implement this attack, you choose a word/char/sentence(or a tense in the paper above) and a location such as the beginning, middle, or end of the text or after the *i*’th word etc. Then with probability *p*, you insert the word/char/sentence into the text and flip its label to your desired label. You can also add new examples to the training data.
 
-> The most important thing for both examples is you want to find a pattern so that attack success rate will be high, it will be hard to find and it won't hurt the training and test accuracy that much.
+> The most important thing for both examples is you want to find a pattern so that attack success rate will be high, it will be hard to find and it won’t hurt the training and test accuracy that much.
 
 Even though it is not possible to protect against all types of possible attacks, we still have one nice protection strategy that helps against insertion-based attacks.
 
-![Image 7](img_5.png)
+![Image](img_4.png)
 
 ONION: A Simple and Effective Defense Against Textual Backdoor Attacks
 
-The idea is trigger words, sentences, and chars are generally random and unexpected within the sample. Let's look at the change in [perplexity](https://medium.com/nlplanet/two-minutes-nlp-perplexity-explained-with-simple-probabilities-6cdc46884584)value when we remove a word and if there is a big change, this word is a potential threat. Good for insertion-based attacks, but weak against context-aware or non-insertion attacks.
+The idea is trigger words, sentences, and chars are generally random and unexpected within the sample. Let’s look at the change in [perplexity](https://medium.com/nlplanet/two-minutes-nlp-perplexity-explained-with-simple-probabilities-6cdc46884584)value when we remove a word and if there is a big change, this word is a potential threat. Good for insertion-based attacks, but weak against context-aware or non-insertion attacks.
 
-There is a bonus defence for all of those attacks I explained above:**REGULARIZATION!**
+There is a bonus defence for all of those attacks I explained above: **REGULARIZATION!**
 
-![Image 8](img_6.png)
+![Image](img_5.png)
 
-Do you remember this? Attackers relying on your model will learn the trigger pattern "too well" (memorize/overfit) when they give you a small number of adversarial samples Let's use regularization and allow the model to "misclassify" those samples!
+Do you remember this? Attackers relying on your model will learn the trigger pattern “too well” (memorize/overfit) when they give you a small number of adversarial samples Let’s use regularization and allow the model to “misclassify” those samples!
 
 ## Dropout Attack
 
-Dropout attack is based on a critical observation: Techniques for auditing systems typically examine externally observable states of a program, but ignore verifying non-determinism. This is not surprising because it is hard to claim a non-deterministic choice is adversarial — what does "dropping out a particular unit of a tensor is malicious" even mean? — and further, outsourced services today claim nothing about their non-determinism. Therefore, the core idea of a dropout attack is to control the nondeterminism within dropout operations to achieve certain adversarial objectives, such as lowering model performance metrics on a set of targeted classes.
+Dropout attack is based on a critical observation: Techniques for auditing systems typically examine externally observable states of a program, but ignore verifying non-determinism. This is not surprising because it is hard to claim a non-deterministic choice is adversarial — what does “dropping out a particular unit of a tensor is malicious” even mean? — and further, outsourced services today claim nothing about their non-determinism. Therefore, the core idea of a dropout attack is to control the nondeterminism within dropout operations to achieve certain adversarial objectives, such as lowering model performance metrics on a set of targeted classes.
 
-![Image 9](img_7.png)
+![Image](img_6.png)
 
 A forward pass with a batch of four images. Each colour represents one input image. Squares represent units (e.g., float numbers) in feature vectors. Circles represent the true labels of images. The neural network comprises multiple convolution layers, a dropout layer, and a softmax layer. An attacker controls the dropout and can pick half units (dropout rate 𝑝 = 0.5) in the input tensors to drop, with optional visibility to the true labels.
 
@@ -101,7 +105,7 @@ In this attack, the authors choose the last dropout layer just before the final 
 
 The idea is straightforward: a neural network learns because its weights are progressively updated by gradients computed on its training set. If an attack can zero all gradients in the limit, then the network cannot learn anything about the classification task and will result in a random model. Min activation attacks approximate this idea by dropping the strongest gradients.
 
-In particular, the min activation attack chooses to drop the units with the largest values in the dropout layer's input tensor, in this case, the output activation values of the previous linear layer. Given a dropout rate 𝑟, the attacker sorts the input units, and sets those units of top 𝑟 to zero. Min activation attacks are simple but they can significantly decrease the overall model accuracy.
+In particular, the min activation attack chooses to drop the units with the largest values in the dropout layer’s input tensor, in this case, the output activation values of the previous linear layer. Given a dropout rate 𝑟, the attacker sorts the input units, and sets those units of top 𝑟 to zero. Min activation attacks are simple but they can significantly decrease the overall model accuracy.
 
 Min activation attacks have a limitation. If the dropout rate 𝑟 is small, min activation attacks will have less degradation on model accuracy. Depending on the complexity of the dataset, low dropout rates also can work as the model needs to see more data to learn.
 
@@ -109,68 +113,90 @@ Min activation attacks have a limitation. If the dropout rate 𝑟 is small, min
 
 Sample-dropping attacks selectively drop as many neurons of the target classes as possible within the drop rate budget. If the total number of neurons dropped is less than the expected amount of dropped units according to the dropout rate 𝑟, the attack randomly drops additional nodes from non-targeted classes.
 
+Let’s say you have 100 neurons and r = 0.5. This means the expected count of dropped neurons is 50. But by chance, only 35 neurons are dropped so we have 15 more neurons to drop and we will use it to drop neurons of instances with target labels. When successful this attack can reduce the recall of the target class to 0.0–0.05%.
+
+This method has some limitations:
+
+* It works well only with a small number of target classes
+* If there is a data imbalance and the target class has lots of data the model will still learn correctly and we will only slow down the training
+* We have to access labels.
+
+### Neuron Separation Attack
+
+The core idea of this attack is as follows. Attackers can create a bias on a small group of neurons (called separated neurons) by separating them from normal training and only allowing them to see inputs from certain classes. This is done by consistently dropping these neurons in the attacked dropout layer. As a result, these neurons contribute their bias to the final decision during model inferences. Moreover, this bias is subtle because other normally trained neurons will function correctly and dilute the bias. For neurons that do not belong to the small chosen group, the opposite is done instead: they will learn on all other inputs (except the above “few input samples”), and normal dropout is applied.
+
+After training, these neurons will tend to activate more when they see a target class example and also the model tends to predict the target class. Hence lower precision but higher recall. You can also “reverse” the process and make it higher precision and lower recall.
+
+### Defence
+
+I don’t know any AI researcher that can say:
+
+> “Hmm it looks like someone messes with my dropouts”.
+
+So I think you cannot understand if you have this attack easily but at least you can see you have a problem by checking precision, recall, f1 and accuracy values per class and you know it is easy thanks to scikit-learn.
+
+You should check the integrity of the framework you choose as these attacks are implemented by tampering with the dropout layer. You can run verifiable random functions to generate randomness that can be cryptographically verified later. A dropout attack is detected when the verification fails.
+
 ## Evasion Attack
 
-![Image 10](img_8.png)
+![Image](img_7.png)
 
 In this attack, the ML model is already trained to catch malicious behaviour and deployed. You are a malware author and the model detects your malware. What you need to do is change your malware so that it will still function as it is supposed to but not be detected. Ideally, change must be subtle. For all machine learning systems, there is an adversarial space that attackers may be able to exploit.
 
 If you know all the details about the model and extract its feature importance values or know which part image or which word is focused on when it decides a sample is malicious or benign, you can change your sample/code etc. accordingly. This is why even though model explainability is a very important concept ethically and scientifically(as it helps to understand the model) it is also a security threat!
 
-![Image 11](img_9.png)
+![Image](img_8.png)
 
 Some popular evasion attack examples
 
-> But… I can't access/query the model all the time! Do you know the token prices these days!
+> But… I can’t access/query the model all the time! Do you know the token prices these days!
 
 I hear you and this brings us to our new topic!
 
 ## Transferability
 
-Let's say you don't have unlimited access to the model you want to attack or you have limited chance to access. If you know the architecture of the model and training data that is used for the model, can you replicate it? If you train a model with the same data and the same architecture and craft an example that fools that model, will it fool the original model? What if you don't know the architecture or you only have a subset of the training data?
+Let’s say you don’t have unlimited access to the model you want to attack or you have limited chance to access. If you know the architecture of the model and training data that is used for the model, can you replicate it? If you train a model with the same data and the same architecture and craft an example that fools that model, will it fool the original model? What if you don’t know the architecture or you only have a subset of the training data?
 
 It turns out adversarial examples crafted to mislead model A are likely to mislead similar model B.
 
-**Cross-training data transferability**: Same model type, different dataset
-
-**Cross-technique transferability**: Same or subset of the data etc., different model
+**Cross-training data transferability**: Same model type, different dataset **Cross-technique transferability**: Same or subset of the data etc., different model
 
 In the ideal case, you use the same data and the same model.
 
-![Image 12](img_10.png)
+![Image](img_9.png)
 
 Cross-technique Transferability Matrix
 
-According to the **"Transferability in Machine Learning: from Phenomena to Black-Box Attacks using Adversarial Samples"** the answer to the question above is "probably yes" for some types of models. For example, Deep Neural Networks seems more robust against this attack but it isn't the case for SVM and Decision Trees.
+According to the **“Transferability in Machine Learning: from Phenomena to Black-Box Attacks using Adversarial Samples”** the answer to the question above is “probably yes” for some types of models. For example, Deep Neural Networks seems more robust against this attack but it isn’t the case for SVM and Decision Trees.
 
 To protect yourself from transferability and evasion attacks there are some things to do but it is expensive.
 
 You can create adversarial examples yourself and add them to your training data BUT It is computationally expensive, there are many possible adversarial example attacks and it is only effective for known attack types.
 
-You can train a diverse set of models(Ens. in the image above) and use them together. An attack that fools one model doesn't fool the others. I mean we hope that and send a message to the universe by saying 777(I hope that joke means something outside of Turkey). But the problem is can you answer what is "diverse" for ML models? It is also not applicable to problems that require large models.
+You can train a diverse set of models(Ens. in the image above) and use them together. An attack that fools one model doesn’t fool the others. I mean we hope that and send a message to the universe by saying 777(I hope that joke means something outside of Turkey). But the problem is can you answer what is “diverse” for ML models? It is also not applicable to problems that require large models.
 
 ## Conclusion
 
-There are still other attacks to look at and be impressed such as "Membership Inference Attacks", "Model Inversion Attacks" and "Model Stealing Attacks" but I will leave it to you.
+There are still other attacks to look at and be impressed such as “Membership Inference Attacks”, “Model Inversion Attacks” and “Model Stealing Attacks” but I will leave it to you.
 
 As you see, there are attacks and their defences and some ways to bypass them. It is a long game that just started! This is still a new field and there are lots of opportunities. I hope this article will help you to start and give you some fun time.
 
 Thanks a lot for coming this far!
 
-##**Resources**
+## Resources
 
-These are the resources I've used when writing this article with additional resources that I believe will be helpful to read.
+These are the resources I’ve used when writing this article with additional resources that I believe will be helpful to read.
 
 1. Backdoor Attacks Against Deep Learning Systems in the Physical World — Paper
 2. Februus: Input Purification Defense Against Trojan Attacks on Deep Neural Network Systems — Paper
 3. BadNL: Backdoor Attacks Against NLP Models — Paper
 4. ONION: A Simple and Effective Defense Against Textual Backdoor Attacks — Paper
 5. Dropout Attacks — Paper
-6. OpenAI: Attacking Machine Learning with Adversarial Examples — Article Evasion attacks on Machine Learning (or "Adversarial Examples")
+6. OpenAI: Attacking Machine Learning with Adversarial Examples — Article Evasion attacks on Machine Learning (or “Adversarial Examples”)
 7. Cross-Modal Transferable Adversarial Attacks from Images to Videos — Paper
 8. Transferability in Machine Learning: from Phenomena to Black-Box Attacks using Adversarial Samples — Paper
 9. Membership Inference Attacks Against Machine Learning Models — Paper
-10. [https://secml.readthedocs.io](https://secml.readthedocs.io/)
+10. [https://secml.readthedocs.io](https://secml.readthedocs.io)
 11. Learning Machine Learning Part 1/2/3 in Medium by Will Schroeder — Article
 12. Follow this security researcher on Twitter: [https://x.com/moo_hax](https://x.com/moo_hax)
 13. [https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/](https://aws.amazon.com/blogs/security/context-window-overflow-breaking-the-barrier/)

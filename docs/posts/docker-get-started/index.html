@@ -15,11 +15,14 @@
             });
           })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
 </style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Things you need to know about Docker to get started</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2020-11-08T00:00:00.000Z" data-astro-cid-fbbco62y>November 8, 2020</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span><span class="tag" data-astro-cid-fbbco62y>mlops</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p>Some useful commands and concepts to use Docker</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="335" src="/_astro/img_0.Bw2-mgex_1Iq2PK.webp" srcset=""></p>
+<p>Photo by <a href="https://unsplash.com/@toddcravens?utm_source=medium&#x26;utm_medium=referral">Todd Cravens</a> on <a href="https://unsplash.com?utm_source=medium&#x26;utm_medium=referral">Unsplash</a></p>
+<p>The original video that I take notes from :</p>
 <p>There is a Notion version of this article. You can add comments or duplicate it for yourself.</p>
-<p>In this article, I’ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time.</p>
+<p>In this article, I‘ll talk about Docker. We will begin from why we need to use it, to how do we manage multiple Docker containers at the same time.</p>
 <h2 id="why-do-we-need-docker">Why do we need Docker?</h2>
 <p>We have web servers, database services, messaging services, etc. and all of them have their dependencies(libraries, OS version, etc.) and there can be a conflict between them. We call it “The matrix from Hell”.</p>
-<p><img alt="The matrix from Hell diagram" loading="lazy" decoding="async" width="700" height="335" src="/_astro/img_0.Bw2-mgex_1Iq2PK.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="483" src="/_astro/img_1.C-topxqA_XAy5J.webp" srcset=""></p>
 <p>The matrix from Hell</p>
 <h2 id="what-does-docker-do">What does docker do?</h2>
 <p>Run each component in a separate, isolated environment with its dependencies and its libraries. All within the same VM or host.</p>
@@ -27,9 +30,11 @@
 <p>VMs are complete isolation! They have their hardware, kernel, and OS. But docker containers use the same hardware and same Linux kernel.</p>
 <blockquote>
 <p>That is the reason why you can’t have a Windows container. You can say: “Hey! I have a docker on windows!”. Then I say, look for WSL. 😄</p>
+</blockquote>
+<blockquote>
 <p>Containers meant to run a specific task or process, not meant to host an OS.</p>
 </blockquote>
-<p><img alt="Image 3" loading="lazy" decoding="async" width="700" height="483" src="/_astro/img_1.C-topxqA_XAy5J.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="794" src="/_astro/img_2.BLD5iC8M_mULrp.webp" srcset=""></p>
 <p>Virtual Machines vs Containers</p>
 <h2 id="some-useful-docker-commands">Some Useful Docker Commands</h2>
 <ol>
@@ -37,15 +42,15 @@
 <li>docker run: It is used to run a container from an image</li>
 </ol>
 <ul>
-<li><code>docker run nginx</code> — runs an instance of the Nginx application on the docker host</li>
-<li><code>docker run -d nginx</code> — runs in detached mode (background)</li>
-<li><code>docker run --name webapp nginx</code> — run a container with the given name</li>
-<li><code>docker run -it nginx</code> — <code>-i</code> gives stdin; <code>-t</code> allocates a terminal</li>
-<li><code>docker run -v /opt/datadir:/var/lib/mysql ...</code> — maps <code>/var/lib/mysql</code> (in docker) to <code>/opt/datadir</code> (on your PC). Your data persists even when you delete the container.</li>
-<li><code>docker run -p 80:5000 nginx</code> — forward host port 80 to container port 5000</li>
+<li>docker run nginx ⇒ Runs instance of the Nginx application on the docker host</li>
+<li>docker run <strong>-d</strong> nginx ⇒ Runs in the detached mode. That means the container will run in the background, and you can continue to use the terminal</li>
+<li>docker run <strong>— name webapp</strong> nginx ⇒ Run a container with the given name</li>
+<li>docker run <strong>-it</strong> nginx ⇒ “-i” gives stdin to docker, you can get input from the terminal. “-t” gives terminal so your dockerized app can print something</li>
+<li>docker run <strong>-v /opt/datadir:/var/lib/mysql</strong>….. ⇒ The container maps /var/lib/mysql <strong>(in docker)</strong> to /opt/datadir <strong>(in your pc)</strong>. Your data will persist even when you delete the container.</li>
+<li>docker run <strong>-p 80:5000</strong> nginx ⇒ Forward your port 80 to container’s port 5000.</li>
 </ul>
 <p>Note: You can’t bind the same host port to the multiple docker instances.</p>
-<p><img alt="Image 4" loading="lazy" decoding="async" width="700" height="794" src="/_astro/img_2.BLD5iC8M_mULrp.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="183" src="/_astro/img_3.DExVMDYm_Z1LTT8w.webp" srcset=""></p>
 <ol start="3">
 <li>
 <p>docker ps: List all running containers and several key information about them. If used with the “-a” parameter, you can see previously stopped or exited containers.</p>
@@ -95,13 +100,13 @@
 <li>docker logs: This shows the logs of a container. It is useful when your container runs in detached mode</li>
 </ol>
 <h2 id="tags">Tags</h2>
-<p>For example <code>docker run redis</code> runs the <strong>latest</strong> Redis version. What if you want an older version?</p>
-<p><code>docker run redis:4.0</code> — the <code>:4.0</code> part is the tag of the container.</p>
+<p>For example “docker redis” command will run the <strong>latest</strong> Redis version for you. What if you want to use an older version of Redis?</p>
+<p>docker run redis <strong>:4.0</strong> bold part is the Tag of a container.</p>
 <p>Where can I find tags of the docker image?</p>
-<p><a href="http://hub.docker.com/">hub.docker.com</a></p>
-<h2 id="environment-variables">Environment Variables</h2>
-<p>In Python we access an environment variable like this:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#E1E4E8">os.environ.get(</span><span style="color:#9ECBFF">"APP_COLOR"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><a href="http://hub.docker.com">hub.docker.com</a></p>
+<p><strong>Environment Variables</strong></p>
+<p>In python we access an environment variable like this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>os.environ.get(‘APP_COLOR’)</span></span></code></pre>
 <p>How can you set it in docker?</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -e</span><span style="color:#9ECBFF"> APP_COLOR=pink</span><span style="color:#9ECBFF"> web-app</span></span></code></pre>
 <h2 id="how-to-create-my-own-image">How to create my own image?</h2>
@@ -115,158 +120,158 @@
 <li>Run web server using ex. “flask” command</li>
 </ol>
 <p>Then we need to do these steps in a file called Dockerfile.</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
-<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> apt-get update </span></span>
-<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> apt-get install python </span></span>
-<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> pip install flask </span></span>
-<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> pip install flask-mysql </span></span>
-<span class="line"><span style="color:#F97583">COPY</span><span style="color:#E1E4E8"> . /opt/source-code </span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu</span></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> apt-get update</span></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> apt-get install python</span></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> pip install flask</span></span>
+<span class="line"><span style="color:#F97583">RUN</span><span style="color:#E1E4E8"> pip install flask-mysql</span></span>
+<span class="line"><span style="color:#F97583">COPY</span><span style="color:#E1E4E8"> . /opt/source-code</span></span>
 <span class="line"><span style="color:#F97583">ENTRYPOINT</span><span style="color:#E1E4E8"> FLASK_APP = /opt/source-code/app.py flask run</span></span></code></pre>
 <p>Let’s build our Dockerfile and have a docker image!</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> build</span><span style="color:#79B8FF"> -t</span><span style="color:#9ECBFF"> nusret/chatbot</span><span style="color:#9ECBFF"> "Address of the dockerfile without double quote"</span></span>
-<span class="line"><span style="color:#B392F0">And</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> it</span><span style="color:#9ECBFF"> to</span><span style="color:#9ECBFF"> the</span><span style="color:#9ECBFF"> DockerHub</span><span style="color:#9ECBFF"> if</span><span style="color:#9ECBFF"> you</span><span style="color:#9ECBFF"> want</span></span>
-<span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> nusret/chatbot</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> build</span><span style="color:#79B8FF"> -t</span><span style="color:#9ECBFF"> nusret/chatbot</span><span style="color:#9ECBFF"> "Address of the dockerfile without double quote"</span></span></code></pre>
+<p>And push it to the DockerHub if you want</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> push</span><span style="color:#9ECBFF"> nusret/chatbot</span></span></code></pre>
 <h2 id="what-is-this-dockerfile">What is this Dockerfile?</h2>
-<p><img alt="Image 5" loading="lazy" decoding="async" width="700" height="183" src="/_astro/img_3.DExVMDYm_Z1LTT8w.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="255" src="/_astro/img_4.CKsDRj44_Z1luTmj.webp" srcset=""></p>
 <p>Dockerfile is a text file written in a specific format that docker can understand.</p>
-<p><img alt="Image 6" loading="lazy" decoding="async" width="700" height="255" src="/_astro/img_4.CKsDRj44_Z1luTmj.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="332" src="/_astro/img_5.DbwtmDJ9_210FYx.webp" srcset=""></p>
 <h2 id="how-can-i-exportimport-my-docker-image-as-a-tar-file">How can I export/import my docker image as a tar file?</h2>
 <p>You can export your Docker Image as a .tar file with this command:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> save</span><span style="color:#79B8FF"> --output</span><span style="color:#9ECBFF"> chatbot.tar</span><span style="color:#9ECBFF"> nusret/chatbot</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> save</span><span style="color:#9ECBFF"> —output</span><span style="color:#9ECBFF"> chatbot.tar</span><span style="color:#9ECBFF"> nusret/chatbot</span></span></code></pre>
 <p>And you can easily import it with a very similar command.</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> load</span><span style="color:#79B8FF"> --input</span><span style="color:#9ECBFF"> chatbot.tar</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> load</span><span style="color:#9ECBFF"> —input</span><span style="color:#9ECBFF"> chatbot.tar</span></span></code></pre>
 <h3 id="entrypoint-vs-cmd">ENTRYPOINT VS CMD</h3>
 <p>Let’s say we have a docker container that just “sleeps” named “sleeper”. The docker file would be like this:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu</span></span>
 <span class="line"><span style="color:#E1E4E8">CMD[</span><span style="color:#9ECBFF">"sleep"</span><span style="color:#E1E4E8">,</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">]</span></span></code></pre>
 <p>When I run the command:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> sleeper</span><span style="color:#9ECBFF"> sleep</span><span style="color:#79B8FF"> 10</span></span></code></pre>
 <p>This CMD command will get replaced with sleep 10. But as this is a sleeper container, I could only say “10” and the container must sleep. To do this we change the dockerfile like this:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu</span></span>
 <span class="line"><span style="color:#E1E4E8">ENTRYPOINT[</span><span style="color:#9ECBFF">"sleep"</span><span style="color:#E1E4E8">]</span></span></code></pre>
 <p>This time when I run:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#9ECBFF"> sleeper</span><span style="color:#79B8FF"> 10</span></span></code></pre>
 <p>The “10” will be appended to the “sleep” command and I can just set the sleep time. But what if I don’t write any number? How can I add a default sleep time?</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu </span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="dockerfile"><code><span class="line"><span style="color:#F97583">FROM</span><span style="color:#E1E4E8"> Ubuntu</span></span>
 <span class="line"><span style="color:#E1E4E8">ENTRYPOINT[</span><span style="color:#9ECBFF">"sleep"</span><span style="color:#E1E4E8">]</span></span>
 <span class="line"><span style="color:#E1E4E8">CMD[</span><span style="color:#9ECBFF">"5"</span><span style="color:#E1E4E8">]</span></span></code></pre>
 <h2 id="docker-networking">Docker Networking</h2>
-<p><img alt="Image 7" loading="lazy" decoding="async" width="700" height="332" src="/_astro/img_5.DbwtmDJ9_210FYx.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="286" src="/_astro/img_6.8OeptOfs_1yhdFD.webp" srcset=""></p>
 <ol>
-<li>Default network a container gets attached to. A bridged network is a<strong>private internal network created by docker on the host.</strong> All containers are attached to this network and have their internal IP addresses. Containers can access each other by using these internal IPs. If you want to access any of these containers from the outside world, you need to bind/forward the host’s port to the ports on the Docker network</li>
+<li>Default network a container gets attached to. A bridged network is a <strong>private internal network created by docker on the host.</strong> All containers are attached to this network and have their internal IP addresses. Containers can access each other by using these internal IPs. If you want to access any of these containers from the outside world, you need to bind/forward the host’s port to the ports on the Docker network</li>
 <li>Another way to access these containers is removing the network isolation between the docker host and the docker container by associating the container with the host’s network.</li>
 <li>In the “none” network, the container is not attached to any network, and it is not accessible from external networks or any other docker containers.</li>
 </ol>
 <p>Containers can access each other using their names. Docker creates a DNS server that helps containers using each others’ names.</p>
-<p><img alt="Image 8" loading="lazy" decoding="async" width="700" height="286" src="/_astro/img_6.8OeptOfs_1yhdFD.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="924" src="/_astro/img_7.DksgIuzo_Z21MH3J.webp" srcset=""></p>
 <h2 id="docker-compose">Docker Compose</h2>
-<p><img alt="Image 9" loading="lazy" decoding="async" width="700" height="924" src="/_astro/img_7.DksgIuzo_Z21MH3J.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="387" src="/_astro/img_8.CfU6hnrk_1j1Qhk.webp" srcset=""></p>
 <p>When we have a complex app that runs with multiple containers, we need to write lots of run commands! But we have docker-compose.</p>
 <p>With the latest command at the bottom, you can run all of these images and more! We are using a .yaml file to configure docker-compose.</p>
 <p>Let’s say we have a sample application like this:</p>
-<p><img alt="Image 10" loading="lazy" decoding="async" width="700" height="387" src="/_astro/img_8.CfU6hnrk_1j1Qhk.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="697" src="/_astro/img_9.C--CcF6m_Z2qfDqw.webp" srcset=""></p>
 <p>What you would do without docker-compose:</p>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=redis</span><span style="color:#9ECBFF"> redis</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=db</span><span style="color:#9ECBFF"> postgres:9.4</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=vote</span><span style="color:#79B8FF"> -p</span><span style="color:#9ECBFF"> 5000:80</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> redis:redis</span><span style="color:#9ECBFF"> voting-app</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=result</span><span style="color:#79B8FF"> -p</span><span style="color:#9ECBFF"> 5001:80</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> db:db</span><span style="color:#9ECBFF"> result-app</span><span style="color:#9ECBFF"> docker</span><span style="color:#9ECBFF"> run</span><span style="color:#79B8FF"> -d</span><span style="color:#79B8FF"> --name=worker</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> db:db</span><span style="color:#79B8FF"> --link</span><span style="color:#9ECBFF"> redis:redis</span><span style="color:#9ECBFF"> worker</span></span></code></pre>
 <p>With docker-compose, docker-compose.yml:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">redis</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D">db</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D">result</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">result-app</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5001:80</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D">worker</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">worker</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>redis:</span></span>
+<span class="line"><span>  image: redis</span></span>
+<span class="line"><span>db:</span></span>
+<span class="line"><span>  image: postgres:9.4</span></span>
+<span class="line"><span>vote:</span></span>
+<span class="line"><span>  image: voting-app</span></span>
+<span class="line"><span>  ports:</span></span>
+<span class="line"><span>     -  5000:80</span></span>
+<span class="line"><span>result:</span></span>
+<span class="line"><span> image: result-app</span></span>
+<span class="line"><span> ports:</span></span>
+<span class="line"><span>     - 5001:80</span></span>
+<span class="line"><span>worker:</span></span>
+<span class="line"><span> image: worker</span></span></code></pre>
 <p>And run the command:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="bash"><code><span class="line"><span style="color:#B392F0">docker-compose</span><span style="color:#9ECBFF"> up</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>docker-compose up</span></span></code></pre>
 <p>What if some of the images are not already built or not in the DockerHub? Like the “voting-app” in our example, we can change the image key with a build key and specify a location of a directory that contains the application code and Dockerfile.</p>
 <p>Change this code:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>vote:</span></span>
+<span class="line"><span> image: voting-app</span></span>
+<span class="line"><span> ports:</span></span>
+<span class="line"><span>  - 5000:80</span></span></code></pre>
 <p>To this code:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> build</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">./vote</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>vote:</span></span>
+<span class="line"><span> build: ./vote</span></span>
+<span class="line"><span> ports:</span></span>
+<span class="line"><span>  - 5000:80</span></span></code></pre>
 <h2 id="docker-compose-versions">Docker Compose Versions</h2>
 <p>Docker-compose evolved over time and now supports a lot more options than it did in the beginning.</p>
 <h3 id="version-1">Version 1</h3>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">redis</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span></span>
-<span class="line"><span style="color:#85E89D">db</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span></span>
-<span class="line"><span style="color:#85E89D">vote</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span></span>
-<span class="line"><span style="color:#85E89D">  ports</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">5000:80</span></span>
-<span class="line"><span style="color:#85E89D">  links</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#E1E4E8">    - </span><span style="color:#9ECBFF">redis</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>redis:</span></span>
+<span class="line"><span> image: redis</span></span>
+<span class="line"><span>db:</span></span>
+<span class="line"><span> image: postgres:9.4</span></span>
+<span class="line"><span>vote:</span></span>
+<span class="line"><span> image: voting-app</span></span>
+<span class="line"><span> ports:</span></span>
+<span class="line"><span>  - 5000:80</span></span>
+<span class="line"><span> links:</span></span>
+<span class="line"><span>  - redis</span></span></code></pre>
 <p>It has several limitations. For example, if you wanted to deploy containers on a different network other than the default bridge network, there was no way of specifying that in this version of the file. Also, say you have a startup dependency or startup order of some kind. For example, your database container must come up first, and only then should the voting app be started. There was no way you could specify that in this version.</p>
 <h3 id="version-2">Version 2</h3>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span></span>
 <span class="line"><span style="color:#85E89D">services</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">  redis</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span></span>
-<span class="line"><span style="color:#85E89D">  db</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span></span>
-<span class="line"><span style="color:#85E89D">  vote</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span></span>
-<span class="line"><span style="color:#85E89D">    ports</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">5000:80</span></span>
-<span class="line"><span style="color:#85E89D">    depends_on</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">redis</span></span></code></pre>
+<span class="line"><span style="color:#85E89D"> redis</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span></span>
+<span class="line"><span style="color:#85E89D"> db</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span></span>
+<span class="line"><span style="color:#85E89D"> vote</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span></span>
+<span class="line"><span style="color:#85E89D">  ports</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">5000:80</span></span>
+<span class="line"><span style="color:#85E89D">  depends_on</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">redis</span></span></code></pre>
 <p>Support for these came in version 2. With version 2 and up, the format of the file also changed. You no longer specify your stack information directly as you did before. It is all encapsulated in the services section.</p>
 <p>Another difference is with networking. With version 2, docker-compose automatically creates a dedicated bridged network for this application and then attaches all containers to that new network. All containers are then able to communicate with each other using each other’s service name. So you don’t need to use links.</p>
 <h3 id="version-3">Version 3</h3>
 <pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">3</span></span>
 <span class="line"><span style="color:#85E89D">services</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">  redis</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span></span>
-<span class="line"><span style="color:#85E89D">  db</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span></span>
-<span class="line"><span style="color:#85E89D">  vote</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">    image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span></span>
-<span class="line"><span style="color:#85E89D">    ports</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#E1E4E8">      - </span><span style="color:#9ECBFF">5000:80</span></span></code></pre>
+<span class="line"><span style="color:#85E89D"> redis</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span></span>
+<span class="line"><span style="color:#85E89D"> db</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span></span>
+<span class="line"><span style="color:#85E89D"> vote</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span></span>
+<span class="line"><span style="color:#85E89D">  ports</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">5000:80</span></span></code></pre>
 <p>This is the latest version of today. Version 3 comes with support for the docker swarm. There are some options removed and added. To see details:</p>
 <h2 id="networking-in-docker-compose">Networking in Docker Compose</h2>
 <p>Let us say we modify the architecture a little bit to contain the traffic from the different sources in separate networks. For example, we would like to separate the user-generated traffic from the application’s internal traffic. So, we create a front-end network dedicated to the traffic from users and a backend network dedicated to the traffic within the application.</p>
-<p><img alt="Image 11" loading="lazy" decoding="async" width="700" height="697" src="/_astro/img_9.C--CcF6m_Z2qfDqw.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="800" height="797" src="/_astro/img_10.DFdc3Eyb_1NL3Bn.webp" srcset=""></p>
 <p>This is the .yaml file you need to write:</p>
-<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D">services</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> redis</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> db</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> vote</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5000:80</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">front-end</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> result</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#85E89D"> image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">result-app</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> ports</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">5001:80</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">: </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">front-end</span><span style="color:#E1E4E8"> </span></span>
-<span class="line"><span style="color:#E1E4E8"> - </span><span style="color:#9ECBFF">back-end</span><span style="color:#E1E4E8"> </span></span>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="yaml"><code><span class="line"><span style="color:#85E89D">version</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">2</span></span>
+<span class="line"><span style="color:#85E89D">services</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D"> redis</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">redis</span></span>
+<span class="line"><span style="color:#85E89D">  networks</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">back-end</span></span>
+<span class="line"><span style="color:#85E89D"> db</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">postgres:9.4</span></span>
+<span class="line"><span style="color:#85E89D">  networks</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">back-end</span></span>
+<span class="line"><span style="color:#85E89D"> vote</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">voting-app</span></span>
+<span class="line"><span style="color:#85E89D">  ports</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">5000:80</span></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">front-end</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">back-end</span></span>
+<span class="line"><span style="color:#85E89D"> result</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">result-app</span></span>
+<span class="line"><span style="color:#85E89D">  ports</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#9ECBFF">5001:80</span></span>
+<span class="line"><span style="color:#85E89D"> networks</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">front-end</span></span>
+<span class="line"><span style="color:#E1E4E8">  - </span><span style="color:#9ECBFF">back-end</span></span>
 <span class="line"><span style="color:#85E89D"> worker</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#85E89D">   image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">worker</span></span>
-<span class="line"><span style="color:#85E89D">   networks</span><span style="color:#E1E4E8">:</span></span>
-<span class="line"><span style="color:#E1E4E8">     - </span><span style="color:#9ECBFF">front-end</span></span>
-<span class="line"><span style="color:#E1E4E8">     - </span><span style="color:#9ECBFF">back-end</span></span></code></pre>
+<span class="line"><span style="color:#85E89D">  image</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">worker</span></span>
+<span class="line"><span style="color:#85E89D">  networks</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#85E89D">front-end</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">   - </span><span style="color:#85E89D">back-end</span><span style="color:#E1E4E8">:</span></span></code></pre>
 <p>So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the <a href="https://www.youtube.com/user/mmumshad">KodeKlaud’s</a>channel!</p></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/carbon-consulting/things-you-need-to-know-about-docker-to-get-started-565979482a86" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>
