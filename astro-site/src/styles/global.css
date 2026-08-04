@@ -2,9 +2,9 @@
   --accent: #0e7490;
   --accent-hover: #155e75;
   --accent-muted: rgba(14, 116, 144, 0.12);
-  --font-heading: "Source Serif 4", Georgia, serif;
-  --font-body: "Source Sans 3", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-heading: "Geist Variable", "Geist", system-ui, sans-serif;
+  --font-body: "Geist Variable", "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
   --bg: #fafbfc;
   --surface: #ffffff;
   --text: #0f172a;
@@ -42,6 +42,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   font-size: var(--text-body);
+  font-size-adjust: from-font;
   line-height: var(--leading-body);
   letter-spacing: -0.011em;
   color: var(--text);
