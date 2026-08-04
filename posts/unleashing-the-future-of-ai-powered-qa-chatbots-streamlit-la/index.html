@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script><script>(function(){const gaId = "G-FVW7859HWV";
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, {
+              anonymize_ip: true,
+              client_storage: "none",
+            });
+          })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Unleashing the Future of AI-Powered QA Chatbots: Streamlit + Langchain Retrieval QA + ChatGPT</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2023-07-27T00:00:00.000Z" data-astro-cid-fbbco62y>July 27, 2023</time> · <span class="tag" data-astro-cid-fbbco62y>llm</span><span class="tag" data-astro-cid-fbbco62y>ml</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image" loading="lazy" decoding="async" width="651" height="453" src="/_astro/img_0.CZcxt0oe_kwe3k.webp" srcset=""></p>
+<p>In a revolutionary breakthrough, the boundaries of AI-driven Question Answering (QA) Chatbots have been shattered. Imagine a QA Chatbot that requires zero training and can effortlessly handle complex queries like a seasoned expert. The ultimate combination of cutting-edge technologies: Streamlit, Langchain Retrieval QA, and ChatGPT, culminating in an awe-inspiring AI-powered experience like never before. I will share the code at the end.</p>
+<p>Let’s talk about these 3 leading technologies:</p>
+<h3 id="streamlit">Streamlit</h3>
+<p>Well if you are a Python developer, an AI expert, etc. you probably need to improve at the design side of the things like me. Streamlit comes to your help for these times.</p>
+<blockquote>
+<p>Streamlit turns data scripts into shareable web apps in minutes.
+All in pure Python. No front‑end experience required.</p>
+</blockquote>
+<h3 id="langchain">Langchain</h3>
+<p>We will talk more about this. I will drop the official introduction below:</p>
+<p>LangChain is a framework for developing applications powered by language models. It enables applications that are:</p>
+<ul>
+<li>Data-aware: connect a language model to other sources of data</li>
+<li>Agentic: allow a language model to interact with its environment</li>
+</ul>
+<p>The main value props of LangChain are:</p>
+<ol>
+<li>Components: abstractions for working with language models, along with a collection of implementations for each abstraction. Components are modular and easy to use, whether you are using the rest of the LangChain framework or not</li>
+<li>Off-the-shelf chains: a structured assembly of components for accomplishing specific higher-level tasks</li>
+</ol>
+<p>Off-the-shelf chains make it easy to get started. For more complex applications and nuanced use cases, components make it easy to customize existing chains or build new ones.</p>
+<h3 id="chatgpt">ChatGPT</h3>
+<p>We all know this part… So let’s start building!</p>
+<h2 id="data-loading">Data Loading</h2>
+<p>To answer questions, we need something to look at. Langchain has tons of different data loaders in <code>langchain.document_loader</code>. We will use only three of them.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.document_loaders </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> PyPDFLoader, TextLoader, UnstructuredURLLoader</span></span></code></pre>
+<p><strong>PyPDFLoader:</strong> It reads the pdf file, and creates an <code>Document</code>object for every page. You need to install the<code>pypdf</code> library to use it.</p>
+<p><strong>TextLoader:</strong> It reads the contents of a txt file, and creates a <code>Document</code> object.</p>
+<p><strong>UnstructuredURLLoader:</strong> It reads the body of the URL and returns every element as a doc. You need to install <code>unstructured python-magic</code> libraries to use this class. If you are on Windows install <code>python-magic-bin</code> too.</p>
+<p>Loading pdf and text files is very easy and similar</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_text_file</span><span style="color:#E1E4E8">(file_path: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> Document:</span></span>
+<span class="line"><span style="color:#E1E4E8">    doc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> TextLoader(file_path, </span><span style="color:#FFAB70">encoding</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">'utf-8'</span><span style="color:#E1E4E8">).load()[</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> doc</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_pdf_file</span><span style="color:#E1E4E8">(file_path: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> List[Document]:</span></span>
+<span class="line"><span style="color:#E1E4E8">    loader </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PyPDFLoader(file_path)</span></span>
+<span class="line"><span style="color:#E1E4E8">    docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> loader.load()</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> docs</span></span></code></pre>
+<p>Website loading is a little bit longer because we need to post-process it because they are mostly full of irrelevant text that needs to go to the thrash.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_website</span><span style="color:#E1E4E8">(url: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> Document:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """ Loads a website and returns a Document object.</span></span>
+<span class="line"><span style="color:#9ECBFF">    Args:</span></span>
+<span class="line"><span style="color:#9ECBFF">        url: Url of the website.</span></span>
+<span class="line"><span style="color:#9ECBFF">    Returns:</span></span>
+<span class="line"><span style="color:#9ECBFF">        A Document object.</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#E1E4E8">    doc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> UnstructuredURLLoader([url], </span><span style="color:#FFAB70">mode</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"elements"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">headers</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span></span>
+<span class="line"><span style="color:#9ECBFF">        'ssl_verify'</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"False"</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    }).load()</span></span>
+<span class="line"><span style="color:#E1E4E8">    processed_docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#6A737D">    # We are not rich, we need to eliminate some of the elements</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> range</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(doc)):</span></span>
+<span class="line"><span style="color:#6A737D">        # This will make us lose table information sorry about that :(</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">'category'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8">[</span><span style="color:#9ECBFF">'NarrativeText'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'UncategorizedText'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'Title'</span><span style="color:#E1E4E8">]:</span></span>
+<span class="line"><span style="color:#F97583">            continue</span></span>
+<span class="line"><span style="color:#6A737D">        # Remove elements with empty links, they are mostly recommended articles etc.</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">'links'</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">            link </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> doc[i].metadata[</span><span style="color:#9ECBFF">'links'</span><span style="color:#E1E4E8">][</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">][</span><span style="color:#9ECBFF">'text'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#E1E4E8"> link </span><span style="color:#F97583">is</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">                continue</span></span>
+<span class="line"><span style="color:#E1E4E8">            link </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> link.replace(</span><span style="color:#9ECBFF">' '</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">''</span><span style="color:#E1E4E8">).replace(</span><span style="color:#9ECBFF">'</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">''</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(link.split()) </span><span style="color:#F97583">==</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">                continue</span></span>
+<span class="line"><span style="color:#6A737D">        # Remove titles with links, they are mostly table of contents or navigation links</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">'category'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> 'Title'</span><span style="color:#F97583"> and</span><span style="color:#E1E4E8"> doc[i].metadata.get(</span><span style="color:#9ECBFF">'links'</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">            continue</span></span>
+<span class="line"><span style="color:#6A737D">        # Remove extra spaces</span></span>
+<span class="line"><span style="color:#E1E4E8">        doc[i].page_content </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> re.sub(</span><span style="color:#9ECBFF">' +'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">' '</span><span style="color:#E1E4E8">, doc[i].page_content)</span></span>
+<span class="line"><span style="color:#6A737D">        # Remove docs with less than 3 words</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(doc[i].page_content.split()) </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> 3</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            continue</span></span>
+<span class="line"><span style="color:#E1E4E8">        processed_docs.append(doc[i])</span></span>
+<span class="line"><span style="color:#6A737D">    #  Instead of splitting element-wise, we merge all the elements and split them in chunks</span></span>
+<span class="line"><span style="color:#E1E4E8">    merged_docs </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> "</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">"</span><span style="color:#E1E4E8">.join([doc.page_content </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> doc </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> processed_docs])</span></span>
+<span class="line"><span style="color:#E1E4E8">    splitter </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> RecursiveCharacterTextSplitter(</span><span style="color:#FFAB70">chunk_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">chunk_overlap</span><span style="color:#F97583">=</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    processed_docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> splitter.split_text(merged_docs)</span></span>
+<span class="line"><span style="color:#E1E4E8">    processed_docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [Document(</span><span style="color:#FFAB70">page_content</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">doc, </span><span style="color:#FFAB70">metadata</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">{</span><span style="color:#9ECBFF">'url'</span><span style="color:#E1E4E8">: url}) </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> doc </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> processed_docs]</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> processed_docs</span></span></code></pre>
+<p>To summarize the steps quickly:</p>
+<ol>
+<li>Read the HTML</li>
+<li>Filter all elements that are not a meaningful text</li>
+<li>Filter all elements that contain links with empty text</li>
+<li>Remove all extra spaces and filter out all elements with less than 3 words.</li>
+<li>Merge all texts and split them into chunks</li>
+</ol>
+<p>Okay, we load the data what’s next? Before continuing, we will learn about a prompting technique.</p>
+<h2 id="retrieval-augmented-generation">Retrieval Augmented Generation</h2>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="99" src="/_astro/img_1.DHZY1RIS_2qGs13.webp" srcset=""></p>
+<p>We’re facing two primary issues. Firstly, LLMs such as ChatGPT have difficulty reading lengthy texts, and even if they can, it’s an expensive process. Additionally, irrelevant details in the text can add noise and reduce answer quality, making it a waste of money. Secondly, LLMs tend to generate false information, which can lead to incorrect answers. To address these issues, we aim to provide only the essential context in the prompt and restrict the model to use only this context to answer the question.</p>
+<ol>
+<li>LLMs (or at least ChatGPT) cannot read very long text, even if it can it will be costly to do that. Even if we accept the cost, lots of irrelevant information about our question is a waste of money and it will introduce noise and reduce answer quality.</li>
+<li>LLMs like to hallucinate and gives false information.</li>
+</ol>
+<p>To solve these problems, we want to include only the necessary context to the prompt and make the model use only this context to answer the question.</p>
+<p>The algorithm:</p>
+<ol>
+<li>Read all the documents you have, and split them into smaller chunks(a hyper-parameter).</li>
+<li>Create embedding vectors of these chunks. Store these vectors in a vector store.</li>
+<li>When a query/question comes, create an embedding vector of the query and search for the most similar <code>k</code> chunks.</li>
+<li>Add the question and the selected chunks to the prompt and get the answer from the LLM.</li>
+</ol>
+<p>For the third point, there are some optimization methods but I invite you to search it yourself :) Now let’s go back to practice again!</p>
+<h2 id="data-indexing">Data Indexing</h2>
+<p>After we split out data into chunks, we can store it in a vector store.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.indexes </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> VectorstoreIndexCreator</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.vectorstores </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> DocArrayInMemorySearch</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.vectorstores.base </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> VectorStoreRetriever</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> create_index</span><span style="color:#E1E4E8">(docs: List[Document]) -> VectorStoreRetriever:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """ Creates a vectorstore index from a list of Document objects.</span></span>
+<span class="line"><span style="color:#9ECBFF">    Args:</span></span>
+<span class="line"><span style="color:#9ECBFF">        docs: List of Document objects.</span></span>
+<span class="line"><span style="color:#9ECBFF">    Returns:</span></span>
+<span class="line"><span style="color:#9ECBFF">        A vectorstore index. It searches the most similar document to the given query but with</span></span>
+<span class="line"><span style="color:#9ECBFF">        the help of MMR it also tries to find the most diverse document to the given query.</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#E1E4E8">    index </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> VectorstoreIndexCreator(</span></span>
+<span class="line"><span style="color:#FFAB70">        vectorstore_cls</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">DocArrayInMemorySearch,</span></span>
+<span class="line"><span style="color:#FFAB70">        text_splitter</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">RecursiveCharacterTextSplitter(</span><span style="color:#FFAB70">chunk_size</span><span style="color:#F97583">=</span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">chunk_overlap</span><span style="color:#F97583">=</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">    ).from_documents(docs)</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> index.vectorstore.as_retriever(</span><span style="color:#FFAB70">search_type</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">'mmr'</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>VectorstoreIndexCreator automatically creates embeddings of the documents using <code>OpenAIEmbeddings</code> and stores the embeddings in memory.</p>
+<blockquote>
+<p>To make this article not too long, I will not show the prompts here but we have 1 prompt. It is for generating the question that is suitable for searching in the vector store using the conversation history.</p>
+</blockquote>
+<h2 id="model-creation">Model Creation</h2>
+<p>We have documents, we have a vector store and we have our prompts. Now let’s put them together and create our bot.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.chat_models </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ChatOpenAI</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.chains </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ConversationalRetrievalChain</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.prompts </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> PromptTemplate</span></span>
+<span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> prompts </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> QUESTION_CREATOR_TEMPLATE</span><span style="color:#6A737D"> # This is a file I put the prompts</span></span>
+<span class="line"><span style="color:#B392F0">@st.cache_resource</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_chain</span><span style="color:#E1E4E8">(file_name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, file_type: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> file_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "text/plain"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_text_files([file_name])</span></span>
+<span class="line"><span style="color:#F97583">    elif</span><span style="color:#E1E4E8"> file_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "application/pdf"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_pdf_files([file_name])</span></span>
+<span class="line"><span style="color:#F97583">    elif</span><span style="color:#E1E4E8"> file_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "text/html"</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        docs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> load_website(file_name)</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.write(</span><span style="color:#9ECBFF">"File type is not supported!"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.stop()</span></span>
+<span class="line"><span style="color:#E1E4E8">    retriever </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> create_index(docs)</span></span>
+<span class="line"><span style="color:#E1E4E8">    condense_question_prompt </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PromptTemplate.from_template(</span><span style="color:#79B8FF">QUESTION_CREATOR_TEMPLATE</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">    chain </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ConversationalRetrievalChain.from_llm(</span></span>
+<span class="line"><span style="color:#E1E4E8">        ChatOpenAI(</span><span style="color:#FFAB70">model_name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"gpt-3.5-turbo"</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">temperature</span><span style="color:#F97583">=</span><span style="color:#79B8FF">0</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#E1E4E8">        retriever,</span></span>
+<span class="line"><span style="color:#FFAB70">        condense_question_llm</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">ChatOpenAI(</span><span style="color:#FFAB70">model_name</span><span style="color:#F97583">=</span><span style="color:#9ECBFF">"gpt-3.5-turbo"</span><span style="color:#E1E4E8">),</span></span>
+<span class="line"><span style="color:#FFAB70">        condense_question_prompt</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">condense_question_prompt,</span></span>
+<span class="line"><span style="color:#FFAB70">        verbose</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#E1E4E8">    )</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> chain</span></span></code></pre>
+<p><code>st.cache_resource</code> is used to cache the embeddings and our LLM in memory to not create embeddings again and again.</p>
+<p><code>PromptTemplate</code> is used to insert the necessary context and the question to the prompt.</p>
+<p><code>ChatOpenAI</code> will be used as the LLM. The default model is <code>chatgpt-3.5</code> . One LLM is used to create an answer and the other one will be used to create the standalone question to make searching better. I didn’t like the prompt to create the question so changed it to a better prompt.</p>
+<p><code>verbose</code> will print out what is behind the scenes</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="809" src="/_astro/img_2.D5YTv1T__wawfi.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="721" height="833" src="/_astro/img_3.4NzaT0Hw_Z1ArfBy.webp" srcset=""></p>
+<p>Lastly, to create meaningful questions, we need to know about our chat history. There are lots of ways to store memory:</p>
+<ol>
+<li>Saving all the conversation</li>
+<li>Saving last <code>k</code> messages</li>
+<li>Creating a summary after <code>k</code> messages/tokens</li>
+<li>…</li>
+</ol>
+<p>In this example, we will use the second one. We generally only need the last 3 messages to get the context and create questions. No need to use our money for more.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> langchain.memory </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ConversationBufferWindowMemory</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> load_memory</span><span style="color:#E1E4E8">(st) -> ConversationBufferWindowMemory:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """Load memory from session state</span></span>
+<span class="line"><span style="color:#9ECBFF">    Args:</span></span>
+<span class="line"><span style="color:#9ECBFF">        st: streamlit object</span></span>
+<span class="line"><span style="color:#9ECBFF">    Returns:</span></span>
+<span class="line"><span style="color:#9ECBFF">        memory_loader: ConversationBufferMemory object</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#E1E4E8">    memory </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ConversationBufferWindowMemory(</span><span style="color:#FFAB70">k</span><span style="color:#F97583">=</span><span style="color:#79B8FF">3</span><span style="color:#E1E4E8">, </span><span style="color:#FFAB70">return_messages</span><span style="color:#F97583">=</span><span style="color:#79B8FF">True</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#9ECBFF"> "messages"</span><span style="color:#F97583"> not</span><span style="color:#F97583"> in</span><span style="color:#E1E4E8"> st.session_state:</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.session_state[</span><span style="color:#9ECBFF">"messages"</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [</span></span>
+<span class="line"><span style="color:#E1E4E8">            {</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"assistant"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">"How can I help you?"</span><span style="color:#E1E4E8">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        ]</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> index, msg </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> enumerate</span><span style="color:#E1E4E8">(st.session_state.messages):</span></span>
+<span class="line"><span style="color:#E1E4E8">        st.chat_message(msg[</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">]).write(msg[</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">])</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> msg[</span><span style="color:#9ECBFF">"role"</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> "user"</span><span style="color:#F97583"> and</span><span style="color:#E1E4E8"> index </span><span style="color:#F97583">&#x3C;</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(st.session_state.messages) </span><span style="color:#F97583">-</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            memory.save_context(</span></span>
+<span class="line"><span style="color:#E1E4E8">                {</span><span style="color:#9ECBFF">"input"</span><span style="color:#E1E4E8">: msg[</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">]},</span></span>
+<span class="line"><span style="color:#E1E4E8">                {</span><span style="color:#9ECBFF">"output"</span><span style="color:#E1E4E8">: st.session_state.messages[index </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> 1</span><span style="color:#E1E4E8">][</span><span style="color:#9ECBFF">"content"</span><span style="color:#E1E4E8">]},</span></span>
+<span class="line"><span style="color:#E1E4E8">            )</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> memory</span></span></code></pre>
+<p>It takes a streamlit object as input. Check if there is a message from the last session. If yes load them to the memory, otherwise start with a welcome message. We will give this history to the model when we call it with user input.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>os.environ["OPENAI_API_KEY"] = "sk-blablabla"</span></span>
+<span class="line"><span>st.set_page_config(layout="wide")</span></span>
+<span class="line"><span>st.title("💬 QA Chatbot")</span></span>
+<span class="line"><span># Get a file</span></span>
+<span class="line"><span>uploaded_file = st.file_uploader("Choose a file", type=["txt", "pdf"])</span></span>
+<span class="line"><span>st.header("Or you can give a url")</span></span>
+<span class="line"><span>url = st.text_input("Url to parse")</span></span>
+<span class="line"><span>if uploaded_file is not None or url:</span></span>
+<span class="line"><span>    if uploaded_file:</span></span>
+<span class="line"><span>        # Save the file</span></span>
+<span class="line"><span>        with open(uploaded_file.name, "wb") as f:</span></span>
+<span class="line"><span>            f.write(uploaded_file.getbuffer())</span></span>
+<span class="line"><span>        chain = load_chain(uploaded_file.name, uploaded_file.type)</span></span>
+<span class="line"><span>    else:</span></span>
+<span class="line"><span>        chain = load_chain(url, "text/html")</span></span>
+<span class="line"><span>    st.write("## 🤖 Chatbot is ready to answer your questions!")</span></span>
+<span class="line"><span>    memory = load_memory(st)</span></span>
+<span class="line"><span>    if question := st.chat_input():</span></span>
+<span class="line"><span>        # Get and save the question</span></span>
+<span class="line"><span>        st.session_state.messages.append({"role": "user", "content": question})</span></span>
+<span class="line"><span>        st.chat_message("user").write(question)</span></span>
+<span class="line"><span>        # Get an answer using question and the conversation history</span></span>
+<span class="line"><span>        response = chain(</span></span>
+<span class="line"><span>            {</span></span>
+<span class="line"><span>                "question": question,</span></span>
+<span class="line"><span>                "chat_history": memory.load_memory_variables({})["history"],</span></span>
+<span class="line"><span>            }</span></span>
+<span class="line"><span>        )</span></span>
+<span class="line"><span>        answer = response["answer"]</span></span>
+<span class="line"><span>        # Save the answer</span></span>
+<span class="line"><span>        st.session_state.messages.append({"role": "assistant", "content": answer})</span></span>
+<span class="line"><span>        st.chat_message("assistant").write(answer)</span></span></code></pre>
+<p>And we are done! You can check the code from the <a href="https://github.com/NusretOzates/langchain_retrieval_qa_bot">GitHub repository</a> and ask any questions you have!</p>
+<h2 id="resources">Resources</h2>
+<ol>
+<li><a href="https://ai.meta.com/blog/retrieval-augmented-generation-streamlining-the-creation-of-intelligent-natural-language-processing-models/">https://ai.meta.com/blog/retrieval-augmented-generation-streamlining-the-creation-of-intelligent-natural-language-processing-models/</a></li>
+<li><a href="https://www.promptingguide.ai/">https://www.promptingguide.ai/</a></li>
+<li><a href="https://python.langchain.com/docs/get_started/introduction">https://python.langchain.com/docs/get_started/introduction</a></li>
+<li><a href="https://streamlit.io/">https://streamlit.io/</a></li>
+<li><a href="https://platform.openai.com/docs/introduction">https://platform.openai.com/docs/introduction</a></li>
+</ol></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/@m.nusret.ozates/unleashing-the-future-of-ai-powered-qa-chatbots-streamlit-langchain-retrieval-qa-chatgpt-53c0dd8876ed" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>Article Review: Searching for Build Debt Experiences Managing Technical Debt at Google · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script><script>(function(){const gaId = "G-FVW7859HWV";
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, {
+              anonymize_ip: true,
+              client_storage: "none",
+            });
+          })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Article Review: Searching for Build Debt Experiences Managing Technical Debt at Google</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2022-12-25T00:00:00.000Z" data-astro-cid-fbbco62y>December 25, 2022</time> · <span class="tag" data-astro-cid-fbbco62y>llm</span><span class="tag" data-astro-cid-fbbco62y>ml</span><span class="tag" data-astro-cid-fbbco62y>software</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image" loading="lazy" decoding="async" width="700" height="467" src="/_astro/img_0.D_YmOfAP_Z1QcGnW.webp" srcset=""></p>
+<p>Photo by <a href="https://unsplash.com/es/@freegraphictoday?utm_source=medium&#x26;utm_medium=referral">AbsolutVision</a> on <a href="https://unsplash.com?utm_source=medium&#x26;utm_medium=referral">Unsplash</a></p>
+<h2 id="introduction">Introduction</h2>
+<p>Google is one of the world’s most successful companies, and its success is based in part on how well it utilizes its resources. In this article review, we will be looking at the “Searching for Build Debt: Experiences Managing Technical Debt at Google” article, in which the authors provide an in-depth analysis of the experiences, practices, and lessons learned from their research on managing technical debt (more specifically BUILD debt) at Google. We will discuss the article’s findings and implications, as well as its implications for other organizations.</p>
+<h2 id="what-is-technical-debt">What is Technical Debt?</h2>
+<p>Technical debt is the cost associated with taking shortcuts when developing software. This debt can be accumulated when developers are in a rush to meet deadlines, or when they make decisions to save time in the short term that may cause long-term problems. The authors state that technical debt is “a pervasive challenge across organizations,” and it is a “necessary evil” in the software development process.</p>
+<h2 id="what-is-build-debt">What is Build Debt?</h2>
+<p>The specifications for building software at Google are encapsulated in BUILD files. BUILD files define modules of code (either at the library or binary level), list the source files and dependent libraries the module uses, and include additional metadata about building the project. They are manually maintained which means over time, these files can diverge from the actual dependencies to build, test, and execute the software. These build files can cause some other problems which we will discuss further.</p>
+<h2 id="googles-approach-to-build-debt">Google’s Approach to “Build Debt”</h2>
+<ol>
+<li>Automation. The fix must be automated whenever it is possible</li>
+<li>Make it easy to do the right thing. Analyze the changes during editing, browsing, or code review to prevent certain kinds of debt</li>
+<li>Make it hard to do the wrong thing. Ex. Prevent people from taking a dependency that is not ready for use by others. Build stricter checks into compile process and make them compile time error</li>
+</ol>
+<p>The team doesn’t own any software or library at Google. So their solutions are domain independent.</p>
+<h2 id="dependency-debt">Dependency Debt</h2>
+<p>We have 3 main keywords here:</p>
+<ol>
+<li>Over-declared dependencies. These are the dependencies you don’t need or use.</li>
+<li>Under-utilized dependencies. These are the ones you used very little.</li>
+<li>Under-declared dependencies. You are using these dependencies using another dependency.</li>
+</ol>
+<p>Let’s look at the third one a little bit more. So, your project’s name is A which depends on B and B depends on C. You are using a class from C, but you import it from project B.</p>
+<p>One day, project B will depend on project C and your project will not build! This makes your project more brittle.</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="622" height="309" src="/_astro/img_1.qT8tXTdL_VXEev.webp" srcset=""></p>
+<p>Target dependencies</p>
+<h2 id="addressing-dependency-debt">Addressing Dependency Debt</h2>
+<p>At first, we need to start finding under-declared dependencies and add those as direct dependencies. In the article, the authors found these dependencies using the javac compiler by getting classpaths of loaded classes.</p>
+<p>Second, we will find unused dependencies which are easier after the first step.</p>
+<p>Lastly, we need to find and eliminate under-utilized dependencies but we cannot do that automatically, because generally, the solution is dividing the target library into smaller libraries. To handle that, the authors created a tool called Clipper.</p>
+<h2 id="clipper">Clipper</h2>
+<p>Clipper is a dependency refactoring assistant. It looks at the dependency graph and suggests specific dependencies that would be good cleanup candidates. It uses a ranking algorithm to decide which dependency is easier than others. The factors are:</p>
+<ol>
+<li>The number of symbols defined by the target: The more symbols (e.g., variables, functions, classes) that are defined within the target system or codebase, the more work may be required to refactor it.</li>
+<li>The cumulative number of symbols in the transitive closure of the target’s dependencies: This refers to the number of symbols defined by the target’s dependencies, as well as the dependencies of those dependencies, and so on. The more symbols there are in the transitive closure, the more complex the refactoring effort may be.</li>
+<li>The utilization of symbols: If the symbols defined by the target and its dependencies are heavily used within the codebase, it may be more difficult to refactor them without breaking the system.</li>
+<li>Dependency proximity or depth: This refers to the number of “hops” or intermediary dependencies between the target and its dependencies. The more hops there are, the more complex the refactoring effort may be.</li>
+<li>Dependency interconnectedness or density: This refers to the total number of paths that lead to a dependency. If there are many paths leading to a dependency, it may be more difficult to refactor the dependency without affecting the rest of the system.</li>
+</ol>
+<h2 id="zombie-targets">Zombie Targets</h2>
+<p>Some projects in Google’s code can be abandoned and become forgotten. But even these projects are visible to everyone to use. And when these projects are used by active projects, most of the time engineers had to fix bugs in an unmaintained project. To find these zombie targets, Google uses a system that looks for:</p>
+<ol>
+<li>When was the last time this target was built successfully</li>
+<li>When was the last time someone attempted to build this target</li>
+</ol>
+<p>If a target failed to build for at least 90 days, it will be declared dead and removed from the codebase.</p>
+<h2 id="visibility-debt">Visibility Debt</h2>
+<p>When you can view all other projects and use them as a dependency, you can depend on a project that is not ready for sharing or not intended to be shared with other people. If a project depends on your project, you won’t know until you break something on their side. To fix this, the team decided to make all new projects’ default visibility private and all old projects’ visibility “legacy public”. If a team wants to use another team’s code, they need to talk and agree on whether the API is ready to share and under what conditions.</p>
+<p>This caused a lot of drama within Google! “This is un-Googley,” they said. “It will lead to lots of code duplication,” they said. “It will cause widespread build breakages,” they said. But none of this happened, and they changed the visibility system with minimal drama.</p>
+<p><strong>Funny fact: Nearly half of the new files start out publicly visible despite the new default, a reminder of Googler’s attitude toward openness.</strong></p>
+<blockquote>
+<p><em>Lesson learned: any change will always be opposed by someone and in a large organization it is important to have an independent group that is empowered to make decisions based on a global cost-benefit analysis.</em></p>
+</blockquote>
+<blockquote>
+<p><em>— The authors</em></p>
+</blockquote>
+<h2 id="dead-flags">Dead Flags</h2>
+<p>You know, the options you use when you’re using a CLI app from terminals? When you want to make your library more customizable, test something, or experiment, you add some flags. This causes dead code to be added to the library, and these options guard it. Some flags can be removed, and some can be replaced with a constant. The authors organized a Fixit day, and engineers removed 2300 flags from the codebase. As a result, 272,000 lines of code were removed too!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Build debt reduces engineer productivity with slower builds, more fragile projects, and upkeep of broken libraries. It also increases the cost of building, running, and testing projects.</p>
+<p>The article’s final recommendations are:</p>
+<ol>
+<li>Since many engineers oppose addressing technical debt because it could slow them down or lead to code duplication, prioritizing and managing it can’t always be left to individual teams.</li>
+<li>As codebase size increases, the cost of recovering from technical debt rises non-linearly. Thus, it’s essential to pay attention to these debts early and invest in tools, policies, and processes that make an organization aware of the debt and make it easy to continually repay/avoid it as part of each engineer’s regular workflow.</li>
+</ol>
+<h2 id="reference">Reference</h2>
+<p>Original article: <a href="https://research.google/pubs/pub37755/">https://research.google/pubs/pub37755/</a></p></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/dev-genius/article-review-searching-for-build-debt-experiences-managing-technical-debt-at-google-7851014563ab" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>

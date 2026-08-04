@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>Good Design Practices with Python — Defensive Programming · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script><script>(function(){const gaId = "G-FVW7859HWV";
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, {
+              anonymize_ip: true,
+              client_storage: "none",
+            });
+          })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Good Design Practices with Python — Defensive Programming</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2022-04-05T00:00:00.000Z" data-astro-cid-fbbco62y>April 5, 2022</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span><span class="tag" data-astro-cid-fbbco62y>software</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image" loading="lazy" decoding="async" width="700" height="890" src="/_astro/img_0.Dfx48jGM_1h4VSu.webp" srcset=""></p>
+<p>Photo by <a href="https://unsplash.com/@rainrainbowchou?utm_source=medium&#x26;utm_medium=referral">Rita Chou</a> on <a href="https://unsplash.com?utm_source=medium&#x26;utm_medium=referral">Unsplash</a></p>
+<h2 id="intro">Intro</h2>
+<p>As software engineers, we write code most of the time. We have some tight deadlines and because of these deadlines, we tend to write code fast without thinking about the design. This choice comes with consequences. It actually makes you slower because you write the code so urgently that you forgot that client’s requests will change faster than you thought and when that time comes to you. It will be very hard to change your code. You will look at the code and say “oh I need to change this part and it is done” and then you will realize that the change broke a completely different part of the code, you will change that too and realize this change broke another part of your code and so on…</p>
+<p>We don’t want that, think before coding, and give yourself some time to design architecture. Think about how you could test that chunk of code and only after that start coding. To make your life easier, there are some design “principals” out there and I will explain them with examples using Python. This is part 2 of this series.</p>
+<h2 id="defensive-programming">Defensive Programming</h2>
+<p>Defensive programming is all about handling exceptions we expect to happen or think impossible to happen(but yes it is possible). In defensive programming, we are trying to defend our program against invalid input, unexpected or expected scenarios( such as key not found errors).</p>
+<h2 id="error-handling">Error Handling</h2>
+<p>The main idea of error handling is deciding how to proceed with errors we expect. There are three main ways to handle errors.</p>
+<ol>
+<li>Value substitution</li>
+<li>Error logging</li>
+<li>Exception handling</li>
+</ol>
+<p>Error logging is just… You know logging the error, you should always do that.</p>
+<h2 id="value-substitution">Value Substitution</h2>
+<p>This means when an incorrect input comes, you can change the value of that input to something acceptable, maybe a default value to prevent error. But I don’t recommend doing this type of error handling as this makes the code more robust but broke the correctness of the function. This is problematic, especially in critical functions.</p>
+<blockquote>
+<p>👉 A software program is robust when it does not fail, even in the presence of an erroneous scenario. But this is not correct either.</p>
+</blockquote>
+<p>The safer approach is using default values for missing parameters or configurations or environment values if they can work correctly with a default value. In the machine learning field, we have this case a lot.</p>
+<h2 id="exception-handling">Exception Handling</h2>
+<p>There are some cases where you can’t continue with corrupt data or you try to communicate with an external component such as databases, library functions, or APIs and they fail to work and you cannot continue to execution of your function. In such cases, we have to notify the program that there is an error and we cannot ignore it.</p>
+<blockquote>
+<p><em>The mechanism for accomplishing this is an exception. It is important to emphasize that this is what exceptions should be used for — clearly announcing an exceptional situation, and not altering the flow of the program according to business logic.</em></p>
+</blockquote>
+<p>👉 Do not use exceptions as a go-to mechanism! Use exceptions only to report exceptional stations with lots of details. Don’t do this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">	x </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> event.get_user(</span><span style="color:#9ECBFF">'12345'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">except</span><span style="color:#E1E4E8"> UserNotFoundError:</span></span>
+<span class="line"><span style="color:#E1E4E8">	x </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#6A737D"># Do something with x</span></span></code></pre>
+<p>The number of exceptions in a function can give you a nice idea about whether the function is small enough and has a single responsibility. If a function raises lots of exceptions, probably that function has too many responsibilities and can be broken down into smaller functions.</p>
+<h2 id="good-exception-handling-practices">Good Exception Handling Practices</h2>
+<h3 id="handling-exceptions-at-the-right-level-of-abstraction">Handling exceptions at the right level of abstraction</h3>
+<p>Let’s go through an example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EventProducer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> produce</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            parsed </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.parse(event)</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.send(parsed)</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> ValueError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> err:</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">            raise</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> ConnectionError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> err:</span></span>
+<span class="line"><span style="color:#79B8FF">            print</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">            raise</span></span>
+<span class="line"><span style="color:#F97583">	return</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> send</span><span style="color:#E1E4E8">(self, parsed):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.connection.send(parsed)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> parse</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> event</span></span></code></pre>
+<p>This is a bad example! For this example, I’m not talking about missing type hintings and docstrings or using print instead of log. The exceptions are handled in the wrong part of the code. We expect <code>ValueError</code> in the <code>parse()</code> function and <code>ConnectionError</code> in the <code>send()</code> function. So, this handling should be in these functions.</p>
+<p>This approach is better:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> logging</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EventProducer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> produce</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#E1E4E8">        parsed </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.parse(event)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.send(parsed)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> send</span><span style="color:#E1E4E8">(self, parsed):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.connection.send(parsed)</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> ConnectionError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> err:</span></span>
+<span class="line"><span style="color:#E1E4E8">            logging.error(err)</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ConnectionError</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> parse</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#F97583">        try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.parser.parse(event)</span></span>
+<span class="line"><span style="color:#F97583">        except</span><span style="color:#79B8FF"> ValueError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> err:</span></span>
+<span class="line"><span style="color:#E1E4E8">            logging.error(err)</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(err)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> event</span></span></code></pre>
+<p><strong>Do not expose tracebacks to end-users</strong></p>
+<p>We need to collect lots of information to do better debugging. But this info is very valuable for hackers too. So, we need to collect that information but do not show it to the users. Some generic responses could help, such as “Not Found”</p>
+<p><strong>Avoid empty except blocks</strong></p>
+<blockquote>
+<p><em>This was even referred to as the most diabolical Python anti-pattern.</em></p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># Please don't do that</span></span>
+<span class="line"><span style="color:#F97583">try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">    process_data()</span></span>
+<span class="line"><span style="color:#F97583">except</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    pass</span></span>
+<span class="line"><span style="color:#6A737D"># If you really want to do that use a specific exception</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> contextlib</span></span>
+<span class="line"><span style="color:#F97583">with</span><span style="color:#E1E4E8"> contextlib.suppress(</span><span style="color:#79B8FF">KeyError</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#E1E4E8">    process_data()</span></span></code></pre>
+<p>I’m using the last one when I create a folder because if it already exists it will raise an exception but I don’t care. I only care about creation if it doesn’t exist.</p>
+<p><strong>Include the original exception</strong></p>
+<p>Sometimes we create special exception classes for our use cases and raise that exception. This is a good approach but you shouldn’t forget to include the original exception like in the example below:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> InternalDataError</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">Exception</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">    """An exception with the data of our domain problem."""</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> process</span><span style="color:#E1E4E8">(data_dictionary, record_id):</span></span>
+<span class="line"><span style="color:#F97583">    try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> data_dictionary[record_id]</span></span>
+<span class="line"><span style="color:#F97583">    except</span><span style="color:#79B8FF"> KeyError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> e:</span></span>
+<span class="line"><span style="color:#F97583">        raise</span><span style="color:#E1E4E8"> InternalDataError(</span><span style="color:#9ECBFF">"Record not present"</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">from</span><span style="color:#E1E4E8"> e</span></span></code></pre>
+<p>And that’s all! Thank you for reading!</p>
+<h2 id="references">References</h2>
+<ol>
+<li>Clean Code in Python — Mariano Anaya</li>
+</ol></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/@m.nusret.ozates/good-design-practices-with-python-defensive-programming-bc859fe084ea" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>

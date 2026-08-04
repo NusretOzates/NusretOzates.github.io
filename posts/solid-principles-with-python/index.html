@@ -1,0 +1,310 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>SOLID Principles with Python · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script><script>(function(){const gaId = "G-FVW7859HWV";
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, {
+              anonymize_ip: true,
+              client_storage: "none",
+            });
+          })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>SOLID Principles with Python</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2022-04-11T00:00:00.000Z" data-astro-cid-fbbco62y>April 11, 2022</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span><span class="tag" data-astro-cid-fbbco62y>mlops</span><span class="tag" data-astro-cid-fbbco62y>software</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image" loading="lazy" decoding="async" width="700" height="464" src="/_astro/img_0.DAxLWnA-_1jJTsL.webp" srcset=""></p>
+<p>Photo by <a href="https://unsplash.com/@neonbrand?utm_source=medium&#x26;utm_medium=referral">NeONBRAND</a> on <a href="https://unsplash.com?utm_source=medium&#x26;utm_medium=referral">Unsplash</a></p>
+<p>SOLID principles are a series of good practices that will make you write better quality software. This looks like a long article but actually it is not. Just the codes takes a little bit more space :)</p>
+<blockquote>
+<p>💡 <strong>SOLID</strong> stands for:</p>
+</blockquote>
+<blockquote>
+<p><strong>S:</strong> Single responsibility principle</p>
+</blockquote>
+<blockquote>
+<p><strong>O:</strong> Open/Closed principle</p>
+</blockquote>
+<blockquote>
+<p><strong>L:</strong> Liskov’s substitution principle</p>
+</blockquote>
+<blockquote>
+<p><strong>I:</strong> Interface segregation principle</p>
+</blockquote>
+<blockquote>
+<p><strong>D:</strong> Dependency inversion principle</p>
+</blockquote>
+<h2 id="single-responsibility-principle">Single Responsibility Principle</h2>
+<p>For Turkish readers, I will summarize this principle with only one sentence: “Nerede çokluk orada ….”:)</p>
+<p>A software component must have only one responsibility. It must have only one reason to change. If you need to modify the class for different reasons, this means something( an abstraction) is missing and you need to fix this. If a class has lots of responsibilities this class is often called a “God class” because they know too much or do too much, more than they should do. This type of class is very hard to maintain and the smaller the class, the better.</p>
+<blockquote>
+<p><em>What we strive to achieve here is that classes are designed in such a way that most of their properties and their attributes are used by their methods, most of the time. When this happens, we know they are related concepts, and therefore it makes sense to group them under the same abstraction.</em></p>
+</blockquote>
+<p>For example, when you look at the methods of the class and see there are some unrelated functions (with each other), you can tell that this class has to be broken down.</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="700" height="210" src="/_astro/img_1.eimkepb6_Z1y8hOv.webp" srcset=""></p>
+<p>Single Responsibility Principle Example</p>
+<p>Take a loot at the <code>SystemMonitor</code> class. You can see there are three different reasons to make a change in this class. Maybe we decide to change how we load the activities, parse the events, or how we send the events (maybe we’ve decided to use Redis Streams instead of Kafka).</p>
+<p>The picture on the right is better and reuseable. If we need to change something in how we load the data, we will only modify one class and the other classes will know nothing <strong>if we do not break the contract</strong>. Additionally, we can create an interface for let’s say loading events with a load function and we can use that interface to create classes with different loading codes (maybe loading from different sources). And we can use these classes as a plug-and-play.</p>
+<p>The classes could have more than one method as long as they serve the same purpose.</p>
+<blockquote>
+<p>💡 Try with one big monolithic class first and then try to separate it. This will help to get a clearer picture of the new abstraction that you need to create.</p>
+</blockquote>
+<h2 id="open-closed-principle">Open-Closed Principle</h2>
+<p>A class must be open to extension but closed to modification. When we want to add new things to our model, we only want to add new things and not change anything existing that is closed to modification. This principle is very easy to understand with a concrete example. Let’s start with a bad example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Employee</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, salary: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.salary </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> salary</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Tester</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Employee</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, salary: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, salary)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> test</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{}</span><span style="color:#9ECBFF"> is testing"</span><span style="color:#E1E4E8">.format(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.name))</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Developer</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Employee</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, salary: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, salary)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> develop</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{}</span><span style="color:#9ECBFF"> is developing"</span><span style="color:#E1E4E8">.format(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.name))</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Company</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> work</span><span style="color:#E1E4E8">(self, employee):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(employee, Developer):</span></span>
+<span class="line"><span style="color:#E1E4E8">            employee.develop()</span></span>
+<span class="line"><span style="color:#F97583">        elif</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(employee, Tester):</span></span>
+<span class="line"><span style="color:#E1E4E8">            employee.test()</span></span>
+<span class="line"><span style="color:#F97583">        else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> Exception</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Unknown employee"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>Why this is a bad example? Think about it for a second. How can you add an <code>Analyst</code> to this “Company”? Well, you can create a new class as a subclass of the <code>Employee</code> and then add one more if to Company’s work function. Well yes, it works but did you really like the solution? What will you do when new types of Employees come? This if-elif chain eventually will become hell and very hard to maintain. Now let’s see how we can fix this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Employee</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, salary: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.salary </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> salary</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> work</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Tester</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Employee</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, salary: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, salary)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> test</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{}</span><span style="color:#9ECBFF"> is testing"</span><span style="color:#E1E4E8">.format(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.name))</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> work</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.test()</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Developer</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Employee</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, salary: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, salary)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> develop</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"</span><span style="color:#79B8FF">{}</span><span style="color:#9ECBFF"> is developing"</span><span style="color:#E1E4E8">.format(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.name))</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> work</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.develop()</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Company</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> work</span><span style="color:#E1E4E8">(self, employee: Employee):</span></span>
+<span class="line"><span style="color:#E1E4E8">        employee.work()</span></span>
+<span class="line"><span style="color:#E1E4E8">carbon </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Company(</span><span style="color:#9ECBFF">"Carbon"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">developer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Developer(</span><span style="color:#9ECBFF">"Nusret"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"1000000"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">tester </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Tester(</span><span style="color:#9ECBFF">"Someone"</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"1000000"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">carbon.work(developer) </span><span style="color:#6A737D"># Will print Nusret is developing</span></span>
+<span class="line"><span style="color:#E1E4E8">carbon.work(tester) </span><span style="color:#6A737D"># Will print Someone is testing</span></span></code></pre>
+<p>What changed? Now <code>Employee</code> is an abstract class and it has an abstract method called work. All subclasses of this class have to implement a work function. <code>Developer</code> calls its develop method and <code>Tester</code> calls its test method. In the company, all we had to do is calling the <code>work()</code> method of the given employee. If I need to add a new Employee like an Analyst, all I need to do is implement the <code>work()</code> method and done!</p>
+<h2 id="liskovs-substitution-principle">Liskov’s Substitution Principle</h2>
+<p>The formal definition is:</p>
+<blockquote>
+<p><em>if</em>S<em>is a subtype of</em>T*, then objects of type<em>T</em>may be replaced by objects of type<em>S</em>, without breaking the program.*</p>
+</blockquote>
+<p>I will begin with a rule special to Python and then show the general example. Why there is a special rule for Python? Because no one can stop you from doing this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> SuperClass</span><span style="color:#E1E4E8">:</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">	def</span><span style="color:#B392F0"> check</span><span style="color:#E1E4E8">(name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">)-> </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> name</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> SubClass</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">SuperClass</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">	def</span><span style="color:#B392F0"> check</span><span style="color:#E1E4E8">(name: </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">		return</span><span style="color:#E1E4E8"> name</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> AnotherSubclass</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">SuperClass</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">		def</span><span style="color:#B392F0"> check</span><span style="color:#E1E4E8">(name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, surname: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">tuple</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">			return</span><span style="color:#E1E4E8"> name, surname</span></span></code></pre>
+<p>The program will work buuut… it will eventually crash somewhere. So, this is the special rule for Python because it allows doing this… How to protect yourself from these types of situations? The answer is holy python tool <strong>mypy</strong> and <strong>pylint.</strong> Both tools help you to find those mistakes and more!</p>
+<p>The second rule comes from the design by contract principle:</p>
+<ul>
+<li>A subclass can never make preconditions stricter than they are defined in the parent class</li>
+<li>A subclass can never make postconditions weaker than they are defined in the parent class</li>
+</ul>
+<p>Let’s say your base class checks a dictionary and raises an Exception if the dictionary doesn’t contain the key “session_id”. A subclass of this class cannot say “The dictionary has to contain a key “class_id” too”. And if your base class checks if the returned value is a dictionary with a key “result”, you can’t lift this restriction in the subclass.</p>
+<p>Now let’s give a more general example independent from 🐍 . Let’s say we have a class structure like this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Member</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, age: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Teacher</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, age: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">, teacher_id: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.teacher_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> teacher_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving teacher data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Student</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, age: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8"> , student_id: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.student_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> student_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving student data to database"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>We can successfully run this code with this structure:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> typing </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> List</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>members: List[Member] = []</span></span>
+<span class="line"><span>members.apped(Student('nusret',23,"12345"))</span></span>
+<span class="line"><span>members.apped(Teacher('Teacher_nusret',23,"12345"))</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>for member in members:</span></span>
+<span class="line"><span>	member.save_database()</span></span></code></pre>
+<p>Now let’s modify the code and add one more abstract method <code>pay()</code>. For the sake of easiness, I will assume students cannot pay because it is free for them.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Member</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Teacher</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age, teacher_id):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.teacher_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> teacher_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving teacher data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Paying"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Manager</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age, manager_id):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.manager_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> manager_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving manager data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Paying"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Student</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age, student_id):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.student_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> student_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving student data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        raise</span><span style="color:#79B8FF"> NotImplementedError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"It is free for students!"</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> typing </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> List</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>members: List[Member] = []</span></span>
+<span class="line"><span>members.apped(Student('nusret',23,"12345"))</span></span>
+<span class="line"><span>members.apped(Teacher('Teacher_nusret',23,"12345"))</span></span></code></pre>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>for member in members:</span></span>
+<span class="line"><span>	member.pay()</span></span></code></pre>
+<p>Now this example cannot work! Both classes are a subclass of the Member class but the Student class will throw exceptions or not work as expected. This is against the rule. If a <code>Member</code> has to pay, we can clearly say that a <code>Student</code>cannot be a <code>Member</code>. To solve this problem, we can remove the <code>pay()</code> method from <code>Member</code> and create a new abstract class <code>Payer</code>. Very sorry for the naming but I couldn’t come up with a better name… Now our structure should be like this:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Payer</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Member</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Teacher</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Payer</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age, teacher_id):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.teacher_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> teacher_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving teacher data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Paying"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Manager</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">, </span><span style="color:#B392F0">Payer</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age, manager_id):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.manager_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> manager_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving manager data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Paying"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Student</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Member</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age, student_id):</span></span>
+<span class="line"><span style="color:#79B8FF">        super</span><span style="color:#E1E4E8">().</span><span style="color:#79B8FF">__init__</span><span style="color:#E1E4E8">(name, age)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.student_id </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> student_id</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> save_database</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">"Saving student data to database"</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">payers: List[Payer] </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> [Teacher(</span><span style="color:#9ECBFF">"John"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">30</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"123"</span><span style="color:#E1E4E8">), Manager(</span><span style="color:#9ECBFF">"Mary"</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">25</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">"456"</span><span style="color:#E1E4E8">)]</span></span>
+<span class="line"><span style="color:#F97583">for</span><span style="color:#E1E4E8"> payer </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> payers:</span></span>
+<span class="line"><span style="color:#E1E4E8">    payer.pay()</span></span></code></pre>
+<p>Now, this will work and it is appropriate for the principle!</p>
+<h2 id="interface-segregation-principle">Interface Segregation Principle</h2>
+<p>Instead of one fat interface, create interfaces as small as possible based on a group of methods each one serving one submodule. For example, this is a bad example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ABCMeta, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EventParser</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">metaclass</span><span style="color:#F97583">=</span><span style="color:#B392F0">ABCMeta</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">	@abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">	def</span><span style="color:#B392F0"> from_xml</span><span style="color:#E1E4E8">(xml_data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">		"Parse an event from XML"</span></span>
+<span class="line"><span style="color:#B392F0">	@abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">	def</span><span style="color:#B392F0"> from_json</span><span style="color:#E1E4E8">(json_data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">		"Parse an event from JSON"</span></span></code></pre>
+<p>Why this is bad? Because what if a class that implements this interface doesn’t need to use the from_json method? Here we force a class to implement an interface they don’t want to use. The true approach is to create 2 different interfaces for those functions.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#E1E4E8"> ABCMeta, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> XMLEventParser</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">metaclass</span><span style="color:#F97583">=</span><span style="color:#B392F0">ABCMeta</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">	@abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">	def</span><span style="color:#B392F0"> from_xml</span><span style="color:#E1E4E8">(xml_data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">		"Parse an event from XML"</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> JSONEventParser</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">metaclass</span><span style="color:#F97583">=</span><span style="color:#B392F0">ABCMeta</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">	@abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">	def</span><span style="color:#B392F0"> from_json</span><span style="color:#E1E4E8">(json_data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#9ECBFF">		"Parse an event from JSON"</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> RestClient</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">JSONEventParser</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">	...</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> SoapClient</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">XMLEventParser</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">	...</span></span></code></pre>
+<h2 id="dependency-inversion">Dependency Inversion</h2>
+<p>Let’s say you need to charge your phone. You would connect the adapter to the socket and it is done. You wouldn’t think about what is behind the wall and details of how you get the electricity (I mean if you are not an electrical engineer or something like that). This should be the case with your classes too. Your high-level classes (such as ActivityStreamer) should depend upon abstractions/interfaces, not concrete classes. Let’s give an example of bad practice:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Syslog</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> write</span><span style="color:#E1E4E8">(self, msg):</span></span>
+<span class="line"><span style="color:#F97583">        with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'path'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'a'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#E1E4E8">            f.write(msg)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EventStreamer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.event_stream </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Syslog()</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> send_event</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.event_stream.write(event)</span></span></code></pre>
+<p>What are the problems with that code?</p>
+<ol>
+<li>What if the name of the <code>write()</code> method changes? This class could be from a library or could be a class from the other team. Now you had to change your code when they change too because you depend on a concrete class in your high-level class.</li>
+<li>If we want to change the data destination for a different one or add new ones at runtime, we are also in trouble because we will find ourselves constantly modifying the <code>stream()</code> method to adapt it to these requirements.</li>
+</ol>
+<p>How could we design our classes so that we could get rid of those problems?</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EventSender</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> send</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Syslog</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">EventSender</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> write</span><span style="color:#E1E4E8">(self, msg):</span></span>
+<span class="line"><span style="color:#F97583">        with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'path'</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">'a'</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#E1E4E8">            f.write(msg)</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> send</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.write(event)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> EventStreamer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, sender: EventSender):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.event_stream </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> sender</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> send_event</span><span style="color:#E1E4E8">(self, event):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.event_stream.send(event)</span></span></code></pre>
+<p>Here we are depending on the abstraction using <code>EventSender</code>. Whatever subclass we get, we can just call <code>send()</code> method of this and we know that our event will be sent to the true place. And If we wanted to change the destination, we can just create a different subclass and give it in the <code>__init__()</code> method of <code>EventStreamer</code>.</p>
+<p>I think that is all I can say! Thanks for reading!</p>
+<h2 id="references">References</h2>
+<ol>
+<li>Clean Code in Python — Mariano Anaya</li>
+<li><a href="https://www.youtube.com/watch?v=BLcnGmsZ5EE">https://www.youtube.com/watch?v=BLcnGmsZ5EE</a></li>
+<li><a href="https://www.youtube.com/watch?v=i0qmhk41QVM">https://www.youtube.com/watch?v=i0qmhk41QVM</a></li>
+<li><a href="https://www.youtube.com/watch?v=M6rwl_AZPJg">https://www.youtube.com/watch?v=M6rwl_AZPJg</a></li>
+<li><a href="https://www.youtube.com/watch?v=onp6gcvVvIM">https://www.youtube.com/watch?v=onp6gcvVvIM</a></li>
+</ol></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/@m.nusret.ozates/solid-principles-with-python-245e45f9b1f8" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>

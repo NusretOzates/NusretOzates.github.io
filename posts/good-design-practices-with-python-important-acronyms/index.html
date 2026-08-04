@@ -1,0 +1,127 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Machine Learning Engineer — NLP, medical imaging, MLOps."><link rel="icon" href="/favicon.png" type="image/png"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Source+Sans+3:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet"><title>Good Design Practices with Python — Important Acronyms · Nusret Özateş</title><script>
+      const stored = localStorage.getItem("theme");
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (stored === "dark" || (!stored && prefersDark)) document.documentElement.dataset.theme = "dark";
+    </script><script async src="https://www.googletagmanager.com/gtag/js?id=G-FVW7859HWV"></script><script>(function(){const gaId = "G-FVW7859HWV";
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", gaId, {
+              anonymize_ip: true,
+              client_storage: "none",
+            });
+          })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Good Design Practices with Python — Important Acronyms</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2022-04-05T00:00:00.000Z" data-astro-cid-fbbco62y>April 5, 2022</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image" loading="lazy" decoding="async" width="700" height="467" src="/_astro/img_0.CsOg-dqz_1NdLeR.webp" srcset=""></p>
+<p>Photo by <a href="https://unsplash.com/@benchaccounting?utm_source=medium&#x26;utm_medium=referral">Bench Accounting</a> on <a href="https://unsplash.com?utm_source=medium&#x26;utm_medium=referral">Unsplash</a></p>
+<h2 id="intro">Intro</h2>
+<p>As software engineers, we write code most of the time. We have some tight deadlines and because of these deadlines, we tend to write code fast without thinking about the design. This choice comes with consequences. It actually makes you slower because you write the code so urgently that you forgot that client’s requests will change faster than you thought and when that time comes to you. It will be very hard to change your code. You will look at the code and say “oh I need to change this part and it is done” and then you will realize that the change broke a completely different part of the code, you will change that too and realize this change broke another part of your code and so on…</p>
+<p>We don’t want that, think before coding, and give yourself some time to design architecture. Think about how you could test that chunk of code and only after that start coding. To make your life easier, there are some design “principals” out there and I will explain them with examples using Python. This is the last part of the series.</p>
+<h2 id="dont-repeat-yourself--dry">Don’t Repeat Yourself — DRY</h2>
+<p>When writing a program, you will (probably) find yourself writing the same code again and again. When a change is required, will you change all of those same codes again? Let’s look at some examples:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> function_a</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'conversations'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> function_b</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'conversations'</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> function_c</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">'conversations'</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>To add a story, let’s say “conversations” is the name of a database table we need to connect. If the name of that database somehow changes, what will you do? You will make a change 3 times and you will not that lucky about finding those functions especially if you are not the one that writes all of those codes. Instead, we can write code like that:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#79B8FF">DB_NAME</span><span style="color:#F97583"> =</span><span style="color:#9ECBFF"> 'conversations'</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> function_a</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">DB_NAME</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> function_b</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">DB_NAME</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> function_c</span><span style="color:#E1E4E8">():</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">DB_NAME</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>Now I can just change the DB_NAME variable’s value and do the all necessary changes at once. Now we will go one step further and look at examples with more code. Say, we are doing a credit risk program and we need to calculate a score based on the user’s info:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> do_something</span><span style="color:#E1E4E8">(user: </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#9ECBFF">    Do something with user's credit score.</span></span>
+<span class="line"><span style="color:#9ECBFF">    :param user: User's information</span></span>
+<span class="line"><span style="color:#9ECBFF">    :return: None</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#E1E4E8">    age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'age'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    income </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'income'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    education </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'education'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    loan </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'loan'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    score </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> income </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.7</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> education </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.6</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> loan </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.3</span></span>
+<span class="line"><span style="color:#6A737D">    # Do something with the score</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> sort_users_by_score</span><span style="color:#E1E4E8">(users: </span><span style="color:#79B8FF">list</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">list</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#9ECBFF">    Sort users by credit score.</span></span>
+<span class="line"><span style="color:#9ECBFF">    :param users: List of users</span></span>
+<span class="line"><span style="color:#9ECBFF">    :return: Sorted list of users</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> sorted</span><span style="color:#E1E4E8">(users, </span><span style="color:#FFAB70">key</span><span style="color:#F97583">=</span><span style="color:#F97583"> lambda</span><span style="color:#E1E4E8"> user: user[</span><span style="color:#9ECBFF">'age'</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'income'</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.7</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'education'</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.6</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'loan'</span><span style="color:#E1E4E8">] </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.3</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p>Maybe one day your boss come to you and said “We will change the calculation of score”. Now, you need to change all the calculations from the code, if you can find them all! A better approach is:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> calculate_user_credit_score</span><span style="color:#E1E4E8">(user: </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#9ECBFF">    Calculate the user's credit score.</span></span>
+<span class="line"><span style="color:#9ECBFF">    :param user: User's information</span></span>
+<span class="line"><span style="color:#9ECBFF">    :return: User's credit score</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#E1E4E8">    age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'age'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    income </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'income'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    education </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'education'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#E1E4E8">    loan </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> user[</span><span style="color:#9ECBFF">'loan'</span><span style="color:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.2</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> income </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.7</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> education </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.6</span><span style="color:#F97583"> +</span><span style="color:#E1E4E8"> loan </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.3</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> do_something</span><span style="color:#E1E4E8">(user: </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">None</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#9ECBFF">    Do something with user's credit score.</span></span>
+<span class="line"><span style="color:#9ECBFF">    :param user: User's information</span></span>
+<span class="line"><span style="color:#9ECBFF">    :return: None</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#E1E4E8">    score </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> calculate_user_credit_score(user)</span></span>
+<span class="line"><span style="color:#6A737D">    # Do sometging with the score</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> sort_users_by_score</span><span style="color:#E1E4E8">(users: </span><span style="color:#79B8FF">list</span><span style="color:#E1E4E8">) -> </span><span style="color:#79B8FF">list</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#9ECBFF">    Sort users by credit score.</span></span>
+<span class="line"><span style="color:#9ECBFF">    :param users: List of users</span></span>
+<span class="line"><span style="color:#9ECBFF">    :return: Sorted list of users</span></span>
+<span class="line"><span style="color:#9ECBFF">    """</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#79B8FF"> sorted</span><span style="color:#E1E4E8">(users, </span><span style="color:#FFAB70">key</span><span style="color:#F97583">=</span><span style="color:#E1E4E8">calculate_user_credit_score)</span></span></code></pre>
+<h2 id="you-aint-gonna-need-it--yagni">You Ain’t Gonna Need It — YAGNI</h2>
+<p>Personally, this is one of the hardest things to understand clearly. Understanding the main idea is simple but putting it onto practice is way harder. This is about not doing over-engineering.</p>
+<p>Especially when you learned about SOLID principles, you have an urge to create lots of base classes and interfaces. Let’s say you create a class to do something and then you think “Well creating a base class and making the current class a subclass of this base class could be a nice idea for future requirements”. THIS IS WRONG</p>
+<ol>
+<li>You are doing futurology. You don’t know the future requirements or the details</li>
+<li>Maybe you ain’t gonna need it and it will be a waste of your valuable time</li>
+<li>That base class is being biased by the current requirements, so it’ll likely not be the correct abstraction.</li>
+</ol>
+<blockquote>
+<p><em>The best approach would be to write only what’s needed now in a way that doesn’t hinder further improvements. If, later on, more requirements come in, we can think about creating a base class, abstract some methods, and perhaps we will discover a design pattern that emerged for our solution. This is also the way object-oriented design is supposed to work: bottom-up.</em></p>
+</blockquote>
+<h2 id="keep-it-simple--kis">Keep It Simple — KIS</h2>
+<p>Actually, I’m kind of sure it is KISS — Keep it simple, stupid 😀 It is all about being like me LAZY. Keep it simple, implement a minimal, simplest algorithm to solve the problem. Do not add unnecessary features or shiny things into your code. I’ve seen lots of people that create awfully complex solutions for very simple problems just to show off their knowledge. Don’t be like time.</p>
+<blockquote>
+<p><em>Remember the Zen of Python: Simple is better than complex.</em></p>
+</blockquote>
+<h2 id="easier-to-ask-forgiveness-than-permission--eafp-and-look-before-you-leap--lbyl">Easier to Ask Forgiveness than Permission — EAFP and Look Before You Leap — LBYL</h2>
+<p>I think this is the first thing I disagree with the author of the book in the references section. So, EAFP is about writing the action first and handling the possible errors later, like try-except cases. LBYL is the total reverse of this approach and it says you should check what you are about to do. Let me give you a clear example:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># Look before you leap approach - from book</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#E1E4E8"> os.path.exists(filename):</span></span>
+<span class="line"><span style="color:#F97583">    with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(filename) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#79B8FF">      ...</span></span>
+<span class="line"><span style="color:#6A737D"> # Easier to ask forgiveness than permission approach - from book</span></span>
+<span class="line"><span style="color:#F97583">try</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(filename) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#79B8FF">        ...</span></span>
+<span class="line"><span style="color:#F97583">except</span><span style="color:#79B8FF"> FileNotFoundError</span><span style="color:#F97583"> as</span><span style="color:#E1E4E8"> e:</span></span>
+<span class="line"><span style="color:#E1E4E8">    logger.error(e)</span></span>
+<span class="line"><span style="color:#6A737D"># Better LBYL approach - my example</span></span>
+<span class="line"><span style="color:#F97583">if</span><span style="color:#F97583"> not</span><span style="color:#E1E4E8"> os.path.exist(filename):</span></span>
+<span class="line"><span style="color:#6A737D"> # Create the file</span></span>
+<span class="line"><span style="color:#F97583">with</span><span style="color:#79B8FF"> open</span><span style="color:#E1E4E8">(filename) </span><span style="color:#F97583">as</span><span style="color:#E1E4E8"> f:</span></span>
+<span class="line"><span style="color:#79B8FF">  ...</span></span></code></pre>
+<p>From the author:</p>
+<blockquote>
+<p><em>Particular cases might of course apply, but most of the time, you’ll find the EAFP version to be more intention-revealing. The code written this way would be easier to read because it goes directly to the task needed instead of preventively checking conditions. Put another way, in the last example, you’ll see a part of the code that tries to open a file and then process it. If the file doesn’t exist, then we handle that case. In the first example, we’ll see a function checking whether a file exists, and then trying to do something. You might argue that this is also clear, but we don’t know for sure. Maybe the file being asked about is a different one or is a function that belongs to a different layer of the program, or a leftover, and such. The second approach is less error-prone when you look at the code at first glance.</em></p>
+</blockquote>
+<p>But I don’t agree with that. For me, the last code I wrote is cleaner and just the same intention-revealing as the EAFP version. So it is up to you to choose whether you want to use EAFP or LBYL 😀</p>
+<p>Thanks for reading!</p>
+<h2 id="references">References</h2>
+<ol>
+<li>Clean Code in Python — Mariano Anaya</li>
+</ol></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/@m.nusret.ozates/good-design-practices-with-python-important-acronyms-c590bbab733d" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>
