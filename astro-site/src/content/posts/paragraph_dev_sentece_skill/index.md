@@ -31,10 +31,10 @@ Example:
 
 ### Known-New Contract
 
-- Introduce your readers to the "big picture" first by giving them information they **already know **(the topic part).
-- Then they can**link what's familiar **to the**new information **you give them (the stress part).
+- Introduce your readers to the "big picture" first by giving them information they **already know**(the topic part).
+- Then they can **link what's familiar** to the **new information** you give them (the stress part).
 
-As that**new information **becomes familiar, it too becomes old information that can link to newer information.
+As that **new information** becomes familiar, it too becomes old information that can link to newer information.
 
 Example:
 
@@ -93,7 +93,7 @@ Such leaders should make the work of their followers more pleasant by treating t
 
 ## Run-Ons
 
-A run-on is**two complete thoughts **run together with no sign to mark the break between them or with just a comma:
+A run-on is **two complete thoughts** run together with no sign to mark the break between them or with just a comma:
 
 Then, in [2], they also presented a bisection algorithm to compute ε-pseudospectral abscissa of a fixed matrix, i.e. α<sub>ε</sub>(A),
 
@@ -117,7 +117,7 @@ A sentence fragment is a group of words that lacks a subject or a verb and does 
 
 <span class="stress-part">Purdue offers many majors in engineering.</span> <span class="stress-part"><strong>Such as electrical, chemical, and industrial engineering.</strong></span>
 
-Purdue offers many majors in engineering**such as electrical, chemical, and industrial engineering **.
+Purdue offers many majors in engineering **such as electrical, chemical, and industrial engineering**.
 
 ## Parallelism
 
@@ -147,7 +147,7 @@ In order to avoid misplaced modifiers, place the words as close as possible to w
 
 ## Dangling Modifiers
 
-A modifier that opens a sentence must be**followed immediately **by the**word it is meant to describe**.
+A modifier that opens a sentence must be **followed immediately** by the **word it is meant to describe**.
 
 Otherwise the sentence takes on an unintended meaning.
 
@@ -209,7 +209,7 @@ college level. Readers may lose interest. They may not want to continue reading.
 
 See the effect? Let's fix it:
 
-Too many short sentences can hurt an essay,**for **it can make the writing seem choppy**and **below a college level.
+Too many short sentences can hurt an essay,**for** it can make the writing seem choppy **and** below a college level.
 
 Because of this, readers may lose interest and not want to continue reading.
 
@@ -245,13 +245,13 @@ I think I see something similar to this in the novels I've read.
 
 When that happens, consider using these parts of speech to fix the problem:
 
-**Relative pronouns **
+**Relative pronouns**
 
 Indiana used to be mainly an agricultural state. It has recently attracted more industry.
 
 Indiana, <span class="topic-part"><strong>which</strong></span> used to be mainly an agricultural state, has recently attracted more industry.
 
-**Participles **
+**Participles**
 
 Wei Xie was surprised to get a phone call from his sister. He was happy to hear her voice again.
 

@@ -91,7 +91,7 @@ This will tell us how much attention we need to give to each word to encode "bet
 
 ## Multi-Head Self Attention
 
-The idea/question behind multi-head self-attention is:**_"How do we improve the model's ability to focus on different features of the input sentence?"_ **.
+The idea/question behind multi-head self-attention is:**_"How do we improve the model's ability to focus on different features of the input sentence?"_**.
 
 1. With 1 head self-attention, the encoding could be dominated by the actual word.
 2. Multi-head attention allows the model to learn different semantic meanings of attention. Eg. One for grammar, one for vocabulary, etc.

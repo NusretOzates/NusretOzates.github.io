@@ -6,15 +6,15 @@ image: "img_0.jpg"
 mediumUrl: "https://medium.com/@m.nusret.ozates/good-design-practices-with-python-defensive-programming-bc859fe084ea"
 ---
 
-![Image 1](img_0.jpg)
+![Image](img_0.jpg)
 
-Photo by [Rita Chou](https://unsplash.com/@rainrainbowchou?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
+Photo by [Rita Chou](https://unsplash.com/@rainrainbowchou?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
 ## Intro
 
-As software engineers, we write code most of the time. We have some tight deadlines and because of these deadlines, we tend to write code fast without thinking about the design. This choice comes with consequences. It actually makes you slower because you write the code so urgently that you forgot that client's requests will change faster than you thought and when that time comes to you. It will be very hard to change your code. You will look at the code and say "oh I need to change this part and it is done" and then you will realize that the change broke a completely different part of the code, you will change that too and realize this change broke another part of your code and so on…
+As software engineers, we write code most of the time. We have some tight deadlines and because of these deadlines, we tend to write code fast without thinking about the design. This choice comes with consequences. It actually makes you slower because you write the code so urgently that you forgot that client’s requests will change faster than you thought and when that time comes to you. It will be very hard to change your code. You will look at the code and say “oh I need to change this part and it is done” and then you will realize that the change broke a completely different part of the code, you will change that too and realize this change broke another part of your code and so on…
 
-We don't want that, think before coding, and give yourself some time to design architecture. Think about how you could test that chunk of code and only after that start coding. To make your life easier, there are some design "principals" out there and I will explain them with examples using Python. This is part 2 of this series.
+We don’t want that, think before coding, and give yourself some time to design architecture. Think about how you could test that chunk of code and only after that start coding. To make your life easier, there are some design “principals” out there and I will explain them with examples using Python. This is part 2 of this series.
 
 ## Defensive Programming
 
@@ -32,7 +32,7 @@ Error logging is just… You know logging the error, you should always do that.
 
 ## Value Substitution
 
-This means when an incorrect input comes, you can change the value of that input to something acceptable, maybe a default value to prevent error. But I don't recommend doing this type of error handling as this makes the code more robust but broke the correctness of the function. This is problematic, especially in critical functions.
+This means when an incorrect input comes, you can change the value of that input to something acceptable, maybe a default value to prevent error. But I don’t recommend doing this type of error handling as this makes the code more robust but broke the correctness of the function. This is problematic, especially in critical functions.
 
 > 👉 A software program is robust when it does not fail, even in the presence of an erroneous scenario. But this is not correct either.
 
@@ -40,22 +40,111 @@ The safer approach is using default values for missing parameters or configurati
 
 ## Exception Handling
 
-There are some cases where you can't continue with corrupt data or you try to communicate with an external component such as databases, library functions, or APIs and they fail to work and you cannot continue to execution of your function. In such cases, we have to notify the program that there is an error and we cannot ignore it.
+There are some cases where you can’t continue with corrupt data or you try to communicate with an external component such as databases, library functions, or APIs and they fail to work and you cannot continue to execution of your function. In such cases, we have to notify the program that there is an error and we cannot ignore it.
 
-> _The mechanism for accomplishing this is an exception. It is important to emphasize that this is what exceptions should be used for — clearly announcing an exceptional situation, and not altering the flow of the program according to business logic._
+> *The mechanism for accomplishing this is an exception. It is important to emphasize that this is what exceptions should be used for — clearly announcing an exceptional situation, and not altering the flow of the program according to business logic.*
 
-👉 Do not use exceptions as a go-to mechanism! Use exceptions only to report exceptional stations with lots of details. Don't do this:
+👉 Do not use exceptions as a go-to mechanism! Use exceptions only to report exceptional stations with lots of details. Don’t do this:
+
+```python
+try:
+	x = event.get_user('12345')
+except UserNotFoundError:
+	x = None
+# Do something with x
+```
 
 The number of exceptions in a function can give you a nice idea about whether the function is small enough and has a single responsibility. If a function raises lots of exceptions, probably that function has too many responsibilities and can be broken down into smaller functions.
 
 ## Good Exception Handling Practices
 
-### **Handling exceptions at the right level of abstraction **
+### Handling exceptions at the right level of abstraction
 
-Let's go through an example:
+Let’s go through an example:
 
-This is a bad example! For this example, I'm not talking about missing type hintings and docstrings or using print instead of log. The exceptions are handled in the wrong part of the code. We expect `ValueError` in the `parse()` function and `ConnectionError` in the `send()` function. So, this handling should be in these functions.
+```python
+class EventProducer:
+    def produce(self, event):
+        try:
+            parsed = self.parse(event)
+            self.send(parsed)
+        except ValueError as err:
+            print(err)
+            raise
+        except ConnectionError as err:
+            print(err)
+            raise
+	return True
+    def send(self, parsed):
+        return self.connection.send(parsed)
+    def parse(self, event):
+        return event
+```
 
-##**References**
+This is a bad example! For this example, I’m not talking about missing type hintings and docstrings or using print instead of log. The exceptions are handled in the wrong part of the code. We expect `ValueError` in the `parse()` function and `ConnectionError` in the `send()` function. So, this handling should be in these functions.
+
+This approach is better:
+
+```python
+import logging
+class EventProducer:
+    def produce(self, event):
+        parsed = self.parse(event)
+        self.send(parsed)
+        return True
+    def send(self, parsed):
+        try:
+            return self.connection.send(parsed)
+        except ConnectionError as err:
+            logging.error(err)
+            raise ConnectionError(err)
+    def parse(self, event):
+        try:
+            return self.parser.parse(event)
+        except ValueError as err:
+            logging.error(err)
+            raise ValueError(err)
+        return event
+```
+
+**Do not expose tracebacks to end-users**
+
+We need to collect lots of information to do better debugging. But this info is very valuable for hackers too. So, we need to collect that information but do not show it to the users. Some generic responses could help, such as “Not Found”
+
+**Avoid empty except blocks**
+
+> *This was even referred to as the most diabolical Python anti-pattern.*
+
+```python
+# Please don't do that
+try:
+    process_data()
+except:
+    pass
+# If you really want to do that use a specific exception
+import contextlib
+with contextlib.suppress(KeyError):
+    process_data()
+```
+
+I’m using the last one when I create a folder because if it already exists it will raise an exception but I don’t care. I only care about creation if it doesn’t exist.
+
+**Include the original exception**
+
+Sometimes we create special exception classes for our use cases and raise that exception. This is a good approach but you shouldn’t forget to include the original exception like in the example below:
+
+```python
+class InternalDataError(Exception):
+    """An exception with the data of our domain problem."""
+def process(data_dictionary, record_id):
+    try:
+        return data_dictionary[record_id]
+    except KeyError as e:
+        raise InternalDataError("Record not present") from e
+```
+
+And that’s all! Thank you for reading!
+
+## References
 
 1. Clean Code in Python — Mariano Anaya

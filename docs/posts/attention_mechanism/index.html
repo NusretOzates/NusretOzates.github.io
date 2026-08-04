@@ -14,52 +14,52 @@
               client_storage: "none",
             });
           })();</script><link rel="stylesheet" href="/_astro/BaseLayout.Cu91sid0.css"><style>.prose[data-astro-cid-fbbco62y]{max-width:52rem;margin:0 auto;padding:2rem 1.5rem 4rem}.prose-header[data-astro-cid-fbbco62y]{border-bottom:1px solid var(--border);margin-bottom:2rem;padding-bottom:1.5rem}.prose-header[data-astro-cid-fbbco62y] h1[data-astro-cid-fbbco62y]{font-family:var(--font-heading);margin:0 0 .75rem;font-size:clamp(2rem,4vw,2.6rem);line-height:1.2}.meta[data-astro-cid-fbbco62y]{color:var(--text-muted);flex-wrap:wrap;align-items:center;gap:.35rem .5rem;margin:0;font-size:1rem;display:flex}.tag[data-astro-cid-fbbco62y]{background:var(--accent-muted);color:var(--accent);border-radius:4px;padding:.15rem .5rem;font-size:.875rem;display:inline-block}.medium-attribution[data-astro-cid-fbbco62y]{border-left:3px solid var(--accent);color:var(--text-muted);margin-top:2.5rem;padding:.75rem 1rem;font-size:1rem}
-</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Attention mechanism and how it works on neural machine translation</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2020-12-13T00:00:00.000Z" data-astro-cid-fbbco62y>December 13, 2020</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image 2" loading="lazy" decoding="async" width="1000" height="388" src="/_astro/img_0.D3r3ugAu_Z2x1SQ3.webp" srcset=""></p>
+</style></head><body><header class="site-header" data-astro-cid-fzpbxy5g><nav class="nav-inner" data-astro-cid-fzpbxy5g><a class="brand" href="/" data-astro-cid-fzpbxy5g>Nusret Özateş</a><ul class="nav-links" data-astro-cid-fzpbxy5g><li data-astro-cid-fzpbxy5g><a href="/" data-astro-cid-fzpbxy5g>Home</a></li><li data-astro-cid-fzpbxy5g><a href="/posts/" class="active" data-astro-cid-fzpbxy5g>Blogs</a></li><li data-astro-cid-fzpbxy5g><a href="/talks/" data-astro-cid-fzpbxy5g>Talks</a></li><li data-astro-cid-fzpbxy5g><a href="/videos/" data-astro-cid-fzpbxy5g>Videos</a></li><li data-astro-cid-fzpbxy5g><a href="/notes/" data-astro-cid-fzpbxy5g>Notes</a></li></ul><div class="nav-actions" data-astro-cid-fzpbxy5g><button type="button" id="theme-toggle" aria-label="Toggle dark mode" data-astro-cid-fzpbxy5g>◐</button><a href="https://github.com/NusretOzates" target="_blank" rel="noopener noreferrer" aria-label="GitHub" data-astro-cid-fzpbxy5g>GitHub</a><a href="/search/" aria-label="Search" data-astro-cid-fzpbxy5g>Search</a></div></nav></header><script type="module">document.getElementById(`theme-toggle`)?.addEventListener(`click`,()=>{let e=document.documentElement,t=e.dataset.theme===`dark`?`light`:`dark`;e.dataset.theme=t,localStorage.setItem(`theme`,t)});</script><main><article class="prose" data-astro-cid-fbbco62y><header class="prose-header" data-astro-cid-fbbco62y><h1 data-astro-cid-fbbco62y>Attention mechanism and how it works on neural machine translation</h1><p class="meta" data-astro-cid-fbbco62y><time datetime="2020-12-13T00:00:00.000Z" data-astro-cid-fbbco62y>December 13, 2020</time> · <span class="tag" data-astro-cid-fbbco62y>ml</span></p></header><div class="prose-body" data-astro-cid-fbbco62y><p><img alt="Image" loading="lazy" decoding="async" width="1000" height="388" src="/_astro/img_0.D3r3ugAu_Z2x1SQ3.webp" srcset=""></p>
 <p>In neural machine translation, we aim to find a sentence y that maximizes probability of y given source sentence x. We basically find <em>argmax_y P(y|x)</em>. Before transformers, we were using RNNs with a encoder-decoder approach. An encoder read the inputs and return a fixed-length vector to decoder. The decoder uses this vector as a starting hidden state and outputs a translation from that encoded vector.</p>
 <h2 id="rnn-encoder-decoder">RNN Encoder-Decoder</h2>
 <p>Let’s look at the encoder-decoder architecture more formally.</p>
 <h3 id="encoder">Encoder</h3>
 <p>The encoder, reads an input sequence(vector sequence) and “encode” these sequence into a vector c. To calculate c, we calculate hidden states with:</p>
-<p><img alt="Image 3" loading="lazy" decoding="async" width="245" height="37" src="/_astro/img_1.BZpU9IhB_Z1ki5n.webp" srcset=""></p>
-<p>**Equation 1 **: Hidden state vector h</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="245" height="37" src="/_astro/img_1.BZpU9IhB_Z1ki5n.webp" srcset=""></p>
+<p><strong>Equation 1</strong>: Hidden state vector h</p>
 <p>and vector c is equal to:</p>
-<p><img alt="Image 4" loading="lazy" decoding="async" width="279" height="37" src="/_astro/img_2.9_HtpymM_12Hpu3.webp" srcset=""></p>
-<p>**Equation 2 **: Context vector c</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="250" height="38" src="/_astro/img_10.C1elT4Bg_ZrFPFw.webp" srcset=""></p>
+<p><strong>Equation 2</strong>: Context vector c</p>
 <p>hₜ ∈ ℝⁿ is a hidden state at time t, c is a vector, generated from the sequence of the hidden states. f and q functions are some non-linear functions. As an example, f can be an LSTM and <em>q(h_1…,h_Tx )</em> can be equal to <em>h_T</em>.</p>
 <h3 id="decoder">Decoder</h3>
 <blockquote>
 <p>Note: In the article, hidden states of encoder are interpreted as “h” and in the decoder, author choose to use “s” for decoder’s hidden state.</p>
 </blockquote>
 <p>The decoder predicts the next word <em>y_t</em>, given context vector c and all other previously predicted words. Finally, the probability of the translated sentence y is calculated with:</p>
-<p><img alt="Image 5" loading="lazy" decoding="async" width="444" height="105" src="/_astro/img_3.CnJf9Vaz_ZCe7iK.webp" srcset=""></p>
-<p>**Equation 3 **: Probability of sentence y</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="279" height="37" src="/_astro/img_2.9_HtpymM_12Hpu3.webp" srcset=""></p>
+<p><strong>Equation 3</strong>: Probability of sentence y</p>
 <p>But, how do we calculate p(y_(t)|y₁, …, y_(t − 1), c)?</p>
-<p><img alt="Image 6" loading="lazy" decoding="async" width="516" height="37" src="/_astro/img_4.cljX_hV3_Z1vOF4F.webp" srcset=""></p>
-<p>**Equation 4 **: Probability of y_t given all previously predicted words before</p>
-<p>where g is a non-linear function that outputs the probability of <em>y_t</em> and <em>s_t</em> is the hidden state of the RNN.</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="444" height="105" src="/_astro/img_3.CnJf9Vaz_ZCe7iK.webp" srcset=""></p>
+<p><strong>Equation 4</strong>: Probability of y_t given all previously predicted words before</p>
+<p>where g is a non-linear function that outputs the probability of <em>y_t</em> and<em>s_t</em>is the hidden state of the RNN.</p>
 <h2 id="attention-mechanism-a-new-approach-to-encoder-decoder-structure">Attention Mechanism: A new approach to encoder-decoder structure</h2>
 <h3 id="encoder-1">Encoder</h3>
-<p>In the encoder structure, the hidden states are calculated as <em>Eq.1.</em> Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.</p>
-<p><img alt="Image 7" loading="lazy" decoding="async" width="201" height="65" src="/_astro/img_5.BhPmSb5i_Z3OEcF.webp" srcset=""></p>
-<p>**Equation 5:**Hidden state vector compose of forward and backward traverse</p>
+<p>In the encoder structure, the hidden states are calculated as *Eq.1.*Hence, in order to understand the context not only according to previous words but also according to next words, the sentence is traversed 2 times. First one is from beginning to end, second one is from end to beginning. For this operation, Bidirectional RNNs(BiRNNs) are used. This operation creates two different vectors. By concatenating these two vectors, we have our new hidden state vector h, which h contains summarized knowledge of forward and backward words.</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="516" height="37" src="/_astro/img_4.cljX_hV3_Z1vOF4F.webp" srcset=""></p>
+<p><strong>Equation 5:</strong> Hidden state vector compose of forward and backward traverse</p>
 <h3 id="decoder-1">Decoder</h3>
 <p>In the decoder structure, probability of each word is computed according to previous word’s vector y_i-1 , hidden state s_i and context vector c_i.</p>
-<p><img alt="Image 8" loading="lazy" decoding="async" width="532" height="37" src="/_astro/img_6.DD1oxyXE_ZjcrHc.webp" srcset=""></p>
-<p>**Equation 6 **: Probability calculation</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="201" height="65" src="/_astro/img_5.BhPmSb5i_Z3OEcF.webp" srcset=""></p>
+<p><strong>Equation 6</strong>: Probability calculation</p>
 <p>Hidden state is computed according to previous hidden state s_i-1, previous word’s vector y_i-1 and current context vector c_i.</p>
-<p><img alt="Image 9" loading="lazy" decoding="async" width="312" height="37" src="/_astro/img_7.cKxfVpXN_1ak8Uf.webp" srcset=""></p>
-<p>**Equation 7 **: Hidden state calculation</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="532" height="37" src="/_astro/img_6.DD1oxyXE_ZjcrHc.webp" srcset=""></p>
+<p><strong>Equation 7</strong>: Hidden state calculation</p>
 <p>The context vector c_i depends on all hidden states with their weights. This weights represent the amount of “attention” needed to be given to predict next word y_i.</p>
-<p><img alt="Image 10" loading="lazy" decoding="async" width="209" height="111" src="/_astro/img_8.CuDVHsQm_Z1M0gF2.webp" srcset=""></p>
-<p>**Equation 8 **: Context vector calculation</p>
+<p><img alt="Image" loading="lazy" decoding="async" width="312" height="37" src="/_astro/img_7.cKxfVpXN_1ak8Uf.webp" srcset=""></p>
+<p><strong>Equation 8</strong>: Context vector calculation</p>
 <p>The “attention amount” calculated by the formula:</p>
-<p><img alt="Image 11" loading="lazy" decoding="async" width="319" height="95" src="/_astro/img_9.DepHToJl_Zjnb7O.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="209" height="111" src="/_astro/img_8.CuDVHsQm_Z1M0gF2.webp" srcset=""></p>
 <p><strong>Equation 9</strong>: Softmax</p>
 <p><em>e(i,j)</em> represents “energy”, the importance of hidden state h_j, respect to the previous hidden state s_i-1. It is calculated by concatenation of h_j and s_i-1 is fed through a feedforward neural network <em>a</em>, which allows to train an alignment model through backward propagation.</p>
-<p><img alt="Image 12" loading="lazy" decoding="async" width="250" height="38" src="/_astro/img_10.C1elT4Bg_ZrFPFw.webp" srcset=""></p>
+<p><img alt="Image" loading="lazy" decoding="async" width="319" height="95" src="/_astro/img_9.DepHToJl_Zjnb7O.webp" srcset=""></p>
 <p>And with this approach, a new era of NLP has started. This attention mechanism become a basic building block of the famous transformer models.</p>
 <h2 id="acknowledgments">Acknowledgments</h2>
-<p>This article has written with Hasan Kemik.</p>
-<p>I want to thank M Asgari C for reviewing of this article.</p>
+<p>This article has written with <a href="https://medium.com/u/515bb3bf7ccd">Hasan Kemik</a>.</p>
+<p>I want to thank <a href="https://medium.com/u/1854d6742248">M Asgari C</a> for reviewing of this article.</p>
 <h2 id="references">References</h2>
-<p><a href="https://arxiv.org/abs/1409.0473">NEURAL MACHINE TRANSLATION BY JOINTLY LEARNING TO ALIGN AND TRANSLATE</a></p></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/carbon-consulting/attention-mechanism-and-how-it-works-on-neural-machine-translation-93a034458dec" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>
+<p><a href="https://arxiv.org/pdf/1409.0473.pdf">NEURAL MACHINE TRANSLATION BY JOINTLY LEARNING TO ALIGN AND TRANSLATE</a></p></div><aside class="medium-attribution" data-astro-cid-fbbco62y>Originally published on <a href="https://medium.com/carbon-consulting/attention-mechanism-and-how-it-works-on-neural-machine-translation-93a034458dec" target="_blank" rel="noopener noreferrer" data-astro-cid-fbbco62y>Medium</a>.</aside></article></main><footer class="site-footer" data-astro-cid-nns7i3if><p data-astro-cid-nns7i3if>© 2026 Nusret Özateş</p></footer></body></html>
