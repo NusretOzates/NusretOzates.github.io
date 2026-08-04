@@ -12,6 +12,8 @@ Photo by [Alexander Schimmeck](https://unsplash.com/@alschim?utm_source=medium&u
 
 Before the beginning: Transformers library already has a function called `hyperparameter_search` in the `Trainer` object. But the aim of this article is to learn Optuna by using Transformers.
 
+Some codes look bad but to make copy-paste easier, I add the code with the screenshot of the good-looking code!
+
 ## What is Hyperparameter Optimization?
 
 A hyperparameter is a parameter whose value is used to control the learning process. By contrast, the values of other parameters (typically node weights) are learned. By changing these parameters, we can improve or worsen the accuracy of the model.

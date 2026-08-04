@@ -35,3 +35,5 @@ And some additional points:
 * Learning how to fine-tune those small LLMs is currently one of the most important things, due to privacy reasons in a lot of industries
 
 If you want to watch:
+
+[Career Advice in AI — Andrew Ng & Laurence Moroney](https://www.youtube.com/watch?v=AuZoDsNmG_s)

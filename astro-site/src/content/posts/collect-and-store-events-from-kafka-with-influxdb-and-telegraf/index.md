@@ -73,7 +73,7 @@ services:
       - influxdb-cli
 ```
 
-Note: As you can see, there are duplicate environment variables, we can avoid this by using “extension fields” as stated below but for simplicity, we will continue with the example above:
+Note: As you can see, there are duplicate environment variables, we can avoid this by using “extension fields” as stated in [Re-using environment variables in docker-compose.yml](https://stackoverflow.com/questions/36283908/re-using-environment-variables-in-docker-compose-yml) but for simplicity, we will continue with the example above:
 
 We need to know these three values to push data to the InfluxDB. If there wasn’t an initial setup option, we would have to run these apps separately, create an account after running the InfluxDB, copy the admin token, and so on. Thanks, InfluxDB ❤️. In the volumes section, we are replacing our Telegraf config file with the default one. So, let’s create the configuration file. There are lots of configuration options to set so I decided to keep it as simple as I can.
 

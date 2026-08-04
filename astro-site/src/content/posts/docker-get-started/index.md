@@ -12,7 +12,9 @@ Some useful commands and concepts to use Docker
 
 Photo by [Todd Cravens](https://unsplash.com/@toddcravens?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com?utm_source=medium&utm_medium=referral)
 
-The original video that I take notes from :
+The original video that I take notes from:
+
+[Docker Tutorial for Beginners — Full Course (freeCodeCamp)](https://www.youtube.com/watch?v=fqMOX6JJhGo)
 
 There is a Notion version of this article. You can add comments or duplicate it for yourself.
 
