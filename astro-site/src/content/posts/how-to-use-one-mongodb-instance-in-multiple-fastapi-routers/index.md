@@ -14,11 +14,11 @@ mediumUrl: "https://medium.com/carbon-consulting/how-to-use-one-mongodb-instance
 
 For example, when I have endpoints for`/item` and `/users` I would like to have them in separate files. With this approach, I could get rid of the problem of having one huge file to maintain and have a cleaner structure. I have just one problem with this approach: I have only one MongoDB instance and I need to use that one instance from every router file. After trying lots of bad or useless solutions, today I finally find the best and cleaner way to use the same MongoDB instance inside different routers and I want to share it with everyone. [This](https://github.com/michaldev/fastapi-async-mongodb) is where I find the solution and I will explain this implementation using PyMongo( not an async solution ). I will try to keep it simple and small. This is my file structure:
 
-```
+```text
 app
 ```
 
-```
+```text
    --- db
          --- __init__.py
          --- mongo_manager.py

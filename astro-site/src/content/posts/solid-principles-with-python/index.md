@@ -126,20 +126,11 @@ I will begin with a rule special to Python and then show the general example. Wh
 
 ```python
 class SuperClass:
-```
-
-```python
 	def check(name: str)-> str:
 		return name
-```
-
-```python
 class SubClass(SuperClass):
 	def check(name: dict) -> dict:
 		return name
-```
-
-```python
 class AnotherSubclass(SuperClass):
 		def check(name: str, surname: str) -> tuple:
 			return name, surname
@@ -183,15 +174,9 @@ We can successfully run this code with this structure:
 
 ```python
 from typing import List
-```
-
-```
 members: List[Member] = []
 members.apped(Student('nusret',23,"12345"))
 members.apped(Teacher('Teacher_nusret',23,"12345"))
-```
-
-```
 for member in members:
 	member.save_database()
 ```
@@ -234,19 +219,10 @@ class Student(Member):
         print("Saving student data to database")
     def pay(self):
         raise NotImplementedError("It is free for students!")
-```
-
-```python
 from typing import List
-```
-
-```
 members: List[Member] = []
 members.apped(Student('nusret',23,"12345"))
 members.apped(Teacher('Teacher_nusret',23,"12345"))
-```
-
-```
 for member in members:
 	member.pay()
 ```

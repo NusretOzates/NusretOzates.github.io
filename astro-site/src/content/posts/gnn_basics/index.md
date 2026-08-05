@@ -29,7 +29,7 @@ You don’t update/override this function; you pass the necessary data to it to 
 
 Some example parameters:
 
-```
+```python
 propagate(edge_index, x=x)
 propagate(edge_index, x=x, edge_attr=edge_attr)
 propagate(edge_index, x=x, norm=norm)
@@ -46,7 +46,7 @@ You can also access any other data you passed in the propagate function, such as
 
 Some example parameters:
 
-```
+```python
 message(x_j)
 message(x_j, norm)
 message(x_j, x_i, norm, edge_index, x)

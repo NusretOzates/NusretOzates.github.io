@@ -113,7 +113,7 @@ In the inputs section, we give Kafka’s URL, a topic to listen to, and a consum
 
 And that is all! Assuming you have a running Kafka deployment, just run the code from the terminal:
 
-```
+```bash
 docker-compose up
 ```
 

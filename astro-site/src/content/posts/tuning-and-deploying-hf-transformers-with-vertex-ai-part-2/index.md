@@ -30,7 +30,7 @@ In [part 3](/posts/tuning-and-deploying-huggingface-transformers-with-vertex-ai/
 
 We will create a file structure like this:
 
-```
+```text
 custom_training_docker/
 ├── trainer/
 │   ├── __init__.py
@@ -580,7 +580,7 @@ gcloud auth configure-docker europe-west4-docker.pkg.dev
 
 This will give us the ability to use docker push in our artifact registry docker repository. Then set the IMAGE_URI variable in this format:
 
-```
+```bash
 IMAGE_URI=europe-west4-docker.pkg.dev/{project_name}/{repository_name}/tweet_eval:hypertune
 ```
 
