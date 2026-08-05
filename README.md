@@ -33,6 +33,8 @@ npm run build        # writes to docs/ (for preview or future publish)
 
 Google Analytics is in `astro-site/src/layouts/BaseLayout.astro` (production builds only).
 
+Typography: **Geist** for UI/prose; **JetBrains Mono** for code. Fenced blocks use [Expressive Code](https://expressive-code.com/) (editor/terminal frames, dual light/dark themes, copy button).
+
 ## Publishing
 
 The live site is on **`gh-pages`**. Today that branch is built from Quarto on `main`. After Astro cutover, build with `npm run build` and push the output to `gh-pages` instead.
