@@ -31,15 +31,115 @@
 <p>But as you run your service you will get an error after you get a request from more than 1 user at the same time. The issue is GPU synchronization. When you separate your service and your model with Tensorflow Serving, you can increment your worker count as much as you want and Tensorflow Serving will handle everything for you, the speed enhancement is very big and a nice bonus.</p>
 <p>Now it’s time to share some impressive results of Tensorflow Serving. I’ve tested a model with a pre-trained BERT-base for the transfer learning part. I’ve used Locust to test the RPS rate and median response time. I have RTX 2060 GPU and Ryzen 5 1600AF CPU. In the tables below, RPS = Request per second and MRT = Median Response Time</p>
 <h3 id="tf-serving-using-cpu-worker-count--user-count">TF Serving using CPU (Worker count = User count)</h3>
-<div class="expressive-code"><link rel="stylesheet" href="/_astro/ec.cppdp.css"><script type="module" src="/_astro/ec.0vx5m.js"></script><figure class="frame"><figcaption class="header"></figcaption><pre data-language="text"><code><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+-------+---------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">|        Test           | RPS   | MRT(ms) |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+-------+---------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 1 User 5000 request   |     9 |     100 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 10 User 5000 request  | 15.5  |     620 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 50 User 5000 request  |    18 |    2900 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+-------+---------+</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="+-----------------------+-------+---------+|        Test           | RPS   | MRT(ms) |+-----------------------+-------+---------+| 1 User 5000 request   |     9 |     100 || 10 User 5000 request  | 15.5  |     620 || 50 User 5000 request  |    18 |    2900 |+-----------------------+-------+---------+"><div></div></button></div></figure></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Test</th><th align="right">RPS</th><th align="right">MRT (ms)</th></tr></thead><tbody><tr><td>1 User 5000 request</td><td align="right">9</td><td align="right">100</td></tr><tr><td>10 User 5000 request</td><td align="right">15.5</td><td align="right">620</td></tr><tr><td>50 User 5000 request</td><td align="right">18</td><td align="right">2900</td></tr></tbody></table>
 <p>I don’t know the reason but you don’t have any problem with worker count if you use CPU to run your model.</p>
-<h3 id="model-in-fastapi-using-cpuworker-count--user-count">Model in FastAPI using CPU(Worker count = User count)</h3>
-<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="text"><code><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+------------+------------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">|        Test           |    RPS     |  MRT(ms)   |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+------------+------------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 1 User 5000 request   | 7.1        | 100        |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 10 User 5000 request  | 16         | 620        |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 50 User 5000 request  | PC crashed | PC crashed |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+------------+------------+</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="+-----------------------+------------+------------+|        Test           |    RPS     |  MRT(ms)   |+-----------------------+------------+------------+| 1 User 5000 request   | 7.1        | 100        || 10 User 5000 request  | 16         | 620        || 50 User 5000 request  | PC crashed | PC crashed |+-----------------------+------------+------------+"><div></div></button></div></figure></div>
-<h3 id="tensorflow-serving-using-gpuworker-count--user-count">Tensorflow Serving using GPU(Worker count = User count)</h3>
-<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="text"><code><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+------+---------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">|        Test           | RPS  | MRT(ms) |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+------+---------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 1 User 5000 request   |   45 |      21 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 10 User 5000 request  | 105  |      87 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 50 User 5000 request  |  120 |     330 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+------+---------+</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="+-----------------------+------+---------+|        Test           | RPS  | MRT(ms) |+-----------------------+------+---------+| 1 User 5000 request   |   45 |      21 || 10 User 5000 request  | 105  |      87 || 50 User 5000 request  |  120 |     330 |+-----------------------+------+---------+"><div></div></button></div></figure></div>
+<h3 id="model-in-fastapi-using-cpu-worker-count--user-count">Model in FastAPI using CPU (Worker count = User count)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Test</th><th align="right">RPS</th><th align="right">MRT (ms)</th></tr></thead><tbody><tr><td>1 User 5000 request</td><td align="right">7.1</td><td align="right">100</td></tr><tr><td>10 User 5000 request</td><td align="right">16</td><td align="right">620</td></tr><tr><td>50 User 5000 request</td><td align="right">PC crashed</td><td align="right">PC crashed</td></tr></tbody></table>
+<h3 id="tensorflow-serving-using-gpu-worker-count--user-count">Tensorflow Serving using GPU (Worker count = User count)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Test</th><th align="right">RPS</th><th align="right">MRT (ms)</th></tr></thead><tbody><tr><td>1 User 5000 request</td><td align="right">45</td><td align="right">21</td></tr><tr><td>10 User 5000 request</td><td align="right">105</td><td align="right">87</td></tr><tr><td>50 User 5000 request</td><td align="right">120</td><td align="right">330</td></tr></tbody></table>
 <p>Reminder for next table, worker count must be 1, otherwise, you will get an error!</p>
-<h3 id="model-in-fastapi-using-gpuworker-count--1">Model in FastAPI using GPU(Worker count = 1)</h3>
-<div class="expressive-code"><figure class="frame"><figcaption class="header"></figcaption><pre data-language="text"><code><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+-------+---------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">|        Test           | RPS   | MRT(ms) |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+-------+---------+</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 1 User 5000 request   | 20.7  |      45 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 10 User 5000 request  | 22    |     450 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">| 50 User 5000 request  | 22-24 |    2300 |</span></div></div><div class="ec-line"><div class="code"><span style="--0:#24292e;--1:#e1e4e8">+-----------------------+-------+---------+</span></div></div></code></pre><div class="copy"><div aria-live="polite"></div><button title="Copy to clipboard" data-copied="Copied!" data-code="+-----------------------+-------+---------+|        Test           | RPS   | MRT(ms) |+-----------------------+-------+---------+| 1 User 5000 request   | 20.7  |      45 || 10 User 5000 request  | 22    |     450 || 50 User 5000 request  | 22-24 |    2300 |+-----------------------+-------+---------+"><div></div></button></div></figure></div>
+<h3 id="model-in-fastapi-using-gpu-worker-count--1">Model in FastAPI using GPU (Worker count = 1)</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Test</th><th align="right">RPS</th><th align="right">MRT (ms)</th></tr></thead><tbody><tr><td>1 User 5000 request</td><td align="right">20.7</td><td align="right">45</td></tr><tr><td>10 User 5000 request</td><td align="right">22</td><td align="right">450</td></tr><tr><td>50 User 5000 request</td><td align="right">22-24</td><td align="right">2300</td></tr></tbody></table>
 <h2 id="references">References</h2>
 <ol>
 <li><a href="https://www.tensorflow.org/tfx/guide">https://www.tensorflow.org/tfx/guide</a></li>

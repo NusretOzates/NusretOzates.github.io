@@ -30,7 +30,7 @@ In [part 2](/posts/tuning-and-deploying-hf-transformers-with-vertex-ai-part-2/),
 
 For looking at the whole code we will use check this [GitHub repository](https://github.com/NusretOzates/huggingface-gcp-classification).
 
-Open your Jupyter Lab environment from Vertex AI or you can use Shell Editor and create a file `training.py` . You can change the name of course.
+Open your Jupyter Lab environment from Vertex AI or you can use Shell Editor and create a file `training.py`. You can change the name of course.
 
 ```python
 import os
@@ -58,13 +58,13 @@ We begin with imports and some constants to initialize the AI Platform.
 **PROJECT_NAME**: Your project name
 **BUCKET_NAME**: Your Google Cloud Storage bucket name to save training metadata or saving models
 **REPOSITORY_NAME**: Your Google Cloud Artifact Registry Docker Repository name
-**LOCATION**: Where should training and tuning begin? If you followed the previous parts, this should be `europe-west4` . As all parts of the training will be in the same region, everything will be faster with reduced latency.
+**LOCATION**: Where should training and tuning begin? If you followed the previous parts, this should be `europe-west4`. As all parts of the training will be in the same region, everything will be faster with reduced latency.
 **IMAGE_URI**: URI of the training docker image to use
 **TIMESTAMP**: We will use this when giving job names to train and tune models
 
-To create `HyperparameterTuningJob` we need to create a `CustomJob` first.
+To create `HyperparameterTuningJob`, we need to create a `CustomJob` first.
 
-CustomJob object needs 3 parameters: `display_name` ,`project_name` and `worker_pool_specs` . The first two are very simple to set. The last is still simple but it is longer.
+CustomJob object needs 3 parameters: `display_name`, `project_name`, and `worker_pool_specs`. The first two are very simple to set. The last is still simple but it is longer.
 
 ```python
 container_spec = {
@@ -103,7 +103,7 @@ custom_job = aiplatform.CustomJob(
 )
 ```
 
-Every worker pool needs to set three parameters. `machine_spec` , `container_spec` and `replica_count` .
+Every worker pool needs to set three parameters. `machine_spec`, `container_spec`, and `replica_count`.
 
 ### machine_spec
 
@@ -208,7 +208,7 @@ model = container_job.run(
 )
 ```
 
-First, we’ve created a `CustomContainerTrainingJob` which allows us to create training jobs using containers. We give our training image to `container_uri `and set a deployment image prepared by Vertex AI itself. There are faster images to deploy your model that created by Vertex AI but it is a topic for another article.
+First, we’ve created a `CustomContainerTrainingJob` which allows us to create training jobs using containers. We give our training image to `container_uri` and set a deployment image prepared by Vertex AI itself. There are faster images to deploy your model that created by Vertex AI but it is a topic for another article.
 
 Before running the job, we set the “hp” parameter to False and add the best hyperparameters to model arguments. We set 3 as the replica count and the job itself will automatically create 1 chef and 2 workers for us.
 

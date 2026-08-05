@@ -52,7 +52,7 @@
 <p>Yes, I know that I could create a TFAutoModelForSequenceClassification instead. But in this way, I can add more Dense layers after pooling.</p>
 </blockquote>
 <p>As we need only 1 sentence for our task, we only need <strong>“input_ids”</strong> and <strong>“attention_mask”</strong> as the input. When we tokenize the data, we will use max length padding. Because of that, the shapes of the inputs are set to the model_max_length using the tokenizer.</p>
-<p>Then we create our model as TFAutoModel, which outputs [batch_size, max_length,token_length]. After we made this base model not trainable, we get its output and get the average embedding value using average pooling. The second and maybe better approach would be using the first embedding output (CLS token’s output) but anyway.</p>
+<p>Then we create our model as TFAutoModel, which outputs [batch_size, max_length, token_length]. After we made this base model not trainable, we get its output and get the average embedding value using average pooling. The second and maybe better approach would be using the first embedding output (CLS token’s output) but anyway.</p>
 <p>Lastly, you can use as many as Dense layers you want but for simplicity, I choose to go only with the classification layer.</p>
 <p>Now that we have our model, let’s look at how we get the data.</p>
 <h3 id="get_data">get_data()</h3>

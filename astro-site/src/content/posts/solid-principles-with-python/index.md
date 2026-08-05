@@ -136,7 +136,7 @@ class AnotherSubclass(SuperClass):
 			return name, surname
 ```
 
-The program will work buuut… it will eventually crash somewhere. So, this is the special rule for Python because it allows doing this… How to protect yourself from these types of situations? The answer is holy python tool **mypy** and **pylint.** Both tools help you to find those mistakes and more!
+The program will work buuut… it will eventually crash somewhere. So, this is the special rule for Python because it allows doing this… How to protect yourself from these types of situations? The answer is holy python tool **mypy** and **pylint**. Both tools help you to find those mistakes and more!
 
 The second rule comes from the design by contract principle:
 
@@ -227,7 +227,7 @@ for member in members:
 	member.pay()
 ```
 
-Now this example cannot work! Both classes are a subclass of the Member class but the Student class will throw exceptions or not work as expected. This is against the rule. If a `Member` has to pay, we can clearly say that a `Student`cannot be a `Member`. To solve this problem, we can remove the `pay()` method from `Member` and create a new abstract class `Payer`. Very sorry for the naming but I couldn’t come up with a better name... Now our structure should be like this:
+Now this example cannot work! Both classes are a subclass of the Member class but the Student class will throw exceptions or not work as expected. This is against the rule. If a `Member` has to pay, we can clearly say that a `Student` cannot be a `Member`. To solve this problem, we can remove the `pay()` method from `Member` and create a new abstract class `Payer`. Very sorry for the naming but I couldn’t come up with a better name... Now our structure should be like this:
 
 ```python
 from abc import ABC, abstractmethod

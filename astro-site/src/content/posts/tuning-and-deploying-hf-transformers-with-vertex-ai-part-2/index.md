@@ -187,7 +187,7 @@ def get_model():
 
 As we need only 1 sentence for our task, we only need **“input_ids”** and **“attention_mask”** as the input. When we tokenize the data, we will use max length padding. Because of that, the shapes of the inputs are set to the model_max_length using the tokenizer.
 
-Then we create our model as TFAutoModel, which outputs [batch_size, max_length,token_length]. After we made this base model not trainable, we get its output and get the average embedding value using average pooling. The second and maybe better approach would be using the first embedding output (CLS token’s output) but anyway.
+Then we create our model as TFAutoModel, which outputs [batch_size, max_length, token_length]. After we made this base model not trainable, we get its output and get the average embedding value using average pooling. The second and maybe better approach would be using the first embedding output (CLS token’s output) but anyway.
 
 Lastly, you can use as many as Dense layers you want but for simplicity, I choose to go only with the classification layer.
 

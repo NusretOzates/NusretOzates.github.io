@@ -19,11 +19,11 @@ For those unfamiliar, Graph Neural Networks (GNNs) are a class of neural network
 > PyG uses “source_to_target” flow by default, meaning messages are sent from source nodes to target nodes. Source nodes are typically denoted with a subscript “_j” and target nodes with “_i”.
 > Remember: Source = neighbors, Target = self.
 
-In PyG, message passing is typically implemented using the `MessagePassing`class, which provides a flexible framework for defining custom message-passing schemes. It has 4 important methods:
+In PyG, message passing is typically implemented using the `MessagePassing` class, which provides a flexible framework for defining custom message-passing schemes. It has 4 important methods:
 
 ## 1. Propagate
 
-This function is responsible for orchestrating the message-passing process. It takes an edge index, a.k.a adjacency matrix, as a **mandatory parameter**
+This function is responsible for orchestrating the message-passing process. It takes an edge index, a.k.a. adjacency matrix, as a **mandatory parameter**.
 You can (and probably must) give feature matrix **x**. In addition, you can pass any other necessary data for the later steps we will see.
 You don’t update/override this function; you pass the necessary data to it to be further used in the next steps.
 
@@ -35,7 +35,7 @@ propagate(edge_index, x=x, edge_attr=edge_attr)
 propagate(edge_index, x=x, norm=norm)
 ```
 
-> Choosing the name for the feature vector **x** is critical. If you use **x=x** like the example above, PyG will automatically split it into x_i and x_j for target and source nodes, respectively. If you use**feature_vec=x**, you should use **feature_vec_i** and **feature_vec_j** in the later steps’ parameter names.
+> Choosing the name for the feature vector **x** is critical. If you use **x=x** like the example above, PyG will automatically split it into x_i and x_j for target and source nodes, respectively. If you use **feature_vec=x**, you should use **feature_vec_i** and **feature_vec_j** in the later steps’ parameter names.
 
 ## 2. Message
 
@@ -67,14 +67,14 @@ def message(self, x_j, norm):
 ## 3. Aggregate
 
 Now that you have messages from your neighboring nodes, this is where you aggregate those messages. This method calls the `Aggregator` object
-of the class by default, which is set to **“add”** by default. You can change it to **“mean”** or **“max”** when you initialize your custom `MessagePassing`class or implement your own aggregate function.
+of the class by default, which is set to **“add”** by default. You can change it to **“mean”** or **“max”** when you initialize your custom `MessagePassing` class or implement your own aggregate function.
 
 You can also override this method to implement your own aggregation logic. By overriding this method, you can weight the messages using any data you want, before using the default sum aggregation as an example.
 
 It takes the following parameters:
 
--**inputs**which is the messages created in the message function
--**index** that says the target node each message belongs to
+- **inputs**, which is the messages created in the message function
+- **index** that says the target node each message belongs to
 
 And whatever you want from the propagate function.
 
@@ -82,11 +82,11 @@ And whatever you want from the propagate function.
 
 This is the final step where you update the target node features using the aggregated messages. Depending on your architecture, you might do nothing here and return the aggregated messages, such as when you add self-loops. Alternatively, add the source node features to the aggregated messages or pass them through a neural network layer.
 
-It takes **inputs,** which is the aggregated messages from the aggregate function and whatever you want from the propagate function.
+It takes **inputs**, which is the aggregated messages from the aggregate function and whatever you want from the propagate function.
 
 ## Conclusion
 
-In this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the `MessagePassing`class:`propagate`, `message` , `aggregate` and `update` .
+In this blog post, we explored how message passing works in PyTorch Geometric by breaking down the key methods of the `MessagePassing` class: `propagate`, `message`, `aggregate`, and `update`.
 
 If you want to customize your GNN architecture and experiment with different message-passing schemes, understanding these methods is critical. With this knowledge, you can implement your own GNN layers and tailor them to your specific needs. I will drop a simple working code that I’ve borrowed from the PyG documentation below for reference.
 
