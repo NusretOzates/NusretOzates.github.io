@@ -17,13 +17,10 @@ In this post, I will share what I learned from Koc University Academic Writing c
 
 You can divide a sentence into two parts: the topic and the stress. The topic is what the sentence is about, and the stress is what you want to say about the topic or what is new information.
 
-| <span class="topic-part">Topic Part</span>, Readers:   | <span class="stress-part">Stress Part</span>, Readers     |
-
-|------------------------|:--------------------------|
-
-| - Expect to understand what the sentence is about.| - Expect to see new and important ideas.|
-
-| - Try to connect the sentence to what they have already read.| - Focus most of their interpretative effort.|
+| <span class="topic-part">Topic Part</span>, Readers | <span class="stress-part">Stress Part</span>, Readers |
+| --- | --- |
+| Expect to understand what the sentence is about. | Expect to see new and important ideas. |
+| Try to connect the sentence to what they have already read. | Focus most of their interpretative effort. |
 
 Example:
 
@@ -31,7 +28,7 @@ Example:
 
 ### Known-New Contract
 
-- Introduce your readers to the "big picture" first by giving them information they **already know**(the topic part).
+- Introduce your readers to the "big picture" first by giving them information they **already know** (the topic part).
 - Then they can **link what's familiar** to the **new information** you give them (the stress part).
 
 As that **new information** becomes familiar, it too becomes old information that can link to newer information.
@@ -40,7 +37,7 @@ Example:
 
 <span class="topic-part">Accounts of depression</span> evolved after psychologists introduced the <span class="stress-part">concepts of defeat and entrapment</span>.
 
-<span class="topic-part">These concepts</span> have been implicated in <span class="stress-part">theoretical accounts of anxiety and suicide</span>. <span class="topic-part">Such theories</span>.
+<span class="topic-part">These concepts</span> have been implicated in <span class="stress-part">theoretical accounts of anxiety and suicide</span>.
 
 Example 2:
 
@@ -141,7 +138,7 @@ George couldn't drive to work in his small sports car <span class="stress-part">
 
 In this example, we and transformer models know that George has a broken leg, not the car. But grammatically,
 
-the modifier "with a broken leg" seems to describe the car. This is an easy example but in a academic text, it can be more complex and harder to spot.
+the modifier "with a broken leg" seems to describe the car. This is an easy example but in an academic text, it can be more complex and harder to spot.
 
 In order to avoid misplaced modifiers, place the words as close as possible to what they describe.
 
@@ -157,7 +154,7 @@ While smoking a pipe, <span class="underline-mark">I sat with my dog</span>.
 
 While <span class="underline-mark">I was smoking a pipe</span>, my dog sat with me.
 
-Again, this is also an easy example but in a academic text, it can be more complex and harder to spot.
+Again, this is also an easy example but in an academic text, it can be more complex and harder to spot.
 
 ## Sentence Variety
 
@@ -209,7 +206,7 @@ college level. Readers may lose interest. They may not want to continue reading.
 
 See the effect? Let's fix it:
 
-Too many short sentences can hurt an essay,**for** it can make the writing seem choppy **and** below a college level.
+Too many short sentences can hurt an essay, **for** it can make the writing seem choppy **and** below a college level.
 
 Because of this, readers may lose interest and not want to continue reading.
 

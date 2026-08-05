@@ -34,55 +34,39 @@ Now it’s time to share some impressive results of Tensorflow Serving. I’ve t
 
 ### TF Serving using CPU (Worker count = User count)
 
-```text
-+-----------------------+-------+---------+
-|        Test           | RPS   | MRT(ms) |
-+-----------------------+-------+---------+
-| 1 User 5000 request   |     9 |     100 |
-| 10 User 5000 request  | 15.5  |     620 |
-| 50 User 5000 request  |    18 |    2900 |
-+-----------------------+-------+---------+
-```
+| Test | RPS | MRT (ms) |
+| --- | ---: | ---: |
+| 1 User 5000 request | 9 | 100 |
+| 10 User 5000 request | 15.5 | 620 |
+| 50 User 5000 request | 18 | 2900 |
 
 I don’t know the reason but you don’t have any problem with worker count if you use CPU to run your model.
 
-### Model in FastAPI using CPU(Worker count = User count)
+### Model in FastAPI using CPU (Worker count = User count)
 
-```text
-+-----------------------+------------+------------+
-|        Test           |    RPS     |  MRT(ms)   |
-+-----------------------+------------+------------+
-| 1 User 5000 request   | 7.1        | 100        |
-| 10 User 5000 request  | 16         | 620        |
-| 50 User 5000 request  | PC crashed | PC crashed |
-+-----------------------+------------+------------+
-```
+| Test | RPS | MRT (ms) |
+| --- | ---: | ---: |
+| 1 User 5000 request | 7.1 | 100 |
+| 10 User 5000 request | 16 | 620 |
+| 50 User 5000 request | PC crashed | PC crashed |
 
-### Tensorflow Serving using GPU(Worker count = User count)
+### Tensorflow Serving using GPU (Worker count = User count)
 
-```text
-+-----------------------+------+---------+
-|        Test           | RPS  | MRT(ms) |
-+-----------------------+------+---------+
-| 1 User 5000 request   |   45 |      21 |
-| 10 User 5000 request  | 105  |      87 |
-| 50 User 5000 request  |  120 |     330 |
-+-----------------------+------+---------+
-```
+| Test | RPS | MRT (ms) |
+| --- | ---: | ---: |
+| 1 User 5000 request | 45 | 21 |
+| 10 User 5000 request | 105 | 87 |
+| 50 User 5000 request | 120 | 330 |
 
 Reminder for next table, worker count must be 1, otherwise, you will get an error!
 
-### Model in FastAPI using GPU(Worker count = 1)
+### Model in FastAPI using GPU (Worker count = 1)
 
-```text
-+-----------------------+-------+---------+
-|        Test           | RPS   | MRT(ms) |
-+-----------------------+-------+---------+
-| 1 User 5000 request   | 20.7  |      45 |
-| 10 User 5000 request  | 22    |     450 |
-| 50 User 5000 request  | 22-24 |    2300 |
-+-----------------------+-------+---------+
-```
+| Test | RPS | MRT (ms) |
+| --- | ---: | ---: |
+| 1 User 5000 request | 20.7 | 45 |
+| 10 User 5000 request | 22 | 450 |
+| 50 User 5000 request | 22-24 | 2300 |
 
 ## References
 

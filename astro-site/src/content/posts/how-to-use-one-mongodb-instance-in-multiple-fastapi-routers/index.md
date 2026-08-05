@@ -12,13 +12,10 @@ mediumUrl: "https://medium.com/carbon-consulting/how-to-use-one-mongodb-instance
 
 > When I begin to use FastAPI, I was fascinated by how it is easy to use and how it is possible to have an organized backend structure with it.
 
-For example, when I have endpoints for`/item` and `/users` I would like to have them in separate files. With this approach, I could get rid of the problem of having one huge file to maintain and have a cleaner structure. I have just one problem with this approach: I have only one MongoDB instance and I need to use that one instance from every router file. After trying lots of bad or useless solutions, today I finally find the best and cleaner way to use the same MongoDB instance inside different routers and I want to share it with everyone. [This](https://github.com/michaldev/fastapi-async-mongodb) is where I find the solution and I will explain this implementation using PyMongo( not an async solution ). I will try to keep it simple and small. This is my file structure:
+For example, when I have endpoints for `/item` and `/users` I would like to have them in separate files. With this approach, I could get rid of the problem of having one huge file to maintain and have a cleaner structure. I have just one problem with this approach: I have only one MongoDB instance and I need to use that one instance from every router file. After trying lots of bad or useless solutions, today I finally find the best and cleaner way to use the same MongoDB instance inside different routers and I want to share it with everyone. [This](https://github.com/michaldev/fastapi-async-mongodb) is where I find the solution and I will explain this implementation using PyMongo( not an async solution ). I will try to keep it simple and small. This is my file structure:
 
 ```text
 app
-```
-
-```text
    --- db
          --- __init__.py
          --- mongo_manager.py
@@ -77,7 +74,7 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-As you can see from the 3. line we import the db object from the previous file we looked at. On the fastAPI **startup event**, we connect to the MongoDB database using the***connect_to_database()***function and we close the connection on **shutdown.** Now time to go to the users.py.
+As you can see from the 3. line we import the db object from the previous file we looked at. On the fastAPI **startup event**, we connect to the MongoDB database using the **connect_to_database()** function and we close the connection on **shutdown**. Now time to go to the users.py.
 
 ```python
 from fastapi import APIRouter

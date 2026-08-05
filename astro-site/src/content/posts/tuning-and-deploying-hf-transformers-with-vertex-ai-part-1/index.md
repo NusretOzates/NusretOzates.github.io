@@ -93,7 +93,7 @@ bucket: Bucket = gcs_client.bucket(BUCKET_NAME)
 train_blob = gcs_bucket.blob("tweet_eval_emotions/data/train/train.csv")
 test_blob = gcs_bucket.blob("tweet_eval_emotions/data/test/test.csv")
 validation_blob = gcs_bucket.blob("tweet_eval_emotions/data/validation/validation.csv")
-# Here I assume you have train,test and validation csv files in your local storage
+# Here I assume you have train, test and validation csv files in your local storage
 train_blob.upload_from_filename("train.csv")
 test_blob.upload_from_filename("test.csv")
 validation_blob.upload_from_filename("validation.csv")

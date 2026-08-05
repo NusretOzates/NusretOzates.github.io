@@ -81,7 +81,7 @@ Even though it is not possible to protect against all types of possible attacks,
 
 ONION: A Simple and Effective Defense Against Textual Backdoor Attacks
 
-The idea is trigger words, sentences, and chars are generally random and unexpected within the sample. Let’s look at the change in [perplexity](https://medium.com/nlplanet/two-minutes-nlp-perplexity-explained-with-simple-probabilities-6cdc46884584)value when we remove a word and if there is a big change, this word is a potential threat. Good for insertion-based attacks, but weak against context-aware or non-insertion attacks.
+The idea is trigger words, sentences, and chars are generally random and unexpected within the sample. Let’s look at the change in [perplexity](https://medium.com/nlplanet/two-minutes-nlp-perplexity-explained-with-simple-probabilities-6cdc46884584) value when we remove a word and if there is a big change, this word is a potential threat. Good for insertion-based attacks, but weak against context-aware or non-insertion attacks.
 
 There is a bonus defence for all of those attacks I explained above: **REGULARIZATION!**
 
@@ -159,7 +159,7 @@ Let’s say you don’t have unlimited access to the model you want to attack or
 
 It turns out adversarial examples crafted to mislead model A are likely to mislead similar model B.
 
-**Cross-training data transferability**: Same model type, different dataset **Cross-technique transferability**: Same or subset of the data etc., different model
+**Cross-training data transferability**: Same model type, different dataset. **Cross-technique transferability**: Same or subset of the data etc., different model
 
 In the ideal case, you use the same data and the same model.
 

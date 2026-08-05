@@ -47,7 +47,7 @@ To answer questions, we need something to look at. Langchain has tons of differe
 from langchain.document_loaders import PyPDFLoader, TextLoader, UnstructuredURLLoader
 ```
 
-**PyPDFLoader:** It reads the pdf file, and creates an `Document`object for every page. You need to install the`pypdf` library to use it.
+**PyPDFLoader:** It reads the pdf file, and creates a `Document` object for every page. You need to install the `pypdf` library to use it.
 
 **TextLoader:** It reads the contents of a txt file, and creates a `Document` object.
 
@@ -202,7 +202,7 @@ def load_chain(file_name: str, file_type: str):
 
 `PromptTemplate` is used to insert the necessary context and the question to the prompt.
 
-`ChatOpenAI` will be used as the LLM. The default model is `chatgpt-3.5` . One LLM is used to create an answer and the other one will be used to create the standalone question to make searching better. I didn’t like the prompt to create the question so changed it to a better prompt.
+`ChatOpenAI` will be used as the LLM. The default model is `chatgpt-3.5`. One LLM is used to create an answer and the other one will be used to create the standalone question to make searching better. I didn’t like the prompt to create the question so changed it to a better prompt.
 
 `verbose` will print out what is behind the scenes
 

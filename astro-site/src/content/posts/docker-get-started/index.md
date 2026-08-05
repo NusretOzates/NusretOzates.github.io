@@ -379,4 +379,4 @@ services:
    - back-end:
 ```
 
-So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the [KodeKlaud’s](https://www.youtube.com/user/mmumshad)channel!
+So, that’s it! Please watch the video from FreeCodeCamp’s channel to get more detailed information. Also, take a look at the [KodeKlaud’s](https://www.youtube.com/user/mmumshad) channel!

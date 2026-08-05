@@ -63,7 +63,7 @@
 <p>Even though it is not possible to protect against all types of possible attacks, we still have one nice protection strategy that helps against insertion-based attacks.</p>
 <p><img alt="Image" loading="lazy" decoding="async" width="700" height="161" src="/_astro/img_4.4qBCgA6g_ZL3NCv.webp" srcset=""></p>
 <p>ONION: A Simple and Effective Defense Against Textual Backdoor Attacks</p>
-<p>The idea is trigger words, sentences, and chars are generally random and unexpected within the sample. Let’s look at the change in <a href="https://medium.com/nlplanet/two-minutes-nlp-perplexity-explained-with-simple-probabilities-6cdc46884584">perplexity</a>value when we remove a word and if there is a big change, this word is a potential threat. Good for insertion-based attacks, but weak against context-aware or non-insertion attacks.</p>
+<p>The idea is trigger words, sentences, and chars are generally random and unexpected within the sample. Let’s look at the change in <a href="https://medium.com/nlplanet/two-minutes-nlp-perplexity-explained-with-simple-probabilities-6cdc46884584">perplexity</a> value when we remove a word and if there is a big change, this word is a potential threat. Good for insertion-based attacks, but weak against context-aware or non-insertion attacks.</p>
 <p>There is a bonus defence for all of those attacks I explained above: <strong>REGULARIZATION!</strong></p>
 <p><img alt="Image" loading="lazy" decoding="async" width="680" height="579" src="/_astro/img_5.pXeQ-tEV_HYpiM.webp" srcset=""></p>
 <p>Do you remember this? Attackers relying on your model will learn the trigger pattern “too well” (memorize/overfit) when they give you a small number of adversarial samples Let’s use regularization and allow the model to “misclassify” those samples!</p>
@@ -109,7 +109,7 @@
 <h2 id="transferability">Transferability</h2>
 <p>Let’s say you don’t have unlimited access to the model you want to attack or you have limited chance to access. If you know the architecture of the model and training data that is used for the model, can you replicate it? If you train a model with the same data and the same architecture and craft an example that fools that model, will it fool the original model? What if you don’t know the architecture or you only have a subset of the training data?</p>
 <p>It turns out adversarial examples crafted to mislead model A are likely to mislead similar model B.</p>
-<p><strong>Cross-training data transferability</strong>: Same model type, different dataset <strong>Cross-technique transferability</strong>: Same or subset of the data etc., different model</p>
+<p><strong>Cross-training data transferability</strong>: Same model type, different dataset. <strong>Cross-technique transferability</strong>: Same or subset of the data etc., different model</p>
 <p>In the ideal case, you use the same data and the same model.</p>
 <p><img alt="Image" loading="lazy" decoding="async" width="700" height="262" src="/_astro/img_9.BNamuLV5_Z1BRwmL.webp" srcset=""></p>
 <p>Cross-technique Transferability Matrix</p>
