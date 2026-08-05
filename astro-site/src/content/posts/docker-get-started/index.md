@@ -102,7 +102,7 @@ Where can I find tags of the docker image?
 
 In python we access an environment variable like this:
 
-```
+```python
 os.environ.get(‘APP_COLOR’)
 ```
 
@@ -237,7 +237,7 @@ docker run -d --name=redis redis docker run -d --name=db postgres:9.4 docker run
 
 With docker-compose, docker-compose.yml:
 
-```
+```text
 redis:
   image: redis
 db:
@@ -256,7 +256,7 @@ worker:
 
 And run the command:
 
-```
+```bash
 docker-compose up
 ```
 
@@ -264,7 +264,7 @@ What if some of the images are not already built or not in the DockerHub? Like t
 
 Change this code:
 
-```
+```yaml
 vote:
  image: voting-app
  ports:
@@ -273,7 +273,7 @@ vote:
 
 To this code:
 
-```
+```yaml
 vote:
  build: ./vote
  ports:
@@ -286,7 +286,7 @@ Docker-compose evolved over time and now supports a lot more options than it did
 
 ### Version 1
 
-```
+```text
 redis:
  image: redis
 db:

@@ -58,9 +58,6 @@ Using Tensorflow Hub, training or fine-tuning BERT models is very easy. In the f
 
 ```python
 import tensorflow as tf
-```
-
-```
 dataset = tf.data.experimental.make_csv_dataset(
     'data/kaggle_toxic_comments/train.csv', batch_size=batch_size, num_epochs=1
     , select_columns=['comment_text', 'toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate'])
@@ -68,9 +65,6 @@ dataset = dataset.unbatch()
 validation = dataset.take(10000)
 train = dataset.skip(10000)
 train = train.map(lambda data: (
-```
-
-```
     dataset_preprocessing(data['comment_text']),
     [data['toxic'],
      data['severe_toxic'],
@@ -100,9 +94,6 @@ Let’s create the BERT model using the Tensorflow Hub:
 ```python
 from tensorflow.keras.layers import *
 import tensorflow_hub as hub
-```
-
-```
 text_input = tf.keras.layers.Input(shape=(), dtype=tf.string)
 preprocessor = hub.KerasLayer(
     "https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3")
@@ -117,14 +108,14 @@ sequence_output = outputs["sequence_output"][:, 0, :]
 
 Now we have two different outputs, pooled output, and sequence output. The pooled output represents each input sequence as a whole, and the sequence output represents each input token in context. Either of those can be used as input to further model building. For this task I want to use the output of the [CLS] token so I connect the sequence_output to a sigmoid layer and create the model like this:
 
-```
+```python
 classification_output = Dense(6, activation='sigmoid')(sequence_output)
 embedding_model = tf.keras.Model(text_input, classification_output)
 ```
 
 Now I can just compile and fit the model:
 
-```
+```python
 embedding_model.compile(
     optimizer=tf.keras.optimizers.Nadam(learning_rate=0.025),
     loss=tf.keras.losses.BinaryCrossentropy(),

@@ -44,7 +44,7 @@ class SGNNHyperModel(keras_tuner.HyperModel):
 
 Normally, we create a function that takes the HyperParameters object and returns a model. This function is the***build***method in our new class. In the fit method, we have the model, hyper-parameters, and args to give the standard fit method of Keras. Using/Inside MLflow’s start_run function, we can log our parameters. With the “autolog”, other parameters and model artifacts will be stored too! Now all you need to do is start searching:
 
-```
+```python
 tuner = BayesianOptimization(
     SGNNHyperModel(),
     max_trials=20,

@@ -245,7 +245,7 @@ def load_memory(st) -> ConversationBufferWindowMemory:
 
 It takes a streamlit object as input. Check if there is a message from the last session. If yes load them to the memory, otherwise start with a welcome message. We will give this history to the model when we call it with user input.
 
-```
+```python
 os.environ["OPENAI_API_KEY"] = "sk-blablabla"
 st.set_page_config(layout="wide")
 st.title("💬 QA Chatbot")

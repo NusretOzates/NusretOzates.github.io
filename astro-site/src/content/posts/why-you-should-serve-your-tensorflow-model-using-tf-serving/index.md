@@ -34,7 +34,7 @@ Now it’s time to share some impressive results of Tensorflow Serving. I’ve t
 
 ### TF Serving using CPU (Worker count = User count)
 
-```
+```text
 +-----------------------+-------+---------+
 |        Test           | RPS   | MRT(ms) |
 +-----------------------+-------+---------+
@@ -48,7 +48,7 @@ I don’t know the reason but you don’t have any problem with worker count if 
 
 ### Model in FastAPI using CPU(Worker count = User count)
 
-```
+```text
 +-----------------------+------------+------------+
 |        Test           |    RPS     |  MRT(ms)   |
 +-----------------------+------------+------------+
@@ -60,7 +60,7 @@ I don’t know the reason but you don’t have any problem with worker count if 
 
 ### Tensorflow Serving using GPU(Worker count = User count)
 
-```
+```text
 +-----------------------+------+---------+
 |        Test           | RPS  | MRT(ms) |
 +-----------------------+------+---------+
@@ -74,7 +74,7 @@ Reminder for next table, worker count must be 1, otherwise, you will get an erro
 
 ### Model in FastAPI using GPU(Worker count = 1)
 
-```
+```text
 +-----------------------+-------+---------+
 |        Test           | RPS   | MRT(ms) |
 +-----------------------+-------+---------+
