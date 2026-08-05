@@ -12,11 +12,20 @@
   --text-muted: #64748b;
   --border: rgba(15, 23, 42, 0.08);
   --hero-glow: linear-gradient(165deg, var(--accent-muted) 0%, transparent 55%);
-  --text-root: 125%;
+  /* Mobile-first root: 100% keeps rem-based type readable on narrow screens */
+  --text-root: 100%;
   --text-body: 1.05rem;
-  --text-prose: 1.125rem;
+  --text-prose: 1.0625rem;
   --leading-body: 1.7;
-  --leading-prose: 1.75;
+  --leading-prose: 1.7;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-root: 125%;
+    --text-prose: 1.125rem;
+    --leading-prose: 1.75;
+  }
 }
 
 [data-theme="dark"] {
